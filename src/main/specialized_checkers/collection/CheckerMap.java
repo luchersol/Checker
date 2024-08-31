@@ -5,18 +5,10 @@ import java.util.Map;
 
 import src.main.AbstractChecker;
 
-public class CheckerMap extends AbstractChecker<Map<Object, Object>>{
+public class CheckerMap<K, V> extends AbstractChecker<Map<K, V>>{
 
-    public CheckerMap(Map<Object, Object> object) {
-        super(object);
-    }
-
-    public CheckerMap(Map<Object, Object> object, List<Exception> errors) {
-        super(object, errors);
-    }
-
-    public CheckerMap(Map<Object, Object> object, List<Exception> errors, boolean saveErrors) {
-        super(object, errors, saveErrors);
+    public CheckerMap(Map<K, V> object, String name) {
+        super(object, name);
     }
 
 }

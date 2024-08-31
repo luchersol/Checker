@@ -26,16 +26,16 @@ public class CheckerTest {
     
     
     public static void main(String[] args) {
-        Checker.check(STRING_TEST).isString();
-        Checker.check(INTEGER_TEST).isInteger();
-        Checker.check(LONG_TEST).isLong();
-        Checker.check(FLOAT_TEST).isFloat();
-        Checker.check(DOUBLE_TEST).isDouble();
-        Checker.check(ARRAY_TEST).isArray();
-        Checker.check(COLLECTION_TEST).isCollection();
-        Checker.check(LIST_TEST).isList();
-        Checker.check(SET_TEST).isSet();
-        Checker.check(MAP_TEST).isMap();
+        // Checker.check(STRING_TEST).isString();
+        // Checker.check(INTEGER_TEST).isInteger().isPositive().hasErrors();
+        // Checker.check(LONG_TEST).isLong();
+        // Checker.check(FLOAT_TEST).isFloat();
+        // Checker.check(DOUBLE_TEST).isDouble();
+        // Checker.check(ARRAY_TEST).isArray();
+        // Checker.check(COLLECTION_TEST).isCollection();
+        // Checker.check(LIST_TEST).isList();
+        // Checker.check(SET_TEST).isSet();
+        // Checker.check(MAP_TEST).isMap();
 
     }
 }

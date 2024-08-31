@@ -3,18 +3,12 @@ package src.main.specialized_checkers.collection;
 import java.util.List;
 import java.util.Set;
 
-public class CheckerSet extends CheckerCollection<Set<Object>>{
+import src.main.AbstractChecker;
 
-    public CheckerSet(Set<Object> object) {
-        super(object);
+public class CheckerSet<T> extends AbstractChecker<Set<T>>{
+
+    public CheckerSet(Set<T> object, String name) {
+        super(object, name);
     }
 
-    public CheckerSet(Set<Object> object, List<Exception> errors) {
-        super(object, errors);
-    }
-
-    public CheckerSet(Set<Object> object, List<Exception> errors, boolean saveErrors) {
-        super(object, errors, saveErrors);
-    }
-    
 }

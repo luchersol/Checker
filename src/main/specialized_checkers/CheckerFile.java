@@ -7,17 +7,8 @@ import src.main.AbstractChecker;
 
 public class CheckerFile extends AbstractChecker<File> {
 
-    public CheckerFile(File object) {
-        super(object);
+    public CheckerFile(File object, String name) {
+        super(object, name);
     }
-
-    public CheckerFile(File object, List<Exception> errors) {
-        super(object, errors);
-    }
-
-    public CheckerFile(File object, List<Exception> errors, boolean saveErrors) {
-        super(object, errors, saveErrors);
-    }
-    
     
 }

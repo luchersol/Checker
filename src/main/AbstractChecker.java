@@ -1,41 +1,35 @@
 package src.main;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AbstractChecker<T> {
     
     protected T object;
 
-    protected List<Exception> errors;
+    protected String name;
+
+    protected ExceptionTracker exceptionTracker;
 
     protected boolean saveErrors;
 
-    public AbstractChecker(T object) {
+    public AbstractChecker(T object, String name) {
         this.object = object;
-        this.errors = new ArrayList<>();
+        this.name = name;
+        this.exceptionTracker = ExceptionTracker.empty();
         this.saveErrors = true;
-    }
-
-    public AbstractChecker(T object, List<Exception> errors) {
-        this.object = object;
-        this.errors = errors;
-        this.saveErrors = true;
-    }
-
-    public AbstractChecker(T object, List<Exception> errors, boolean saveErrors) {
-        this.object = object;
-        this.errors = errors;
-        this.saveErrors = saveErrors;
     }
 
     public void is(boolean condition, String message) {
+        RuntimeException exception = new RuntimeException(new Error(message));
         if(!condition){
-            IllegalArgumentException exception = new IllegalArgumentException(message);
             if(saveErrors)
-                this.errors.add(exception);
+                this.exceptionTracker.addThrownException(exception);
             else
                 throw exception;
+        } else {
+            if(saveErrors){
+                this.exceptionTracker.addNotThrownException(exception);
+            }
         }
     }
 
@@ -51,8 +45,24 @@ public class AbstractChecker<T> {
         is(this.object != null, message);
     }
 
-    public Boolean toBoolean(){
-        return this.errors.isEmpty();
+    public Boolean hasErrors(){
+        return this.exceptionTracker.hasErrors();
+    }
+
+    public Boolean hasNotErrors(){
+        return this.exceptionTracker.hasNotErrors();
+    }
+
+    public void showThrownException(){
+        this.exceptionTracker.showThrownException();
+    }
+
+    public void showNotThrownException(){
+        this.exceptionTracker.showNotThrownException();
+    }
+
+    public void show(){
+        this.exceptionTracker.show();
     }
 
 }

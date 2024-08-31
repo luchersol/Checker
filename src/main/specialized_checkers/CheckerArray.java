@@ -1,21 +1,11 @@
 package src.main.specialized_checkers;
 
-import java.util.List;
-
 import src.main.AbstractChecker;
 
-public class CheckerArray extends AbstractChecker<Object[]>{
+public class CheckerArray<T> extends AbstractChecker<T[]>{
 
-    public CheckerArray(Object[] object) {
-        super(object);
-    }
-
-    public CheckerArray(Object[] object, List<Exception> errors) {
-        super(object, errors);
-    }
-
-    public CheckerArray(Object[] object, List<Exception> errors, boolean saveErrors) {
-        super(object, errors, saveErrors);
+    public CheckerArray(T[] object, String name) {
+        super(object, name);
     }
     
 }

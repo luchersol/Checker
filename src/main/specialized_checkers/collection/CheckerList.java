@@ -2,18 +2,12 @@ package src.main.specialized_checkers.collection;
 
 import java.util.List;
 
-public class CheckerList extends CheckerCollection<List<Object>>{
+import src.main.AbstractChecker;
 
-    public CheckerList(List<Object> object) {
-        super(object);
-    }
+public class CheckerList<T> extends AbstractChecker<List<T>>{
 
-    public CheckerList(List<Object> object, List<Exception> errors) {
-        super(object, errors);
-    }
-
-    public CheckerList(List<Object> object, List<Exception> errors, boolean saveErrors) {
-        super(object, errors, saveErrors);
+    public CheckerList(List<T> object, String name) {
+        super(object, name);
     }
 
 }
