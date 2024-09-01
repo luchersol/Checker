@@ -6,14 +6,13 @@ import java.util.Set;
 
 import specialized_checkers.CheckerArray;
 import specialized_checkers.CheckerString;
-import specialized_checkers.collection.CheckerCollection;
-import specialized_checkers.collection.CheckerList;
-import specialized_checkers.collection.CheckerMap;
-import specialized_checkers.collection.CheckerSet;
-import specialized_checkers.number.CheckerDouble;
-import specialized_checkers.number.CheckerFloat;
-import specialized_checkers.number.CheckerInteger;
-import specialized_checkers.number.CheckerLong;
+import specialized_checkers.collections.CheckerList;
+import specialized_checkers.collections.CheckerMap;
+import specialized_checkers.collections.CheckerSet;
+import specialized_checkers.numbers.decimalTypes.CheckerDouble;
+import specialized_checkers.numbers.decimalTypes.CheckerFloat;
+import specialized_checkers.numbers.integerTypes.CheckerInteger;
+import specialized_checkers.numbers.integerTypes.CheckerLong;
 
 public class Checker extends AbstractChecker<Object>{
 
@@ -29,6 +28,11 @@ public class Checker extends AbstractChecker<Object>{
         return new Checker(object, "Object");
     }
 
+    public Checker saveErrors(){
+        this.saveErrors = true;
+        return this;
+    }
+
     public Checker notSaveErrors(){
         this.saveErrors = false;
         return this;
@@ -40,6 +44,11 @@ public class Checker extends AbstractChecker<Object>{
 
     public Checker isNumber() {
         isClass(Number.class);
+        return this;
+    }
+
+    public Checker isCollection() {
+        isClass(Collection.class);
         return this;
     }
 
@@ -68,47 +77,50 @@ public class Checker extends AbstractChecker<Object>{
         return new CheckerDouble((Double) this.object, name);
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public CheckerArray<?> isArray() {
         is(this.object.getClass().isArray(), "null");
         return new CheckerArray(((Collection<?>) this.object).toArray(), name);
     }
 
-    public CheckerCollection<?> isCollection() {
-        isClass(Collection.class);
-        return new CheckerCollection((Collection<?>) this.object, name);
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public <T> CheckerArray<T> isArray(Class<T> clazz) {
+        is(this.object.getClass().isArray(), "null");
+        return new CheckerArray(((Collection<T>) this.object).toArray(), name);
     }
 
-    public <T> CheckerCollection isCollection(Class<T> clazz) {
-        isClass(Collection.class);
-        return new CheckerCollection((Collection<T>) this.object, name);
-    }
-
-    public CheckerList isList() {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public CheckerList<?> isList() {
         isClass(List.class);
-        return new CheckerList((List) this.object, name);
+        return new CheckerList((List<?>) this.object, name);
     }
 
-    public <T> CheckerList isList(Class<T> clazz) {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public <T> CheckerList<T> isList(Class<T> clazz) {
         isClass(List.class);
         return new CheckerList((List<T>) this.object, name);
     }
 
-    public CheckerSet isSet() {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public CheckerSet<?> isSet() {
         isClass(Set.class);
-        return new CheckerSet((Set) this.object, name);
+        return new CheckerSet((Set<?>) this.object, name);
     }
 
-    public <T> CheckerSet isSet(Class<T> clazz) {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public <T> CheckerSet<T> isSet(Class<T> clazz) {
         isClass(Set.class);
         return new CheckerSet((Set<T>) this.object, name);
     }
 
-    public CheckerMap isMap() {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public CheckerMap<?,?> isMap() {
         isClass(Map.class);
-        return new CheckerMap((Map) this.object, name);
+        return new CheckerMap((Map<?,?>) this.object, name);
     }
 
-    public <K,V> CheckerMap isMap(Class<K> clazzKey, Class<V> clazzValue) {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public <K,V> CheckerMap<K,V> isMap(Class<K> clazzKey, Class<V> clazzValue) {
         isClass(Map.class);
         return new CheckerMap((Map<K,V>) this.object, name);
     }

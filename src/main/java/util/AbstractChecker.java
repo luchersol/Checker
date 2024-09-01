@@ -1,4 +1,7 @@
 package util;
+
+import static util.Message.sendMessage;
+
 public class AbstractChecker<T> {
     
     protected T object;
@@ -8,6 +11,12 @@ public class AbstractChecker<T> {
     protected ExceptionTracker exceptionTracker;
 
     protected boolean saveErrors;
+
+    public AbstractChecker(String name){
+        this.name = name;
+        this.exceptionTracker = ExceptionTracker.empty();
+        this.saveErrors = true;
+    }
 
     public AbstractChecker(T object, String name) {
         this.object = object;
@@ -44,6 +53,10 @@ public class AbstractChecker<T> {
 
     public Boolean hasErrors(){
         return this.exceptionTracker.hasErrors();
+    }
+
+    public void reversed(){
+        this.exceptionTracker.swapExceptions();
     }
 
     public Boolean hasNotErrors(){

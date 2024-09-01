@@ -1,8 +1,14 @@
-package specialized_checkers.number;
+package specialized_checkers.numbers;
 
 
 public interface InterfaceCheckerNumber<T extends InterfaceCheckerNumber<T>> {
-    
+
+    T isPositive();
+    T isPositiveOrZero();
+    T isNegative();
+    T isNegativeOrZero();
+    T isZero();
+
     T isGreaterThan(Byte number);
     T isGreaterThan(Short number);
     T isGreaterThan(Integer number);
