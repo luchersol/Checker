@@ -18,15 +18,21 @@ public class ExceptionTracker  {
         public static InnerExceptionTracker of(int index,Exception exception){
             return new InnerExceptionTracker(index, exception);
         }
+
+        @Override
+        public String toString() {
+            return this.exception.getMessage();
+        }
     }
     
     private List<InnerExceptionTracker> thrownExceptions;
     private List<InnerExceptionTracker> notThrownExceptions;
-    private int cont = 0;
+    private int cont;
 
     public ExceptionTracker() {
         this.thrownExceptions = new ArrayList<>();
         this.notThrownExceptions = new ArrayList<>();
+        this.cont = 0;
     }
 
     public static ExceptionTracker empty(){
@@ -57,12 +63,6 @@ public class ExceptionTracker  {
 
     public boolean hasNotErrors() {
         return this.thrownExceptions.isEmpty();
-    }
-
-    public void swapExceptions() {
-        List<InnerExceptionTracker> temp = new ArrayList<>(thrownExceptions);
-        this.thrownExceptions = new ArrayList<>(notThrownExceptions);
-        this.notThrownExceptions = temp;
     }
 
     public void showThrownException(){

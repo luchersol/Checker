@@ -2,7 +2,9 @@ package util;
 
 import static util.Message.sendMessage;
 
-public class AbstractChecker<T> {
+import java.util.function.Predicate;
+
+public class AbstractChecker<T> implements InterfaceChecker<AbstractChecker<T>, T>{
     
     protected T object;
 
@@ -12,51 +14,72 @@ public class AbstractChecker<T> {
 
     protected boolean saveErrors;
 
-    public AbstractChecker(String name){
-        this.name = name;
-        this.exceptionTracker = ExceptionTracker.empty();
-        this.saveErrors = true;
-    }
+    protected boolean stop;
 
-    public AbstractChecker(T object, String name) {
+    private static final String INIT_ABSTRACT_CHECKER = "abstract_checker";
+
+    public AbstractChecker(T object, String name){
         this.object = object;
         this.name = name;
         this.exceptionTracker = ExceptionTracker.empty();
         this.saveErrors = true;
+        this.stop = object == null;
     }
 
-    public void is(boolean condition, String message) {
+    public AbstractChecker(String name, ExceptionTracker exceptionTracker){
+        this.name = name;
+        this.exceptionTracker = exceptionTracker;
+        this.saveErrors = true;
+        this.stop = object == null;
+    }
+
+    public AbstractChecker(T object, String name, ExceptionTracker exceptionTracker) {
+        this.object = object;
+        this.name = name;
+        this.exceptionTracker = exceptionTracker;
+        this.saveErrors = true;
+        this.stop = object == null;
+    }
+
+    public void stop() {
+        this.stop = true;
+    }
+
+    public AbstractChecker<T> is(Predicate<T> condition, String message) {
         RuntimeException exception = new RuntimeException(new Error(message));
-        if(!condition){
-            if(saveErrors)
+        if(stop) {
+            return this;
+        }
+            
+        if(!condition.test(this.object)){
+            if(saveErrors){
                 this.exceptionTracker.addThrownException(exception);
-            else
+            }else{
                 throw exception;
+            }
         } else {
             if(saveErrors){
                 this.exceptionTracker.addNotThrownException(exception);
             }
         }
+
+        return this;
     }
 
-    public void isNot(boolean condition, String message){
-        is(!condition, message);
+    public AbstractChecker<T> is(Predicate<T> condition) {
+        return is(condition, sendMessage(INIT_ABSTRACT_CHECKER, "is"));
     }
 
-    public void isNull(String message) {
-        is(this.object == null, message);
+    public AbstractChecker<T> isNot(Predicate<T> condition, String message){
+        return is(condition.negate(), message);
     }
 
-    public void isNotNull(String message) {
-        is(this.object != null, message);
+    public AbstractChecker<T> isNot(Predicate<T> condition){
+        return is(condition.negate(), sendMessage(INIT_ABSTRACT_CHECKER, "is_not"));
     }
 
     public Boolean hasErrors(){
         return this.exceptionTracker.hasErrors();
-    }
-
-    public void reversed(){
-        this.exceptionTracker.swapExceptions();
     }
 
     public Boolean hasNotErrors(){

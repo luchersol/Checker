@@ -7,16 +7,38 @@ import java.util.Comparator;
 import java.util.function.Predicate;
 
 import util.AbstractChecker;
+import util.ExceptionTracker;
 
-public class CheckerArray<T> extends AbstractChecker<T>{
+public class CheckerArray<T> extends AbstractChecker<T[]>{
 
     private static final String INIT_ARRAY = "array";
 
-    protected T[] object;
+    public CheckerArray(T[] object, String name, ExceptionTracker exceptionTracker) {
+        super(object, name, exceptionTracker);
+    } 
 
-    public CheckerArray(T[] object, String name) {
-        super(name);
-        this.object = object;
+    @Override
+    public CheckerArray<T> is(Predicate<T[]> condition, String message) {
+        super.is(condition, message);
+        return this;
+    }
+
+    @Override
+    public CheckerArray<T> is(Predicate<T[]> condition) {
+        super.is(condition);
+        return this;
+    }
+
+    @Override
+    public CheckerArray<T> isNot(Predicate<T[]> condition, String message) {
+        super.isNot(condition, message);
+        return this;
+    }
+
+    @Override
+    public CheckerArray<T> isNot(Predicate<T[]> condition) {
+        super.isNot(condition);
+        return this;
     }
 
     private String getTypeName(){
@@ -24,7 +46,7 @@ public class CheckerArray<T> extends AbstractChecker<T>{
     }
 
     public CheckerArray<T> isEmpty(){
-        is(this.object.length == 0, sendMessage(INIT_ARRAY, "is_empty"));
+        is(array -> array.length == 0, sendMessage(INIT_ARRAY, "is_empty"));
         return this;
     }
 
@@ -32,12 +54,12 @@ public class CheckerArray<T> extends AbstractChecker<T>{
         if (this.object.length == 0) 
             return this;
         boolean implementComparable = object[0] instanceof Comparable;
-        is(implementComparable, sendMessage(INIT_ARRAY, "comparator", getTypeName()));
+        is(array -> array[0] instanceof Comparable, sendMessage(INIT_ARRAY, "comparator", getTypeName()));
 
         if(implementComparable){
             T[] copy = Arrays.copyOf(this.object, this.object.length);
             Arrays.sort(copy, comparator);
-            is(Arrays.equals(this.object, copy), sendMessage(INIT_ARRAY, "is_sorted_asc.comparator"));
+            is(array -> Arrays.equals(this.object, copy), sendMessage(INIT_ARRAY, "is_sorted_asc.comparator"));
         }
         
         return this;
@@ -47,12 +69,12 @@ public class CheckerArray<T> extends AbstractChecker<T>{
         if (this.object.length == 0) 
             return this;
         boolean implementComparable = object[0] instanceof Comparable;
-        is(implementComparable, sendMessage(INIT_ARRAY, "comparator", getTypeName()));
+        is(array -> array[0] instanceof Comparable, sendMessage(INIT_ARRAY, "comparator", getTypeName()));
 
         if(implementComparable){
             T[] copy = Arrays.copyOf(this.object, this.object.length);
             Arrays.sort(copy);
-            is(Arrays.equals(this.object, copy), sendMessage(INIT_ARRAY, "is_sorted_asc"));
+            is(array -> Arrays.equals(array, copy), sendMessage(INIT_ARRAY, "is_sorted_asc"));
         }
         
         return this;
@@ -62,12 +84,12 @@ public class CheckerArray<T> extends AbstractChecker<T>{
         if (this.object.length == 0) 
             return this;
         boolean implementComparable = object[0] instanceof Comparable;
-        is(implementComparable, sendMessage(INIT_ARRAY, "comparator", getTypeName()));
+        is(array -> array[0] instanceof Comparable, sendMessage(INIT_ARRAY, "comparator", getTypeName()));
 
         if(implementComparable){
             T[] copy = Arrays.copyOf(this.object, this.object.length);
             Arrays.sort(copy, comparator.reversed());
-            is(Arrays.equals(this.object, copy), sendMessage(INIT_ARRAY, "is_sorted_decs.comparator"));
+            is(array -> Arrays.equals(array, copy), sendMessage(INIT_ARRAY, "is_sorted_decs.comparator"));
         }
         
         return this;
@@ -77,26 +99,26 @@ public class CheckerArray<T> extends AbstractChecker<T>{
         if (this.object.length == 0) 
             return this;
         boolean implementComparable = object[0] instanceof Comparable;
-        is(implementComparable, sendMessage(INIT_ARRAY, "comparator", getTypeName()));
+        is(array -> array[0] instanceof Comparable, sendMessage(INIT_ARRAY, "comparator", getTypeName()));
 
         if(implementComparable){
             T[] copy = Arrays.copyOf(this.object, this.object.length);
             @SuppressWarnings("unchecked")
             Comparator<T> comparator = (Comparator<T>) Comparator.reverseOrder();
             Arrays.sort(copy, comparator);
-            is(Arrays.equals(this.object, copy), sendMessage(INIT_ARRAY, "is_sorted_desc"));
+            is(array -> Arrays.equals(array, copy), sendMessage(INIT_ARRAY, "is_sorted_desc"));
         }
         
         return this;
     }
 
     public CheckerArray<T> anyMatch(Predicate<T> predicate){
-        is(Arrays.stream(this.object).anyMatch(predicate), sendMessage(INIT_ARRAY, "any_match"));
+        is(array -> Arrays.stream(array).anyMatch(predicate), sendMessage(INIT_ARRAY, "any_match"));
         return this;
     }
 
     public CheckerArray<T> allMatch(Predicate<T> predicate){
-        is(Arrays.stream(this.object).allMatch(predicate), sendMessage(INIT_ARRAY, "all_match"));
+        is(array -> Arrays.stream(array).allMatch(predicate), sendMessage(INIT_ARRAY, "all_match"));
         return this;
     }
     

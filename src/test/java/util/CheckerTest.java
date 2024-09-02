@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class CheckerTest {
 
@@ -22,6 +24,9 @@ public class CheckerTest {
     private static Set<Integer> SET_TEST = new HashSet<>();
     private static Map<Integer, Integer> MAP_TEST = new HashMap<>();
     
+    private static void line(){
+        System.out.println("-".repeat(50));
+    }
     
     public static void main(String[] args) {
         // Checker.check(STRING_TEST).isString();
@@ -34,6 +39,5 @@ public class CheckerTest {
         // Checker.check(LIST_TEST).isList();
         // Checker.check(SET_TEST).isSet();
         // Checker.check(MAP_TEST).isMap();
-
     }
 }

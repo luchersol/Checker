@@ -16,28 +16,52 @@ public class CheckerSet<T> extends AbstractChecker<Set<T>>{
         super(object, name);
     }
 
+    @Override
+    public CheckerSet<T> is(Predicate<Set<T>> condition, String message) {
+        super.is(condition, message);
+        return this;
+    }
+
+    @Override
+    public CheckerSet<T> is(Predicate<Set<T>> condition) {
+        super.is(condition);
+        return this;
+    }
+
+    @Override
+    public CheckerSet<T> isNot(Predicate<Set<T>> condition, String message) {
+        super.isNot(condition, message);
+        return this;
+    }
+
+    @Override
+    public CheckerSet<T> isNot(Predicate<Set<T>> condition) {
+        super.isNot(condition);
+        return this;
+    }
+
     public CheckerSet<T> isEmpty(){
-        is(this.object.isEmpty(), sendMessage(INIT_SET, "is_empty"));
+        is(set -> set.isEmpty(), sendMessage(INIT_SET, "is_empty"));
         return this;
     }
 
     public CheckerSet<T> anyMatch(Predicate<T> predicate){
-        is(this.object.stream().anyMatch(predicate), sendMessage(INIT_SET, "any_match"));
+        is(set -> set.stream().anyMatch(predicate), sendMessage(INIT_SET, "any_match"));
         return this;
     }
 
     public CheckerSet<T> allMatch(Predicate<T> predicate){
-        is(this.object.stream().allMatch(predicate), sendMessage(INIT_SET, "all_match"));
+        is(set -> set.stream().allMatch(predicate), sendMessage(INIT_SET, "all_match"));
         return this;
     }
 
     public CheckerSet<T> isSubset(Collection<T> collection){
-        is(collection.containsAll(this.object), sendMessage(INIT_SET, "is_subset"));
+        is(set -> collection.containsAll(set), sendMessage(INIT_SET, "is_subset"));
         return this;
     }
 
     public CheckerSet<T> isSuperset(Collection<T> collection){
-        is(this.object.containsAll(collection), sendMessage(INIT_SET, "is_superset"));
+        is(set -> set.containsAll(collection), sendMessage(INIT_SET, "is_superset"));
         return this;
     }
 

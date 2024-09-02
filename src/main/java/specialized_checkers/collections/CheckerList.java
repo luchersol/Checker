@@ -17,33 +17,57 @@ public class CheckerList<T> extends AbstractChecker<List<T>>{
         super(object, name);
     }
 
+    @Override
+    public CheckerList<T> is(Predicate<List<T>> condition, String message) {
+        super.is(condition, message);
+        return this;
+    }
+
+    @Override
+    public CheckerList<T> is(Predicate<List<T>> condition) {
+        super.is(condition);
+        return this;
+    }
+
+    @Override
+    public CheckerList<T> isNot(Predicate<List<T>>  condition, String message) {
+        super.isNot(condition, message);
+        return this;
+    }
+
+    @Override
+    public CheckerList<T> isNot(Predicate<List<T>>  condition) {
+        super.isNot(condition);
+        return this;
+    }
+
     public CheckerList<T> isEmpty(){
-        is(this.object.isEmpty(), sendMessage(INIT_LIST, "is_empty"));
+        is(list-> list.isEmpty(), sendMessage(INIT_LIST, "is_empty"));
         return this;
     }
 
     public CheckerList<T> anyMatch(Predicate<T> predicate){
-        is(this.object.stream().anyMatch(predicate), sendMessage(INIT_LIST, "any_match"));
+        is(list-> list.stream().anyMatch(predicate), sendMessage(INIT_LIST, "any_match"));
         return this;
     }
 
     public CheckerList<T> allMatch(Predicate<T> predicate){
-        is(this.object.stream().allMatch(predicate), sendMessage(INIT_LIST, "all_match"));
+        is(list-> list.stream().allMatch(predicate), sendMessage(INIT_LIST, "all_match"));
         return this;
     }
 
     public CheckerList<T> allDistinct(){
-        is(Set.copyOf(this.object).size() == this.object.size(), sendMessage(INIT_LIST, "all_distinct"));
+        is(list -> Set.copyOf(list).size() == list.size(), sendMessage(INIT_LIST, "all_distinct"));
         return this;
     }
 
         public CheckerList<T> isSubset(Collection<T> collection){
-        is(collection.containsAll(this.object), sendMessage(INIT_LIST, "is_subset"));
+        is(list -> collection.containsAll(list), sendMessage(INIT_LIST, "is_subset"));
         return this;
     }
 
     public CheckerList<T> isSuperset(Collection<T> collection){
-        is(this.object.containsAll(collection), sendMessage(INIT_LIST, "is_superset"));
+        is(list-> list.containsAll(collection), sendMessage(INIT_LIST, "is_superset"));
         return this;
     }
 
