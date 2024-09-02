@@ -2,14 +2,17 @@ package util;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Currency;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import java.util.spi.LocaleNameProvider;
 
 public class CheckerTest {
 
@@ -39,5 +42,6 @@ public class CheckerTest {
         // Checker.check(LIST_TEST).isList();
         // Checker.check(SET_TEST).isSet();
         // Checker.check(MAP_TEST).isMap();
+        
     }
 }

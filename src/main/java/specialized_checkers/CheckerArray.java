@@ -4,6 +4,7 @@ import static util.Message.sendMessage;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Currency;
 import java.util.function.Predicate;
 
 import util.AbstractChecker;
@@ -59,7 +60,7 @@ public class CheckerArray<T> extends AbstractChecker<T[]>{
         if(implementComparable){
             T[] copy = Arrays.copyOf(this.object, this.object.length);
             Arrays.sort(copy, comparator);
-            is(array -> Arrays.equals(this.object, copy), sendMessage(INIT_ARRAY, "is_sorted_asc.comparator"));
+            is(array -> Arrays.equals(array, copy), sendMessage(INIT_ARRAY, "is_sorted_asc.comparator"));
         }
         
         return this;
@@ -109,6 +110,15 @@ public class CheckerArray<T> extends AbstractChecker<T[]>{
             is(array -> Arrays.equals(array, copy), sendMessage(INIT_ARRAY, "is_sorted_desc"));
         }
         
+        return this;
+    }
+
+    public CheckerArray<T> isSufficientPercentage(Predicate<T> matching, double percentage){
+        Predicate<T[]> predicate = array -> {
+            double percentageMatching = Arrays.stream(array).filter(matching).count() * 100. / array.length;
+            return percentageMatching >= percentage;
+        };
+        is(predicate, sendMessage(INIT_ARRAY, "is_suffcient_percentage"));
         return this;
     }
 

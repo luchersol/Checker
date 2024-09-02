@@ -3,8 +3,11 @@ package specialized_checkers;
 import static util.Message.sendMessage;
 
 import java.io.File;
+import java.util.UUID;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
+import netscape.javascript.JSObject;
 import util.AbstractChecker;
 
 public class CheckerFile extends AbstractChecker<File> {
@@ -40,21 +43,22 @@ public class CheckerFile extends AbstractChecker<File> {
     }
 
     public CheckerFile exists(){
+        is(file -> file.exists(), sendMessage(INIT_FILE, "exists"));
         return this;
     }
 
-    public CheckerFile isFile(){
-        is(file -> file.isFile(), sendMessage(INIT_FILE, "is_file"));
+    public CheckerFile isTypeFile(){
+        is(file -> file.isFile(), sendMessage(INIT_FILE, "is_type_file"));
         return this;
     }
 
-    public CheckerFile isDirectory(){
-        is(file -> file.isDirectory(), sendMessage(INIT_FILE, "is_directory"));
+    public CheckerFile isTypeDirectory(){
+        is(file -> file.isDirectory(), sendMessage(INIT_FILE, "is_type_directory"));
         return this;
     }
 
-    public CheckerFile isHidden(){
-        is(file -> file.isHidden(), sendMessage(INIT_FILE, "is_hidden"));
+    public CheckerFile isTypeHidden(){
+        is(file -> file.isHidden(), sendMessage(INIT_FILE, "is_type_hidden"));
         return this;
     }
 
@@ -69,21 +73,41 @@ public class CheckerFile extends AbstractChecker<File> {
     }
 
     public CheckerFile min(int minBytes){
-        isFile();
-        is(file -> minBytes < file.length(), sendMessage(INIT_FILE, "min"));
+        isTypeFile();
+        is(file -> minBytes < file.length(), sendMessage(INIT_FILE, "min", minBytes));
         return this;
     }
 
     public CheckerFile max(int maxBytes){
-        isFile();
-        is(file -> file.length() < maxBytes, sendMessage(INIT_FILE, "max"));
+        isTypeFile();
+        is(file -> file.length() < maxBytes, sendMessage(INIT_FILE, "max", maxBytes));
         return this;
     }
 
     public CheckerFile inRange(int minBytes, int maxBytes){
-        isFile();
-        is(file -> minBytes < file.length() && file.length() < maxBytes, sendMessage(INIT_FILE, "in_range"));
+        isTypeFile();
+        is(file -> minBytes < file.length() && file.length() < maxBytes, sendMessage(INIT_FILE, "in_range", minBytes, maxBytes));
         return this;
+    }
+
+    public CheckerFile withExtension(String extension) {
+        is(file -> getFileExtension(file).equals(extension), sendMessage(INIT_FILE, "with_extension"));
+        return this;
+    }
+
+    public CheckerFile withAnyExtension(String... extensions) {
+        is(file -> Stream.of(extensions).anyMatch(extension -> getFileExtension(file).equals(extension)), sendMessage(INIT_FILE, "with_any_extension"));
+        return this;
+    }
+
+    private static String getFileExtension(File file){
+        String fileName = file.getName();
+        int lastIndexOfDot = fileName.lastIndexOf('.');
+
+        if (lastIndexOfDot == -1 || lastIndexOfDot == 0) 
+            return "";
+        
+        return fileName.substring(lastIndexOfDot + 1);
     }
 
 }

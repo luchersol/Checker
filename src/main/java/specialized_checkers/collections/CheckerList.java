@@ -1,9 +1,12 @@
 package specialized_checkers.collections;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
+
+import specialized_checkers.CheckerArray;
 
 import static util.Message.sendMessage;
 
@@ -61,13 +64,22 @@ public class CheckerList<T> extends AbstractChecker<List<T>>{
         return this;
     }
 
-        public CheckerList<T> isSubset(Collection<T> collection){
+    public CheckerList<T> isSubset(Collection<T> collection){
         is(list -> collection.containsAll(list), sendMessage(INIT_LIST, "is_subset"));
         return this;
     }
 
     public CheckerList<T> isSuperset(Collection<T> collection){
         is(list-> list.containsAll(collection), sendMessage(INIT_LIST, "is_superset"));
+        return this;
+    }
+
+    public CheckerList<T> isSufficientPercentage(Predicate<T> matching, double percentage){
+        Predicate<List<T>> predicate = list -> {
+            double percentageMatching = list.stream().filter(matching).count() * 100. / list.size();
+            return percentageMatching >= percentage;
+        };
+        is(predicate, sendMessage(INIT_LIST, "is_suffcient_percentage"));
         return this;
     }
 

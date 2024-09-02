@@ -3,6 +3,7 @@ package specialized_checkers.collections;
 import static util.Message.sendMessage;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -62,6 +63,15 @@ public class CheckerSet<T> extends AbstractChecker<Set<T>>{
 
     public CheckerSet<T> isSuperset(Collection<T> collection){
         is(set -> set.containsAll(collection), sendMessage(INIT_SET, "is_superset"));
+        return this;
+    }
+
+    public CheckerSet<T> isSufficientPercentage(Predicate<T> matching, double percentage){
+        Predicate<Set<T>> predicate = set -> {
+            double percentageMatching = set.stream().filter(matching).count() * 100. / set.size();
+            return percentageMatching >= percentage;
+        };
+        is(predicate, sendMessage(INIT_SET, "is_suffcient_percentage"));
         return this;
     }
 
