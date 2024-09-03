@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 import specialized_checkers.CheckerArray;
+import specialized_checkers.CheckerColor;
 import specialized_checkers.CheckerString;
 import specialized_checkers.collections.CheckerList;
 import specialized_checkers.collections.CheckerMap;

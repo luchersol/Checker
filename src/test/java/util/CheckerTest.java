@@ -2,17 +2,12 @@ package util;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Currency;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
-import java.util.spi.LocaleNameProvider;
 
 public class CheckerTest {
 
@@ -30,8 +25,8 @@ public class CheckerTest {
     private static void line(){
         System.out.println("-".repeat(50));
     }
-    
-    public static void main(String[] args) {
+
+    public void checkTypes(){
         // Checker.check(STRING_TEST).isString();
         // Checker.check(INTEGER_TEST).isInteger().isPositive().hasErrors();
         // Checker.check(LONG_TEST).isLong();
@@ -42,6 +37,13 @@ public class CheckerTest {
         // Checker.check(LIST_TEST).isList();
         // Checker.check(SET_TEST).isSet();
         // Checker.check(MAP_TEST).isMap();
-        
+    }
+
+    private record Persona(InnerPerson innerPerson) {
+        private record InnerPerson(String name, int year) {
+        }
+    }
+    
+    public static void main(String[] args) throws Exception {
     }
 }

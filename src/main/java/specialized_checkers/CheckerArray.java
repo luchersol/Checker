@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Currency;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 
 import util.AbstractChecker;
 import util.ExceptionTracker;

@@ -2,11 +2,16 @@ package util;
 
 import static util.Message.sendMessage;
 
+import java.lang.reflect.Field;
 import java.util.function.Predicate;
 
 public class AbstractChecker<T> implements InterfaceChecker<AbstractChecker<T>, T>{
     
     protected T object;
+
+    public T getObject(){
+        return this.object;
+    }
 
     protected String name;
 
@@ -96,6 +101,32 @@ public class AbstractChecker<T> implements InterfaceChecker<AbstractChecker<T>, 
 
     public void show(){
         this.exceptionTracker.show();
+    }
+
+    public Checker checkProperty(String property) throws Exception{
+        Object obj = getProperty(this.object, property);
+        return new Checker(obj, property);
+    }
+
+    public static Object getProperty(Object object, String propertyPath) throws Exception{
+        String[] properties = propertyPath.split("\\.");
+
+        Object currentObject = object;
+        Field field = currentObject.getClass().getDeclaredField(properties[0]);
+        field.setAccessible(true);
+        currentObject = field.get(currentObject);
+        if (currentObject == null) {
+            return null; 
+        }
+        
+
+        if(properties.length == 1){
+            return currentObject;
+        } else {
+            int indexDot = propertyPath.indexOf('.');
+            return getProperty(currentObject, propertyPath.substring(indexDot + 1));
+        }
+        
     }
 
 }
