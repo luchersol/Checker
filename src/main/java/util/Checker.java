@@ -79,6 +79,11 @@ public class Checker extends AbstractChecker<Object> {
         return this;
     }
 
+    public Checker isEqual(Object other){
+        is(object -> object.equals(other), sendMessage(INIT_CHECKER, "is_equal"));
+        return this;
+    }
+
     public <T> Checker isInstance(Class<T> clazz) {
         is(object -> clazz.isInstance(object), sendMessage(INIT_CHECKER, "is_instance", clazz.getSimpleName()));
         return this;

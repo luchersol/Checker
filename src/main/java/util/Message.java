@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.fusesource.jansi.Ansi;
+import org.fusesource.jansi.Ansi.Color;
+
 public class Message {
     
     private static Properties properties = new Properties();
@@ -18,7 +21,11 @@ public class Message {
     }
 
     private static String getProperty(String key){
-        return properties.getProperty(key, "\033[1;31m" + "[MENSAJE NO ENCONTRADO]" + "\033[0m");
+        String defaultMessage = Ansi.ansi()
+                                    .fgBrightYellow().bold()
+                                    .a(properties.getProperty("default_message").formatted(key))
+                                    .reset().toString();
+        return properties.getProperty(key, defaultMessage);
     }
 
     private static String sendMessage(String key, Object... args){
