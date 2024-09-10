@@ -1,14 +1,11 @@
 package specialized_checkers.collections;
 
-import java.util.Arrays;
+import static util.Message.sendMessage;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
-
-import specialized_checkers.CheckerArray;
-
-import static util.Message.sendMessage;
 
 import util.AbstractChecker;
 

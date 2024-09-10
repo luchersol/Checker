@@ -3,11 +3,9 @@ package specialized_checkers;
 import static util.Message.sendMessage;
 
 import java.io.File;
-import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import netscape.javascript.JSObject;
 import util.AbstractChecker;
 
 public class CheckerFile extends AbstractChecker<File> {

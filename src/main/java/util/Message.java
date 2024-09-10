@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import org.fusesource.jansi.Ansi;
-import org.fusesource.jansi.Ansi.Color;
 
 public class Message {
     

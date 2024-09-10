@@ -4,9 +4,7 @@ import static util.Message.sendMessage;
 
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Currency;
 import java.util.function.Predicate;
-import java.util.regex.Pattern;
 
 import util.AbstractChecker;
 import util.ExceptionTracker;
@@ -119,7 +117,7 @@ public class CheckerArray<T> extends AbstractChecker<T[]>{
             double percentageMatching = Arrays.stream(array).filter(matching).count() * 100. / array.length;
             return percentageMatching >= percentage;
         };
-        is(predicate, sendMessage(INIT_ARRAY, "is_suffcient_percentage"));
+        is(predicate, sendMessage(INIT_ARRAY, "is_sufficient_percentage"));
         return this;
     }
 

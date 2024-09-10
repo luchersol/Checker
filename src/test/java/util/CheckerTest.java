@@ -7,9 +7,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
-import java.util.Map.Entry;
 
 import util.CheckerTest.Persona.InnerPerson;
 
@@ -84,6 +82,13 @@ public class CheckerTest {
         // line();
     }
 
+    public static void checkProperty(){
+        Persona persona = new Persona(new Persona.InnerPerson("TEST", 20));
+        Checker.check(persona).isInstance(Persona.class)
+               .checkProperty("innerPerson").isNull().isInstance(InnerPerson.class).end()
+               .checkProperty("innerPerson.name").isEqual("TEST").end().show();
+    }
+
     public static class Persona {
 
         InnerPerson innerPerson;
@@ -132,9 +137,6 @@ public class CheckerTest {
     }
 
     public static void main(String[] args) throws Exception {
-        Persona persona = new Persona(new Persona.InnerPerson("TEST", 20));
-        Checker.check(persona).isInstance(Persona.class)
-               .checkProperty("innerPerson").isNull().isInstance(InnerPerson.class).end()
-               .checkProperty("innerPerson.name").isEqual("TEST").end().show();
+        checkProperty();
     }
 }

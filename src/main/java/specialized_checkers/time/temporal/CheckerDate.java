@@ -2,7 +2,6 @@ package specialized_checkers.time.temporal;
 
 import static util.Message.sendMessage;
 
-import java.time.temporal.Temporal;
 import java.util.Date;
 import java.util.function.Predicate;
 

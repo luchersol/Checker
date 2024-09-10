@@ -94,6 +94,26 @@ public class CheckerString extends AbstractChecker<String> {
         return this;
     }
 
+    public CheckerString isDNI(){
+        return is(string -> string.matches("^\\d{8}[A-Z]$"), sendMessage(INIT_STRING, "is_dni"));
+    }
+
+    public CheckerString isIPv4(){
+        return is(string -> string.matches("^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\\.(25[0-5]|2[0-4][0-9]|"+
+        "1[0-9]{2}|[1-9]?[0-9])){3}$"),
+        sendMessage(INIT_STRING, "is_ipv4"));
+    }
+
+    public CheckerString isIPv6(){
+        return is(string -> string.equals("^(([0-9a-fA-F]{1,4}:){7}([0-9a-fA-F]{1,4})|"+
+        "(([0-9a-fA-F]{1,4}:){1,7}|:):(([0-9a-fA-F]{1,4}:){1,6}[0-9a-fA-F]{1,4})?)$"), 
+        sendMessage(INIT_STRING, "is_ipv6"));
+    }
+
+    public CheckerString hasSpecialCharacters(){
+        return is(string -> string.matches("[!@#$%^&*(),.?\":{}|<>]"), "has_special_characters");
+    }
+
     public CheckerString isPalindrome() {
         String reversed = new StringBuilder(this.object).reverse().toString();
         is(string -> string.equals(reversed), sendMessage(INIT_STRING, "is_palindrome"));

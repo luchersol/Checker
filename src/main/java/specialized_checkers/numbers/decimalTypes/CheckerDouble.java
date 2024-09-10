@@ -2,7 +2,6 @@ package specialized_checkers.numbers.decimalTypes;
 
 import static util.Message.sendMessage;
 
-import java.io.File;
 import java.util.function.Predicate;
 
 import specialized_checkers.numbers.InterfaceCheckerNumber;
