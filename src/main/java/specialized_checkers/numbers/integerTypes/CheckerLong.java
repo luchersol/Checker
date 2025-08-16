@@ -42,12 +42,12 @@ public class CheckerLong extends AbstractChecker<Long> implements InterfaceCheck
         return this;
     }
 
-    public CheckerLong isPair(){
+    public CheckerLong isEven(){
         is(n_long -> n_long % 2 == 0, sendMessage(INIT_INTEGER_TYPES, "is_pair", LONG_STRING));
         return this;
     }
 
-    public CheckerLong isEven(){
+    public CheckerLong isOdd(){
         is(n_long -> n_long % 2 != 0, sendMessage(INIT_INTEGER_TYPES, "is_even", LONG_STRING));
         return this;
     }

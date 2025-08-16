@@ -41,13 +41,13 @@ public class CheckerInteger extends AbstractChecker<Integer> implements Interfac
         return this;
     }
 
-    public CheckerInteger isPair(){
-        is(n_integer -> n_integer % 2 == 0, sendMessage(INIT_INTEGER_TYPES, "is_pair", INTEGER_STRING));
+    public CheckerInteger isEven(){
+        is(n_integer -> (n_integer & 1) == 0, sendMessage(INIT_INTEGER_TYPES, "is_pair", INTEGER_STRING));
         return this;
     }
 
-    public CheckerInteger isEven(){
-        is(n_integer -> n_integer % 2 != 0, sendMessage(INIT_INTEGER_TYPES, "is_even", INTEGER_STRING));
+    public CheckerInteger isOdd(){
+        is(n_integer -> (n_integer & 1) == 1, sendMessage(INIT_INTEGER_TYPES, "is_even", INTEGER_STRING));
         return this;
     }
 

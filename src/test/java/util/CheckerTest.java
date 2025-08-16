@@ -20,9 +20,6 @@ public class CheckerTest {
     private static Double DOUBLE_TEST = 1D;
     private static int[] ARRAY_TEST = { 1 };
     private static Collection<Integer> COLLECTION_TEST = new LinkedList<>();
-    private static List<Integer> LIST_TEST = new ArrayList<>();
-    private static Set<Integer> SET_TEST = new HashSet<>();
-    private static Map<Integer, Integer> MAP_TEST = new HashMap<>();
 
     private static void line() {
         System.out.println("-".repeat(50));
