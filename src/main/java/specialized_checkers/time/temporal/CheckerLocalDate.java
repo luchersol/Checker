@@ -1,6 +1,6 @@
 package specialized_checkers.time.temporal;
 
-import static util.Message.sendMessage;
+import static util.Message.*;
 
 import java.time.LocalDate;
 import java.util.function.Predicate;
@@ -11,9 +11,9 @@ import util.ExceptionTracker;
 public class CheckerLocalDate extends AbstractChecker<LocalDate> implements InterfaceCheckerDate<CheckerLocalDate, LocalDate>  {
     
     private static final String LOCAL_DATE_STRING = "LocalDate";
-    private static final String INIT_TIME = "time";
+    // private static final String INIT_TIME = "time";
     private static final String INIT_TEMPORAL = "time.temporal";
-    private static final String INIT_LOCAL_DATE = "time.temporal.local_date";
+    // private static final String INIT_LOCAL_DATE = "time.temporal.local_date";
 
     public CheckerLocalDate(LocalDate object, String name, ExceptionTracker exceptionTracker) {
         super(object, name, exceptionTracker);

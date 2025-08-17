@@ -1,6 +1,6 @@
 package specialized_checkers.time;
 
-import static util.Message.sendMessage;
+import static util.Message.*;
 
 import java.time.Duration;
 import java.time.temporal.TemporalUnit;
@@ -11,7 +11,7 @@ import util.ExceptionTracker;
 
 public class CheckerDuration extends AbstractChecker<Duration> {
 
-    private static final String INIT_TIME = "time";
+    // private static final String INIT_TIME = "time";
     private static final String INIT_DURATION = "time.duration";
 
     public CheckerDuration(Duration object, String name, ExceptionTracker exceptionTracker) {

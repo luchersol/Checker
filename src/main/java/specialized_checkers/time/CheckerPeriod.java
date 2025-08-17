@@ -1,6 +1,6 @@
 package specialized_checkers.time;
 
-import static util.Message.sendMessage;
+import static util.Message.*;
 
 import java.time.Period;
 import java.time.temporal.TemporalUnit;
@@ -11,7 +11,7 @@ import util.ExceptionTracker;
 
 public class CheckerPeriod extends AbstractChecker<Period> {
 
-    private static final String INIT_TIME = "time";
+    // private static final String INIT_TIME = "time";
     private static final String INIT_PERIOD = "time.period";
 
     public CheckerPeriod(Period object, String name, ExceptionTracker exceptionTracker) {

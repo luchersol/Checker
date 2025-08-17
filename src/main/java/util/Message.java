@@ -9,11 +9,11 @@ import org.fusesource.jansi.Ansi;
 
 public class Message {
     
-    private static Properties properties = new Properties();
+    private static final Properties PROPERTIES = new Properties();
 
     static {
         try (InputStream input = new FileInputStream("src\\main\\resources\\messages.properties")) {
-            properties.load(input);
+            PROPERTIES.load(input);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -22,9 +22,9 @@ public class Message {
     private static String getProperty(String key){
         String defaultMessage = Ansi.ansi()
                                     .fgBrightYellow().bold()
-                                    .a(properties.getProperty("default_message").formatted(key))
+                                    .a(PROPERTIES.getProperty("default_message").formatted(key))
                                     .reset().toString();
-        return properties.getProperty(key, defaultMessage);
+        return PROPERTIES.getProperty(key, defaultMessage);
     }
 
     private static String sendMessage(String key, Object... args){
@@ -42,10 +42,6 @@ public class Message {
             format.append(".");
         format.append(function);
         return sendMessage(format.toString(), args);
-    }
-
-    public static void main(String[] args) {
-        System.out.println(sendMessage("collection.checker_collection", "args"));
     }
 
 }

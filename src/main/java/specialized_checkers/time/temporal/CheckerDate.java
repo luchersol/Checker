@@ -1,6 +1,6 @@
 package specialized_checkers.time.temporal;
 
-import static util.Message.sendMessage;
+import static util.Message.*;
 
 import java.util.Date;
 import java.util.function.Predicate;
@@ -11,9 +11,9 @@ import util.ExceptionTracker;
 public class CheckerDate extends AbstractChecker<Date> implements InterfaceCheckerDate<CheckerDate, Date> {
 
     private static final String DATE_STRING = "Date";
-    private static final String INIT_TIME = "time";
+    // private static final String INIT_TIME = "time";
     private static final String INIT_TEMPORAL = "time.temporal";
-    private static final String INIT_DATE = "time.temporal.date";
+    // private static final String INIT_DATE = "time.temporal.date";
 
     public CheckerDate(Date object, String name, ExceptionTracker exceptionTracker) {
         super(object, name, exceptionTracker);
