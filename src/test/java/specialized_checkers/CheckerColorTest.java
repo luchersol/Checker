@@ -1,13 +1,5 @@
 package specialized_checkers;
 
-import static util.Message.sendMessage;
-
-import java.util.function.Predicate;
-
-import util.AbstractChecker;
-import util.ExceptionTracker;
-import java.awt.Color;
-
 public class CheckerColorTest {
 
     public void isBlack(){

@@ -1,13 +1,7 @@
 package specialized_checkers.time;
 
-import static util.Message.sendMessage;
-
 import java.time.Duration;
 import java.time.temporal.TemporalUnit;
-import java.util.function.Predicate;
-
-import util.AbstractChecker;
-import util.ExceptionTracker;
 
 public class CheckerDurationTest {
 

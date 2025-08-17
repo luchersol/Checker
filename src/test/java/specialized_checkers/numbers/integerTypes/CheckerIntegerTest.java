@@ -1,12 +1,5 @@
 package specialized_checkers.numbers.integerTypes;
 
-import static util.Message.sendMessage;
-
-import java.util.function.Predicate;
-
-import specialized_checkers.numbers.InterfaceCheckerNumber;
-import util.AbstractChecker;
-
 public class CheckerIntegerTest {
 
     public void isEven(){

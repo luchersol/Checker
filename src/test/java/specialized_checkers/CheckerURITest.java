@@ -1,15 +1,5 @@
 package specialized_checkers;
 
-import static util.Message.sendMessage;
-
-import java.net.URI;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.function.Predicate;
-
-import util.AbstractChecker;
-import util.ExceptionTracker;
-
 public class CheckerURITest {
 
     public void isAbsolute() {
