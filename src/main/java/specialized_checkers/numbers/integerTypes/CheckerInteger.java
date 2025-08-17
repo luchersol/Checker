@@ -1,6 +1,6 @@
 package specialized_checkers.numbers.integerTypes;
 
-import static util.Message.sendMessage;
+import static util.Message.*;
 
 import java.util.function.Predicate;
 
@@ -42,12 +42,12 @@ public class CheckerInteger extends AbstractChecker<Integer> implements Interfac
     }
 
     public CheckerInteger isEven(){
-        is(n_integer -> (n_integer & 1) == 0, sendMessage(INIT_INTEGER_TYPES, "is_pair", INTEGER_STRING));
+        is(n_integer -> (n_integer & 1) == 0, sendMessage(INIT_INTEGER_TYPES, "is_even", INTEGER_STRING));
         return this;
     }
 
     public CheckerInteger isOdd(){
-        is(n_integer -> (n_integer & 1) == 1, sendMessage(INIT_INTEGER_TYPES, "is_even", INTEGER_STRING));
+        is(n_integer -> (n_integer & 1) == 1, sendMessage(INIT_INTEGER_TYPES, "is_odd", INTEGER_STRING));
         return this;
     }
 
