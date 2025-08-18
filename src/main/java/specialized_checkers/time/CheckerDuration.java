@@ -6,15 +6,14 @@ import java.time.Duration;
 import java.time.temporal.TemporalUnit;
 
 import util.AbstractChecker;
-import util.ExceptionTracker;
 
 public class CheckerDuration extends AbstractChecker<Duration, CheckerDuration> {
 
     // private static final String INIT_TIME = "time";
     private static final String INIT_DURATION = "time.duration";
 
-    public CheckerDuration(Duration object, String name, ExceptionTracker exceptionTracker) {
-        super(object, name, exceptionTracker);
+    public CheckerDuration(Duration object, String name) {
+        super(object, name);
     }
 
     @Override
