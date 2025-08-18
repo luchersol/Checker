@@ -8,13 +8,18 @@ import java.math.BigInteger;
 import specialized_checkers.numbers.InterfaceCheckerNumber;
 import util.AbstractChecker;
 
-public class CheckerBigInteger extends AbstractChecker<BigInteger> implements InterfaceCheckerNumber<CheckerBigInteger> {
+public class CheckerBigInteger extends AbstractChecker<BigInteger, CheckerBigInteger> implements InterfaceCheckerNumber<CheckerBigInteger> {
 
     private static final String BIG_INTEGER_STRING = "Big Integer";
     private static final String INIT_NUMBERS = "numbers";
 
     public CheckerBigInteger(BigInteger object, String name) {
         super(object, name);
+    }
+
+    @Override
+    protected CheckerBigInteger self() {
+        return this;
     }
 
     public CheckerBigInteger isEven(){

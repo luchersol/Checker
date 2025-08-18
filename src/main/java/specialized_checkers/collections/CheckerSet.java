@@ -1,6 +1,6 @@
 package specialized_checkers.collections;
 
-import static util.Message.sendMessage;
+import static util.Message.*;
 
 import java.util.Collection;
 import java.util.Set;
@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 
 import util.AbstractChecker;
 
-public class CheckerSet<T> extends AbstractChecker<Set<T>>{
+public class CheckerSet<T> extends AbstractChecker<Set<T>, CheckerSet<T>>{
 
     private static final String INIT_SET = "collections.set";
 
@@ -17,26 +17,7 @@ public class CheckerSet<T> extends AbstractChecker<Set<T>>{
     }
 
     @Override
-    public CheckerSet<T> is(Predicate<Set<T>> condition, String message) {
-        super.is(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerSet<T> is(Predicate<Set<T>> condition) {
-        super.is(condition);
-        return this;
-    }
-
-    @Override
-    public CheckerSet<T> isNot(Predicate<Set<T>> condition, String message) {
-        super.isNot(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerSet<T> isNot(Predicate<Set<T>> condition) {
-        super.isNot(condition);
+    protected CheckerSet<T> self() {
         return this;
     }
 

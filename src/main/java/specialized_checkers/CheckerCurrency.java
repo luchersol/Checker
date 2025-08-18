@@ -1,15 +1,14 @@
 package specialized_checkers;
 
-import static util.Message.sendMessage;
+import static util.Message.*;
 
 import java.util.Currency;
 import java.util.Locale;
-import java.util.function.Predicate;
 
 import util.AbstractChecker;
 import util.ExceptionTracker;
 
-public class CheckerCurrency extends AbstractChecker<Currency> {
+public class CheckerCurrency extends AbstractChecker<Currency, CheckerCurrency> {
 
     private static final String INIT_CURRENCY = "currency";
 
@@ -18,26 +17,7 @@ public class CheckerCurrency extends AbstractChecker<Currency> {
     }
 
     @Override
-    public CheckerCurrency is(Predicate<Currency> condition, String message) {
-        super.is(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerCurrency is(Predicate<Currency> condition) {
-        super.is(condition);
-        return this;
-    }
-
-    @Override
-    public CheckerCurrency isNot(Predicate<Currency> condition, String message) {
-        super.isNot(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerCurrency isNot(Predicate<Currency> condition) {
-        super.isNot(condition);
+    protected CheckerCurrency self() {
         return this;
     }
     

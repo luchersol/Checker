@@ -1,13 +1,11 @@
 package specialized_checkers;
 
-import static util.Message.sendMessage;
-
-import java.util.function.Predicate;
+import static util.Message.*;
 
 import util.AbstractChecker;
 import util.ExceptionTracker;
 
-public class CheckerString extends AbstractChecker<String> {
+public class CheckerString extends AbstractChecker<String, CheckerString> {
 
     private static final String INIT_STRING = "string";
 
@@ -16,26 +14,7 @@ public class CheckerString extends AbstractChecker<String> {
     }
 
     @Override
-    public CheckerString is(Predicate<String> condition, String message) {
-        super.is(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerString is(Predicate<String> condition) {
-        super.is(condition);
-        return this;
-    }
-
-    @Override
-    public CheckerString isNot(Predicate<String> condition, String message) {
-        super.isNot(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerString isNot(Predicate<String> condition) {
-        super.isNot(condition);
+    protected CheckerString self() {
         return this;
     }
 

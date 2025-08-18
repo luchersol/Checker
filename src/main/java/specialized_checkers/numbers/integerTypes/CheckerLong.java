@@ -1,13 +1,13 @@
 package specialized_checkers.numbers.integerTypes;
 
-import static util.Message.sendMessage;
+import static util.Message.*;
 
 import java.util.function.Predicate;
 
 import specialized_checkers.numbers.InterfaceCheckerNumber;
 import util.AbstractChecker;
 
-public class CheckerLong extends AbstractChecker<Long> implements InterfaceCheckerNumber<CheckerLong> {
+public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements InterfaceCheckerNumber<CheckerLong> {
 
     private static final String LONG_STRING = "Long";
     private static final String INIT_NUMBERS = "numbers";
@@ -19,26 +19,7 @@ public class CheckerLong extends AbstractChecker<Long> implements InterfaceCheck
     }
 
     @Override
-    public CheckerLong is(Predicate<Long> condition, String message) {
-        super.is(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerLong is(Predicate<Long> condition) {
-        super.is(condition);
-        return this;
-    }
-
-    @Override
-    public CheckerLong isNot(Predicate<Long> condition, String message) {
-        super.isNot(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerLong isNot(Predicate<Long> condition) {
-        super.isNot(condition);
+    protected CheckerLong self() {
         return this;
     }
 

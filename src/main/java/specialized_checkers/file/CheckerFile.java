@@ -1,14 +1,19 @@
-package specialized_checkers;
+package specialized_checkers.file;
 
-import static util.Message.sendMessage;
+import static util.Message.*;
 
 import java.io.File;
-import java.util.function.Predicate;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.stream.Stream;
 
 import util.AbstractChecker;
 
-public class CheckerFile extends AbstractChecker<File> {
+public class CheckerFile extends AbstractChecker<File, CheckerFile> {
 
     private static final String INIT_FILE = "file";
 
@@ -17,26 +22,7 @@ public class CheckerFile extends AbstractChecker<File> {
     }
 
     @Override
-    public CheckerFile is(Predicate<File> condition, String message) {
-        super.is(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerFile is(Predicate<File> condition) {
-        super.is(condition);
-        return this;
-    }
-
-    @Override
-    public CheckerFile isNot(Predicate<File> condition, String message) {
-        super.isNot(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerFile isNot(Predicate<File> condition) {
-        super.isNot(condition);
+    protected CheckerFile self() {
         return this;
     }
 
@@ -71,20 +57,20 @@ public class CheckerFile extends AbstractChecker<File> {
     }
 
     public CheckerFile min(int minBytes){
-        isTypeFile();
-        is(file -> minBytes < file.length(), sendMessage(INIT_FILE, "min", minBytes));
+        is(file -> minBytes <= getFileSize(file), sendMessage(INIT_FILE, "min", minBytes));
         return this;
     }
 
     public CheckerFile max(int maxBytes){
         isTypeFile();
-        is(file -> file.length() < maxBytes, sendMessage(INIT_FILE, "max", maxBytes));
+        is(file -> getFileSize(file) <= maxBytes, sendMessage(INIT_FILE, "max", maxBytes));
         return this;
     }
 
     public CheckerFile inRange(int minBytes, int maxBytes){
         isTypeFile();
-        is(file -> minBytes < file.length() && file.length() < maxBytes, sendMessage(INIT_FILE, "in_range", minBytes, maxBytes));
+
+        is(file -> minBytes <= getFileSize(file) && getFileSize(file) <= maxBytes, sendMessage(INIT_FILE, "in_range", minBytes, maxBytes));
         return this;
     }
 
@@ -98,14 +84,51 @@ public class CheckerFile extends AbstractChecker<File> {
         return this;
     }
 
+    public CheckerFile isIdentical(String path) {
+        is(file -> areFilesIdentical(file, path), sendMessage(INIT_FILE, "with_any_extension"));
+        return this;
+    }
+
+    private static boolean areFilesIdentical(File file1, String path2) {
+        try {
+            Path file2 = Paths.get(path2);
+            
+            if (file1.length() != Files.size(file2)) return false;
+
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] hash1 = md.digest(Files.readAllBytes(file1.toPath()));
+            byte[] hash2 = md.digest(Files.readAllBytes(file2));
+
+            return MessageDigest.isEqual(hash1, hash2);
+        } catch (IOException | NoSuchAlgorithmException e) {
+            return false;
+        }
+    }
+
     private static String getFileExtension(File file){
         String fileName = file.getName();
         int lastIndexOfDot = fileName.lastIndexOf('.');
 
-        if (lastIndexOfDot == -1 || lastIndexOfDot == 0) 
-            return "";
+        if (lastIndexOfDot == -1 || lastIndexOfDot == 0) return "";
         
         return fileName.substring(lastIndexOfDot + 1);
+    }
+
+    private static long getFileSize(File file) {
+        if (file == null || !file.exists()) return 0;
+
+        if (file.isFile()) return file.length();
+
+        long size = 0;
+        File[] files = file.listFiles();
+
+        if (files != null) {
+            for (File f : files) {
+                size += getFileSize(f);
+            }
+        }
+
+        return size;
     }
 
 }

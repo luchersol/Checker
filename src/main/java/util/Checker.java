@@ -1,6 +1,6 @@
 package util;
 
-import static util.Message.sendMessage;
+import static util.Message.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -18,12 +18,17 @@ import specialized_checkers.numbers.decimalTypes.CheckerFloat;
 import specialized_checkers.numbers.integerTypes.CheckerInteger;
 import specialized_checkers.numbers.integerTypes.CheckerLong;
 
-public class Checker extends AbstractChecker<Object> {
+public class Checker extends AbstractChecker<Object, Checker> {
 
     private static final String INIT_CHECKER = "checker";
 
     public Checker(Object object, String name) {
         super(object, name);
+    }
+
+    @Override
+    protected Checker self() {
+        return this;
     }
 
     public static Checker check(Object object, String name) {
@@ -32,30 +37,6 @@ public class Checker extends AbstractChecker<Object> {
 
     public static Checker check(Object object) {
         return new Checker(object, "Object");
-    }
-
-    @Override
-    public Checker is(Predicate<Object> condition, String message) {
-        super.is(condition, message);
-        return this;
-    }
-
-    @Override
-    public Checker is(Predicate<Object> condition) {
-        super.is(condition);
-        return this;
-    }
-
-    @Override
-    public Checker isNot(Predicate<Object> condition, String message) {
-        super.isNot(condition, message);
-        return this;
-    }
-
-    @Override
-    public Checker isNot(Predicate<Object> condition) {
-        super.isNot(condition);
-        return this;
     }
 
     public Checker saveErrors() {

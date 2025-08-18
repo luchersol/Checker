@@ -7,35 +7,16 @@ import java.util.function.Predicate;
 import util.AbstractChecker;
 import util.Graph;
 
-public class CheckerGraph<N,E extends Number> extends AbstractChecker<Graph<N,E>>{
+public class CheckerGraph<N,E extends Number> extends AbstractChecker<Graph<N,E>, CheckerGraph<N,E>>{
 
     private static final String INIT_GRAPH = "collections.graph";
 
     public CheckerGraph(Graph<N,E> object, String name) {
         super(object, name);
     }
-    
-    @Override
-    public CheckerGraph<N,E> is(Predicate<Graph<N,E>> condition, String message) {
-        super.is(condition, message);
-        return this;
-    }
 
     @Override
-    public CheckerGraph<N,E> is(Predicate<Graph<N,E>> condition) {
-        super.is(condition);
-        return this;
-    }
-
-    @Override
-    public CheckerGraph<N,E> isNot(Predicate<Graph<N,E>>  condition, String message) {
-        super.isNot(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerGraph<N,E> isNot(Predicate<Graph<N, E>>  condition) {
-        super.isNot(condition);
+    protected CheckerGraph<N,E> self() {
         return this;
     }
 

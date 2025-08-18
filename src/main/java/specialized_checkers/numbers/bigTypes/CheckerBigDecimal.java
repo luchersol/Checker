@@ -3,12 +3,11 @@ package specialized_checkers.numbers.bigTypes;
 import static util.Message.*;
 
 import java.math.BigDecimal;
-import java.util.function.Predicate;
 
 import specialized_checkers.numbers.InterfaceCheckerNumber;
 import util.AbstractChecker;
 
-public class CheckerBigDecimal extends AbstractChecker<BigDecimal> implements InterfaceCheckerNumber<CheckerBigDecimal> {
+public class CheckerBigDecimal extends AbstractChecker<BigDecimal, CheckerBigDecimal> implements InterfaceCheckerNumber<CheckerBigDecimal> {
 
     private static final String BIG_DECIMAL_STRING = "Big Decimal";
     private static final String INIT_NUMBERS = "numbers";
@@ -18,29 +17,9 @@ public class CheckerBigDecimal extends AbstractChecker<BigDecimal> implements In
     }
 
     @Override
-    public CheckerBigDecimal is(Predicate<BigDecimal> condition, String message) {
-        super.is(condition, message);
+    protected CheckerBigDecimal self() {
         return this;
     }
-
-    @Override
-    public CheckerBigDecimal is(Predicate<BigDecimal> condition) {
-        super.is(condition);
-        return this;
-    }
-
-    @Override
-    public CheckerBigDecimal isNot(Predicate<BigDecimal> condition, String message) {
-        super.isNot(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerBigDecimal isNot(Predicate<BigDecimal> condition) {
-        super.isNot(condition);
-        return this;
-    }
-
     
     @Override
     public CheckerBigDecimal isPositive() {

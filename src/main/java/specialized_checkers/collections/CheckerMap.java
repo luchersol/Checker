@@ -1,6 +1,6 @@
 package specialized_checkers.collections;
 
-import static util.Message.sendMessage;
+import static util.Message.*;
 
 import java.util.Map;
 import java.util.Map.Entry;
@@ -8,35 +8,16 @@ import java.util.function.Predicate;
 
 import util.AbstractChecker;
 
-public class CheckerMap<K, V> extends AbstractChecker<Map<K, V>>{
+public class CheckerMap<K, V> extends AbstractChecker<Map<K, V>, CheckerMap<K, V>>{
 
     private static final String INIT_MAP = "collections.map";
 
     public CheckerMap(Map<K, V> object, String name) {
         super(object, name);
     }
-    
-    @Override
-    public CheckerMap<K, V> is(Predicate<Map<K, V>> condition, String message) {
-        super.is(condition, message);
-        return this;
-    }
 
     @Override
-    public CheckerMap<K, V> is(Predicate<Map<K, V>> condition) {
-        super.is(condition);
-        return this;
-    }
-
-    @Override
-    public CheckerMap<K, V> isNot(Predicate<Map<K, V>> condition, String message) {
-        super.isNot(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerMap<K, V> isNot(Predicate<Map<K, V>> condition) {
-        super.isNot(condition);
+    protected CheckerMap<K, V> self() {
         return this;
     }
 

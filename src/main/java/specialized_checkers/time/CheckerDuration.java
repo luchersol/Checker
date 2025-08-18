@@ -4,12 +4,11 @@ import static util.Message.*;
 
 import java.time.Duration;
 import java.time.temporal.TemporalUnit;
-import java.util.function.Predicate;
 
 import util.AbstractChecker;
 import util.ExceptionTracker;
 
-public class CheckerDuration extends AbstractChecker<Duration> {
+public class CheckerDuration extends AbstractChecker<Duration, CheckerDuration> {
 
     // private static final String INIT_TIME = "time";
     private static final String INIT_DURATION = "time.duration";
@@ -19,28 +18,9 @@ public class CheckerDuration extends AbstractChecker<Duration> {
     }
 
     @Override
-    public CheckerDuration is(Predicate<Duration> condition, String message) {
-        super.is(condition, message);
+    protected CheckerDuration self() {
         return this;
     }
-
-    @Override
-    public CheckerDuration is(Predicate<Duration> condition) {
-        super.is(condition);
-        return this;
-    }
-
-    @Override
-    public CheckerDuration isNot(Predicate<Duration> condition, String message) {
-        super.isNot(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerDuration isNot(Predicate<Duration> condition) {
-        super.isNot(condition);
-        return this;
-    } 
 
     public CheckerDuration isPositive(){
         return is(duration -> !duration.isNegative() && !duration.isZero(), sendMessage(INIT_DURATION, "is_positive"));

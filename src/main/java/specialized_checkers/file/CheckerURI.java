@@ -1,16 +1,15 @@
-package specialized_checkers;
+package specialized_checkers.file;
 
-import static util.Message.sendMessage;
+import static util.Message.*;
 
 import java.net.URI;
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.function.Predicate;
 
 import util.AbstractChecker;
 import util.ExceptionTracker;
 
-public class CheckerURI extends AbstractChecker<URI> {
+public class CheckerURI extends AbstractChecker<URI, CheckerURI> {
 
     private static final String INIT_URI = "uri";
 
@@ -19,26 +18,7 @@ public class CheckerURI extends AbstractChecker<URI> {
     }
 
     @Override
-    public CheckerURI is(Predicate<URI> condition, String message) {
-        super.is(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerURI is(Predicate<URI> condition) {
-        super.is(condition);
-        return this;
-    }
-
-    @Override
-    public CheckerURI isNot(Predicate<URI> condition, String message) {
-        super.isNot(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerURI isNot(Predicate<URI> condition) {
-        super.isNot(condition);
+    protected CheckerURI self() {
         return this;
     }
 

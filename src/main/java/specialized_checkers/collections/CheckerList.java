@@ -1,6 +1,6 @@
 package specialized_checkers.collections;
 
-import static util.Message.sendMessage;
+import static util.Message.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.function.Predicate;
 
 import util.AbstractChecker;
 
-public class CheckerList<T> extends AbstractChecker<List<T>>{
+public class CheckerList<T> extends AbstractChecker<List<T>, CheckerList<T>>{
 
     private static final String INIT_LIST = "collections.list";
 
@@ -18,26 +18,7 @@ public class CheckerList<T> extends AbstractChecker<List<T>>{
     }
 
     @Override
-    public CheckerList<T> is(Predicate<List<T>> condition, String message) {
-        super.is(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerList<T> is(Predicate<List<T>> condition) {
-        super.is(condition);
-        return this;
-    }
-
-    @Override
-    public CheckerList<T> isNot(Predicate<List<T>>  condition, String message) {
-        super.isNot(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerList<T> isNot(Predicate<List<T>>  condition) {
-        super.isNot(condition);
+    protected CheckerList<T> self() {
         return this;
     }
 

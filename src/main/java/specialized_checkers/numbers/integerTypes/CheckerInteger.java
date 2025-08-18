@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 import specialized_checkers.numbers.InterfaceCheckerNumber;
 import util.AbstractChecker;
 
-public class CheckerInteger extends AbstractChecker<Integer> implements InterfaceCheckerNumber<CheckerInteger> {
+public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> implements InterfaceCheckerNumber<CheckerInteger> {
 
     private static final String INTEGER_STRING = "Integer";
     private static final String INIT_NUMBERS = "numbers";
@@ -18,26 +18,7 @@ public class CheckerInteger extends AbstractChecker<Integer> implements Interfac
     }
 
     @Override
-    public CheckerInteger is(Predicate<Integer> condition, String message) {
-        super.is(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerInteger is(Predicate<Integer> condition) {
-        super.is(condition);
-        return this;
-    }
-
-    @Override
-    public CheckerInteger isNot(Predicate<Integer> condition, String message) {
-        super.isNot(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerInteger isNot(Predicate<Integer> condition) {
-        super.isNot(condition);
+    protected CheckerInteger self() {
         return this;
     }
 

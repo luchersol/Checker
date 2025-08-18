@@ -1,6 +1,6 @@
 package specialized_checkers;
 
-import static util.Message.sendMessage;
+import static util.Message.*;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -9,7 +9,7 @@ import java.util.function.Predicate;
 import util.AbstractChecker;
 import util.ExceptionTracker;
 
-public class CheckerArray<T> extends AbstractChecker<T[]>{
+public class CheckerArray<T> extends AbstractChecker<T[], CheckerArray<T>>{
 
     private static final String INIT_ARRAY = "array";
 
@@ -18,26 +18,7 @@ public class CheckerArray<T> extends AbstractChecker<T[]>{
     } 
 
     @Override
-    public CheckerArray<T> is(Predicate<T[]> condition, String message) {
-        super.is(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerArray<T> is(Predicate<T[]> condition) {
-        super.is(condition);
-        return this;
-    }
-
-    @Override
-    public CheckerArray<T> isNot(Predicate<T[]> condition, String message) {
-        super.isNot(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerArray<T> isNot(Predicate<T[]> condition) {
-        super.isNot(condition);
+    protected CheckerArray<T> self() {
         return this;
     }
 

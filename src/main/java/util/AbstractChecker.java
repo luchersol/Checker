@@ -1,6 +1,6 @@
 package util;
 
-import static util.Message.sendMessage;
+import static util.Message.*;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -9,13 +9,13 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Map.Entry;
+import java.util.Queue;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class AbstractChecker<T> implements InterfaceChecker<AbstractChecker<T>, T> {
+public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> implements InterfaceChecker<AbstractChecker<T,C>, T> {
 
     protected T object;
 
@@ -27,7 +27,7 @@ public class AbstractChecker<T> implements InterfaceChecker<AbstractChecker<T>, 
 
     protected boolean stop;
 
-    protected AbstractChecker<?> backObject;
+    protected AbstractChecker<T, C> backObject;
 
     private static final String INIT_ABSTRACT_CHECKER = "abstract_checker";
 
@@ -63,11 +63,13 @@ public class AbstractChecker<T> implements InterfaceChecker<AbstractChecker<T>, 
         this.stop = true;
     }
 
-    public AbstractChecker<T> is(Predicate<T> condition, String message) {
+    protected abstract C self();
+
+    public C is(Predicate<T> condition, String message) {
         RuntimeException exception = new RuntimeException(new Error(message));
         if (stop) {
             this.exceptionTracker.addNotCheckedException(exception);
-            return this;
+            return self();
         }
 
         if (!condition.test(this.object)) {
@@ -82,18 +84,18 @@ public class AbstractChecker<T> implements InterfaceChecker<AbstractChecker<T>, 
             }
         }
 
-        return this;
+        return self();
     }
 
-    public AbstractChecker<T> is(Predicate<T> condition) {
+    public C is(Predicate<T> condition) {
         return is(condition, sendMessage(INIT_ABSTRACT_CHECKER, "is"));
     }
 
-    public AbstractChecker<T> isNot(Predicate<T> condition, String message) {
+    public C isNot(Predicate<T> condition, String message) {
         return is(condition.negate(), message);
     }
 
-    public AbstractChecker<T> isNot(Predicate<T> condition) {
+    public C isNot(Predicate<T> condition) {
         return is(condition.negate(), sendMessage(INIT_ABSTRACT_CHECKER, "is_not"));
     }
 
@@ -147,7 +149,7 @@ public class AbstractChecker<T> implements InterfaceChecker<AbstractChecker<T>, 
             Queue<Object> argsQueue = new LinkedList<>(Arrays.asList(args));
             Object obj = getProperty(this.object, properties, argsQueue);
             Checker checker = new Checker(obj, name + "." + propertyPath);
-            checker.backObject = this;
+            checker.backObject = (Checker) self();
             return checker;
         } catch (Exception e) {
             return null;
@@ -156,7 +158,7 @@ public class AbstractChecker<T> implements InterfaceChecker<AbstractChecker<T>, 
     }
 
     /**
-     * Para asegurarse de que se utilizand los métodos con las clases queridas, aplicar este método.
+     * Para asegurarse de que se utilizando los métodos con las clases queridas, aplicar este método.
      * En los otros casos, se aplicará la clase del objeto que se obtenga con el método getClass()
      * 
      * @param propertyPath
@@ -183,7 +185,7 @@ public class AbstractChecker<T> implements InterfaceChecker<AbstractChecker<T>, 
             Queue<String> properties = new LinkedList<>(Arrays.asList(split));
             Object obj = getProperty(this.object, properties, args);
             Checker checker = new Checker(obj, name + "." + propertyPath);
-            checker.backObject = this;
+            checker.backObject = (Checker) self();
             return checker;
         } catch (Exception e) {
             return null;
@@ -209,7 +211,7 @@ public class AbstractChecker<T> implements InterfaceChecker<AbstractChecker<T>, 
             Queue<String> properties = new LinkedList<>(Arrays.asList(split));
             Object obj = getProperty(this.object, properties, args);
             Checker checker = new Checker(obj, name + "." + propertyPath);
-            checker.backObject = this;
+            checker.backObject = (Checker) self();
             return checker;
         } catch (Exception e) {
             return null;

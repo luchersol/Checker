@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 import util.AbstractChecker;
 import util.ExceptionTracker;
 
-public class CheckerLocalTime extends AbstractChecker<LocalTime> implements InterfaceCheckerDate<CheckerLocalTime, LocalTime>  {
+public class CheckerLocalTime extends AbstractChecker<LocalTime, CheckerLocalTime> implements InterfaceCheckerDate<CheckerLocalTime, LocalTime>  {
 
     private static final String LOCAL_TIME_STRING = "LocalTime";
     // private static final String INIT_TIME = "time";
@@ -17,6 +17,11 @@ public class CheckerLocalTime extends AbstractChecker<LocalTime> implements Inte
 
     public CheckerLocalTime(LocalTime object, String name, ExceptionTracker exceptionTracker) {
         super(object, name, exceptionTracker);
+    }
+
+    @Override
+    protected CheckerLocalTime self() {
+        return this;
     }
 
     private static LocalTime now(){

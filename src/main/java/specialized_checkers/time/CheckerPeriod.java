@@ -4,12 +4,11 @@ import static util.Message.*;
 
 import java.time.Period;
 import java.time.temporal.TemporalUnit;
-import java.util.function.Predicate;
 
 import util.AbstractChecker;
 import util.ExceptionTracker;
 
-public class CheckerPeriod extends AbstractChecker<Period> {
+public class CheckerPeriod extends AbstractChecker<Period, CheckerPeriod> {
 
     // private static final String INIT_TIME = "time";
     private static final String INIT_PERIOD = "time.period";
@@ -19,26 +18,7 @@ public class CheckerPeriod extends AbstractChecker<Period> {
     }
 
     @Override
-    public CheckerPeriod is(Predicate<Period> condition, String message) {
-        super.is(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerPeriod is(Predicate<Period> condition) {
-        super.is(condition);
-        return this;
-    }
-
-    @Override
-    public CheckerPeriod isNot(Predicate<Period> condition, String message) {
-        super.isNot(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerPeriod isNot(Predicate<Period> condition) {
-        super.isNot(condition);
+    protected CheckerPeriod self() {
         return this;
     }
 

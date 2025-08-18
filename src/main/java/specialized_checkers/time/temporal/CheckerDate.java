@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 import util.AbstractChecker;
 import util.ExceptionTracker;
 
-public class CheckerDate extends AbstractChecker<Date> implements InterfaceCheckerDate<CheckerDate, Date> {
+public class CheckerDate extends AbstractChecker<Date, CheckerDate> implements InterfaceCheckerDate<CheckerDate, Date> {
 
     private static final String DATE_STRING = "Date";
     // private static final String INIT_TIME = "time";
@@ -17,6 +17,11 @@ public class CheckerDate extends AbstractChecker<Date> implements InterfaceCheck
 
     public CheckerDate(Date object, String name, ExceptionTracker exceptionTracker) {
         super(object, name, exceptionTracker);
+    }
+
+    @Override
+    protected CheckerDate self() {
+        return this;
     }
 
     private static Date now(){

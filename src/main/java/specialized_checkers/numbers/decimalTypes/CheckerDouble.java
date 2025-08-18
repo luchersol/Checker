@@ -1,13 +1,11 @@
 package specialized_checkers.numbers.decimalTypes;
 
-import static util.Message.sendMessage;
-
-import java.util.function.Predicate;
+import static util.Message.*;
 
 import specialized_checkers.numbers.InterfaceCheckerNumber;
 import util.AbstractChecker;
 
-public class CheckerDouble extends AbstractChecker<Double> implements InterfaceCheckerNumber<CheckerDouble> {
+public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implements InterfaceCheckerNumber<CheckerDouble> {
 
     private static final String DOUBLE_STRING = "Double";
     private static final String INIT_NUMBERS = "numbers";
@@ -18,26 +16,7 @@ public class CheckerDouble extends AbstractChecker<Double> implements InterfaceC
     }
 
     @Override
-    public CheckerDouble is(Predicate<Double> condition, String message) {
-        super.is(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerDouble is(Predicate<Double> condition) {
-        super.is(condition);
-        return this;
-    }
-
-    @Override
-    public CheckerDouble isNot(Predicate<Double> condition, String message) {
-        super.isNot(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerDouble isNot(Predicate<Double> condition) {
-        super.isNot(condition);
+    protected CheckerDouble self() {
         return this;
     }
     

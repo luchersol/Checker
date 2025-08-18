@@ -1,52 +1,33 @@
 package specialized_checkers;
 
-import static util.Message.sendMessage;
+import static util.Message.*;
 
 import java.util.Arrays;
 import java.util.function.Predicate;
 
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
+import org.apache.commons.math3.linear.EigenDecomposition;
 import org.apache.commons.math3.linear.LUDecomposition;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.SingularValueDecomposition;
-import org.apache.commons.math3.linear.EigenDecomposition;
 import org.apache.commons.math3.util.Precision;
 
 import util.AbstractChecker;
 import util.ExceptionTracker;
 
-public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][]> {
+public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], CheckerMatrix<T>> {
 
     private static final String INIT_MATRIX = "matrix";
 
     public CheckerMatrix(T[][] object, String name, ExceptionTracker exceptionTracker) {
         super(object, name, exceptionTracker);
     }
+
+    @Override
+    protected CheckerMatrix<T> self() {
+        return this;
+    }
     
-    @Override
-    public CheckerMatrix<T> is(Predicate<T[][]> predicate, String message) {
-        super.is(predicate, message);
-        return this;
-    }
-
-    @Override
-    public CheckerMatrix<T> is(Predicate<T[][]> predicate) {
-        super.is(predicate);
-        return this;
-    }
-
-    @Override
-    public CheckerMatrix<T> isNot(Predicate<T[][]> predicate, String message) {
-        super.isNot(predicate, message);
-        return this;
-    }
-
-    @Override
-    public CheckerMatrix<T> isNot(Predicate<T[][]> predicate) {
-        super.isNot(predicate);
-        return this;
-    }
-
     public CheckerMatrix<T> isEmpty() {
         is(matrix -> matrix.length == 0 && matrix[0].length == 0, sendMessage(INIT_MATRIX, "is_empty"));
         return this;

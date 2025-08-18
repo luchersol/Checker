@@ -2,40 +2,19 @@ package specialized_checkers.collections;
 
 import static util.Message.*;
 
-import java.util.function.Predicate;
-
 import util.AbstractChecker;
 import util.Tree;
 
-public class CheckerTree<T> extends AbstractChecker<Tree<T>> {
+public class CheckerTree<T> extends AbstractChecker<Tree<T>, CheckerTree<T>> {
 
     private static final String INIT_TREE = "collections.tree";
 
     public CheckerTree(Tree<T> object, String name) {
         super(object, name);
     }
-    
-    @Override
-    public CheckerTree<T> is(Predicate<Tree<T>> condition, String message) {
-        super.is(condition, message);
-        return this;
-    }
 
     @Override
-    public CheckerTree<T> is(Predicate<Tree<T>> condition) {
-        super.is(condition);
-        return this;
-    }
-
-    @Override
-    public CheckerTree<T> isNot(Predicate<Tree<T>>  condition, String message) {
-        super.isNot(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerTree<T> isNot(Predicate<Tree<T>>  condition) {
-        super.isNot(condition);
+    protected CheckerTree<T> self() {
         return this;
     }
 

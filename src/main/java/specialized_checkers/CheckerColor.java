@@ -1,14 +1,14 @@
 package specialized_checkers;
 
-import static util.Message.sendMessage;
+import static util.Message.*;
 
+import java.awt.Color;
 import java.util.function.Predicate;
 
 import util.AbstractChecker;
 import util.ExceptionTracker;
-import java.awt.Color;
 
-public class CheckerColor extends AbstractChecker<Color> {
+public class CheckerColor extends AbstractChecker<Color, CheckerColor> {
 
     private static final String INIT_COLOR = "color";
 
@@ -17,26 +17,7 @@ public class CheckerColor extends AbstractChecker<Color> {
     }
 
     @Override
-    public CheckerColor is(Predicate<Color> condition, String message) {
-        super.is(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerColor is(Predicate<Color> condition) {
-        super.is(condition);
-        return this;
-    }
-
-    @Override
-    public CheckerColor isNot(Predicate<Color> condition, String message) {
-        super.isNot(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerColor isNot(Predicate<Color> condition) {
-        super.isNot(condition);
+    protected CheckerColor self() {
         return this;
     }
 
