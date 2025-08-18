@@ -19,58 +19,47 @@ public class CheckerString extends AbstractChecker<String, CheckerString> {
     }
 
     public CheckerString isEmpty() {
-        is(string -> string.isEmpty(), sendMessage(INIT_STRING, "is_empty"));
-        return this;
+        return is(string -> string.isEmpty(), sendMessage(INIT_STRING, "is_empty"));
     }
 
     public CheckerString isBlank() {
-        is(string -> string.isBlank(), sendMessage(INIT_STRING, "is_blank"));
-        return this;
+        return is(string -> string.isBlank(), sendMessage(INIT_STRING, "is_blank"));
     }
 
     public CheckerString min(int min) {
-        is(string -> string.length() > min, sendMessage(INIT_STRING, "min", min));
-        return this;
+        return is(string -> string.length() > min, sendMessage(INIT_STRING, "min", min));
     }
 
     public CheckerString max(int max) {
-        is(string -> string.length() < max, sendMessage(INIT_STRING, "max", max));
-        return this;
+        return is(string -> string.length() < max, sendMessage(INIT_STRING, "max", max));
     }
 
     public CheckerString inRange(int min, int max) {
-        is(string -> min < string.length() && string.length() < max, sendMessage(INIT_STRING, "in_range", min, max));
-        return this;
+        return is(string -> min < string.length() && string.length() < max, sendMessage(INIT_STRING, "in_range", min, max));
     }
 
     public CheckerString isEqualsIgnoreCase(String anotherString) {
-        is(string -> string.equalsIgnoreCase(anotherString), sendMessage(INIT_STRING, "is_equals_ignore_case", anotherString));
-        return this;
+        return is(string -> string.equalsIgnoreCase(anotherString), sendMessage(INIT_STRING, "is_equals_ignore_case", anotherString));
     }
 
     public CheckerString contains(CharSequence s) {
-        is(string -> string.contains(s), sendMessage(INIT_STRING, "contains", s));
-        return this;
+        return is(string -> string.contains(s), sendMessage(INIT_STRING, "contains", s));
     }
 
     public CheckerString startsWith(String prefix) {
-        is(string -> string.startsWith(prefix), sendMessage(prefix, "starts_with", prefix));
-        return this;
+        return is(string -> string.startsWith(prefix), sendMessage(prefix, "starts_with", prefix));
     }
 
     public CheckerString endsWith(String suffix) {
-        is(string -> string.endsWith(suffix), sendMessage(INIT_STRING, "ends_with", suffix));
-        return this;
+        return is(string -> string.endsWith(suffix), sendMessage(INIT_STRING, "ends_with", suffix));
     }
 
     public CheckerString matches(String regex) {
-        is(string -> string.matches(regex), sendMessage(INIT_STRING, "matches", regex));
-        return this;
+        return is(string -> string.matches(regex), sendMessage(INIT_STRING, "matches", regex));
     }
 
     public CheckerString isDigit() {
-        is(string -> string.matches("\\d+"), sendMessage(INIT_STRING, "is_digit"));
-        return this;
+        return is(string -> string.matches("\\d+"), sendMessage(INIT_STRING, "is_digit"));
     }
 
     public CheckerString isDNI(){
@@ -95,8 +84,7 @@ public class CheckerString extends AbstractChecker<String, CheckerString> {
 
     public CheckerString isPalindrome() {
         String reversed = new StringBuilder(this.object).reverse().toString();
-        is(string -> string.equals(reversed), sendMessage(INIT_STRING, "is_palindrome"));
-        return this;
+        return is(string -> string.equals(reversed), sendMessage(INIT_STRING, "is_palindrome"));
     }
     
 

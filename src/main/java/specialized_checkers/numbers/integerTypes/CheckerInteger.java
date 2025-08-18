@@ -23,13 +23,11 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
     }
 
     public CheckerInteger isEven(){
-        is(n_integer -> (n_integer & 1) == 0, sendMessage(INIT_INTEGER_TYPES, "is_even", INTEGER_STRING));
-        return this;
+        return is(n_integer -> (n_integer & 1) == 0, sendMessage(INIT_INTEGER_TYPES, "is_even", INTEGER_STRING));
     }
 
     public CheckerInteger isOdd(){
-        is(n_integer -> (n_integer & 1) == 1, sendMessage(INIT_INTEGER_TYPES, "is_odd", INTEGER_STRING));
-        return this;
+        return is(n_integer -> (n_integer & 1) == 1, sendMessage(INIT_INTEGER_TYPES, "is_odd", INTEGER_STRING));
     }
 
     public CheckerInteger isPrime() {
@@ -45,182 +43,152 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
             return true;
         };
         
-        is(isPrime, sendMessage(INIT_INTEGER_TYPES, "is_prime", INTEGER_STRING));
-        return this;
+        return is(isPrime, sendMessage(INIT_INTEGER_TYPES, "is_prime", INTEGER_STRING));
     }
 
     @Override
     public CheckerInteger isPositive() {
-        is(n_integer -> n_integer > 0, sendMessage(INIT_NUMBERS, "is_positive", INTEGER_STRING));
-        return this;
+        return is(n_integer -> n_integer > 0, sendMessage(INIT_NUMBERS, "is_positive", INTEGER_STRING));
     }
 
     @Override
     public CheckerInteger isPositiveOrZero() {
-        is(n_integer -> n_integer >= 0, sendMessage(INIT_NUMBERS, "is_positive_or_zero", INTEGER_STRING));
-        return this;
+        return is(n_integer -> n_integer >= 0, sendMessage(INIT_NUMBERS, "is_positive_or_zero", INTEGER_STRING));
     }
 
     @Override
     public CheckerInteger isNegative() {
-        is(n_integer -> n_integer < 0, sendMessage(INIT_NUMBERS, "is_negative", INTEGER_STRING));
-        return this;
+        return is(n_integer -> n_integer < 0, sendMessage(INIT_NUMBERS, "is_negative", INTEGER_STRING));
     }
 
     @Override
     public CheckerInteger isNegativeOrZero() {
-        is(n_integer -> n_integer <= 0, sendMessage(INIT_NUMBERS, "is_negative_or_zero", INTEGER_STRING));
-        return this;
+        return is(n_integer -> n_integer <= 0, sendMessage(INIT_NUMBERS, "is_negative_or_zero", INTEGER_STRING));
     }
 
     @Override
     public CheckerInteger isZero() {
-        is(n_integer -> n_integer == 0, sendMessage(INIT_NUMBERS, "is_zero", INTEGER_STRING));
-        return this;
+        return is(n_integer -> n_integer == 0, sendMessage(INIT_NUMBERS, "is_zero", INTEGER_STRING));
     }
 
     @Override
     public CheckerInteger isGreaterThan(Byte number) {
-        is(n_integer -> n_integer > number, sendMessage(INIT_NUMBERS, "is_greather_than", INTEGER_STRING, number));
-        return this;
+        return is(n_integer -> n_integer > number, sendMessage(INIT_NUMBERS, "is_greather_than", INTEGER_STRING, number));
     }
 
     @Override
     public CheckerInteger isGreaterThan(Short number) {
-        is(n_integer -> n_integer > number, sendMessage(INIT_NUMBERS, "is_greather_than", INTEGER_STRING, number));
-        return this;
+        return is(n_integer -> n_integer > number, sendMessage(INIT_NUMBERS, "is_greather_than", INTEGER_STRING, number));
     }
 
     @Override
     public CheckerInteger isGreaterThan(Integer number) {
-        is(n_integer -> n_integer > number, sendMessage(INIT_NUMBERS, "is_greather_than", INTEGER_STRING, number));
-        return this;
+        return is(n_integer -> n_integer > number, sendMessage(INIT_NUMBERS, "is_greather_than", INTEGER_STRING, number));
     }
 
     @Override
     public CheckerInteger isGreaterThan(Long number) {
-        is(n_integer -> n_integer > number, sendMessage(INIT_NUMBERS, "is_greather_than", INTEGER_STRING, number));
-        return this;
+        return is(n_integer -> n_integer > number, sendMessage(INIT_NUMBERS, "is_greather_than", INTEGER_STRING, number));
     }
 
     @Override
     public CheckerInteger isGreaterThan(Float number) {
-        is(n_integer -> n_integer > number, sendMessage(INIT_NUMBERS, "is_greather_than", INTEGER_STRING, number));
-        return this;
+        return is(n_integer -> n_integer > number, sendMessage(INIT_NUMBERS, "is_greather_than", INTEGER_STRING, number));
     }
 
     @Override
     public CheckerInteger isGreaterThan(Double number) {
-        is(n_integer -> n_integer > number, sendMessage(INIT_NUMBERS, "is_greather_than", INTEGER_STRING, number));
-        return this;
+        return is(n_integer -> n_integer > number, sendMessage(INIT_NUMBERS, "is_greather_than", INTEGER_STRING, number));
     }
 
     @Override
     public CheckerInteger isGreaterOrEqualTo(Byte number) {
-        is(n_integer -> n_integer >= number, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", INTEGER_STRING, number));
-        return this;
+        return is(n_integer -> n_integer >= number, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", INTEGER_STRING, number));
     }
 
     @Override
     public CheckerInteger isGreaterOrEqualTo(Short number) {
-        is(n_integer -> n_integer >= number, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", INTEGER_STRING, number));
-        return this;
+        return is(n_integer -> n_integer >= number, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", INTEGER_STRING, number));
     }
 
     @Override
     public CheckerInteger isGreaterOrEqualTo(Integer number) {
-        is(n_integer -> n_integer >= number, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", INTEGER_STRING, number));
-        return this;
+        return is(n_integer -> n_integer >= number, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", INTEGER_STRING, number));
     }
 
     @Override
     public CheckerInteger isGreaterOrEqualTo(Long number) {
-        is(n_integer -> n_integer >= number, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", INTEGER_STRING, number));
-        return this;
+        return is(n_integer -> n_integer >= number, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", INTEGER_STRING, number));
     }
 
     @Override
     public CheckerInteger isGreaterOrEqualTo(Float number) {
-        is(n_integer -> n_integer >= number, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", INTEGER_STRING, number));
-        return this;
+        return is(n_integer -> n_integer >= number, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", INTEGER_STRING, number));
     }
 
     @Override
     public CheckerInteger isGreaterOrEqualTo(Double number) {
-        is(n_integer -> n_integer >= number, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", INTEGER_STRING, number));
-        return this;
+        return is(n_integer -> n_integer >= number, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", INTEGER_STRING, number));
     }
 
     @Override
     public CheckerInteger isLessThan(Byte number) {
-        is(n_integer -> n_integer < number, sendMessage(INIT_NUMBERS, "is_less_than", INTEGER_STRING, number));
-        return this;
+        return is(n_integer -> n_integer < number, sendMessage(INIT_NUMBERS, "is_less_than", INTEGER_STRING, number));
     }
 
     @Override
     public CheckerInteger isLessThan(Short number) {
-        is(n_integer -> n_integer < number, sendMessage(INIT_NUMBERS, "is_less_than", INTEGER_STRING, number));
-        return this;
+        return is(n_integer -> n_integer < number, sendMessage(INIT_NUMBERS, "is_less_than", INTEGER_STRING, number));
     }
 
     @Override
     public CheckerInteger isLessThan(Integer number) {
-        is(n_integer -> n_integer < number, sendMessage(INIT_NUMBERS, "is_less_than", INTEGER_STRING, number));
-        return this;
+        return is(n_integer -> n_integer < number, sendMessage(INIT_NUMBERS, "is_less_than", INTEGER_STRING, number));
     }
 
     @Override
     public CheckerInteger isLessThan(Long number) {
-        is(n_integer -> n_integer < number, sendMessage(INIT_NUMBERS, "is_less_than", INTEGER_STRING, number));
-        return this;
+        return is(n_integer -> n_integer < number, sendMessage(INIT_NUMBERS, "is_less_than", INTEGER_STRING, number));
     }
 
     @Override
     public CheckerInteger isLessThan(Float number) {
-        is(n_integer -> n_integer < number, sendMessage(INIT_NUMBERS, "is_less_than", INTEGER_STRING, number));
-        return this;
+        return is(n_integer -> n_integer < number, sendMessage(INIT_NUMBERS, "is_less_than", INTEGER_STRING, number));
     }
 
     @Override
     public CheckerInteger isLessThan(Double number) {
-        is(n_integer -> n_integer < number, sendMessage(INIT_NUMBERS, "is_less_than", INTEGER_STRING, number));
-        return this;
+        return is(n_integer -> n_integer < number, sendMessage(INIT_NUMBERS, "is_less_than", INTEGER_STRING, number));
     }
 
     @Override
     public CheckerInteger isLessOrEqualTo(Byte number) {
-        is(n_integer -> n_integer <= number, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", INTEGER_STRING, number));
-        return this;
+        return is(n_integer -> n_integer <= number, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", INTEGER_STRING, number));
     }
 
     @Override
     public CheckerInteger isLessOrEqualTo(Short number) {
-        is(n_integer -> n_integer <= number, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", INTEGER_STRING, number));
-        return this;
+        return is(n_integer -> n_integer <= number, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", INTEGER_STRING, number));
     }
 
     @Override
     public CheckerInteger isLessOrEqualTo(Integer number) {
-        is(n_integer -> n_integer <= number, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", INTEGER_STRING, number));
-        return this;
+        return is(n_integer -> n_integer <= number, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", INTEGER_STRING, number));
     }
 
     @Override
     public CheckerInteger isLessOrEqualTo(Long number) {
-        is(n_integer -> n_integer <= number, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", INTEGER_STRING, number));
-        return this;
+        return is(n_integer -> n_integer <= number, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", INTEGER_STRING, number));
     }
 
     @Override
     public CheckerInteger isLessOrEqualTo(Float number) {
-        is(n_integer -> n_integer <= number, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", INTEGER_STRING, number));
-        return this;
+        return is(n_integer -> n_integer <= number, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", INTEGER_STRING, number));
     }
 
     @Override
     public CheckerInteger isLessOrEqualTo(Double number) {
-        is(n_integer -> n_integer <= number, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", INTEGER_STRING, number));
-        return this;
+        return is(n_integer -> n_integer <= number, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", INTEGER_STRING, number));
     }
     
 }

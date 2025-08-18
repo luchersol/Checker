@@ -22,17 +22,14 @@ public class CheckerMap<K, V> extends AbstractChecker<Map<K, V>, CheckerMap<K, V
     }
 
     public CheckerMap<K,V> isEmpty(){
-        is(map -> map.isEmpty(), sendMessage(INIT_MAP, "is_empty"));
-        return this;
+        return is(map -> map.isEmpty(), sendMessage(INIT_MAP, "is_empty"));
     }
     public CheckerMap<K,V> anyMatch(Predicate<Entry<K,V>> predicate){
-        is(map -> map.entrySet().stream().anyMatch(predicate), sendMessage(INIT_MAP, "any_match"));
-        return this;
+        return is(map -> map.entrySet().stream().anyMatch(predicate), sendMessage(INIT_MAP, "any_match"));
     }
 
     public CheckerMap<K,V> allMatch(Predicate<Entry<K,V>> predicate){
-        is(map -> map.entrySet().stream().allMatch(predicate), sendMessage(INIT_MAP, "all_match"));
-        return this;
+        return is(map -> map.entrySet().stream().allMatch(predicate), sendMessage(INIT_MAP, "all_match"));
     }
 
 }

@@ -23,33 +23,27 @@ public class CheckerList<T> extends AbstractChecker<List<T>, CheckerList<T>>{
     }
 
     public CheckerList<T> isEmpty(){
-        is(list-> list.isEmpty(), sendMessage(INIT_LIST, "is_empty"));
-        return this;
+        return is(list-> list.isEmpty(), sendMessage(INIT_LIST, "is_empty"));
     }
 
     public CheckerList<T> anyMatch(Predicate<T> predicate){
-        is(list-> list.stream().anyMatch(predicate), sendMessage(INIT_LIST, "any_match"));
-        return this;
+        return is(list-> list.stream().anyMatch(predicate), sendMessage(INIT_LIST, "any_match"));
     }
 
     public CheckerList<T> allMatch(Predicate<T> predicate){
-        is(list-> list.stream().allMatch(predicate), sendMessage(INIT_LIST, "all_match"));
-        return this;
+        return is(list-> list.stream().allMatch(predicate), sendMessage(INIT_LIST, "all_match"));
     }
 
     public CheckerList<T> allDistinct(){
-        is(list -> Set.copyOf(list).size() == list.size(), sendMessage(INIT_LIST, "all_distinct"));
-        return this;
+        return is(list -> Set.copyOf(list).size() == list.size(), sendMessage(INIT_LIST, "all_distinct"));
     }
 
     public CheckerList<T> isSubset(Collection<T> collection){
-        is(list -> collection.containsAll(list), sendMessage(INIT_LIST, "is_subset"));
-        return this;
+        return is(list -> collection.containsAll(list), sendMessage(INIT_LIST, "is_subset"));
     }
 
     public CheckerList<T> isSuperset(Collection<T> collection){
-        is(list-> list.containsAll(collection), sendMessage(INIT_LIST, "is_superset"));
-        return this;
+        return is(list-> list.containsAll(collection), sendMessage(INIT_LIST, "is_superset"));
     }
 
     public CheckerList<T> isSufficientPercentage(Predicate<T> matching, double percentage){
@@ -57,8 +51,7 @@ public class CheckerList<T> extends AbstractChecker<List<T>, CheckerList<T>>{
             double percentageMatching = list.stream().filter(matching).count() * 100. / list.size();
             return percentageMatching >= percentage;
         };
-        is(predicate, sendMessage(INIT_LIST, "is_suffcient_percentage"));
-        return this;
+        return is(predicate, sendMessage(INIT_LIST, "is_suffcient_percentage"));
     }
 
 }

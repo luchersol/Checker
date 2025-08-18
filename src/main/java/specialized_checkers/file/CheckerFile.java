@@ -27,66 +27,53 @@ public class CheckerFile extends AbstractChecker<File, CheckerFile> {
     }
 
     public CheckerFile exists(){
-        is(file -> file.exists(), sendMessage(INIT_FILE, "exists"));
-        return this;
+        return is(file -> file.exists(), sendMessage(INIT_FILE, "exists"));
     }
 
     public CheckerFile isTypeFile(){
-        is(file -> file.isFile(), sendMessage(INIT_FILE, "is_type_file"));
-        return this;
+        return is(file -> file.isFile(), sendMessage(INIT_FILE, "is_type_file"));
     }
 
     public CheckerFile isTypeDirectory(){
-        is(file -> file.isDirectory(), sendMessage(INIT_FILE, "is_type_directory"));
-        return this;
+        return is(file -> file.isDirectory(), sendMessage(INIT_FILE, "is_type_directory"));
     }
 
     public CheckerFile isTypeHidden(){
-        is(file -> file.isHidden(), sendMessage(INIT_FILE, "is_type_hidden"));
-        return this;
+        return is(file -> file.isHidden(), sendMessage(INIT_FILE, "is_type_hidden"));
     }
 
     public CheckerFile canRead(){
-        is(file -> file.canRead(), sendMessage(INIT_FILE, "can_read"));
-        return this;
+        return is(file -> file.canRead(), sendMessage(INIT_FILE, "can_read"));
     }
 
     public CheckerFile canWrite(){
-        is(file -> file.canWrite(), sendMessage(INIT_FILE, "can_write"));
-        return this;
+        return is(file -> file.canWrite(), sendMessage(INIT_FILE, "can_write"));
     }
 
     public CheckerFile min(int minBytes){
-        is(file -> minBytes <= getFileSize(file), sendMessage(INIT_FILE, "min", minBytes));
-        return this;
+        return is(file -> minBytes <= getFileSize(file), sendMessage(INIT_FILE, "min", minBytes));
     }
 
     public CheckerFile max(int maxBytes){
         isTypeFile();
-        is(file -> getFileSize(file) <= maxBytes, sendMessage(INIT_FILE, "max", maxBytes));
-        return this;
+        return is(file -> getFileSize(file) <= maxBytes, sendMessage(INIT_FILE, "max", maxBytes));
     }
 
     public CheckerFile inRange(int minBytes, int maxBytes){
         isTypeFile();
-
-        is(file -> minBytes <= getFileSize(file) && getFileSize(file) <= maxBytes, sendMessage(INIT_FILE, "in_range", minBytes, maxBytes));
-        return this;
+        return is(file -> minBytes <= getFileSize(file) && getFileSize(file) <= maxBytes, sendMessage(INIT_FILE, "in_range", minBytes, maxBytes));
     }
 
     public CheckerFile withExtension(String extension) {
-        is(file -> getFileExtension(file).equals(extension), sendMessage(INIT_FILE, "with_extension"));
-        return this;
+        return is(file -> getFileExtension(file).equals(extension), sendMessage(INIT_FILE, "with_extension"));
     }
 
     public CheckerFile withAnyExtension(String... extensions) {
-        is(file -> Stream.of(extensions).anyMatch(extension -> getFileExtension(file).equals(extension)), sendMessage(INIT_FILE, "with_any_extension"));
-        return this;
+        return is(file -> Stream.of(extensions).anyMatch(extension -> getFileExtension(file).equals(extension)), sendMessage(INIT_FILE, "with_any_extension"));
     }
 
     public CheckerFile isIdentical(String path) {
-        is(file -> areFilesIdentical(file, path), sendMessage(INIT_FILE, "with_any_extension"));
-        return this;
+        return is(file -> areFilesIdentical(file, path), sendMessage(INIT_FILE, "with_any_extension"));
     }
 
     private static boolean areFilesIdentical(File file1, String path2) {

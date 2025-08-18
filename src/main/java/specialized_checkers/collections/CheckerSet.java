@@ -22,28 +22,23 @@ public class CheckerSet<T> extends AbstractChecker<Set<T>, CheckerSet<T>>{
     }
 
     public CheckerSet<T> isEmpty(){
-        is(set -> set.isEmpty(), sendMessage(INIT_SET, "is_empty"));
-        return this;
+        return is(set -> set.isEmpty(), sendMessage(INIT_SET, "is_empty"));
     }
 
     public CheckerSet<T> anyMatch(Predicate<T> predicate){
-        is(set -> set.stream().anyMatch(predicate), sendMessage(INIT_SET, "any_match"));
-        return this;
+        return is(set -> set.stream().anyMatch(predicate), sendMessage(INIT_SET, "any_match"));
     }
 
     public CheckerSet<T> allMatch(Predicate<T> predicate){
-        is(set -> set.stream().allMatch(predicate), sendMessage(INIT_SET, "all_match"));
-        return this;
+        return is(set -> set.stream().allMatch(predicate), sendMessage(INIT_SET, "all_match"));
     }
 
     public CheckerSet<T> isSubset(Collection<T> collection){
-        is(set -> collection.containsAll(set), sendMessage(INIT_SET, "is_subset"));
-        return this;
+        return is(set -> collection.containsAll(set), sendMessage(INIT_SET, "is_subset"));
     }
 
     public CheckerSet<T> isSuperset(Collection<T> collection){
-        is(set -> set.containsAll(collection), sendMessage(INIT_SET, "is_superset"));
-        return this;
+        return is(set -> set.containsAll(collection), sendMessage(INIT_SET, "is_superset"));
     }
 
     public CheckerSet<T> isSufficientPercentage(Predicate<T> matching, double percentage){
@@ -51,8 +46,7 @@ public class CheckerSet<T> extends AbstractChecker<Set<T>, CheckerSet<T>>{
             double percentageMatching = set.stream().filter(matching).count() * 100. / set.size();
             return percentageMatching >= percentage;
         };
-        is(predicate, sendMessage(INIT_SET, "is_suffcient_percentage"));
-        return this;
+        return is(predicate, sendMessage(INIT_SET, "is_suffcient_percentage"));
     }
 
 }

@@ -3,7 +3,6 @@ package specialized_checkers.time.temporal;
 import static util.Message.*;
 
 import java.util.Date;
-import java.util.function.Predicate;
 
 import util.AbstractChecker;
 import util.ExceptionTracker;
@@ -26,30 +25,6 @@ public class CheckerDate extends AbstractChecker<Date, CheckerDate> implements I
 
     private static Date now(){
         return new Date();
-    }
-
-    @Override
-    public CheckerDate is(Predicate<Date> condition, String message) {
-        super.is(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerDate is(Predicate<Date> condition) {
-        super.is(condition);
-        return this;
-    }
-
-    @Override
-    public CheckerDate isNot(Predicate<Date> condition, String message) {
-        super.isNot(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerDate isNot(Predicate<Date> condition) {
-        super.isNot(condition);
-        return this;
     }
 
     @Override

@@ -3,7 +3,6 @@ package specialized_checkers.time.temporal;
 import static util.Message.*;
 
 import java.time.LocalDate;
-import java.util.function.Predicate;
 
 import util.AbstractChecker;
 import util.ExceptionTracker;
@@ -27,31 +26,7 @@ public class CheckerLocalDate extends AbstractChecker<LocalDate, CheckerLocalDat
     private static LocalDate now(){
         return LocalDate.now();
     }
-
-    @Override
-    public CheckerLocalDate is(Predicate<LocalDate> condition, String message) {
-        super.is(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerLocalDate is(Predicate<LocalDate> condition) {
-        super.is(condition);
-        return this;
-    }
-
-    @Override
-    public CheckerLocalDate isNot(Predicate<LocalDate> condition, String message) {
-        super.isNot(condition, message);
-        return this;
-    }
-
-    @Override
-    public CheckerLocalDate isNot(Predicate<LocalDate> condition) {
-        super.isNot(condition);
-        return this;
-    }
-
+    
     @Override
     public CheckerLocalDate isBefore(LocalDate date) {
         return is(time -> time.isBefore(date), sendMessage(INIT_TEMPORAL, "is_before", LOCAL_DATE_STRING, date));

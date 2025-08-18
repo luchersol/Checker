@@ -29,8 +29,7 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
     }
     
     public CheckerMatrix<T> isEmpty() {
-        is(matrix -> matrix.length == 0 && matrix[0].length == 0, sendMessage(INIT_MATRIX, "is_empty"));
-        return this;
+        return is(matrix -> matrix.length == 0 && matrix[0].length == 0, sendMessage(INIT_MATRIX, "is_empty"));
     }
 
     public CheckerMatrix<T> isSquare() {
@@ -44,8 +43,7 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
             }
             return true;
         };
-        is(predicate, sendMessage(INIT_MATRIX, "is_square"));
-        return this;
+        return is(predicate, sendMessage(INIT_MATRIX, "is_square"));
     }
 
     public CheckerMatrix<T> isZero() {
@@ -69,8 +67,7 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
             }
             return true;
         };
-        is(predicate, sendMessage(INIT_MATRIX, "is_identity"));
-        return this;
+        return is(predicate, sendMessage(INIT_MATRIX, "is_identity"));
     }
 
     public CheckerMatrix<T> isSymmetric(){
@@ -86,8 +83,7 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
             }
             return true;
         };
-        is(predicate, sendMessage(INIT_MATRIX, "is_symmetric"));
-        return this;
+        return is(predicate, sendMessage(INIT_MATRIX, "is_symmetric"));
     }
 
     public CheckerMatrix<T> isDiagonal(){
@@ -103,8 +99,7 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
             }
             return true;
         };
-        is(predicate, sendMessage(INIT_MATRIX, "is_diagonal"));
-        return this;
+        return is(predicate, sendMessage(INIT_MATRIX, "is_diagonal"));
     }
 
     public CheckerMatrix<T> isOrthogonal(){
@@ -119,8 +114,7 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
             }
             return product.equals(identity);
         };
-        is(predicate, sendMessage(INIT_MATRIX, "is_orthogonal"));
-        return this;
+        return is(predicate, sendMessage(INIT_MATRIX, "is_orthogonal"));
     }
 
     public CheckerMatrix<T> isInvertible(){
@@ -134,8 +128,7 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
                 return false;
             }
         };
-        is(predicate, sendMessage(INIT_MATRIX, "is_invertible"));
-        return this;
+        return is(predicate, sendMessage(INIT_MATRIX, "is_invertible"));
     }
 
     public CheckerMatrix<T> isPositiveDefinite(){
@@ -149,8 +142,7 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
             }
             return true;
         };
-        is(predicate, sendMessage(INIT_MATRIX, "is_positive_definite"));
-        return this;
+        return is(predicate, sendMessage(INIT_MATRIX, "is_positive_definite"));
     }
 
     public CheckerMatrix<T> isUpperTriangular(){
@@ -166,8 +158,7 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
             }
             return true;
         };
-        is(predicate, sendMessage(INIT_MATRIX, "is_upper_triangular"));
-        return this;
+        return is(predicate, sendMessage(INIT_MATRIX, "is_upper_triangular"));
     }
 
     public CheckerMatrix<T> isLowerTriangular(){
@@ -183,8 +174,7 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
             }
             return true;
         };
-        is(predicate, sendMessage(INIT_MATRIX, "is_lower_triangular"));
-        return this;
+        return is(predicate, sendMessage(INIT_MATRIX, "is_lower_triangular"));
     }
 
     public CheckerMatrix<T> hasRank(int rank){
@@ -194,8 +184,7 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
             SingularValueDecomposition svd = new SingularValueDecomposition(mat);
             return Precision.equals(svd.getRank(), rank);
         };
-        is(predicate, sendMessage(INIT_MATRIX, "has_rank", rank));
-        return this;
+        return is(predicate, sendMessage(INIT_MATRIX, "has_rank", rank));
     }
 
     public CheckerMatrix<T> hasRealEigenvalues(){
@@ -210,8 +199,7 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
             }
             return true;
         };
-        is(predicate, sendMessage(INIT_MATRIX, "has_real_eigenvalues"));
-        return this;
+        return is(predicate, sendMessage(INIT_MATRIX, "has_real_eigenvalues"));
     }
 
     public CheckerMatrix<T> isFullRank(){
@@ -222,8 +210,7 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
             int rank = svd.getRank();
             return rank == Math.min(matrix.length, matrix[0].length);
         };
-        is(predicate, sendMessage(INIT_MATRIX, "is_full_rank"));
-        return this;
+        return is(predicate, sendMessage(INIT_MATRIX, "is_full_rank"));
     }
 
     public CheckerMatrix<T> anyMatch(Predicate<T> predicate) {

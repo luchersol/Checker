@@ -21,118 +21,95 @@ public class CheckerGraph<N,E extends Number> extends AbstractChecker<Graph<N,E>
     }
 
     public CheckerGraph<N,E> isEmpty() {
-        is(graph -> graph.isEmpty(), sendMessage(INIT_GRAPH, "is_empty"));
-        return this;
+        return is(graph -> graph.isEmpty(), sendMessage(INIT_GRAPH, "is_empty"));
     }
 
     public CheckerGraph<N,E> isTree(){
-        is(graph -> graph.isTree(), sendMessage(INIT_GRAPH, "is_tree"));
-        return this;
+        return is(graph -> graph.isTree(), sendMessage(INIT_GRAPH, "is_tree"));
     }
 
     public CheckerGraph<N,E> isBinaryTree() {
-        is(graph -> graph.isBinaryTree(), sendMessage(INIT_GRAPH, "is_binary_tree"));
-        return this;
+        return is(graph -> graph.isBinaryTree(), sendMessage(INIT_GRAPH, "is_binary_tree"));
     }
     
     public CheckerGraph<N,E> isDirected() {
-        is(graph -> graph.isDirected(), sendMessage(INIT_GRAPH, "is_directed"));
-        return this;
+        return is(graph -> graph.isDirected(), sendMessage(INIT_GRAPH, "is_directed"));
     }
 
     public CheckerGraph<N,E> isConnected() {
-        is(graph -> graph.isConnected(), sendMessage(INIT_GRAPH, "is_connected"));
-        return this;
+        return is(graph -> graph.isConnected(), sendMessage(INIT_GRAPH, "is_connected"));
     }
 
     public CheckerGraph<N,E> hasCycle() {
-        is(graph -> graph.hasCycle(), sendMessage(INIT_GRAPH, "has_cycle"));
-        return this;
+        return is(graph -> graph.hasCycle(), sendMessage(INIT_GRAPH, "has_cycle"));
     }
 
     public CheckerGraph<N,E> containsNode(N node) {
-        is(graph -> graph.containsNode(node), sendMessage(INIT_GRAPH, "contains_node"));
-        return this;
+        return is(graph -> graph.containsNode(node), sendMessage(INIT_GRAPH, "contains_node"));
     }
 
     public CheckerGraph<N,E> containsEdge(N from, N to) {
-        is(graph -> graph.containsEdge(from, to), sendMessage(INIT_GRAPH, "contains_edge"));
-        return this;
+        return is(graph -> graph.containsEdge(from, to), sendMessage(INIT_GRAPH, "contains_edge"));
     }
 
     public CheckerGraph<N,E> containsEdge(Graph.Edge<N, E> edge) {
-        is(graph -> graph.containsEdge(edge), sendMessage(INIT_GRAPH, "contains_edge"));
-        return this;
+        return is(graph -> graph.containsEdge(edge), sendMessage(INIT_GRAPH, "contains_edge"));
     }
 
     public CheckerGraph<N,E> anyNodesMatch(Predicate<N> condition) {
-        is(graph -> graph.anyNodesMatch(condition), sendMessage(INIT_GRAPH, "any_nodes_match"));
-        return this;
+        return is(graph -> graph.anyNodesMatch(condition), sendMessage(INIT_GRAPH, "any_nodes_match"));
     }
 
     public CheckerGraph<N,E> allNodesMatch(Predicate<N> condition) {
-        is(graph -> graph.allNodesMatch(condition), sendMessage(INIT_GRAPH, "all_nodes_match"));
-        return this;
+        return is(graph -> graph.allNodesMatch(condition), sendMessage(INIT_GRAPH, "all_nodes_match"));
     }
 
     public CheckerGraph<N,E> anyEdgesMatch(Predicate<Graph.Edge<N,E>> condition) {
-        is(graph -> graph.anyEdgesMatch(condition), sendMessage(INIT_GRAPH, "any_edges_match"));
-        return this;
+        return is(graph -> graph.anyEdgesMatch(condition), sendMessage(INIT_GRAPH, "any_edges_match"));
     }
 
     public CheckerGraph<N,E> allEdgesMatch(Predicate<Graph.Edge<N,E>> condition) {
-        is(graph -> graph.allEdgesMatch(condition), sendMessage(INIT_GRAPH, "all_edges_match"));
-        return this;
+        return is(graph -> graph.allEdgesMatch(condition), sendMessage(INIT_GRAPH, "all_edges_match"));
     }
 
     public CheckerGraph<N,E> hasPath(N start, N end) {
-        is(graph -> graph.hasPath(start, end), sendMessage(INIT_GRAPH, "has_path"));
-        return this;
+        return is(graph -> graph.hasPath(start, end), sendMessage(INIT_GRAPH, "has_path"));
     } 
 
     public CheckerGraph<N,E> minNodes(int min) {
-        is(graph -> min <= graph.countNodes(), sendMessage(INIT_GRAPH, "min_nodes"));
-        return this;
+        return is(graph -> min <= graph.countNodes(), sendMessage(INIT_GRAPH, "min_nodes"));
     }
 
     public CheckerGraph<N,E> maxNodes(int max) {
-        is(graph -> graph.countNodes() <= max, sendMessage(INIT_GRAPH, "max_nodes"));
-        return this;
+        return is(graph -> graph.countNodes() <= max, sendMessage(INIT_GRAPH, "max_nodes"));
     }
 
     public CheckerGraph<N,E> inRangeNodes(int min, int max) {
-        is(graph -> min <= graph.countNodes() && graph.countNodes() <= max, sendMessage(INIT_GRAPH, "in_range_nodes"));
-        return this;
+        return is(graph -> min <= graph.countNodes() && graph.countNodes() <= max, sendMessage(INIT_GRAPH, "in_range_nodes"));
     }
 
     public CheckerGraph<N,E> minEdges(int min) {
-        is(graph -> min <= graph.countNodes(), sendMessage(INIT_GRAPH, "min_edges"));
-        return this;
+        return is(graph -> min <= graph.countNodes(), sendMessage(INIT_GRAPH, "min_edges"));
     }
 
     public CheckerGraph<N,E> maxEdges(int max) {
-        is(graph -> graph.countNodes() <= max, sendMessage(INIT_GRAPH, "max_edges"));
-        return this;
+        return is(graph -> graph.countNodes() <= max, sendMessage(INIT_GRAPH, "max_edges"));
     }
 
     public CheckerGraph<N,E> inRangeEdges(int min, int max) {
-        is(graph -> min <= graph.countNodes() && graph.countNodes() <= max, sendMessage(INIT_GRAPH, "in_range_edges"));
-        return this;
+        return is(graph -> min <= graph.countNodes() && graph.countNodes() <= max, sendMessage(INIT_GRAPH, "in_range_edges"));
     }
 
     public CheckerGraph<N,E> minWeight(double min) {
-        is(graph -> graph.getEdges().stream().allMatch(edge -> min <= edge.getWeigth()), sendMessage(INIT_GRAPH, "min_edges"));
-        return this;
+        return is(graph -> graph.getEdges().stream().allMatch(edge -> min <= edge.getWeigth()), sendMessage(INIT_GRAPH, "min_edges"));
     }
 
     public CheckerGraph<N,E> maxWeight(double max) {
-        is(graph -> graph.getEdges().stream().allMatch(edge -> edge.getWeigth() <= max), sendMessage(INIT_GRAPH, "max_edges"));
-        return this;
+        return is(graph -> graph.getEdges().stream().allMatch(edge -> edge.getWeigth() <= max), sendMessage(INIT_GRAPH, "max_edges"));
     }
 
     public CheckerGraph<N,E> inRangeWeight(double min, double max) {
-        is(graph -> graph.getEdges().stream().allMatch(edge -> min <= edge.getWeigth() && edge.getWeigth() <= max), sendMessage(INIT_GRAPH, "in_range_edges"));
-        return this;
+        return is(graph -> graph.getEdges().stream().allMatch(edge -> min <= edge.getWeigth() && edge.getWeigth() <= max), sendMessage(INIT_GRAPH, "in_range_edges"));
     }
     
 }

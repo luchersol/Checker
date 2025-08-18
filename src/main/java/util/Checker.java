@@ -50,23 +50,19 @@ public class Checker extends AbstractChecker<Object, Checker> {
     }
 
     public Checker isNull() {
-        is(object -> object == null, sendMessage(INIT_CHECKER, "is_null"));
-        return this;
+        return is(object -> object == null, sendMessage(INIT_CHECKER, "is_null"));
     }
 
     public Checker isNotNull() {
-        is(object -> object != null, sendMessage(INIT_CHECKER, "is_not_null"));
-        return this;
+        return is(object -> object != null, sendMessage(INIT_CHECKER, "is_not_null"));
     }
 
     public Checker isEqual(Object other){
-        is(object -> object.equals(other), sendMessage(INIT_CHECKER, "is_equal"));
-        return this;
+        return is(object -> object.equals(other), sendMessage(INIT_CHECKER, "is_equal"));
     }
 
     public <T> Checker isInstance(Class<T> clazz) {
-        is(object -> clazz.isInstance(object), sendMessage(INIT_CHECKER, "is_instance", clazz.getSimpleName()));
-        return this;
+        return is(object -> clazz.isInstance(object), sendMessage(INIT_CHECKER, "is_instance", clazz.getSimpleName()));
     }
 
     @SuppressWarnings({ "unchecked" })

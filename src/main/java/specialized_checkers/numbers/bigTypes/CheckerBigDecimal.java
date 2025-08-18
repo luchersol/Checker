@@ -23,176 +23,147 @@ public class CheckerBigDecimal extends AbstractChecker<BigDecimal, CheckerBigDec
     
     @Override
     public CheckerBigDecimal isPositive() {
-        is(n_big_decimal -> n_big_decimal.signum() > 0, sendMessage(INIT_NUMBERS, "is_positive", BIG_DECIMAL_STRING));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.signum() > 0, sendMessage(INIT_NUMBERS, "is_positive", BIG_DECIMAL_STRING));
     }
 
     @Override
     public CheckerBigDecimal isPositiveOrZero() {
-        is(n_big_decimal -> n_big_decimal.signum() >= 0, sendMessage(INIT_NUMBERS, "is_positive_or_zero", BIG_DECIMAL_STRING));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.signum() >= 0, sendMessage(INIT_NUMBERS, "is_positive_or_zero", BIG_DECIMAL_STRING));
     }
 
     @Override
     public CheckerBigDecimal isNegative() {
-        is(n_big_decimal -> n_big_decimal.signum() < 0, sendMessage(INIT_NUMBERS, "is_negative", BIG_DECIMAL_STRING));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.signum() < 0, sendMessage(INIT_NUMBERS, "is_negative", BIG_DECIMAL_STRING));
     }
 
     @Override
     public CheckerBigDecimal isNegativeOrZero() {
-        is(n_big_decimal -> n_big_decimal.signum() <= 0, sendMessage(INIT_NUMBERS, "is_negative_or_zero", BIG_DECIMAL_STRING));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.signum() <= 0, sendMessage(INIT_NUMBERS, "is_negative_or_zero", BIG_DECIMAL_STRING));
     }
 
     @Override
     public CheckerBigDecimal isZero() {
-        is(n_big_decimal -> n_big_decimal.signum() == 0, sendMessage(INIT_NUMBERS, "is_zero", BIG_DECIMAL_STRING));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.signum() == 0, sendMessage(INIT_NUMBERS, "is_zero", BIG_DECIMAL_STRING));
     }
 
     @Override
     public CheckerBigDecimal isGreaterThan(Byte number) {
-        is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) > 0, sendMessage(INIT_NUMBERS, "is_greather_than", BIG_DECIMAL_STRING, number));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) > 0, sendMessage(INIT_NUMBERS, "is_greather_than", BIG_DECIMAL_STRING, number));
     }
 
     @Override
     public CheckerBigDecimal isGreaterThan(Short number) {
-        is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) > 0, sendMessage(INIT_NUMBERS, "is_greather_than", BIG_DECIMAL_STRING, number));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) > 0, sendMessage(INIT_NUMBERS, "is_greather_than", BIG_DECIMAL_STRING, number));
     }
 
     @Override
     public CheckerBigDecimal isGreaterThan(Integer number) {
-        is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) > 0, sendMessage(INIT_NUMBERS, "is_greather_than", BIG_DECIMAL_STRING, number));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) > 0, sendMessage(INIT_NUMBERS, "is_greather_than", BIG_DECIMAL_STRING, number));
     }
 
     @Override
     public CheckerBigDecimal isGreaterThan(Long number) {
-        is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) > 0, sendMessage(INIT_NUMBERS, "is_greather_than", BIG_DECIMAL_STRING, number));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) > 0, sendMessage(INIT_NUMBERS, "is_greather_than", BIG_DECIMAL_STRING, number));
     }
 
     @Override
     public CheckerBigDecimal isGreaterThan(Float number) {
-        is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) > 0, sendMessage(INIT_NUMBERS, "is_greather_than", BIG_DECIMAL_STRING, number));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) > 0, sendMessage(INIT_NUMBERS, "is_greather_than", BIG_DECIMAL_STRING, number));
     }
 
     @Override
     public CheckerBigDecimal isGreaterThan(Double number) {
-        is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) > 0, sendMessage(INIT_NUMBERS, "is_greather_than", BIG_DECIMAL_STRING, number));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) > 0, sendMessage(INIT_NUMBERS, "is_greather_than", BIG_DECIMAL_STRING, number));
     }
 
     @Override
     public CheckerBigDecimal isGreaterOrEqualTo(Byte number) {
-        is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) >= 0, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", BIG_DECIMAL_STRING, number));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) >= 0, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", BIG_DECIMAL_STRING, number));
     }
 
     @Override
     public CheckerBigDecimal isGreaterOrEqualTo(Short number) {
-        is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) >= 0, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", BIG_DECIMAL_STRING, number));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) >= 0, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", BIG_DECIMAL_STRING, number));
     }
 
     @Override
     public CheckerBigDecimal isGreaterOrEqualTo(Integer number) {
-        is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) >= 0, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", BIG_DECIMAL_STRING, number));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) >= 0, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", BIG_DECIMAL_STRING, number));
     }
 
     @Override
     public CheckerBigDecimal isGreaterOrEqualTo(Long number) {
-        is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) >= 0, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", BIG_DECIMAL_STRING, number));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) >= 0, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", BIG_DECIMAL_STRING, number));
     }
 
     @Override
     public CheckerBigDecimal isGreaterOrEqualTo(Float number) {
-        is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) >= 0, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", BIG_DECIMAL_STRING, number));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) >= 0, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", BIG_DECIMAL_STRING, number));
     }
 
     @Override
     public CheckerBigDecimal isGreaterOrEqualTo(Double number) {
-        is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) >= 0, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", BIG_DECIMAL_STRING, number));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) >= 0, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", BIG_DECIMAL_STRING, number));
     }
 
     @Override
     public CheckerBigDecimal isLessThan(Byte number) {
-        is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) < 0, sendMessage(INIT_NUMBERS, "is_less_than", BIG_DECIMAL_STRING, number));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) < 0, sendMessage(INIT_NUMBERS, "is_less_than", BIG_DECIMAL_STRING, number));
     }
 
     @Override
     public CheckerBigDecimal isLessThan(Short number) {
-        is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) < 0, sendMessage(INIT_NUMBERS, "is_less_than", BIG_DECIMAL_STRING, number));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) < 0, sendMessage(INIT_NUMBERS, "is_less_than", BIG_DECIMAL_STRING, number));
     }
 
     @Override
     public CheckerBigDecimal isLessThan(Integer number) {
-        is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) < 0, sendMessage(INIT_NUMBERS, "is_less_than", BIG_DECIMAL_STRING, number));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) < 0, sendMessage(INIT_NUMBERS, "is_less_than", BIG_DECIMAL_STRING, number));
     }
 
     @Override
     public CheckerBigDecimal isLessThan(Long number) {
-        is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) < 0, sendMessage(INIT_NUMBERS, "is_less_than", BIG_DECIMAL_STRING, number));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) < 0, sendMessage(INIT_NUMBERS, "is_less_than", BIG_DECIMAL_STRING, number));
     }
 
     @Override
     public CheckerBigDecimal isLessThan(Float number) {
-        is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) < 0, sendMessage(INIT_NUMBERS, "is_less_than", BIG_DECIMAL_STRING, number));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) < 0, sendMessage(INIT_NUMBERS, "is_less_than", BIG_DECIMAL_STRING, number));
     }
 
     @Override
     public CheckerBigDecimal isLessThan(Double number) {
-        is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) < 0, sendMessage(INIT_NUMBERS, "is_less_than", BIG_DECIMAL_STRING, number));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) < 0, sendMessage(INIT_NUMBERS, "is_less_than", BIG_DECIMAL_STRING, number));
     }
 
     @Override
     public CheckerBigDecimal isLessOrEqualTo(Byte number) {
-        is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) <= 0, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", BIG_DECIMAL_STRING, number));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) <= 0, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", BIG_DECIMAL_STRING, number));
     }
 
     @Override
     public CheckerBigDecimal isLessOrEqualTo(Short number) {
-        is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) <= 0, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", BIG_DECIMAL_STRING, number));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) <= 0, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", BIG_DECIMAL_STRING, number));
     }
 
     @Override
     public CheckerBigDecimal isLessOrEqualTo(Integer number) {
-        is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) <= 0, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", BIG_DECIMAL_STRING, number));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) <= 0, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", BIG_DECIMAL_STRING, number));
     }
 
     @Override
     public CheckerBigDecimal isLessOrEqualTo(Long number) {
-        is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) <= 0, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", BIG_DECIMAL_STRING, number));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) <= 0, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", BIG_DECIMAL_STRING, number));
     }
 
     @Override
     public CheckerBigDecimal isLessOrEqualTo(Float number) {
-        is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) <= 0, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", BIG_DECIMAL_STRING, number));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) <= 0, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", BIG_DECIMAL_STRING, number));
     }
 
     @Override
     public CheckerBigDecimal isLessOrEqualTo(Double number) {
-        is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) <= 0, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", BIG_DECIMAL_STRING, number));
-        return this;
+        return is(n_big_decimal -> n_big_decimal.compareTo(BigDecimal.valueOf(number)) <= 0, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", BIG_DECIMAL_STRING, number));
     }
     
 }

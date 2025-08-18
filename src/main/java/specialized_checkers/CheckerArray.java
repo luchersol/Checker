@@ -27,8 +27,7 @@ public class CheckerArray<T> extends AbstractChecker<T[], CheckerArray<T>>{
     }
 
     public CheckerArray<T> isEmpty(){
-        is(array -> array.length == 0, sendMessage(INIT_ARRAY, "is_empty"));
-        return this;
+        return is(array -> array.length == 0, sendMessage(INIT_ARRAY, "is_empty"));
     }
 
     public CheckerArray<T> isSortedAsc(Comparator<T> comparator){
@@ -98,18 +97,15 @@ public class CheckerArray<T> extends AbstractChecker<T[], CheckerArray<T>>{
             double percentageMatching = Arrays.stream(array).filter(matching).count() * 100. / array.length;
             return percentageMatching >= percentage;
         };
-        is(predicate, sendMessage(INIT_ARRAY, "is_sufficient_percentage"));
-        return this;
+        return is(predicate, sendMessage(INIT_ARRAY, "is_sufficient_percentage"));
     }
 
     public CheckerArray<T> anyMatch(Predicate<T> predicate){
-        is(array -> Arrays.stream(array).anyMatch(predicate), sendMessage(INIT_ARRAY, "any_match"));
-        return this;
+        return is(array -> Arrays.stream(array).anyMatch(predicate), sendMessage(INIT_ARRAY, "any_match"));
     }
 
     public CheckerArray<T> allMatch(Predicate<T> predicate){
-        is(array -> Arrays.stream(array).allMatch(predicate), sendMessage(INIT_ARRAY, "all_match"));
-        return this;
+        return is(array -> Arrays.stream(array).allMatch(predicate), sendMessage(INIT_ARRAY, "all_match"));
     }
     
 }
