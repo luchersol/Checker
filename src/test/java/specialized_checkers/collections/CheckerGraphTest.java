@@ -7,7 +7,8 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import util.Graph;
+import specialized_checkers.collection.CheckerGraph;
+import util.collection.Graph;
 
 class CheckerGraphTest {
 

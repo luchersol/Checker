@@ -1,4 +1,4 @@
-package specialized_checkers;
+package specialized_checkers.math;
 
 import static util.Message.*;
 

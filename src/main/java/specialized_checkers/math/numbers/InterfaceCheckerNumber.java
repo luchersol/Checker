@@ -1,4 +1,4 @@
-package specialized_checkers.numbers;
+package specialized_checkers.math.numbers;
 
 
 public interface InterfaceCheckerNumber<T extends InterfaceCheckerNumber<T>> {

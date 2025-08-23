@@ -8,15 +8,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import specialized_checkers.CheckerArray;
 import specialized_checkers.CheckerString;
-import specialized_checkers.collections.CheckerList;
-import specialized_checkers.collections.CheckerMap;
-import specialized_checkers.collections.CheckerSet;
-import specialized_checkers.numbers.decimalTypes.CheckerDouble;
-import specialized_checkers.numbers.decimalTypes.CheckerFloat;
-import specialized_checkers.numbers.integerTypes.CheckerInteger;
-import specialized_checkers.numbers.integerTypes.CheckerLong;
+import specialized_checkers.collection.CheckerList;
+import specialized_checkers.collection.CheckerMap;
+import specialized_checkers.collection.CheckerSet;
+import specialized_checkers.math.CheckerArray;
+import specialized_checkers.math.numbers.decimalTypes.CheckerDouble;
+import specialized_checkers.math.numbers.decimalTypes.CheckerFloat;
+import specialized_checkers.math.numbers.integerTypes.CheckerInteger;
+import specialized_checkers.math.numbers.integerTypes.CheckerLong;
 
 public class Checker extends AbstractChecker<Object, Checker> {
 

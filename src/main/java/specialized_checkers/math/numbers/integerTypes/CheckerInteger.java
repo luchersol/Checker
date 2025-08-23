@@ -1,10 +1,10 @@
-package specialized_checkers.numbers.integerTypes;
+package specialized_checkers.math.numbers.integerTypes;
 
 import static util.Message.*;
 
 import java.util.function.Predicate;
 
-import specialized_checkers.numbers.InterfaceCheckerNumber;
+import specialized_checkers.math.numbers.InterfaceCheckerNumber;
 import util.AbstractChecker;
 
 public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> implements InterfaceCheckerNumber<CheckerInteger> {

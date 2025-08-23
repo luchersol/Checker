@@ -1,8 +1,8 @@
-package specialized_checkers.numbers.decimalTypes;
+package specialized_checkers.math.numbers.decimalTypes;
 
 import static util.Message.*;
 
-import specialized_checkers.numbers.InterfaceCheckerNumber;
+import specialized_checkers.math.numbers.InterfaceCheckerNumber;
 import util.AbstractChecker;
 
 public class CheckerFloat extends AbstractChecker<Float, CheckerFloat> implements InterfaceCheckerNumber<CheckerFloat>{

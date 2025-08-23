@@ -1,11 +1,11 @@
-package specialized_checkers.numbers.bigTypes;
+package specialized_checkers.math.numbers.bigTypes;
 
 import static util.Message.*;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import specialized_checkers.numbers.InterfaceCheckerNumber;
+import specialized_checkers.math.numbers.InterfaceCheckerNumber;
 import util.AbstractChecker;
 
 public class CheckerBigInteger extends AbstractChecker<BigInteger, CheckerBigInteger> implements InterfaceCheckerNumber<CheckerBigInteger> {

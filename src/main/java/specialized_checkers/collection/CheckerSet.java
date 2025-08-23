@@ -1,4 +1,4 @@
-package specialized_checkers.collections;
+package specialized_checkers.collection;
 
 import static util.Message.*;
 

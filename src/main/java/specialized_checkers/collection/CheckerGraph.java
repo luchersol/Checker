@@ -1,11 +1,11 @@
-package specialized_checkers.collections;
+package specialized_checkers.collection;
 
 import static util.Message.*;
 
 import java.util.function.Predicate;
 
 import util.AbstractChecker;
-import util.Graph;
+import util.collection.Graph;
 
 public class CheckerGraph<N,E extends Number> extends AbstractChecker<Graph<N,E>, CheckerGraph<N,E>>{
 

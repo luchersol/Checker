@@ -138,7 +138,7 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
         try {
             String[] keys = path.split("\\.");
             JsonNode current = this.object;
-
+    
             for (String key : keys) {
                 if (current == null) {
                     return null;

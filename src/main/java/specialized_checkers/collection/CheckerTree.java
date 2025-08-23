@@ -1,9 +1,9 @@
-package specialized_checkers.collections;
+package specialized_checkers.collection;
 
 import static util.Message.*;
 
 import util.AbstractChecker;
-import util.Tree;
+import util.collection.Tree;
 
 public class CheckerTree<T> extends AbstractChecker<Tree<T>, CheckerTree<T>> {
 
