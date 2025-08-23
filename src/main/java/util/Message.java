@@ -29,7 +29,7 @@ public class Message {
 
     private static String sendMessage(String key, Object... args){
         String format = getProperty(key);
-        return String.format(format, args);
+        return args.length == 0 ? format : String.format(format, args);
     }
 
     public static String sendMessage(String init, String function){
