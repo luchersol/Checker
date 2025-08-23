@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -47,7 +48,7 @@ public class Graph<N,E extends Number> {
             return this.to;
         }
 
-        public double getWeigth(){
+        public double getWeight(){
             return this.weight.doubleValue();
         }
 
@@ -56,17 +57,27 @@ public class Graph<N,E extends Number> {
         }
     }
 
-    public Graph(boolean directed, Collection<Edge<N,E>> edges) {
+    public Graph(Collection<N> nodes, Collection<Edge<N,E>> edges, boolean directed) {
+        nodes.forEach(this::addNode);
+        this.addEdges(edges);
         this.directed = directed;
-        edges.forEach(edge -> addEdge(edge.from, edge.to, edge.weight, edge.properties));
+    }
+
+    public Graph(Collection<N> nodes, Collection<Edge<N,E>> edges) {
+        this(nodes, edges, false);
+    }
+
+    public Graph(Collection<Edge<N,E>> edges, boolean directed) {
+        this.directed = directed;
+        this.addEdges(edges);
     }
 
     public Graph(Collection<Edge<N,E>> edges) {
-        this(false, edges);
+        this(edges, false);
     }
 
     public Graph() {
-        this(false, Collections.emptyList());
+        this(Collections.emptyList(), false);
     }
 
     private void addNode(N node) {
@@ -82,8 +93,17 @@ public class Graph<N,E extends Number> {
         }
     }
 
+    private void addEdges(Collection<Edge<N,E>> edges) {
+       for (Edge<N,E> edge : edges) {
+            this.addEdge(edge.from, edge.to, edge.weight, edge.properties);
+       }
+    }
+
     public Set<N> getNeighbors(N node) {
-        return this.adjacencyMap.getOrDefault(node, Collections.emptySet()).stream().map(Graph.Edge::getFrom).collect(Collectors.toSet());
+        return this.adjacencyMap.getOrDefault(node, Collections.emptySet())
+                                .stream()
+                                .map(Graph.Edge::getTo)
+                                .collect(Collectors.toSet());
     }
 
     public Set<N> getNodes() {
@@ -154,7 +174,9 @@ public class Graph<N,E extends Number> {
     }
 
     public boolean containsEdge(N from, N to) {
-        return this.adjacencyMap.containsKey(from) && this.adjacencyMap.get(from).contains(to);
+        return this.adjacencyMap.getOrDefault(from, Collections.emptySet())
+                                .stream()
+                                .anyMatch(edge -> Objects.equals(edge.getTo(), to));
     }
 
     public boolean containsEdge(Graph.Edge<N,E> edge) {

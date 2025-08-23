@@ -40,14 +40,14 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
         this.object = object;
         this.name = name;
         this.exceptionTracker = ExceptionTracker.empty(name);
-        this.saveErrors = true;
+        this.saveErrors = false;
         this.stop = object == null;
     }
 
     public AbstractChecker(String name, ExceptionTracker exceptionTracker) {
         this.name = name;
         this.exceptionTracker = exceptionTracker;
-        this.saveErrors = true;
+        this.saveErrors = false;
         this.stop = object == null;
     }
 
@@ -55,7 +55,7 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
         this.object = object;
         this.name = name;
         this.exceptionTracker = exceptionTracker;
-        this.saveErrors = true;
+        this.saveErrors = false;
         this.stop = object == null;
     }
 
@@ -97,6 +97,16 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
 
     public C isNot(Predicate<T> condition) {
         return is(condition.negate(), sendMessage(INIT_ABSTRACT_CHECKER, "is_not"));
+    }
+
+    public C saveErrors() {
+        this.saveErrors = true;
+        return self();
+    }
+
+    public C notSaveErrors() {
+        this.saveErrors = false;
+        return self();
     }
 
     public Boolean hasErrors() {

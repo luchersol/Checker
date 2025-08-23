@@ -1,41 +1,89 @@
 package specialized_checkers.time.temporal;
 
-public class CheckerLocalDateTimeTest {
+import static org.junit.jupiter.api.Assertions.*;
 
-    public void isBefore() {
+import java.time.LocalDateTime;
 
+import org.junit.jupiter.api.Test;
+
+class CheckerLocalDateTimeTest {
+
+    @Test
+    void testIsBefore() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime earlier = now.minusDays(1);
+        CheckerLocalDateTime checker = new CheckerLocalDateTime(earlier, "testDate");
+        assertDoesNotThrow(() -> checker.isBefore(now));
     }
 
-    public void isBeforeOrEqual() {
-
+    @Test
+    void testIsBefore_Fails() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime later = now.plusDays(1);
+        CheckerLocalDateTime checker = new CheckerLocalDateTime(later, "testDate");
+        assertThrows(Exception.class, () -> checker.isBefore(now));
     }
 
-    public void isAfter() {
-
+    @Test
+    void testIsBeforeOrEqual_Equal() {
+        LocalDateTime now = LocalDateTime.now();
+        CheckerLocalDateTime checker = new CheckerLocalDateTime(now, "testDate");
+        assertDoesNotThrow(() -> checker.isBeforeOrEqual(now));
     }
 
-    public void isAfterOrEqual() {
-
+    @Test
+    void testIsAfter() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime later = now.plusDays(1);
+        CheckerLocalDateTime checker = new CheckerLocalDateTime(later, "testDate");
+        assertDoesNotThrow(() -> checker.isAfter(now));
     }
 
-    public void inRange() {
-
+    @Test
+    void testIsAfter_Fails() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime earlier = now.minusDays(1);
+        CheckerLocalDateTime checker = new CheckerLocalDateTime(earlier, "testDate");
+        assertThrows(Exception.class, () -> checker.isAfter(now));
     }
 
-    public void isPast() {
-
+    @Test
+    void testIsAfterOrEqual_Equal() {
+        LocalDateTime now = LocalDateTime.now();
+        CheckerLocalDateTime checker = new CheckerLocalDateTime(now, "testDate");
+        assertDoesNotThrow(() -> checker.isAfterOrEqual(now));
     }
 
-    public void isPastOrPresent() {
-
+    @Test
+    void testInRange() {
+        LocalDateTime start = LocalDateTime.now();
+        LocalDateTime middle = start.plusHours(1);
+        LocalDateTime end = start.plusHours(2);
+        CheckerLocalDateTime checker = new CheckerLocalDateTime(middle, "testDate");
+        assertDoesNotThrow(() -> checker.inRange(start, end));
     }
 
-    public void isFuture() {
-
+    @Test
+    void testInRange_Fails() {
+        LocalDateTime start = LocalDateTime.now();
+        LocalDateTime end = start.plusHours(2);
+        LocalDateTime outside = start.minusHours(1);
+        CheckerLocalDateTime checker = new CheckerLocalDateTime(outside, "testDate");
+        assertThrows(Exception.class, () -> checker.inRange(start, end));
     }
 
-    public void isFutureOrPresent() {
+    @Test
+    void testIsPast() {
+        LocalDateTime past = LocalDateTime.now().minusDays(1);
+        CheckerLocalDateTime checker = new CheckerLocalDateTime(past, "testDate");
+        assertDoesNotThrow(checker::isPast);
+    }
 
+    @Test
+    void testIsFuture() {
+        LocalDateTime future = LocalDateTime.now().plusDays(1);
+        CheckerLocalDateTime checker = new CheckerLocalDateTime(future, "testDate");
+        assertDoesNotThrow(checker::isFuture);
     }
 
 }

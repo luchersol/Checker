@@ -13,14 +13,13 @@ import org.apache.commons.math3.linear.SingularValueDecomposition;
 import org.apache.commons.math3.util.Precision;
 
 import util.AbstractChecker;
-import util.ExceptionTracker;
 
 public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], CheckerMatrix<T>> {
 
-    private static final String INIT_MATRIX = "matrix";
+    private static final String INIT_MATRIX = "math.matrix";
 
-    public CheckerMatrix(T[][] object, String name, ExceptionTracker exceptionTracker) {
-        super(object, name, exceptionTracker);
+    public CheckerMatrix(T[][] object, String name) {
+        super(object, name);
     }
 
     @Override
@@ -29,7 +28,10 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
     }
     
     public CheckerMatrix<T> isEmpty() {
-        return is(matrix -> matrix.length == 0 && matrix[0].length == 0, sendMessage(INIT_MATRIX, "is_empty"));
+        return is(matrix -> {
+            if (matrix == null || matrix.length == 0) return true;
+            return Arrays.stream(matrix).allMatch(row -> row == null || row.length == 0); 
+        }, sendMessage(INIT_MATRIX, "is_empty"));
     }
 
     public CheckerMatrix<T> isSquare() {
@@ -61,7 +63,7 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
                 for (int j = 0; j < n; j++) {
                     if (i == j && matrix[i][j].doubleValue() != 1)
                         return false;
-                    else if (matrix[i][j].doubleValue() != 0)
+                    else if (i != j && matrix[i][j].doubleValue() != 0)
                         return false;
                 }
             }

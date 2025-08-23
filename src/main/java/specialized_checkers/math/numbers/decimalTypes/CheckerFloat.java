@@ -15,6 +15,10 @@ public class CheckerFloat extends AbstractChecker<Float, CheckerFloat> implement
         super(object, name);
     }
 
+    public CheckerFloat(Double object, String name) {
+        super(object.floatValue(), name);
+    }
+
     @Override
     protected CheckerFloat self() {
         return this;

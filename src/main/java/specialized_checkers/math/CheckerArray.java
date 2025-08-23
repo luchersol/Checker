@@ -7,14 +7,13 @@ import java.util.Comparator;
 import java.util.function.Predicate;
 
 import util.AbstractChecker;
-import util.ExceptionTracker;
 
 public class CheckerArray<T> extends AbstractChecker<T[], CheckerArray<T>>{
 
-    private static final String INIT_ARRAY = "array";
+    private static final String INIT_ARRAY = "math.array";
 
-    public CheckerArray(T[] object, String name, ExceptionTracker exceptionTracker) {
-        super(object, name, exceptionTracker);
+    public CheckerArray(T[] object, String name) {
+        super(object, name);
     } 
 
     @Override

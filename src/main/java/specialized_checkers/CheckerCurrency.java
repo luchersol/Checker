@@ -6,21 +6,20 @@ import java.util.Currency;
 import java.util.Locale;
 
 import util.AbstractChecker;
-import util.ExceptionTracker;
 
 public class CheckerCurrency extends AbstractChecker<Currency, CheckerCurrency> {
 
     private static final String INIT_CURRENCY = "currency";
 
-    public CheckerCurrency(Currency object, String name, ExceptionTracker exceptionTracker) {
-        super(object, name, exceptionTracker);
+    public CheckerCurrency(Currency object, String name) {
+        super(object, name);
     }
 
     @Override
     protected CheckerCurrency self() {
         return this;
     }
-    
+
     public CheckerCurrency hasSymbol(String symbol){
         return is(currency -> currency.getSymbol().equals(symbol), sendMessage(INIT_CURRENCY, "has_symbol"));
     }

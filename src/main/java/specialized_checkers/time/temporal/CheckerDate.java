@@ -5,7 +5,6 @@ import static util.Message.*;
 import java.util.Date;
 
 import util.AbstractChecker;
-import util.ExceptionTracker;
 
 public class CheckerDate extends AbstractChecker<Date, CheckerDate> implements InterfaceCheckerDate<CheckerDate, Date> {
 
@@ -14,8 +13,8 @@ public class CheckerDate extends AbstractChecker<Date, CheckerDate> implements I
     private static final String INIT_TEMPORAL = "time.temporal";
     // private static final String INIT_DATE = "time.temporal.date";
 
-    public CheckerDate(Date object, String name, ExceptionTracker exceptionTracker) {
-        super(object, name, exceptionTracker);
+    public CheckerDate(Date object, String name) {
+        super(object, name);
     }
 
     @Override
@@ -58,18 +57,8 @@ public class CheckerDate extends AbstractChecker<Date, CheckerDate> implements I
     }
 
     @Override
-    public CheckerDate isPastOrPresent() {
-        return is(time -> time.before(now()) || time.equals(now()), sendMessage(INIT_TEMPORAL, "is_past_or_present", DATE_STRING));
-    }
-
-    @Override
     public CheckerDate isFuture() {
         return is(time -> time.after(now()), sendMessage(INIT_TEMPORAL, "is_future", DATE_STRING));
     }
 
-    @Override
-    public CheckerDate isFutureOrPresent() {
-        return is(time -> time.after(now()) || time.equals(now()), sendMessage(INIT_TEMPORAL, "is_future_or_present", DATE_STRING));
-    }
-    
 }

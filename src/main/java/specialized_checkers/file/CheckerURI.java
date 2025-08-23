@@ -7,14 +7,13 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import util.AbstractChecker;
-import util.ExceptionTracker;
 
 public class CheckerURI extends AbstractChecker<URI, CheckerURI> {
 
     private static final String INIT_URI = "uri";
 
-    public CheckerURI(URI object, String name, ExceptionTracker exceptionTracker) {
-        super(object, name, exceptionTracker);
+    public CheckerURI(URI object, String name) {
+        super(object, name);
     }
 
     @Override

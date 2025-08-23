@@ -6,14 +6,13 @@ import java.awt.Color;
 import java.util.function.Predicate;
 
 import util.AbstractChecker;
-import util.ExceptionTracker;
 
 public class CheckerColor extends AbstractChecker<Color, CheckerColor> {
 
     private static final String INIT_COLOR = "color";
 
-    public CheckerColor(Color object, String name, ExceptionTracker exceptionTracker) {
-        super(object, name, exceptionTracker);
+    public CheckerColor(Color object, String name) {
+        super(object, name);
     }
 
     @Override
@@ -57,7 +56,7 @@ public class CheckerColor extends AbstractChecker<Color, CheckerColor> {
     public CheckerColor isLight(double umbral){
         Predicate<Color> predicate = color -> {
             double luminosidad = 0.2126 * color.getRed() + 0.7152 * color.getGreen() + 0.0722 * color.getBlue();
-            return luminosidad < umbral;
+            return luminosidad > umbral;
         };
 
         return is(predicate, sendMessage(INIT_COLOR, "is_light", umbral));
@@ -88,11 +87,11 @@ public class CheckerColor extends AbstractChecker<Color, CheckerColor> {
     public CheckerColor hasAlpha(int alpha){
         return is(color -> color.getAlpha() == alpha, sendMessage(INIT_COLOR, "has_alpha", alpha));
     }
-    
+
     public CheckerColor isDesaturated(double umbral) {
         Predicate<Color> predicate = color ->{
             float[] hsb = Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), null);
-            return hsb[1] < umbral; 
+            return hsb[1] < umbral;
         };
         return is(predicate, sendMessage(INIT_COLOR, "is_desturated"));
     }
@@ -113,11 +112,11 @@ public class CheckerColor extends AbstractChecker<Color, CheckerColor> {
 
     public CheckerColor hasHexadecimal(String hex){
         Predicate<Color> predicate = color -> {
-            int rgb = color.getRGB();  
-            String hexadecimal = String.format("#%06X", (0xFFFFFF & rgb));  
+            int rgb = color.getRGB();
+            String hexadecimal = String.format("#%06X", (0xFFFFFF & rgb));
             return hexadecimal.equals(hex);
-        };   
+        };
         return is(predicate, sendMessage(INIT_COLOR, "has_hexadecimal"));
     }
-    
+
 }

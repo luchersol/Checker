@@ -18,6 +18,10 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
         super(object, name);
     }
 
+    public CheckerLong(Integer object, String name) {
+        super(object.longValue(), name);
+    }
+
     @Override
     protected CheckerLong self() {
         return this;

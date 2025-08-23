@@ -6,15 +6,14 @@ import java.time.Period;
 import java.time.temporal.TemporalUnit;
 
 import util.AbstractChecker;
-import util.ExceptionTracker;
 
 public class CheckerPeriod extends AbstractChecker<Period, CheckerPeriod> {
 
     // private static final String INIT_TIME = "time";
     private static final String INIT_PERIOD = "time.period";
 
-    public CheckerPeriod(Period object, String name, ExceptionTracker exceptionTracker) {
-        super(object, name, exceptionTracker);
+    public CheckerPeriod(Period object, String name) {
+        super(object, name);
     }
 
     @Override
@@ -25,11 +24,11 @@ public class CheckerPeriod extends AbstractChecker<Period, CheckerPeriod> {
     public CheckerPeriod isPositive(){
         return is(period -> !period.isNegative() && !period.isZero(), sendMessage(INIT_PERIOD, "is_positive"));
     }
-    
+
     public CheckerPeriod isNegative(){
         return is(period -> period.isNegative(), sendMessage(INIT_PERIOD, "is_negative"));
     }
-    
+
     public CheckerPeriod isZero(){
         return is(period -> period.isZero(), sendMessage(INIT_PERIOD, "is_zero"));
     }
@@ -55,7 +54,7 @@ public class CheckerPeriod extends AbstractChecker<Period, CheckerPeriod> {
     }
 
     private static int comparateTo(Period self, Period other){
-        if(self.equals(other)) 
+        if(self.equals(other))
             return 0;
         if(self.getYears() > other.getYears())
             return 1;
@@ -63,7 +62,7 @@ public class CheckerPeriod extends AbstractChecker<Period, CheckerPeriod> {
             return 1;
         else if(self.getDays() > other.getDays())
             return 1;
-        else 
+        else
             return -1;
     }
 

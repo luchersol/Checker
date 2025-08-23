@@ -3,14 +3,13 @@ package specialized_checkers;
 import static util.Message.*;
 
 import util.AbstractChecker;
-import util.ExceptionTracker;
 
 public class CheckerString extends AbstractChecker<String, CheckerString> {
 
     private static final String INIT_STRING = "string";
 
-    public CheckerString(String object, String name, ExceptionTracker exceptionTracker) {
-        super(object, name, exceptionTracker);
+    public CheckerString(String object, String name) {
+        super(object, name);
     }
 
     @Override
@@ -74,18 +73,18 @@ public class CheckerString extends AbstractChecker<String, CheckerString> {
 
     public CheckerString isIPv6(){
         return is(string -> string.equals("^(([0-9a-fA-F]{1,4}:){7}([0-9a-fA-F]{1,4})|"+
-        "(([0-9a-fA-F]{1,4}:){1,7}|:):(([0-9a-fA-F]{1,4}:){1,6}[0-9a-fA-F]{1,4})?)$"), 
+        "(([0-9a-fA-F]{1,4}:){1,7}|:):(([0-9a-fA-F]{1,4}:){1,6}[0-9a-fA-F]{1,4})?)$"),
         sendMessage(INIT_STRING, "is_ipv6"));
     }
 
     public CheckerString hasSpecialCharacters(){
-        return is(string -> string.matches("[!@#$%^&*(),.?\":{}|<>]"), "has_special_characters");
+        return is(string -> string.matches(".*[!@#$%^&*(),.?\":{}|<>].*"), "has_special_characters");
     }
 
     public CheckerString isPalindrome() {
         String reversed = new StringBuilder(this.object).reverse().toString();
         return is(string -> string.equals(reversed), sendMessage(INIT_STRING, "is_palindrome"));
     }
-    
+
 
 }

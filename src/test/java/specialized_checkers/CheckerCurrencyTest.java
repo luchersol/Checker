@@ -1,19 +1,53 @@
 package specialized_checkers;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Currency;
 import java.util.Locale;
 
-public class CheckerCurrencyTest {
-    
-    public void hasSymbol(String symbol){
+import org.junit.jupiter.api.Test;
 
+class CheckerCurrencyTest {
+
+    @Test
+    void hasSymbol_shouldPassForCorrectSymbol() {
+        Currency usd = Currency.getInstance("USD");
+        CheckerCurrency checker = new CheckerCurrency(usd, "usd");
+        assertDoesNotThrow(() -> checker.hasSymbol("US$"));
     }
 
-    public void withDefaultFractionDigits(int n){
-
+    @Test
+    void hasSymbol_shouldFailForIncorrectSymbol() {
+        Currency usd = Currency.getInstance("USD");
+        CheckerCurrency checker = new CheckerCurrency(usd, "usd");
+        assertThrows(Exception.class, () -> checker.hasSymbol("€"));
     }
 
-    public void isFrom(Locale locale){
-
+    @Test
+    void withDefaultFractionDigits_shouldPassForCorrectDigits() {
+        Currency eur = Currency.getInstance("EUR");
+        CheckerCurrency checker = new CheckerCurrency(eur, "eur");
+        assertDoesNotThrow(() -> checker.withDefaultFractionDigits(2));
     }
 
+    @Test
+    void withDefaultFractionDigits_shouldFailForIncorrectDigits() {
+        Currency eur = Currency.getInstance("EUR");
+        CheckerCurrency checker = new CheckerCurrency(eur, "eur");
+        assertThrows(Exception.class, () -> checker.withDefaultFractionDigits(0));
+    }
+
+    @Test
+    void isFrom_shouldPassForMatchingLocale() {
+        Currency jpy = Currency.getInstance("JPY");
+        CheckerCurrency checker = new CheckerCurrency(jpy, "jpy");
+        assertDoesNotThrow(() -> checker.isFrom(Locale.JAPAN));
+    }
+
+    @Test
+    void isFrom_shouldFailForNonMatchingLocale() {
+        Currency usd = Currency.getInstance("USD");
+        CheckerCurrency checker = new CheckerCurrency(usd, "usd");
+        assertThrows(Exception.class, () -> checker.isFrom(Locale.FRANCE));
+    }
 }

@@ -5,7 +5,6 @@ import static util.Message.*;
 import java.time.LocalDateTime;
 
 import util.AbstractChecker;
-import util.ExceptionTracker;
 
 public class CheckerLocalDateTime extends AbstractChecker<LocalDateTime, CheckerLocalDateTime> implements InterfaceCheckerDate<CheckerLocalDateTime, LocalDateTime>  {
 
@@ -14,8 +13,8 @@ public class CheckerLocalDateTime extends AbstractChecker<LocalDateTime, Checker
     private static final String INIT_TEMPORAL = "time.temporal";
     // private static final String INIT_LOCAL_DATE_TIME = "time.temporal.local_date_time";
 
-    public CheckerLocalDateTime(LocalDateTime object, String name, ExceptionTracker exceptionTracker) {
-        super(object, name, exceptionTracker);
+    public CheckerLocalDateTime(LocalDateTime object, String name) {
+        super(object, name);
     }
 
     @Override
@@ -58,18 +57,8 @@ public class CheckerLocalDateTime extends AbstractChecker<LocalDateTime, Checker
     }
 
     @Override
-    public CheckerLocalDateTime isPastOrPresent() {
-        return is(time -> time.isBefore(now()) || time.equals(now()), sendMessage(INIT_TEMPORAL, "is_past_or_present", LOCAL_DATE_TIME_STRING));
-    }
-
-    @Override
     public CheckerLocalDateTime isFuture() {
         return is(time -> time.isAfter(now()), sendMessage(INIT_TEMPORAL, "is_future", LOCAL_DATE_TIME_STRING));
-    }
-
-    @Override
-    public CheckerLocalDateTime isFutureOrPresent() {
-        return is(time -> time.isAfter(now()) || time.equals(now()), sendMessage(INIT_TEMPORAL, "is_future_or_present", LOCAL_DATE_TIME_STRING));
     }
 
 }

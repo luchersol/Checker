@@ -39,16 +39,6 @@ public class Checker extends AbstractChecker<Object, Checker> {
         return new Checker(object, "Object");
     }
 
-    public Checker saveErrors() {
-        this.saveErrors = true;
-        return this;
-    }
-
-    public Checker notSaveErrors() {
-        this.saveErrors = false;
-        return this;
-    }
-
     public Checker isNull() {
         return is(object -> object == null, sendMessage(INIT_CHECKER, "is_null"));
     }
@@ -82,7 +72,7 @@ public class Checker extends AbstractChecker<Object, Checker> {
 
     public CheckerString isString() {
         isInstance(String.class);
-        return new CheckerString(transformOfNull(this.object, String.class), this.name, this.exceptionTracker);
+        return new CheckerString(transformOfNull(this.object, String.class), this.name);
     }
 
     public CheckerInteger isInteger() {
@@ -108,13 +98,13 @@ public class Checker extends AbstractChecker<Object, Checker> {
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public CheckerArray<?> isArray() {
         is(object -> object.getClass().isArray(), sendMessage(INIT_CHECKER, "is_array"));
-        return new CheckerArray(((Collection<?>) this.object).toArray(), this.name, this.exceptionTracker);
+        return new CheckerArray(((Collection<?>) this.object).toArray(), this.name);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public <T> CheckerArray<T> isArray(Class<T> clazz) {
         is(object -> object.getClass().isArray(), sendMessage(INIT_CHECKER, "is_array", clazz.getSimpleName()));
-        return new CheckerArray(((Collection<T>) this.object).toArray(), this.name, this.exceptionTracker);
+        return new CheckerArray(((Collection<T>) this.object).toArray(), this.name);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

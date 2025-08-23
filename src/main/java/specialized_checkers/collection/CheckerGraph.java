@@ -89,27 +89,27 @@ public class CheckerGraph<N,E extends Number> extends AbstractChecker<Graph<N,E>
     }
 
     public CheckerGraph<N,E> minEdges(int min) {
-        return is(graph -> min <= graph.countNodes(), sendMessage(INIT_GRAPH, "min_edges"));
+        return is(graph -> min <= graph.countEdges(), sendMessage(INIT_GRAPH, "min_edges"));
     }
 
     public CheckerGraph<N,E> maxEdges(int max) {
-        return is(graph -> graph.countNodes() <= max, sendMessage(INIT_GRAPH, "max_edges"));
+        return is(graph -> graph.countEdges() <= max, sendMessage(INIT_GRAPH, "max_edges"));
     }
 
     public CheckerGraph<N,E> inRangeEdges(int min, int max) {
-        return is(graph -> min <= graph.countNodes() && graph.countNodes() <= max, sendMessage(INIT_GRAPH, "in_range_edges"));
+        return is(graph -> min <= graph.countEdges() && graph.countEdges() <= max, sendMessage(INIT_GRAPH, "in_range_edges"));
     }
 
     public CheckerGraph<N,E> minWeight(double min) {
-        return is(graph -> graph.getEdges().stream().allMatch(edge -> min <= edge.getWeigth()), sendMessage(INIT_GRAPH, "min_edges"));
+        return is(graph -> graph.getEdges().stream().allMatch(edge -> min <= edge.getWeight()), sendMessage(INIT_GRAPH, "min_edges"));
     }
 
     public CheckerGraph<N,E> maxWeight(double max) {
-        return is(graph -> graph.getEdges().stream().allMatch(edge -> edge.getWeigth() <= max), sendMessage(INIT_GRAPH, "max_edges"));
+        return is(graph -> graph.getEdges().stream().allMatch(edge -> edge.getWeight() <= max), sendMessage(INIT_GRAPH, "max_edges"));
     }
 
     public CheckerGraph<N,E> inRangeWeight(double min, double max) {
-        return is(graph -> graph.getEdges().stream().allMatch(edge -> min <= edge.getWeigth() && edge.getWeigth() <= max), sendMessage(INIT_GRAPH, "in_range_edges"));
+        return is(graph -> graph.getEdges().stream().allMatch(edge -> min <= edge.getWeight() && edge.getWeight() <= max), sendMessage(INIT_GRAPH, "in_range_edges"));
     }
     
 }
