@@ -2,16 +2,26 @@ package specialized_checkers.file;
 
 import static util.Message.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.function.Predicate;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import util.AbstractChecker;
 
 public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
 
     private static final String INIT_JSON = "json";
+
+    public CheckerJson(File object, String name) throws IOException {
+        super(name);
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode rootNode = mapper.readTree(object);
+        this.object = rootNode;
+    }
 
     public CheckerJson(JsonNode object, String name) {
         super(object, name);
@@ -21,7 +31,7 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
     protected CheckerJson self() {
         return this;
     }
-    
+
     public CheckerJson hasProperty(String path){
         return is(json -> containsProperty(path), sendMessage(INIT_JSON, "has_property", path));
     }
@@ -29,7 +39,7 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
     public CheckerJson isArray(String path) {
         return checkNodeType(path, JsonNode::isArray, sendMessage(INIT_JSON, "is_array", path));
     }
-    
+
     public CheckerJson isBigDecimal(String path) {
         return checkNodeType(path, JsonNode::isBigDecimal, sendMessage(INIT_JSON, "is_big_decimal", path));
     }
@@ -37,11 +47,11 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
     public CheckerJson isBigInteger(String path) {
         return checkNodeType(path, JsonNode::isBigInteger, sendMessage(INIT_JSON, "is_big_integer", path));
     }
-    
+
     public CheckerJson isBinary(String path) {
         return checkNodeType(path, JsonNode::isBinary, sendMessage(INIT_JSON, "is_binary", path));
     }
-        
+
     public CheckerJson isBoolean(String path) {
         return checkNodeType(path, JsonNode::isBoolean, sendMessage(INIT_JSON, "is_boolean", path));
     }
@@ -49,7 +59,7 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
     public CheckerJson isContainerNode(String path) {
         return checkNodeType(path, JsonNode::isContainerNode, sendMessage(INIT_JSON, "is_container_node", path));
     }
-    
+
     public CheckerJson isDouble(String path) {
         return checkNodeType(path, JsonNode::isDouble, sendMessage(INIT_JSON, "is_node", path));
     }
@@ -65,9 +75,9 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
     public CheckerJson isFloatingPointNumber(String path) {
         return checkNodeType(path, JsonNode::isFloatingPointNumber, sendMessage(INIT_JSON, "is_floating_point_number", path));
     }
-    
+
     public CheckerJson isInt(String path) {
-        return checkNodeType(path, JsonNode::isInt, sendMessage(INIT_JSON, "is_int", path));   
+        return checkNodeType(path, JsonNode::isInt, sendMessage(INIT_JSON, "is_int", path));
     }
 
     public CheckerJson isIntegralNumber(String path) {
@@ -138,14 +148,14 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
         try {
             String[] keys = path.split("\\.");
             JsonNode current = this.object;
-    
+
             for (String key : keys) {
                 if (current == null) {
                     return null;
                 }
                 current = current.get(key);
             }
-            
+
             return clazz.cast(current);
         } catch (Exception e) {
             return null;

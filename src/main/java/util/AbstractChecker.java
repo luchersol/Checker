@@ -36,6 +36,14 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
     private static final String REGEX_METHOD_BY_NUMBER_PARAMS = "^(?<function>[a-zA-Z_][a-zA-Z0-9_]*)\\((?<numParams>\\d+)?\\)$";
     private static final String REGEX_PARENTHESIS = "\\((.*?)\\)";
 
+    public AbstractChecker(String name) {
+        this.object = null;
+        this.name = name;
+        this.exceptionTracker = ExceptionTracker.empty(name);
+        this.saveErrors = false;
+        this.stop = object == null;
+    }
+
     public AbstractChecker(T object, String name) {
         this.object = object;
         this.name = name;
@@ -130,10 +138,10 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
     }
 
     /**
-     * Hay que tener cuidado con las clases si se usa este método. 
-     * Ej: Si el método usa Map y el objeto es un HashMap internamente, fallará 
-     * 
-     * 
+     * Hay que tener cuidado con las clases si se usa este método.
+     * Ej: Si el método usa Map y el objeto es un HashMap internamente, fallará
+     *
+     *
      * @param propertyPath
      * @param args
      * @return
@@ -149,7 +157,7 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
                 numArgs += Integer.valueOf(str);
             }
         }
-            
+
         if (numArgs != args.length)
             return null;
 
@@ -170,10 +178,10 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
     /**
      * Para asegurarse de que se utilizando los métodos con las clases queridas, aplicar este método.
      * En los otros casos, se aplicará la clase del objeto que se obtenga con el método getClass()
-     * 
+     *
      * @param propertyPath
      * @param args
-     * @return 
+     * @return
      * @throws Exception
      */
     public Checker checkProperty(String propertyPath, List<Entry<Object, Class<?>>> args) throws Exception {
@@ -186,7 +194,7 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
             if(!str.isBlank())
                 numArgs += Integer.valueOf(str);
         }
-            
+
         if (numArgs != args.size())
             return null;
 
@@ -360,7 +368,7 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
                     throw new IllegalArgumentException("Unsupported parameter type for number-based method");
                 }
             }
-            
+
         }
 
         Method method = object.getClass().getDeclaredMethod(function, parameterTypes);
@@ -379,5 +387,5 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
     public T getObject() {
         return this.object;
     }
-    
+
 }
