@@ -2,6 +2,7 @@ package specialized_checkers.lambda;
 
 import static util.Message.*;
 
+import java.util.Objects;
 import java.util.function.Function;
 
 import util.AbstractChecker;
@@ -25,12 +26,14 @@ public class CheckerFunction<T, R> extends AbstractChecker<Function<T, R>, Check
         return this;
     }
 
-    public void activateDeepClone() {
+    public CheckerFunction<T, R> activateDeepClone() {
         this.deepClone = true;
+        return self();
     }
 
-    public void deactivateDeepClone() {
-        this.deepClone = true;
+    public CheckerFunction<T, R> deactivateDeepClone() {
+        this.deepClone = false;
+        return self();
     }
 
     /**
@@ -66,7 +69,7 @@ public class CheckerFunction<T, R> extends AbstractChecker<Function<T, R>, Check
         return is(f -> {
             try {
                 R result = f.apply(input);
-                return (expected == null && result == null) || (expected != null && expected.equals(result));
+                return Objects.equals(expected, result);
             } catch (Exception e) {
                 return false;
             }
