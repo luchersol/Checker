@@ -17,45 +17,78 @@ public class CheckerDate extends AbstractChecker<Date, CheckerDate> implements I
         super(object, name);
     }
 
+    /**
+     * @return CheckerDate
+     */
     @Override
     protected CheckerDate self() {
         return this;
     }
 
+    /**
+     * @return Date
+     */
     private static Date now(){
         return new Date();
     }
 
+    /**
+     * @param date
+     * @return CheckerDate
+     */
     @Override
     public CheckerDate isBefore(Date date) {
         return is(time -> time.before(date), sendMessage(INIT_TEMPORAL, "is_before", DATE_STRING, date));
     }
 
+    /**
+     * @param date
+     * @return CheckerDate
+     */
     @Override
     public CheckerDate isBeforeOrEqual(Date date) {
         return is(time -> time.before(date) || time.equals(date), sendMessage(INIT_TEMPORAL, "is_before_or_equal", DATE_STRING, date));
     }
 
+    /**
+     * @param date
+     * @return CheckerDate
+     */
     @Override
     public CheckerDate isAfter(Date date) {
         return is(time -> time.after(date), sendMessage(INIT_TEMPORAL, "is_after", DATE_STRING, date));
     }
 
+    /**
+     * @param date
+     * @return CheckerDate
+     */
     @Override
     public CheckerDate isAfterOrEqual(Date date) {
         return is(time -> time.after(date) || time.equals(date), sendMessage(INIT_TEMPORAL, "is_after_or_equal", DATE_STRING, date));
     }
 
+    /**
+     * @param date_1
+     * @param date_2
+     * @return CheckerDate
+     */
     @Override
     public CheckerDate inRange(Date date_1, Date date_2) {
         return is(time -> time.after(date_1) && time.before(date_2), sendMessage(INIT_TEMPORAL, "in_range", DATE_STRING, date_1, date_2));
     }
 
+    /**
+     * @return CheckerDate
+     */
     @Override
     public CheckerDate isPast() {
         return is(time -> time.before(now()), sendMessage(INIT_TEMPORAL, "is_past", DATE_STRING));
     }
 
+    /**
+     * @return CheckerDate
+     */
     @Override
     public CheckerDate isFuture() {
         return is(time -> time.after(now()), sendMessage(INIT_TEMPORAL, "is_future", DATE_STRING));

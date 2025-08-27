@@ -22,18 +22,27 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
         super(object, name);
     }
 
+    /**
+     * @return CheckerMatrix<T>
+     */
     @Override
     protected CheckerMatrix<T> self() {
         return this;
     }
-    
+
+    /**
+     * @return CheckerMatrix<T>
+     */
     public CheckerMatrix<T> isEmpty() {
         return is(matrix -> {
             if (matrix == null || matrix.length == 0) return true;
-            return Arrays.stream(matrix).allMatch(row -> row == null || row.length == 0); 
+            return Arrays.stream(matrix).allMatch(row -> row == null || row.length == 0);
         }, sendMessage(INIT_MATRIX, "is_empty"));
     }
 
+    /**
+     * @return CheckerMatrix<T>
+     */
     public CheckerMatrix<T> isSquare() {
         Predicate<T[][]> predicate = matrix -> {
             if (matrix.length == 0)
@@ -48,6 +57,9 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
         return is(predicate, sendMessage(INIT_MATRIX, "is_square"));
     }
 
+    /**
+     * @return CheckerMatrix<T>
+     */
     public CheckerMatrix<T> isZero() {
         is(matrix -> matrix.length > 0
                 && Arrays.stream(matrix).flatMap(Arrays::stream).allMatch(elem -> elem.doubleValue() == 0),
@@ -55,6 +67,9 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
         return this;
     }
 
+    /**
+     * @return CheckerMatrix<T>
+     */
     public CheckerMatrix<T> isIdentity() {
         isSquare();
         Predicate<T[][]> predicate = matrix -> {
@@ -72,6 +87,9 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
         return is(predicate, sendMessage(INIT_MATRIX, "is_identity"));
     }
 
+    /**
+     * @return CheckerMatrix<T>
+     */
     public CheckerMatrix<T> isSymmetric(){
         isSquare();
         Predicate<T[][]> predicate = matrix -> {
@@ -88,6 +106,9 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
         return is(predicate, sendMessage(INIT_MATRIX, "is_symmetric"));
     }
 
+    /**
+     * @return CheckerMatrix<T>
+     */
     public CheckerMatrix<T> isDiagonal(){
         isSquare();
         Predicate<T[][]> predicate = matrix -> {
@@ -104,6 +125,9 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
         return is(predicate, sendMessage(INIT_MATRIX, "is_diagonal"));
     }
 
+    /**
+     * @return CheckerMatrix<T>
+     */
     public CheckerMatrix<T> isOrthogonal(){
         isSquare();
         Predicate<T[][]> predicate = matrix -> {
@@ -119,6 +143,9 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
         return is(predicate, sendMessage(INIT_MATRIX, "is_orthogonal"));
     }
 
+    /**
+     * @return CheckerMatrix<T>
+     */
     public CheckerMatrix<T> isInvertible(){
         isSquare();
         Predicate<T[][]> predicate = matrix -> {
@@ -133,13 +160,16 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
         return is(predicate, sendMessage(INIT_MATRIX, "is_invertible"));
     }
 
+    /**
+     * @return CheckerMatrix<T>
+     */
     public CheckerMatrix<T> isPositiveDefinite(){
         isSquare();
         Predicate<T[][]> predicate = matrix -> {
             RealMatrix mat = new Array2DRowRealMatrix(convertToDoubleMatrix(matrix));
             EigenDecomposition eigenDecomposition = new EigenDecomposition(mat);
             for (double eigenvalue : eigenDecomposition.getRealEigenvalues()) {
-                if (eigenvalue <= 0) 
+                if (eigenvalue <= 0)
                     return false;
             }
             return true;
@@ -147,6 +177,9 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
         return is(predicate, sendMessage(INIT_MATRIX, "is_positive_definite"));
     }
 
+    /**
+     * @return CheckerMatrix<T>
+     */
     public CheckerMatrix<T> isUpperTriangular(){
         isSquare();
         Predicate<T[][]> predicate = matrix -> {
@@ -163,6 +196,9 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
         return is(predicate, sendMessage(INIT_MATRIX, "is_upper_triangular"));
     }
 
+    /**
+     * @return CheckerMatrix<T>
+     */
     public CheckerMatrix<T> isLowerTriangular(){
         isSquare();
         Predicate<T[][]> predicate = matrix -> {
@@ -179,6 +215,10 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
         return is(predicate, sendMessage(INIT_MATRIX, "is_lower_triangular"));
     }
 
+    /**
+     * @param rank
+     * @return CheckerMatrix<T>
+     */
     public CheckerMatrix<T> hasRank(int rank){
         isSquare();
         Predicate<T[][]> predicate = matrix -> {
@@ -189,6 +229,9 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
         return is(predicate, sendMessage(INIT_MATRIX, "has_rank", rank));
     }
 
+    /**
+     * @return CheckerMatrix<T>
+     */
     public CheckerMatrix<T> hasRealEigenvalues(){
         isSquare();
         Predicate<T[][]> predicate = matrix -> {
@@ -204,6 +247,9 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
         return is(predicate, sendMessage(INIT_MATRIX, "has_real_eigenvalues"));
     }
 
+    /**
+     * @return CheckerMatrix<T>
+     */
     public CheckerMatrix<T> isFullRank(){
         isSquare();
         Predicate<T[][]> predicate = matrix -> {
@@ -215,18 +261,30 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
         return is(predicate, sendMessage(INIT_MATRIX, "is_full_rank"));
     }
 
+    /**
+     * @param predicate
+     * @return CheckerMatrix<T>
+     */
     public CheckerMatrix<T> anyMatch(Predicate<T> predicate) {
         is(matrix -> Arrays.stream(matrix).flatMap(Arrays::stream).anyMatch(elem -> predicate.test(elem)),
                 sendMessage(INIT_MATRIX, "any_match"));
         return this;
     }
 
+    /**
+     * @param predicate
+     * @return CheckerMatrix<T>
+     */
     public CheckerMatrix<T> allMatch(Predicate<T> predicate) {
         is(matrix -> Arrays.stream(matrix).flatMap(Arrays::stream).allMatch(elem -> predicate.test(elem)),
                 sendMessage(INIT_MATRIX, "all_match"));
         return this;
     }
 
+    /**
+     * @param matrix
+     * @return double[][]
+     */
     public static <T extends Number> double[][] convertToDoubleMatrix(T[][] matrix) {
         int rows = matrix.length;
         int cols = matrix[0].length;

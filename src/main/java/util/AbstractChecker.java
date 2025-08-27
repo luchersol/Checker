@@ -73,6 +73,11 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
 
     protected abstract C self();
 
+    /**
+     * @param condition
+     * @param message
+     * @return C
+     */
     public C is(Predicate<T> condition, String message) {
         RuntimeException exception = new RuntimeException(new Error(message));
         if (stop) {
@@ -95,32 +100,57 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
         return self();
     }
 
+    /**
+     * @param condition
+     * @return C
+     */
     public C is(Predicate<T> condition) {
         return is(condition, sendMessage(INIT_ABSTRACT_CHECKER, "is"));
     }
 
+    /**
+     * @param condition
+     * @param message
+     * @return C
+     */
     public C isNot(Predicate<T> condition, String message) {
         return is(condition.negate(), message);
     }
 
+    /**
+     * @param condition
+     * @return C
+     */
     public C isNot(Predicate<T> condition) {
         return is(condition.negate(), sendMessage(INIT_ABSTRACT_CHECKER, "is_not"));
     }
 
+    /**
+     * @return C
+     */
     public C saveErrors() {
         this.saveErrors = true;
         return self();
     }
 
+    /**
+     * @return C
+     */
     public C notSaveErrors() {
         this.saveErrors = false;
         return self();
     }
 
+    /**
+     * @return Boolean
+     */
     public Boolean hasErrors() {
         return this.exceptionTracker.hasErrors();
     }
 
+    /**
+     * @return Boolean
+     */
     public Boolean hasNotErrors() {
         return this.exceptionTracker.hasNotErrors();
     }
@@ -210,6 +240,12 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
         }
     }
 
+    /**
+     * @param propertyPath
+     * @param args
+     * @return Checker
+     * @throws Exception
+     */
     public Checker checkProperty(String propertyPath, Map<String, Object> args) throws Exception {
         int numArgs = 0;
         Pattern pattern = Pattern.compile(REGEX_PARENTHESIS);
@@ -236,6 +272,15 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
         }
     }
 
+    /**
+     * @param object
+     * @param properties
+     * @param args
+     * @return Object
+     * @throws SecurityException
+     * @throws IllegalArgumentException
+     * @throws IllegalAccessException
+     */
     public static Object getProperty(Object object, Queue<String> properties, Object args)
             throws SecurityException, IllegalArgumentException, IllegalAccessException {
         try {
@@ -245,6 +290,16 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
         }
     }
 
+    /**
+     * @param object
+     * @param properties
+     * @param args
+     * @return Object
+     * @throws NoSuchFieldException
+     * @throws SecurityException
+     * @throws IllegalArgumentException
+     * @throws IllegalAccessException
+     */
     @SuppressWarnings("unchecked")
     private static Object tryGetField(Object object, Queue<String> properties, Object args)
             throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
@@ -261,6 +316,12 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
         }
     }
 
+    /**
+     * @param object
+     * @param properties
+     * @param args
+     * @return Object
+     */
     @SuppressWarnings("unchecked")
     private static Object tryGetMethod(Object object, Queue<String> properties, Object args) {
         Queue<String> propCopy = new LinkedList<>(properties);
@@ -280,6 +341,16 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
         }
     }
 
+    /**
+     * @param object
+     * @param properties
+     * @param params
+     * @return Object
+     * @throws NoSuchFieldException
+     * @throws SecurityException
+     * @throws IllegalArgumentException
+     * @throws IllegalAccessException
+     */
     private static Object getField(Object object, Queue<String> properties, Object params)
             throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
         String propertyField = properties.poll();
@@ -294,6 +365,17 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
 
     }
 
+    /**
+     * @param object
+     * @param propertyPath
+     * @param params
+     * @return Object
+     * @throws NoSuchMethodException
+     * @throws SecurityException
+     * @throws IllegalAccessException
+     * @throws IllegalArgumentException
+     * @throws InvocationTargetException
+     */
     public static Object getMethod(Object object, Queue<String> propertyPath, Object params)
             throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
             InvocationTargetException {
@@ -316,6 +398,19 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
         return null;
     }
 
+    /**
+     * @param object
+     * @param propertyPath
+     * @param params
+     * @param matcher
+     * @param isNameParams
+     * @return Object
+     * @throws NoSuchMethodException
+     * @throws SecurityException
+     * @throws IllegalAccessException
+     * @throws IllegalArgumentException
+     * @throws InvocationTargetException
+     */
     @SuppressWarnings("unchecked")
     private static Object handleMethod(Object object, Queue<String> propertyPath, Object params, Matcher matcher,
             boolean isNameParams)
@@ -378,12 +473,18 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
         return result == null ? null : propertyPath.isEmpty() ? result : getProperty(result, propertyPath, params);
     }
 
+    /**
+     * @return Checker
+     */
     public Checker end(){
         ExceptionTracker exceptionTracker = this.exceptionTracker;
         this.backObject.exceptionTracker.merge(exceptionTracker);
         return (Checker) this.backObject;
     }
 
+    /**
+     * @return T
+     */
     public T getObject() {
         return this.object;
     }

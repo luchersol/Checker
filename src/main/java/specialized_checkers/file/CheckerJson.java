@@ -27,95 +27,188 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
         super(object, name);
     }
 
+    /**
+     * @return CheckerJson
+     */
     @Override
     protected CheckerJson self() {
         return this;
     }
 
+    /**
+     * @param path
+     * @return CheckerJson
+     */
     public CheckerJson hasProperty(String path){
         return is(json -> containsProperty(path), sendMessage(INIT_JSON, "has_property", path));
     }
 
+    /**
+     * @param path
+     * @return CheckerJson
+     */
     public CheckerJson isArray(String path) {
         return checkNodeType(path, JsonNode::isArray, sendMessage(INIT_JSON, "is_array", path));
     }
 
+    /**
+     * @param path
+     * @return CheckerJson
+     */
     public CheckerJson isBigDecimal(String path) {
         return checkNodeType(path, JsonNode::isBigDecimal, sendMessage(INIT_JSON, "is_big_decimal", path));
     }
 
+    /**
+     * @param path
+     * @return CheckerJson
+     */
     public CheckerJson isBigInteger(String path) {
         return checkNodeType(path, JsonNode::isBigInteger, sendMessage(INIT_JSON, "is_big_integer", path));
     }
 
+    /**
+     * @param path
+     * @return CheckerJson
+     */
     public CheckerJson isBinary(String path) {
         return checkNodeType(path, JsonNode::isBinary, sendMessage(INIT_JSON, "is_binary", path));
     }
 
+    /**
+     * @param path
+     * @return CheckerJson
+     */
     public CheckerJson isBoolean(String path) {
         return checkNodeType(path, JsonNode::isBoolean, sendMessage(INIT_JSON, "is_boolean", path));
     }
 
+    /**
+     * @param path
+     * @return CheckerJson
+     */
     public CheckerJson isContainerNode(String path) {
         return checkNodeType(path, JsonNode::isContainerNode, sendMessage(INIT_JSON, "is_container_node", path));
     }
 
+    /**
+     * @param path
+     * @return CheckerJson
+     */
     public CheckerJson isDouble(String path) {
         return checkNodeType(path, JsonNode::isDouble, sendMessage(INIT_JSON, "is_node", path));
     }
 
+    /**
+     * @param path
+     * @return CheckerJson
+     */
     public CheckerJson isEmpty(String path) {
         return checkNodeType(path, JsonNode::isEmpty, sendMessage(INIT_JSON, "is_empty", path));
     }
 
+    /**
+     * @param path
+     * @return CheckerJson
+     */
     public CheckerJson isFloat(String path) {
         return checkNodeType(path, JsonNode::isFloat, sendMessage(INIT_JSON, "is_float", path));
     }
 
+    /**
+     * @param path
+     * @return CheckerJson
+     */
     public CheckerJson isFloatingPointNumber(String path) {
         return checkNodeType(path, JsonNode::isFloatingPointNumber, sendMessage(INIT_JSON, "is_floating_point_number", path));
     }
 
+    /**
+     * @param path
+     * @return CheckerJson
+     */
     public CheckerJson isInt(String path) {
         return checkNodeType(path, JsonNode::isInt, sendMessage(INIT_JSON, "is_int", path));
     }
 
+    /**
+     * @param path
+     * @return CheckerJson
+     */
     public CheckerJson isIntegralNumber(String path) {
         return checkNodeType(path, JsonNode::isIntegralNumber, sendMessage(INIT_JSON, "is_integeral_number", path));
     }
 
+    /**
+     * @param path
+     * @return CheckerJson
+     */
     public CheckerJson isLong(String path) {
         return checkNodeType(path, JsonNode::isLong, sendMessage(INIT_JSON, "is_long", path));
     }
 
+    /**
+     * @param path
+     * @return CheckerJson
+     */
     public CheckerJson isMissingNode(String path) {
         return checkNodeType(path, JsonNode::isMissingNode, sendMessage(INIT_JSON, "is_missing_node", path));
     }
 
+    /**
+     * @param path
+     * @return CheckerJson
+     */
     public CheckerJson isNull(String path) {
         return checkNodeType(path, JsonNode::isNull, sendMessage(INIT_JSON, "is_null", path));
     }
 
+    /**
+     * @param path
+     * @return CheckerJson
+     */
     public CheckerJson isNumber(String path) {
         return checkNodeType(path, JsonNode::isNumber, sendMessage(INIT_JSON, "is_number", path));
     }
 
+    /**
+     * @param path
+     * @return CheckerJson
+     */
     public CheckerJson isObject(String path) {
         return checkNodeType(path, JsonNode::isObject, sendMessage(INIT_JSON, "is_object", path));
     }
 
+    /**
+     * @param path
+     * @return CheckerJson
+     */
     public CheckerJson isPojo(String path) {
         return checkNodeType(path, JsonNode::isPojo, sendMessage(INIT_JSON, "is_pojo", path));
     }
 
+    /**
+     * @param path
+     * @return CheckerJson
+     */
     public CheckerJson isShort(String path) {
         return checkNodeType(path, JsonNode::isShort, sendMessage(INIT_JSON, "is_short", path));
     }
 
+    /**
+     * @param path
+     * @return CheckerJson
+     */
     public CheckerJson isTextual(String path) {
         return checkNodeType(path, JsonNode::isTextual, sendMessage(INIT_JSON, "is_textual", path));
     }
 
+    /**
+     * @param path
+     * @param min
+     * @param max
+     * @return CheckerJson
+     */
     public CheckerJson isInRange(String path, int min, int max) {
         return is(json -> {
             JsonNode node = getProperty(path);
@@ -123,6 +216,11 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
         }, sendMessage(INIT_JSON, "is_in_range", path));
     }
 
+    /**
+     * @param path
+     * @param regex
+     * @return CheckerJson
+     */
     public CheckerJson matchesRegex(String path, String regex) {
         return is(json -> {
             JsonNode node = getProperty(path);
@@ -130,6 +228,11 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
         }, sendMessage(INIT_JSON, "matches_regex", path));
     }
 
+    /**
+     * @param path
+     * @param allowedValues
+     * @return CheckerJson
+     */
     public CheckerJson isInEnum(String path, List<String> allowedValues) {
         return is(json -> {
             JsonNode node = getProperty(path);
@@ -137,6 +240,12 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
         }, sendMessage(INIT_JSON, "is_in_enum", path));
     }
 
+    /**
+     * @param path
+     * @param min
+     * @param max
+     * @return CheckerJson
+     */
     public CheckerJson hasLengthBetween(String path, int min, int max) {
         return is(json -> {
             JsonNode node = getProperty(path);
@@ -144,6 +253,11 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
         }, sendMessage(INIT_JSON, "has_length_between", path));
     }
 
+    /**
+     * @param path
+     * @param clazz
+     * @return T
+     */
     private <T> T getProperty(String path, Class<T> clazz) {
         try {
             String[] keys = path.split("\\.");
@@ -162,14 +276,28 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
         }
     }
 
+    /**
+     * @param path
+     * @return JsonNode
+     */
     private JsonNode getProperty(String path) {
         return getProperty(path, JsonNode.class);
     }
 
+    /**
+     * @param path
+     * @return boolean
+     */
     private boolean containsProperty(String path) {
         return getProperty(path) != null;
     }
 
+    /**
+     * @param path
+     * @param condition
+     * @param messageKey
+     * @return CheckerJson
+     */
     private CheckerJson checkNodeType(String path, Predicate<JsonNode> condition, String messageKey) {
         return is(json -> {
             JsonNode node = getProperty(path);

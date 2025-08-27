@@ -57,6 +57,13 @@
             <artifactId>snakeyaml</artifactId>
             <version>2.4</version>
         </dependency>
+
+        <!-- Clonado -->
+        <dependency>
+            <groupId>com.esotericsoftware</groupId>
+            <artifactId>kryo</artifactId>
+            <version>5.5.0</version>
+        </dependency>
     </dependencies>
 
 

@@ -27,7 +27,7 @@ public class Graph<N,E extends Number> {
             this.weight = weight;
             this.properties = properties;
         }
-        
+
         public Edge(N from, N to, Map<String, ?> properties){
             this(from, to, null, properties);
         }
@@ -80,10 +80,19 @@ public class Graph<N,E extends Number> {
         this(Collections.emptyList(), false);
     }
 
+    /**
+     * @param node
+     */
     private void addNode(N node) {
         this.adjacencyMap.putIfAbsent(node, new HashSet<>());
     }
 
+    /**
+     * @param from
+     * @param to
+     * @param weight
+     * @param properties
+     */
     private void addEdge(N from, N to, E weight, Map<String, ?> properties) {
         addNode(from);
         addNode(to);
@@ -93,12 +102,19 @@ public class Graph<N,E extends Number> {
         }
     }
 
+    /**
+     * @param edges
+     */
     private void addEdges(Collection<Edge<N,E>> edges) {
        for (Edge<N,E> edge : edges) {
             this.addEdge(edge.from, edge.to, edge.weight, edge.properties);
        }
     }
 
+    /**
+     * @param node
+     * @return Set<N>
+     */
     public Set<N> getNeighbors(N node) {
         return this.adjacencyMap.getOrDefault(node, Collections.emptySet())
                                 .stream()
@@ -106,24 +122,39 @@ public class Graph<N,E extends Number> {
                                 .collect(Collectors.toSet());
     }
 
+    /**
+     * @return Set<N>
+     */
     public Set<N> getNodes() {
         return this.adjacencyMap.keySet();
     }
 
+    /**
+     * @return Set<Edge<N, E>>
+     */
     public Set<Graph.Edge<N,E>> getEdges() {
         return this.adjacencyMap.values().stream().flatMap(Set::stream).collect(Collectors.toSet());
     }
 
+    /**
+     * @return boolean
+     */
     // CHECKERS
 
     public boolean isEmpty() {
         return this.adjacencyMap.isEmpty();
     }
 
+    /**
+     * @return boolean
+     */
     public boolean isTree() {
         return !isDirected() && isConnected() && !hasCycle();
     }
 
+    /**
+     * @return boolean
+     */
     public boolean isBinaryTree() {
         if(isTree()) return false;
 
@@ -147,10 +178,16 @@ public class Graph<N,E extends Number> {
         return true;
     }
 
+    /**
+     * @return boolean
+     */
     public boolean isDirected() {
         return this.directed;
     }
 
+    /**
+     * @return boolean
+     */
     public boolean isConnected() {
         if (this.adjacencyMap.isEmpty()) return true;
         Set<N> visited = new HashSet<>();
@@ -159,6 +196,9 @@ public class Graph<N,E extends Number> {
         return visited.size() == this.adjacencyMap.size();
     }
 
+    /**
+     * @return boolean
+     */
     public boolean hasCycle() {
         Set<N> visited = new HashSet<>();
         Set<N> recStack = new HashSet<>();
@@ -169,41 +209,81 @@ public class Graph<N,E extends Number> {
         return false;
     }
 
+    /**
+     * @param node
+     * @return boolean
+     */
     public boolean containsNode(N node) {
         return this.adjacencyMap.containsKey(node);
     }
 
+    /**
+     * @param from
+     * @param to
+     * @return boolean
+     */
     public boolean containsEdge(N from, N to) {
         return this.adjacencyMap.getOrDefault(from, Collections.emptySet())
                                 .stream()
                                 .anyMatch(edge -> Objects.equals(edge.getTo(), to));
     }
 
+    /**
+     * @param edge
+     * @return boolean
+     */
     public boolean containsEdge(Graph.Edge<N,E> edge) {
         return this.adjacencyMap.containsKey(edge.from) && this.adjacencyMap.get(edge.from).contains(edge.to);
     }
 
+    /**
+     * @param condition
+     * @return boolean
+     */
     public boolean anyNodesMatch(Predicate<N> condition) {
         return this.adjacencyMap.keySet().stream().anyMatch(condition);
     }
 
+    /**
+     * @param condition
+     * @return boolean
+     */
     public boolean allNodesMatch(Predicate<N> condition) {
         return this.adjacencyMap.keySet().stream().allMatch(condition);
     }
 
+    /**
+     * @param condition
+     * @return boolean
+     */
     public boolean anyEdgesMatch(Predicate<Edge<N,E>> condition) {
         return this.adjacencyMap.values().stream().flatMap(set -> set.stream()).anyMatch(condition);
     }
 
+    /**
+     * @param condition
+     * @return boolean
+     */
     public boolean allEdgesMatch(Predicate<Edge<N,E>> condition) {
         return this.adjacencyMap.values().stream().flatMap(set -> set.stream()).allMatch(condition);
     }
 
+    /**
+     * @param start
+     * @param end
+     * @return boolean
+     */
     public boolean hasPath(N start, N end) {
         Set<N> visited = new HashSet<>();
         return dfsPath(start, end, visited);
     }
 
+    /**
+     * @param current
+     * @param target
+     * @param visited
+     * @return boolean
+     */
     private boolean dfsPath(N current, N target, Set<N> visited) {
         if (current.equals(target)) return true;
         if (!visited.add(current)) return false;
@@ -214,15 +294,25 @@ public class Graph<N,E extends Number> {
         return false;
     }
 
+    /**
+     * @return int
+     */
     public int countNodes(){
         return this.adjacencyMap.size();
     }
 
+    /**
+     * @return int
+     */
     public int countEdges(){
         int count = adjacencyMap.values().stream().mapToInt(Set::size).sum();
         return directed ? count : count / 2;
     }
 
+    /**
+     * @param node
+     * @param visited
+     */
     private void dfsVisit(N node, Set<N> visited) {
         if (!visited.add(node)) return;
         for (N neighbor : getNeighbors(node)) {
@@ -230,6 +320,12 @@ public class Graph<N,E extends Number> {
         }
     }
 
+    /**
+     * @param node
+     * @param visited
+     * @param recStack
+     * @return boolean
+     */
     private boolean dfsCycle(N node, Set<N> visited, Set<N> recStack) {
         if (recStack.contains(node)) return true;
         if (visited.contains(node)) return false;
@@ -245,6 +341,9 @@ public class Graph<N,E extends Number> {
         return false;
     }
 
+    /**
+     * @return int
+     */
     public int connectedComponents() {
         Set<N> visited = new HashSet<>();
         int count = 0;

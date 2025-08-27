@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Tree<T> {
-    
+
     private final TreeNode<T> root;
     private final boolean isBinaryTree;
 
@@ -59,23 +59,40 @@ public class Tree<T> {
         }
     }
 
+    /**
+     * @return TreeNode<T>
+     */
     public TreeNode<T> getRoot() {
         return this.root;
     }
 
+    /**
+     * @return boolean
+     */
     public boolean isEmpty() {
         return this.root == null;
     }
 
+    /**
+     * @return boolean
+     */
     public boolean isBinaryTree() {
         return this.isBinaryTree;
     }
 
+    /**
+     * @return boolean
+     */
     public boolean isSymmetric() {
         if (root == null) return true;
         return isSymmetric(root, root);
     }
 
+    /**
+     * @param t1
+     * @param t2
+     * @return boolean
+     */
     private boolean isSymmetric(TreeNode<T> t1, TreeNode<T> t2) {
         if (t1 == null && t2 == null) return true;
         if (t1 == null || t2 == null) return false;
@@ -92,20 +109,34 @@ public class Tree<T> {
         return true;
     }
 
+    /**
+     * @return boolean
+     */
     public boolean isFull() {
         return isFull(root);
     }
 
+    /**
+     * @param node
+     * @return boolean
+     */
     private boolean isFull(TreeNode<T> node) {
         if (node == null) return true;
         if (!node.isLeaf() && node.children.size() != 2) return false;
         return node.children.stream().allMatch(this::isFull);
     }
 
+    /**
+     * @return int
+     */
     public int getDepth() {
         return getDepth(root);
     }
 
+    /**
+     * @param node
+     * @return int
+     */
     private int getDepth(TreeNode<T> node) {
         if (node == null) return 0;
         if (node.isLeaf()) return 1;
@@ -115,20 +146,34 @@ public class Tree<T> {
                                 .orElse(0);
     }
 
+    /**
+     * @return int
+     */
     public int countLeaves() {
         return countLeaves(root);
     }
 
+    /**
+     * @param node
+     * @return int
+     */
     private int countLeaves(TreeNode<T> node) {
         if (node == null) return 0;
         if (node.isLeaf()) return 1;
         return node.children.stream().mapToInt(this::countLeaves).sum();
     }
 
+    /**
+     * @return int
+     */
     public int maxDegree() {
         return maxDegree(root);
     }
 
+    /**
+     * @param node
+     * @return int
+     */
     private int maxDegree(TreeNode<T> node) {
         if (node == null) return 0;
         int maxChildDegree = node.children.stream()
@@ -138,12 +183,20 @@ public class Tree<T> {
         return Math.max(node.children.size(), maxChildDegree);
     }
 
+    /**
+     * @return int
+     */
     public int diameter() {
         int[] diameter = new int[1];
         heightForDiameter(root, diameter);
         return diameter[0];
     }
 
+    /**
+     * @param node
+     * @param diameter
+     * @return int
+     */
     private int heightForDiameter(TreeNode<T> node, int[] diameter) {
         if (node == null) return 0;
         int max1 = 0, max2 = 0;

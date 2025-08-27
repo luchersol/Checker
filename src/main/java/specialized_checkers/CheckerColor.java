@@ -15,31 +15,54 @@ public class CheckerColor extends AbstractChecker<Color, CheckerColor> {
         super(object, name);
     }
 
+    /**
+     * @return CheckerColor
+     */
     @Override
     protected CheckerColor self() {
         return this;
     }
 
+    /**
+     * @return CheckerColor
+     */
     public CheckerColor isBlack(){
         return is(color -> color.equals(Color.BLACK), sendMessage(INIT_COLOR, "is_black"));
     }
 
+    /**
+     * @return CheckerColor
+     */
     public CheckerColor isWhite(){
         return is(color -> color.equals(Color.WHITE), sendMessage(INIT_COLOR, "is_white"));
     }
 
+    /**
+     * @return CheckerColor
+     */
     public CheckerColor isGray(){
         return is(color -> color.getRed() == color.getGreen() && color.getGreen() == color.getBlue(), sendMessage(INIT_COLOR, "is_gray"));
     }
 
+    /**
+     * @param other
+     * @return CheckerColor
+     */
     public CheckerColor isColor(Color other){
         return is(color -> color.equals(other), sendMessage(INIT_COLOR, "is_color", other));
     }
 
+    /**
+     * @return CheckerColor
+     */
     public CheckerColor isDark(){
         return isDark(128);
     }
 
+    /**
+     * @param umbral
+     * @return CheckerColor
+     */
     public CheckerColor isDark(double umbral){
         Predicate<Color> predicate = color -> {
             double luminosidad = 0.2126 * color.getRed() + 0.7152 * color.getGreen() + 0.0722 * color.getBlue();
@@ -49,10 +72,17 @@ public class CheckerColor extends AbstractChecker<Color, CheckerColor> {
         return is(predicate, sendMessage(INIT_COLOR, "is_dark", umbral));
     }
 
+    /**
+     * @return CheckerColor
+     */
     public CheckerColor isLight(){
         return isLight(128);
     }
 
+    /**
+     * @param umbral
+     * @return CheckerColor
+     */
     public CheckerColor isLight(double umbral){
         Predicate<Color> predicate = color -> {
             double luminosidad = 0.2126 * color.getRed() + 0.7152 * color.getGreen() + 0.0722 * color.getBlue();
@@ -62,6 +92,9 @@ public class CheckerColor extends AbstractChecker<Color, CheckerColor> {
         return is(predicate, sendMessage(INIT_COLOR, "is_light", umbral));
     }
 
+    /**
+     * @return CheckerColor
+     */
     public CheckerColor isTransparent(){
         return is(color -> color.getAlpha() < 255, sendMessage(INIT_COLOR, "is_transparent"));
     }
@@ -75,6 +108,11 @@ public class CheckerColor extends AbstractChecker<Color, CheckerColor> {
         return hasContrast(other, 128);
     }
 
+    /**
+     * @param other
+     * @param umbral
+     * @return CheckerColor
+     */
     public CheckerColor hasContrast(Color other, double umbral){
         Predicate<Color> predicate = color -> {
             double luminancia1 = 0.2126 * color.getRed() + 0.7152 * color.getGreen() + 0.0722 * color.getBlue();
@@ -84,10 +122,18 @@ public class CheckerColor extends AbstractChecker<Color, CheckerColor> {
         return is(predicate, sendMessage(INIT_COLOR, "has_contrast", umbral));
     }
 
+    /**
+     * @param alpha
+     * @return CheckerColor
+     */
     public CheckerColor hasAlpha(int alpha){
         return is(color -> color.getAlpha() == alpha, sendMessage(INIT_COLOR, "has_alpha", alpha));
     }
 
+    /**
+     * @param umbral
+     * @return CheckerColor
+     */
     public CheckerColor isDesaturated(double umbral) {
         Predicate<Color> predicate = color ->{
             float[] hsb = Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), null);
@@ -96,6 +142,11 @@ public class CheckerColor extends AbstractChecker<Color, CheckerColor> {
         return is(predicate, sendMessage(INIT_COLOR, "is_desturated"));
     }
 
+    /**
+     * @param other
+     * @param umbral
+     * @return CheckerColor
+     */
     public CheckerColor isSimilar(Color other, double umbral) {
         Predicate<Color> predicate = color -> {
             int r1 = color.getRed(), g1 = color.getGreen(), b1 = color.getBlue();
@@ -106,10 +157,17 @@ public class CheckerColor extends AbstractChecker<Color, CheckerColor> {
         return is(predicate, sendMessage(INIT_COLOR, "is_similar"));
     }
 
+    /**
+     * @return CheckerColor
+     */
     public CheckerColor isOpaque(){
         return is(color -> color.getAlpha() == 255, sendMessage(INIT_COLOR, "is_opaque"));
     }
 
+    /**
+     * @param hex
+     * @return CheckerColor
+     */
     public CheckerColor hasHexadecimal(String hex){
         Predicate<Color> predicate = color -> {
             int rgb = color.getRGB();

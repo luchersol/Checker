@@ -8,7 +8,7 @@ import java.util.Properties;
 import org.fusesource.jansi.Ansi;
 
 public class Message {
-    
+
     private static final Properties PROPERTIES = new Properties();
 
     static {
@@ -19,6 +19,10 @@ public class Message {
         }
     }
 
+    /**
+     * @param key
+     * @return String
+     */
     private static String getProperty(String key){
         String defaultMessage = Ansi.ansi()
                                     .fgBrightYellow().bold()
@@ -27,15 +31,31 @@ public class Message {
         return PROPERTIES.getProperty(key, defaultMessage);
     }
 
+    /**
+     * @param key
+     * @param args
+     * @return String
+     */
     private static String sendMessage(String key, Object... args){
         String format = getProperty(key);
         return args.length == 0 ? format : String.format(format, args);
     }
 
+    /**
+     * @param init
+     * @param function
+     * @return String
+     */
     public static String sendMessage(String init, String function){
         return sendMessage(init, function, new Object[]{});
     }
 
+    /**
+     * @param init
+     * @param function
+     * @param args
+     * @return String
+     */
     public static String sendMessage(String init, String function, Object... args){
         StringBuilder format = new StringBuilder(init);
         if(!(init.endsWith(".") || function.startsWith(".")))

@@ -16,19 +16,31 @@ public class Polygon {
         this.points = Arrays.stream(points).map(Point2D::new).collect(Collectors.toList());
     }
 
+    /**
+     * @return List<Point2D>
+     */
     public List<Point2D> getPoints() {
         return this.points;
     }
 
+    /**
+     * @return int
+     */
     public int countVertex() {
         return this.points.size() - 1;
     }
 
+    /**
+     * @return boolean
+     */
     public boolean isValid() {
         if (points == null || points.size() < 3) return false;
         return points.stream().allMatch(p -> p != null);
     }
 
+    /**
+     * @return boolean
+     */
     public boolean isClosed() {
         if (!isValid()) return false;
         Point2D first = points.get(0);
@@ -36,6 +48,9 @@ public class Polygon {
         return first.equals(last);
     }
 
+    /**
+     * @return boolean
+     */
     public boolean hasRepeatedPoints() {
         for (int i = 0; i < points.size(); i++) {
             for (int j = i + 1; j < points.size(); j++) {
@@ -47,6 +62,9 @@ public class Polygon {
         return false;
     }
 
+    /**
+     * @return double
+     */
     public double perimeter() {
         if (!isValid()) return 0;
         double sum = 0;
@@ -58,6 +76,9 @@ public class Polygon {
         return sum;
     }
 
+    /**
+     * @return double
+     */
     public double area() {
         if (!isValid()) return 0;
         double sum = 0;
@@ -69,6 +90,9 @@ public class Polygon {
         return Math.abs(sum) / 2.0;
     }
 
+    /**
+     * @return boolean
+     */
     public boolean isConvex() {
         if (!isValid()) return false;
         int n = points.size();

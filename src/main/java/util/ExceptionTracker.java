@@ -14,7 +14,7 @@ import org.fusesource.jansi.AnsiConsole;
 public class ExceptionTracker  {
 
     private static class InnerExceptionTracker {
-    
+
         private int index;
         private Exception exception;
 
@@ -32,7 +32,7 @@ public class ExceptionTracker  {
             return this.exception.getMessage();
         }
     }
-    
+
     private String name;
     private Map<String, List<InnerExceptionTracker>> thrownExceptions;
     private Map<String, List<InnerExceptionTracker>> notThrownExceptions;
@@ -50,32 +50,54 @@ public class ExceptionTracker  {
         this.cont = 0;
     }
 
+    /**
+     * @param name
+     * @return ExceptionTracker
+     */
     public static ExceptionTracker empty(String name){
         return new ExceptionTracker(name);
     }
 
+    /**
+     * @param e
+     */
     public void addThrownException(Exception e) {
         this.thrownExceptions.get(name).add(InnerExceptionTracker.of(cont, e));
         this.cont++;
     }
 
+    /**
+     * @param e
+     */
     public void addNotThrownException(Exception e) {
         this.notThrownExceptions.get(name).add(InnerExceptionTracker.of(cont, e));
         this.cont++;
     }
 
+    /**
+     * @param e
+     */
     public void addNotCheckedException(Exception e) {
         this.notCheckedExceptions.get(name).add(InnerExceptionTracker.of(cont, e));
         this.cont++;
     }
+    /**
+     * @return Map<String, List<InnerExceptionTracker>>
+     */
     public Map<String, List<InnerExceptionTracker>> getThrownExceptions() {
         return thrownExceptions;
     }
 
+    /**
+     * @return Map<String, List<InnerExceptionTracker>>
+     */
     public Map<String, List<InnerExceptionTracker>> getNotThrownExceptions() {
         return notThrownExceptions;
     }
 
+    /**
+     * @param exceptionTracker
+     */
     public void merge(ExceptionTracker exceptionTracker) {
         Function<Map<String, List<InnerExceptionTracker>>, List<InnerExceptionTracker>> f = map -> map.values().stream()
                 .flatMap(List::stream).collect(Collectors.toList());
@@ -88,10 +110,16 @@ public class ExceptionTracker  {
         this.notCheckedExceptions.get(propertyName).addAll(f.apply(exceptionTracker.notCheckedExceptions));
     }
 
+    /**
+     * @return boolean
+     */
     public boolean hasErrors() {
         return !this.thrownExceptions.isEmpty();
     }
 
+    /**
+     * @return boolean
+     */
     public boolean hasNotErrors() {
         return this.thrownExceptions.isEmpty();
     }
@@ -108,6 +136,10 @@ public class ExceptionTracker  {
         showException("Not Checked Exceptions: ", this.notCheckedExceptions, Color.YELLOW);
     }
 
+    /**
+     * @param excepctionMap
+     * @param colorTextException
+     */
     private void showException(String title, Map<String, List<InnerExceptionTracker>> excepctionMap, Color colorTextException){
         AnsiConsole.systemInstall();
         StringBuilder titleBuilder = new StringBuilder(title);

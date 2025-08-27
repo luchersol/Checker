@@ -1,0 +1,89 @@
+package specialized_checkers.lambda;
+
+import static util.Message.*;
+
+import java.util.function.Function;
+
+import util.AbstractChecker;
+import util.Cloner;
+
+public class CheckerFunction<T, R> extends AbstractChecker<Function<T, R>, CheckerFunction<T, R>> {
+
+    private static final String INIT_FUNCTION = "lambda.function";
+
+    private boolean deepClone;
+
+    public CheckerFunction(Function<T, R> function, String name) {
+        super(function, name);
+    }
+
+    /**
+     * @return CheckerFunction<T, R>
+     */
+    @Override
+    protected CheckerFunction<T, R> self() {
+        return this;
+    }
+
+    public void activateDeepClone() {
+        this.deepClone = true;
+    }
+
+    public void deactivateDeepClone() {
+        this.deepClone = true;
+    }
+
+    /**
+     * @param input
+     * @return T
+     */
+    public T getInput(T input) {
+        return this.deepClone ? Cloner.deepClone(input) : input;
+    }
+
+    /**
+     * @param input
+     * @return CheckerFunction<T, R>
+     */
+    public CheckerFunction<T, R> applyWithoutException(T input) {
+        return is(f -> {
+            try {
+                T processInput = getInput(input);
+                f.apply(processInput);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }, sendMessage(INIT_FUNCTION, "apply_without_exception", input));
+    }
+
+    /**
+     * @param input
+     * @param expected
+     * @return CheckerFunction<T, R>
+     */
+    public CheckerFunction<T, R> producesExpected(T input, R expected) {
+        return is(f -> {
+            try {
+                R result = f.apply(input);
+                return (expected == null && result == null) || (expected != null && expected.equals(result));
+            } catch (Exception e) {
+                return false;
+            }
+        }, sendMessage(INIT_FUNCTION, "produces_expected", input, expected));
+    }
+
+    /**
+     * @param input
+     * @return CheckerFunction<T, R>
+     */
+    public CheckerFunction<T, R> producesNonNull(T input) {
+        return is(f -> {
+            try {
+                return f.apply(input) != null;
+            } catch (Exception e) {
+                return false;
+            }
+        }, sendMessage(INIT_FUNCTION, "produces_non_null", input));
+    }
+}
