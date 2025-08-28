@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import util.CheckerException;
+
 class CheckerMatrixTest {
 
     @Test
@@ -18,7 +20,7 @@ class CheckerMatrixTest {
         assertDoesNotThrow(() -> new CheckerMatrix<>(square, "square").isSquare());
 
         Integer[][] nonSquare = { {1, 2, 3}, {4, 5, 6} };
-        assertThrows(Exception.class, () -> new CheckerMatrix<>(nonSquare, "nonSquare").isSquare());
+        assertThrows(CheckerException.class, () -> new CheckerMatrix<>(nonSquare, "nonSquare").isSquare());
     }
 
     @Test
@@ -27,7 +29,7 @@ class CheckerMatrixTest {
         assertDoesNotThrow(() -> new CheckerMatrix<>(zero, "zero").isZero());
 
         Integer[][] notZero = { {0, 1}, {0, 0} };
-        assertThrows(Exception.class, () -> new CheckerMatrix<>(notZero, "notZero").isZero());
+        assertThrows(CheckerException.class, () -> new CheckerMatrix<>(notZero, "notZero").isZero());
     }
 
     @Test
@@ -36,7 +38,7 @@ class CheckerMatrixTest {
         assertDoesNotThrow(() -> new CheckerMatrix<>(identity, "identity").isIdentity());
 
         Integer[][] notIdentity = { {1, 1}, {0, 1} };
-        assertThrows(Exception.class, () -> new CheckerMatrix<>(notIdentity, "notIdentity").isIdentity());
+        assertThrows(CheckerException.class, () -> new CheckerMatrix<>(notIdentity, "notIdentity").isIdentity());
     }
 
     @Test
@@ -45,7 +47,7 @@ class CheckerMatrixTest {
         assertDoesNotThrow(() -> new CheckerMatrix<>(symmetric, "symmetric").isSymmetric());
 
         Integer[][] notSymmetric = { {1, 2}, {3, 1} };
-        assertThrows(Exception.class, () -> new CheckerMatrix<>(notSymmetric, "notSymmetric").isSymmetric());
+        assertThrows(CheckerException.class, () -> new CheckerMatrix<>(notSymmetric, "notSymmetric").isSymmetric());
     }
 
     @Test
@@ -54,7 +56,7 @@ class CheckerMatrixTest {
         assertDoesNotThrow(() -> new CheckerMatrix<>(diagonal, "diagonal").isDiagonal());
 
         Integer[][] notDiagonal = { {1, 2}, {0, 2} };
-        assertThrows(Exception.class, () -> new CheckerMatrix<>(notDiagonal, "notDiagonal").isDiagonal());
+        assertThrows(CheckerException.class, () -> new CheckerMatrix<>(notDiagonal, "notDiagonal").isDiagonal());
     }
 
     @Test
@@ -63,7 +65,7 @@ class CheckerMatrixTest {
         assertDoesNotThrow(() -> new CheckerMatrix<>(upper, "upper").isUpperTriangular());
 
         Integer[][] notUpper = { {1, 0}, {2, 3} };
-        assertThrows(Exception.class, () -> new CheckerMatrix<>(notUpper, "notUpper").isUpperTriangular());
+        assertThrows(CheckerException.class, () -> new CheckerMatrix<>(notUpper, "notUpper").isUpperTriangular());
     }
 
     @Test
@@ -72,7 +74,7 @@ class CheckerMatrixTest {
         assertDoesNotThrow(() -> new CheckerMatrix<>(lower, "lower").isLowerTriangular());
 
         Integer[][] notLower = { {1, 2}, {0, 3} };
-        assertThrows(Exception.class, () -> new CheckerMatrix<>(notLower, "notLower").isLowerTriangular());
+        assertThrows(CheckerException.class, () -> new CheckerMatrix<>(notLower, "notLower").isLowerTriangular());
     }
 
     @Test
@@ -81,7 +83,7 @@ class CheckerMatrixTest {
         assertDoesNotThrow(() -> new CheckerMatrix<>(invertible, "invertible").isInvertible());
 
         Double[][] singular = { {1.0, 2.0}, {2.0, 4.0} };
-        assertThrows(Exception.class, () -> new CheckerMatrix<>(singular, "singular").isInvertible());
+        assertThrows(CheckerException.class, () -> new CheckerMatrix<>(singular, "singular").isInvertible());
     }
 
     @Test
@@ -90,7 +92,7 @@ class CheckerMatrixTest {
         assertDoesNotThrow(() -> new CheckerMatrix<>(positiveDefinite, "positiveDefinite").isPositiveDefinite());
 
         Double[][] notPositiveDefinite = { {0.0, 1.0}, {1.0, 0.0} };
-        assertThrows(Exception.class, () -> new CheckerMatrix<>(notPositiveDefinite, "notPositiveDefinite").isPositiveDefinite());
+        assertThrows(CheckerException.class, () -> new CheckerMatrix<>(notPositiveDefinite, "notPositiveDefinite").isPositiveDefinite());
     }
 
     @Test
@@ -106,14 +108,14 @@ class CheckerMatrixTest {
     void testAnyMatch() {
         Integer[][] matrix = { {1, 2}, {3, 4} };
         assertDoesNotThrow(() -> new CheckerMatrix<>(matrix, "matrix").anyMatch(x -> x == 3));
-        assertThrows(Exception.class, () -> new CheckerMatrix<>(matrix, "matrix").anyMatch(x -> x == 5));
+        assertThrows(CheckerException.class, () -> new CheckerMatrix<>(matrix, "matrix").anyMatch(x -> x == 5));
     }
 
     @Test
     void testAllMatch() {
         Integer[][] matrix = { {2, 2}, {2, 2} };
         assertDoesNotThrow(() -> new CheckerMatrix<>(matrix, "matrix").allMatch(x -> x == 2));
-        assertThrows(Exception.class, () -> new CheckerMatrix<>(matrix, "matrix").allMatch(x -> x == 1));
+        assertThrows(CheckerException.class, () -> new CheckerMatrix<>(matrix, "matrix").allMatch(x -> x == 1));
     }
 
     @Test

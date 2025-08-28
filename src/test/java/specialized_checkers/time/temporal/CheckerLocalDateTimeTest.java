@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Test;
 
+import util.CheckerException;
+
 class CheckerLocalDateTimeTest {
 
     @Test
@@ -21,7 +23,7 @@ class CheckerLocalDateTimeTest {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime later = now.plusDays(1);
         CheckerLocalDateTime checker = new CheckerLocalDateTime(later, "testDate");
-        assertThrows(Exception.class, () -> checker.isBefore(now));
+        assertThrows(CheckerException.class, () -> checker.isBefore(now));
     }
 
     @Test
@@ -44,7 +46,7 @@ class CheckerLocalDateTimeTest {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime earlier = now.minusDays(1);
         CheckerLocalDateTime checker = new CheckerLocalDateTime(earlier, "testDate");
-        assertThrows(Exception.class, () -> checker.isAfter(now));
+        assertThrows(CheckerException.class, () -> checker.isAfter(now));
     }
 
     @Test
@@ -69,7 +71,7 @@ class CheckerLocalDateTimeTest {
         LocalDateTime end = start.plusHours(2);
         LocalDateTime outside = start.minusHours(1);
         CheckerLocalDateTime checker = new CheckerLocalDateTime(outside, "testDate");
-        assertThrows(Exception.class, () -> checker.inRange(start, end));
+        assertThrows(CheckerException.class, () -> checker.inRange(start, end));
     }
 
     @Test

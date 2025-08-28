@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import util.CheckerException;
+
 class CheckerIntegerTest {
 
     @Test
@@ -12,7 +14,7 @@ class CheckerIntegerTest {
         assertDoesNotThrow(checker::isEven);
 
         checker = new CheckerInteger(5, "testEven");
-        assertThrows(Exception.class, checker::isEven);
+        assertThrows(CheckerException.class, checker::isEven);
     }
 
     @Test
@@ -21,7 +23,7 @@ class CheckerIntegerTest {
         assertDoesNotThrow(checker::isOdd);
 
         checker = new CheckerInteger(4, "testOdd");
-        assertThrows(Exception.class, checker::isOdd);
+        assertThrows(CheckerException.class, checker::isOdd);
     }
 
     @Test
@@ -30,10 +32,10 @@ class CheckerIntegerTest {
         assertDoesNotThrow(checker::isPrime);
 
         checker = new CheckerInteger(8, "testPrime");
-        assertThrows(Exception.class, checker::isPrime);
+        assertThrows(CheckerException.class, checker::isPrime);
 
         checker = new CheckerInteger(1, "testPrime");
-        assertThrows(Exception.class, checker::isPrime);
+        assertThrows(CheckerException.class, checker::isPrime);
 
         checker = new CheckerInteger(2, "testPrime");
         assertDoesNotThrow(checker::isPrime);
@@ -45,7 +47,7 @@ class CheckerIntegerTest {
         assertDoesNotThrow(checker::isPositive);
 
         checker = new CheckerInteger(-1, "testPositive");
-        assertThrows(Exception.class, checker::isPositive);
+        assertThrows(CheckerException.class, checker::isPositive);
     }
 
     @Test
@@ -54,7 +56,7 @@ class CheckerIntegerTest {
         assertDoesNotThrow(checker::isPositiveOrZero);
 
         checker = new CheckerInteger(-1, "testPositiveOrZero");
-        assertThrows(Exception.class, checker::isPositiveOrZero);
+        assertThrows(CheckerException.class, checker::isPositiveOrZero);
     }
 
     @Test
@@ -63,7 +65,7 @@ class CheckerIntegerTest {
         assertDoesNotThrow(checker::isNegative);
 
         checker = new CheckerInteger(0, "testNegative");
-        assertThrows(Exception.class, checker::isNegative);
+        assertThrows(CheckerException.class, checker::isNegative);
     }
 
     @Test
@@ -72,7 +74,7 @@ class CheckerIntegerTest {
         assertDoesNotThrow(checker::isNegativeOrZero);
 
         checker = new CheckerInteger(1, "testNegativeOrZero");
-        assertThrows(Exception.class, checker::isNegativeOrZero);
+        assertThrows(CheckerException.class, checker::isNegativeOrZero);
     }
 
     @Test
@@ -81,15 +83,15 @@ class CheckerIntegerTest {
         assertDoesNotThrow(checker::isZero);
 
         checker = new CheckerInteger(1, "testZero");
-        assertThrows(Exception.class, checker::isZero);
+        assertThrows(CheckerException.class, checker::isZero);
     }
 
     @Test
     void testIsGreaterThan() {
         CheckerInteger checker = new CheckerInteger(10, "testGreaterThan");
         assertDoesNotThrow(() -> checker.isGreaterThan(5));
-        assertThrows(Exception.class, () -> checker.isGreaterThan(10));
-        assertThrows(Exception.class, () -> checker.isGreaterThan(15));
+        assertThrows(CheckerException.class, () -> checker.isGreaterThan(10));
+        assertThrows(CheckerException.class, () -> checker.isGreaterThan(15));
     }
 
     @Test
@@ -97,15 +99,15 @@ class CheckerIntegerTest {
         CheckerInteger checker = new CheckerInteger(10, "testGreaterOrEqualTo");
         assertDoesNotThrow(() -> checker.isGreaterOrEqualTo(10));
         assertDoesNotThrow(() -> checker.isGreaterOrEqualTo(5));
-        assertThrows(Exception.class, () -> checker.isGreaterOrEqualTo(15));
+        assertThrows(CheckerException.class, () -> checker.isGreaterOrEqualTo(15));
     }
 
     @Test
     void testIsLessThan() {
         CheckerInteger checker = new CheckerInteger(5, "testLessThan");
         assertDoesNotThrow(() -> checker.isLessThan(10));
-        assertThrows(Exception.class, () -> checker.isLessThan(5));
-        assertThrows(Exception.class, () -> checker.isLessThan(1));
+        assertThrows(CheckerException.class, () -> checker.isLessThan(5));
+        assertThrows(CheckerException.class, () -> checker.isLessThan(1));
     }
 
     @Test
@@ -113,6 +115,6 @@ class CheckerIntegerTest {
         CheckerInteger checker = new CheckerInteger(5, "testLessOrEqualTo");
         assertDoesNotThrow(() -> checker.isLessOrEqualTo(5));
         assertDoesNotThrow(() -> checker.isLessOrEqualTo(10));
-        assertThrows(Exception.class, () -> checker.isLessOrEqualTo(1));
+        assertThrows(CheckerException.class, () -> checker.isLessOrEqualTo(1));
     }
 }

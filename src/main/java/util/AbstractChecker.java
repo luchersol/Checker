@@ -80,7 +80,7 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
      * @return C
      */
     public C is(Predicate<T> condition, String message) {
-        RuntimeException exception = new RuntimeException(new Error(message));
+        CheckerException exception = new CheckerException(message);
         if (stop) {
             this.exceptionTracker.addNotCheckedException(exception);
             return self();
@@ -220,6 +220,8 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
             Queue<Object> argsQueue = new LinkedList<>(Arrays.asList(args));
             Object obj = getProperty(this.object, properties, argsQueue);
             Checker checker = new Checker(obj, name + "." + propertyPath);
+            checker.saveErrors = this.saveErrors;
+            checker.stop = this.stop;
             checker.backObject = (Checker) self();
             return checker;
         } catch (Exception e) {

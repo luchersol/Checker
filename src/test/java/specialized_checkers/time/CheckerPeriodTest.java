@@ -7,6 +7,8 @@ import java.time.temporal.ChronoUnit;
 
 import org.junit.jupiter.api.Test;
 
+import util.CheckerException;
+
 
 class CheckerPeriodTest {
 
@@ -16,10 +18,10 @@ class CheckerPeriodTest {
         assertDoesNotThrow(checker::isPositive);
 
         CheckerPeriod zeroChecker = new CheckerPeriod(Period.ZERO, "zeroPeriod");
-        assertThrows(Exception.class, zeroChecker::isPositive);
+        assertThrows(CheckerException.class, zeroChecker::isPositive);
 
         CheckerPeriod negativeChecker = new CheckerPeriod(Period.of(-1, 0, 0), "negativePeriod");
-        assertThrows(Exception.class, negativeChecker::isPositive);
+        assertThrows(CheckerException.class, negativeChecker::isPositive);
     }
 
     @Test
@@ -28,10 +30,10 @@ class CheckerPeriodTest {
         assertDoesNotThrow(checker::isNegative);
 
         CheckerPeriod positiveChecker = new CheckerPeriod(Period.of(1, 0, 0), "positivePeriod");
-        assertThrows(Exception.class, positiveChecker::isNegative);
+        assertThrows(CheckerException.class, positiveChecker::isNegative);
 
         CheckerPeriod zeroChecker = new CheckerPeriod(Period.ZERO, "zeroPeriod");
-        assertThrows(Exception.class, zeroChecker::isNegative);
+        assertThrows(CheckerException.class, zeroChecker::isNegative);
     }
 
     @Test
@@ -40,15 +42,15 @@ class CheckerPeriodTest {
         assertDoesNotThrow(checker::isZero);
 
         CheckerPeriod nonZeroChecker = new CheckerPeriod(Period.of(0, 1, 0), "nonZeroPeriod");
-        assertThrows(Exception.class, nonZeroChecker::isZero);
+        assertThrows(CheckerException.class, nonZeroChecker::isZero);
     }
 
     @Test
     void testIsGreaterThanTemporalUnit() {
         CheckerPeriod checker = new CheckerPeriod(Period.of(2, 0, 0), "period");
         assertDoesNotThrow(() -> checker.isGreaterThan(ChronoUnit.YEARS, 1));
-        assertThrows(Exception.class, () -> checker.isGreaterThan(ChronoUnit.YEARS, 2));
-        assertThrows(Exception.class, () -> checker.isGreaterThan(ChronoUnit.YEARS, 3));
+        assertThrows(CheckerException.class, () -> checker.isGreaterThan(ChronoUnit.YEARS, 2));
+        assertThrows(CheckerException.class, () -> checker.isGreaterThan(ChronoUnit.YEARS, 3));
     }
 
     @Test
@@ -56,15 +58,15 @@ class CheckerPeriodTest {
         CheckerPeriod checker = new CheckerPeriod(Period.of(2, 0, 0), "period");
         assertDoesNotThrow(() -> checker.isGreaterOrEqualThan(ChronoUnit.YEARS, 2));
         assertDoesNotThrow(() -> checker.isGreaterOrEqualThan(ChronoUnit.YEARS, 1));
-        assertThrows(Exception.class, () -> checker.isGreaterOrEqualThan(ChronoUnit.YEARS, 3));
+        assertThrows(CheckerException.class, () -> checker.isGreaterOrEqualThan(ChronoUnit.YEARS, 3));
     }
 
     @Test
     void testIsLessThanTemporalUnit() {
         CheckerPeriod checker = new CheckerPeriod(Period.of(1, 0, 0), "period");
         assertDoesNotThrow(() -> checker.isLessThan(ChronoUnit.YEARS, 2));
-        assertThrows(Exception.class, () -> checker.isLessThan(ChronoUnit.YEARS, 1));
-        assertThrows(Exception.class, () -> checker.isLessThan(ChronoUnit.YEARS, 0));
+        assertThrows(CheckerException.class, () -> checker.isLessThan(ChronoUnit.YEARS, 1));
+        assertThrows(CheckerException.class, () -> checker.isLessThan(ChronoUnit.YEARS, 0));
     }
 
     @Test
@@ -72,7 +74,7 @@ class CheckerPeriodTest {
         CheckerPeriod checker = new CheckerPeriod(Period.of(1, 0, 0), "period");
         assertDoesNotThrow(() -> checker.isLessOrEqualThan(ChronoUnit.YEARS, 1));
         assertDoesNotThrow(() -> checker.isLessOrEqualThan(ChronoUnit.YEARS, 2));
-        assertThrows(Exception.class, () -> checker.isLessOrEqualThan(ChronoUnit.YEARS, 0));
+        assertThrows(CheckerException.class, () -> checker.isLessOrEqualThan(ChronoUnit.YEARS, 0));
     }
 
     @Test
@@ -81,15 +83,15 @@ class CheckerPeriodTest {
         assertDoesNotThrow(() -> checker.isEqual(ChronoUnit.YEARS, 1));
         assertDoesNotThrow(() -> checker.isEqual(ChronoUnit.MONTHS, 2));
         assertDoesNotThrow(() -> checker.isEqual(ChronoUnit.DAYS, 3));
-        assertThrows(Exception.class, () -> checker.isEqual(ChronoUnit.YEARS, 2));
+        assertThrows(CheckerException.class, () -> checker.isEqual(ChronoUnit.YEARS, 2));
     }
 
     @Test
     void testIsGreaterThanPeriod() {
         CheckerPeriod checker = new CheckerPeriod(Period.of(2, 0, 0), "period");
         assertDoesNotThrow(() -> checker.isGreaterThan(Period.of(1, 0, 0)));
-        assertThrows(Exception.class, () -> checker.isGreaterThan(Period.of(2, 0, 0)));
-        assertThrows(Exception.class, () -> checker.isGreaterThan(Period.of(3, 0, 0)));
+        assertThrows(CheckerException.class, () -> checker.isGreaterThan(Period.of(2, 0, 0)));
+        assertThrows(CheckerException.class, () -> checker.isGreaterThan(Period.of(3, 0, 0)));
     }
 
     @Test
@@ -97,15 +99,15 @@ class CheckerPeriodTest {
         CheckerPeriod checker = new CheckerPeriod(Period.of(2, 0, 0), "period");
         assertDoesNotThrow(() -> checker.isGreaterOrEqualThan(Period.of(1, 0, 0)));
         assertDoesNotThrow(() -> checker.isGreaterOrEqualThan(Period.of(2, 0, 0)));
-        assertThrows(Exception.class, () -> checker.isGreaterOrEqualThan(Period.of(3, 0, 0)));
+        assertThrows(CheckerException.class, () -> checker.isGreaterOrEqualThan(Period.of(3, 0, 0)));
     }
 
     @Test
     void testIsLessThanPeriod() {
         CheckerPeriod checker = new CheckerPeriod(Period.of(1, 0, 0), "period");
         assertDoesNotThrow(() -> checker.isLessThan(Period.of(2, 0, 0)));
-        assertThrows(Exception.class, () -> checker.isLessThan(Period.of(1, 0, 0)));
-        assertThrows(Exception.class, () -> checker.isLessThan(Period.of(0, 0, 0)));
+        assertThrows(CheckerException.class, () -> checker.isLessThan(Period.of(1, 0, 0)));
+        assertThrows(CheckerException.class, () -> checker.isLessThan(Period.of(0, 0, 0)));
     }
 
     @Test
@@ -113,13 +115,13 @@ class CheckerPeriodTest {
         CheckerPeriod checker = new CheckerPeriod(Period.of(1, 0, 0), "period");
         assertDoesNotThrow(() -> checker.isLessOrEqualThan(Period.of(1, 0, 0)));
         assertDoesNotThrow(() -> checker.isLessOrEqualThan(Period.of(2, 0, 0)));
-        assertThrows(Exception.class, () -> checker.isLessOrEqualThan(Period.of(0, 0, 0)));
+        assertThrows(CheckerException.class, () -> checker.isLessOrEqualThan(Period.of(0, 0, 0)));
     }
 
     @Test
     void testIsEqualPeriod() {
         CheckerPeriod checker = new CheckerPeriod(Period.of(1, 2, 3), "period");
         assertDoesNotThrow(() -> checker.isEqual(Period.of(1, 2, 3)));
-        assertThrows(Exception.class, () -> checker.isEqual(Period.of(1, 2, 4)));
+        assertThrows(CheckerException.class, () -> checker.isEqual(Period.of(1, 2, 4)));
     }
 }

@@ -7,6 +7,8 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
+import util.CheckerException;
+
 class CheckerMapTest {
 
         @Test
@@ -21,7 +23,7 @@ class CheckerMapTest {
             Map<String, Integer> map = new HashMap<>();
             map.put("a", 1);
             CheckerMap<String, Integer> checker = new CheckerMap<>(map, "testMap");
-            assertThrows(Exception.class, checker::isEmpty);
+            assertThrows(CheckerException.class, checker::isEmpty);
         }
 
         @Test
@@ -39,7 +41,7 @@ class CheckerMapTest {
             map.put("a", 1);
             map.put("b", 2);
             CheckerMap<String, Integer> checker = new CheckerMap<>(map, "testMap");
-            assertThrows(Exception.class, () -> checker.anyMatch(e -> e.getKey().equals("c")));
+            assertThrows(CheckerException.class, () -> checker.anyMatch(e -> e.getKey().equals("c")));
         }
 
         @Test
@@ -57,6 +59,6 @@ class CheckerMapTest {
             map.put("a", 1);
             map.put("b", 2);
             CheckerMap<String, Integer> checker = new CheckerMap<>(map, "testMap");
-            assertThrows(Exception.class, () -> checker.allMatch(e -> e.getValue() == 1));
+            assertThrows(CheckerException.class, () -> checker.allMatch(e -> e.getValue() == 1));
         }
 }

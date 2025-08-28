@@ -5,6 +5,8 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
+import util.CheckerException;
+
 
 class CheckerLocalDateTest {
 
@@ -15,7 +17,7 @@ class CheckerLocalDateTest {
         LocalDate yesterday = today.minusDays(1);
         CheckerLocalDate checker = new CheckerLocalDate(today, "today");
         assertDoesNotThrow(() -> checker.isBefore(tomorrow));
-        assertThrows(Exception.class, () -> checker.isBefore(yesterday));
+        assertThrows(CheckerException.class, () -> checker.isBefore(yesterday));
     }
 
     @Test
@@ -24,7 +26,7 @@ class CheckerLocalDateTest {
         CheckerLocalDate checker = new CheckerLocalDate(today, "today");
         assertDoesNotThrow(() -> checker.isBeforeOrEqual(today));
         assertDoesNotThrow(() -> checker.isBeforeOrEqual(today.plusDays(1)));
-        assertThrows(Exception.class, () -> checker.isBeforeOrEqual(today.minusDays(1)));
+        assertThrows(CheckerException.class, () -> checker.isBeforeOrEqual(today.minusDays(1)));
     }
 
     @Test
@@ -33,7 +35,7 @@ class CheckerLocalDateTest {
         LocalDate yesterday = today.minusDays(1);
         CheckerLocalDate checker = new CheckerLocalDate(today, "today");
         assertDoesNotThrow(() -> checker.isAfter(yesterday));
-        assertThrows(Exception.class, () -> checker.isAfter(today.plusDays(1)));
+        assertThrows(CheckerException.class, () -> checker.isAfter(today.plusDays(1)));
     }
 
     @Test
@@ -42,7 +44,7 @@ class CheckerLocalDateTest {
         CheckerLocalDate checker = new CheckerLocalDate(today, "today");
         assertDoesNotThrow(() -> checker.isAfterOrEqual(today));
         assertDoesNotThrow(() -> checker.isAfterOrEqual(today.minusDays(1)));
-        assertThrows(Exception.class, () -> checker.isAfterOrEqual(today.plusDays(1)));
+        assertThrows(CheckerException.class, () -> checker.isAfterOrEqual(today.plusDays(1)));
     }
 
     @Test
@@ -52,8 +54,8 @@ class CheckerLocalDateTest {
         LocalDate end = today.plusDays(1);
         CheckerLocalDate checker = new CheckerLocalDate(today, "today");
         assertDoesNotThrow(() -> checker.inRange(start, end));
-        assertThrows(Exception.class, () -> checker.inRange(today, end));
-        assertThrows(Exception.class, () -> checker.inRange(start, today));
+        assertThrows(CheckerException.class, () -> checker.inRange(today, end));
+        assertThrows(CheckerException.class, () -> checker.inRange(start, today));
     }
 
     @Test
@@ -63,7 +65,7 @@ class CheckerLocalDateTest {
         assertDoesNotThrow(checker::isPast);
 
         CheckerLocalDate checkerToday = new CheckerLocalDate(LocalDate.now(), "today");
-        assertThrows(Exception.class, checkerToday::isPast);
+        assertThrows(CheckerException.class, checkerToday::isPast);
     }
 
     @Test
@@ -76,7 +78,7 @@ class CheckerLocalDateTest {
         assertDoesNotThrow(checkerYesterday::isPastOrPresent);
 
         CheckerLocalDate checkerTomorrow = new CheckerLocalDate(today.plusDays(1), "tomorrow");
-        assertThrows(Exception.class, checkerTomorrow::isPastOrPresent);
+        assertThrows(CheckerException.class, checkerTomorrow::isPastOrPresent);
     }
 
     @Test
@@ -86,7 +88,7 @@ class CheckerLocalDateTest {
         assertDoesNotThrow(checker::isFuture);
 
         CheckerLocalDate checkerToday = new CheckerLocalDate(LocalDate.now(), "today");
-        assertThrows(Exception.class, checkerToday::isFuture);
+        assertThrows(CheckerException.class, checkerToday::isFuture);
     }
 
     @Test
@@ -99,6 +101,6 @@ class CheckerLocalDateTest {
         assertDoesNotThrow(checkerTomorrow::isFutureOrPresent);
 
         CheckerLocalDate checkerYesterday = new CheckerLocalDate(today.minusDays(1), "yesterday");
-        assertThrows(Exception.class, checkerYesterday::isFutureOrPresent);
+        assertThrows(CheckerException.class, checkerYesterday::isFutureOrPresent);
     }
 }

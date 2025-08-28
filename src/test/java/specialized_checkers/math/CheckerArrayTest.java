@@ -7,6 +7,8 @@ import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
+import util.CheckerException;
+
 class CheckerArrayTest {
 
     @Test
@@ -20,7 +22,7 @@ class CheckerArrayTest {
     void testIsEmptyWithNonEmptyArray() {
         Integer[] arr = {1, 2};
         CheckerArray<Integer> checker = new CheckerArray<>(arr, "testArr");
-        assertThrows(Exception.class, checker::isEmpty);
+        assertThrows(CheckerException.class, checker::isEmpty);
     }
 
     @Test
@@ -34,7 +36,7 @@ class CheckerArrayTest {
     void testIsSortedAscWithUnsortedArray() {
         Integer[] arr = {3, 2, 1};
         CheckerArray<Integer> checker = new CheckerArray<>(arr, "testArr");
-        assertThrows(Exception.class, checker::isSortedAsc);
+        assertThrows(CheckerException.class, checker::isSortedAsc);
     }
 
     @Test
@@ -55,7 +57,7 @@ class CheckerArrayTest {
     void testIsSortedDescWithUnsortedArray() {
         Integer[] arr = {1, 2, 3};
         CheckerArray<Integer> checker = new CheckerArray<>(arr, "testArr");
-        assertThrows(Exception.class, checker::isSortedDesc);
+        assertThrows(CheckerException.class, checker::isSortedDesc);
     }
 
     @Test
@@ -78,7 +80,7 @@ class CheckerArrayTest {
         Integer[] arr = {1, 3, 5, 7};
         CheckerArray<Integer> checker = new CheckerArray<>(arr, "testArr");
         Predicate<Integer> even = x -> x % 2 == 0;
-        assertThrows(Exception.class, () -> checker.isSufficientPercentage(even, 25.0));
+        assertThrows(CheckerException.class, () -> checker.isSufficientPercentage(even, 25.0));
     }
 
     @Test
@@ -92,7 +94,7 @@ class CheckerArrayTest {
     void testAnyMatchFalse() {
         String[] arr = {"foo", "bar"};
         CheckerArray<String> checker = new CheckerArray<>(arr, "testArr");
-        assertThrows(Exception.class, () -> checker.anyMatch(s -> s.equals("baz")));
+        assertThrows(CheckerException.class, () -> checker.anyMatch(s -> s.equals("baz")));
     }
 
     @Test
@@ -106,7 +108,7 @@ class CheckerArrayTest {
     void testAllMatchFalse() {
         Integer[] arr = {2, 3, 4};
         CheckerArray<Integer> checker = new CheckerArray<>(arr, "testArr");
-        assertThrows(Exception.class, () -> checker.allMatch(x -> x % 2 == 0));
+        assertThrows(CheckerException.class, () -> checker.allMatch(x -> x % 2 == 0));
     }
 
     @Test

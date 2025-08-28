@@ -2,7 +2,7 @@ package util;
 
 import java.util.Map;
 
-import util.CheckerTest.Persona.InnerPerson;
+import util.Persona.InnerPerson;
 
 public class CheckerTest {
 
@@ -74,59 +74,15 @@ public class CheckerTest {
 
     public static void checkProperty(){
         Persona persona = new Persona(new Persona.InnerPerson("TEST", 20));
-        Checker.check(persona).isInstance(Persona.class)
+        Checker.check(persona)
+               .isInstance(Persona.class)
+               .saveErrors()
                .checkProperty("innerPerson").isNull().isInstance(InnerPerson.class).end()
-               .checkProperty("innerPerson.name").isEqual("TEST").end().show();
+               .checkProperty("innerPerson.name").isEqual("TEST").end()
+               .show();
     }
 
-    public static class Persona {
-
-        InnerPerson innerPerson;
-
-        public Persona(InnerPerson innerPerson) {
-            this.innerPerson = innerPerson;
-        }
-
-        public String hola(String str){
-            return "Hola Person String: " + str;
-        }
-
-        public String hola(Object str){
-            return "Hola Person Object: " + str;
-        }
-
-        public Map<String,Object> diga(Map<String,Object> map){
-            return map;
-        }
-
-
-
-        public InnerPerson getInnerPerson(Object i){
-            return this.innerPerson;
-        }
-
-        public static class InnerPerson
-        {
-            String name;
-            int year;
-
-            public InnerPerson(String name, int year){
-                this.name = name;
-                this.year = year;
-            }
-
-            public String hola(String str){
-                return "Hola InnerPerson String; " + str;
-            }
-
-            public String hola(Object str){
-                return "Hola InnerPerson Object: " + str;
-            }
-
-        }
-    }
-
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws CheckerException {
         checkProperty();
     }
 }

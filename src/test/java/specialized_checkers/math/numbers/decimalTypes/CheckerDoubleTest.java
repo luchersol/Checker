@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import util.CheckerException;
+
 class CheckerDoubleTest {
 
     @Test
@@ -15,7 +17,7 @@ class CheckerDoubleTest {
     @Test
     void testIsNotNaN() {
         CheckerDouble checker = new CheckerDouble(1.0, "testNotNaN");
-        assertThrows(Exception.class, checker::isNaN);
+        assertThrows(CheckerException.class, checker::isNaN);
     }
 
     @Test
@@ -33,7 +35,7 @@ class CheckerDoubleTest {
     @Test
     void testIsNotInfinite() {
         CheckerDouble checker = new CheckerDouble(2.0, "testNotInf");
-        assertThrows(Exception.class, checker::isInfinite);
+        assertThrows(CheckerException.class, checker::isInfinite);
     }
 
     @Test
@@ -83,7 +85,7 @@ class CheckerDoubleTest {
         CheckerDouble checker = new CheckerDouble(10.0, "greaterThan");
         assertDoesNotThrow(() -> checker.isGreaterThan(5));
         assertDoesNotThrow(() -> checker.isGreaterThan(5.0));
-        assertThrows(Exception.class, () -> checker.isGreaterThan(15));
+        assertThrows(CheckerException.class, () -> checker.isGreaterThan(15));
     }
 
     @Test
@@ -91,7 +93,7 @@ class CheckerDoubleTest {
         CheckerDouble checker = new CheckerDouble(10.0, "greaterOrEqualTo");
         assertDoesNotThrow(() -> checker.isGreaterOrEqualTo(10));
         assertDoesNotThrow(() -> checker.isGreaterOrEqualTo(5.0));
-        assertThrows(Exception.class, () -> checker.isGreaterOrEqualTo(15));
+        assertThrows(CheckerException.class, () -> checker.isGreaterOrEqualTo(15));
     }
 
     @Test
@@ -99,7 +101,7 @@ class CheckerDoubleTest {
         CheckerDouble checker = new CheckerDouble(2.0, "lessThan");
         assertDoesNotThrow(() -> checker.isLessThan(5));
         assertDoesNotThrow(() -> checker.isLessThan(5.0));
-        assertThrows(Exception.class, () -> checker.isLessThan(1));
+        assertThrows(CheckerException.class, () -> checker.isLessThan(1));
     }
 
     @Test
@@ -107,6 +109,6 @@ class CheckerDoubleTest {
         CheckerDouble checker = new CheckerDouble(2.0, "lessOrEqualTo");
         assertDoesNotThrow(() -> checker.isLessOrEqualTo(2));
         assertDoesNotThrow(() -> checker.isLessOrEqualTo(5.0));
-        assertThrows(Exception.class, () -> checker.isLessOrEqualTo(1));
+        assertThrows(CheckerException.class, () -> checker.isLessOrEqualTo(1));
     }
 }

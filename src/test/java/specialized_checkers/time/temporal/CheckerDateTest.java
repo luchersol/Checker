@@ -7,6 +7,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.Test;
 
+import util.CheckerException;
+
 
 public class CheckerDateTest {
 
@@ -35,7 +37,7 @@ public class CheckerDateTest {
         Date d1 = now();
         Date d2 = minusMillis(d1, 1000);
         CheckerDate checker = new CheckerDate(d1, "date1");
-        assertThrows(Exception.class, () -> checker.isBefore(d2));
+        assertThrows(CheckerException.class, () -> checker.isBefore(d2));
     }
 
     @Test
@@ -58,7 +60,7 @@ public class CheckerDateTest {
         Date d1 = now();
         Date d2 = plusMillis(d1, 1000);
         CheckerDate checker = new CheckerDate(d1, "date1");
-        assertThrows(Exception.class, () -> checker.isAfter(d2));
+        assertThrows(CheckerException.class, () -> checker.isAfter(d2));
     }
 
     @Test
@@ -83,7 +85,7 @@ public class CheckerDateTest {
         Date d2 = plusMillis(d1, 1000);
         Date d3 = plusMillis(d1, 2000);
         CheckerDate checker = new CheckerDate(d1, "date1");
-        assertThrows(Exception.class, () -> checker.inRange(d2, d3));
+        assertThrows(CheckerException.class, () -> checker.inRange(d2, d3));
     }
 
     @Test

@@ -6,6 +6,8 @@ import java.time.LocalTime;
 
 import org.junit.jupiter.api.Test;
 
+import util.CheckerException;
+
 class CheckerLocalTimeTest {
 
     @Test
@@ -69,7 +71,7 @@ class CheckerLocalTimeTest {
         LocalTime start = LocalTime.of(13, 0);
         LocalTime end = LocalTime.of(15, 0);
         CheckerLocalTime checker = new CheckerLocalTime(t1, "testTime");
-        assertThrows(Exception.class, () -> checker.inRange(start, end));
+        assertThrows(CheckerException.class, () -> checker.inRange(start, end));
     }
 
     @Test

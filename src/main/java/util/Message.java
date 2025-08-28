@@ -1,18 +1,19 @@
 package util;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.MissingFormatArgumentException;
 import java.util.Properties;
 
 import org.fusesource.jansi.Ansi;
+import org.fusesource.jansi.Ansi.Color;
 
 public class Message {
 
     private static final Properties PROPERTIES = new Properties();
 
     static {
-        try (InputStream input = new FileInputStream("src\\main\\resources\\messages.properties")) {
+        try (InputStream input = Message.class.getClassLoader().getResourceAsStream("messages.properties")) {
             PROPERTIES.load(input);
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,11 +58,17 @@ public class Message {
      * @return String
      */
     public static String sendMessage(String init, String function, Object... args){
-        StringBuilder format = new StringBuilder(init);
-        if(!(init.endsWith(".") || function.startsWith(".")))
-            format.append(".");
-        format.append(function);
-        return sendMessage(format.toString(), args);
+        try {
+            StringBuilder format = new StringBuilder(init);
+            if(!(init.endsWith(".") || function.startsWith(".")))
+                format.append(".");
+            format.append(function);
+            return sendMessage(format.toString(), args);
+        } catch (MissingFormatArgumentException e) {
+            String message = PROPERTIES.getProperty("error_format_message");
+            return Ansi.ansi().fg(Color.MAGENTA).bold().a(message).reset().toString();
+        }
+
     }
 
 }

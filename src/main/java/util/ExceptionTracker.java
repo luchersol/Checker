@@ -13,31 +13,12 @@ import org.fusesource.jansi.AnsiConsole;
 
 public class ExceptionTracker  {
 
-    private static class InnerExceptionTracker {
-
-        private int index;
-        private Exception exception;
-
-        public InnerExceptionTracker(int index, Exception exception) {
-            this.index = index;
-            this.exception = exception;
-        }
-
-        public static InnerExceptionTracker of(int index,Exception exception){
-            return new InnerExceptionTracker(index, exception);
-        }
-
-        @Override
-        public String toString() {
-            return this.exception.getMessage();
-        }
-    }
+    private static String CLEAN_MESSAGE = Ansi.ansi().fgGreen().a("CLEAN").reset().toString();
 
     private String name;
-    private Map<String, List<InnerExceptionTracker>> thrownExceptions;
-    private Map<String, List<InnerExceptionTracker>> notThrownExceptions;
-    private Map<String, List<InnerExceptionTracker>> notCheckedExceptions;
-    private int cont;
+    private Map<String, List<CheckerException>> thrownExceptions;
+    private Map<String, List<CheckerException>> notThrownExceptions;
+    private Map<String, List<CheckerException>> notCheckedExceptions;
 
     public ExceptionTracker(String name) {
         this.name = name;
@@ -47,7 +28,6 @@ public class ExceptionTracker  {
         this.notThrownExceptions.put(name, new ArrayList<>());
         this.notCheckedExceptions = new HashMap<>();
         this.notCheckedExceptions.put(name, new ArrayList<>());
-        this.cont = 0;
     }
 
     /**
@@ -62,36 +42,34 @@ public class ExceptionTracker  {
      * @param e
      */
     public void addThrownException(Exception e) {
-        this.thrownExceptions.get(name).add(InnerExceptionTracker.of(cont, e));
-        this.cont++;
+        this.thrownExceptions.get(name).add(CheckerException.of(e));
     }
 
     /**
      * @param e
      */
     public void addNotThrownException(Exception e) {
-        this.notThrownExceptions.get(name).add(InnerExceptionTracker.of(cont, e));
-        this.cont++;
+        this.notThrownExceptions.get(name).add(CheckerException.of(e));
     }
 
     /**
      * @param e
      */
     public void addNotCheckedException(Exception e) {
-        this.notCheckedExceptions.get(name).add(InnerExceptionTracker.of(cont, e));
-        this.cont++;
+        this.notCheckedExceptions.get(name).add(CheckerException.of(e));
     }
+
     /**
-     * @return Map<String, List<InnerExceptionTracker>>
+     * @return Map<String, List<CheckerException>>
      */
-    public Map<String, List<InnerExceptionTracker>> getThrownExceptions() {
+    public Map<String, List<CheckerException>> getThrownExceptions() {
         return thrownExceptions;
     }
 
     /**
-     * @return Map<String, List<InnerExceptionTracker>>
+     * @return Map<String, List<CheckerException>>
      */
-    public Map<String, List<InnerExceptionTracker>> getNotThrownExceptions() {
+    public Map<String, List<CheckerException>> getNotThrownExceptions() {
         return notThrownExceptions;
     }
 
@@ -99,15 +77,19 @@ public class ExceptionTracker  {
      * @param exceptionTracker
      */
     public void merge(ExceptionTracker exceptionTracker) {
-        Function<Map<String, List<InnerExceptionTracker>>, List<InnerExceptionTracker>> f = map -> map.values().stream()
+        Function<Map<String, List<CheckerException>>, List<CheckerException>> f = map -> map.values().stream()
                 .flatMap(List::stream).collect(Collectors.toList());
         String propertyName = exceptionTracker.name;
+
         this.thrownExceptions.putIfAbsent(propertyName, new ArrayList<>());
         this.notThrownExceptions.putIfAbsent(propertyName, new ArrayList<>());
         this.notCheckedExceptions.putIfAbsent(propertyName, new ArrayList<>());
+
         this.thrownExceptions.get(propertyName).addAll(f.apply(exceptionTracker.thrownExceptions));
         this.notThrownExceptions.get(propertyName).addAll(f.apply(exceptionTracker.notThrownExceptions));
         this.notCheckedExceptions.get(propertyName).addAll(f.apply(exceptionTracker.notCheckedExceptions));
+
+
     }
 
     /**
@@ -136,24 +118,36 @@ public class ExceptionTracker  {
         showException("Not Checked Exceptions: ", this.notCheckedExceptions, Color.YELLOW);
     }
 
+
     /**
      * @param excepctionMap
      * @param colorTextException
      */
-    private void showException(String title, Map<String, List<InnerExceptionTracker>> excepctionMap, Color colorTextException){
+    private void showException(String title, Map<String, List<CheckerException>> excepctionMap, Color colorTextException){
         AnsiConsole.systemInstall();
-        StringBuilder titleBuilder = new StringBuilder(title);
-        String titleMessage = Ansi.ansi().bold().a(titleBuilder).reset().toString();
-        System.out.println(titleMessage);
-        for (Map.Entry<String, List<InnerExceptionTracker>> entry : excepctionMap.entrySet()) {
-            StringBuilder nameObjectBuilder = new StringBuilder(entry.getKey());
-            String messageNameObject = Ansi.ansi().fgBlue().bold().a(nameObjectBuilder).reset().toString();
-            System.out.println("\t" + messageNameObject);
-            for (InnerExceptionTracker exception : entry.getValue()) {
-                StringBuilder messageExceptionBuilder = new StringBuilder(exception.toString());
-                String messageException = Ansi.ansi().fg(colorTextException).bold().a(messageExceptionBuilder).reset().toString();
-                System.out.println("\t\t" + messageException);
+        try {
+            StringBuilder titleBuilder = new StringBuilder(title);
+            String titleMessage = Ansi.ansi().bold().a(titleBuilder).reset().toString();
+            System.out.println(titleMessage);
+            if(excepctionMap.values().stream().allMatch(List::isEmpty)) {
+                System.out.println("\t" + CLEAN_MESSAGE);
+            } else {
+                excepctionMap.entrySet().stream()
+                .filter(e -> !e.getValue().isEmpty())
+                .forEach(entry -> {
+                    StringBuilder nameObjectBuilder = new StringBuilder(entry.getKey());
+                    String messageNameObject = Ansi.ansi().fgBlue().bold().a(nameObjectBuilder).reset().toString();
+                    System.out.println("\t" + messageNameObject);
+                    entry.getValue().forEach(exception -> {
+                        StringBuilder messageExceptionBuilder = new StringBuilder(exception.toString());
+                        String messageException = Ansi.ansi().fg(colorTextException).bold().a(messageExceptionBuilder).reset().toString();
+                        System.out.println("\t\t" + messageException);
+                    });
+                });
             }
+        } catch (Exception e) {
+            String exceptionMessage = Ansi.ansi().fgRed().bold().a(e).reset().toString();
+            System.out.println(exceptionMessage);
         }
         AnsiConsole.systemUninstall();
     }

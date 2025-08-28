@@ -9,6 +9,8 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import util.CheckerException;
+
 public class CheckerListTest {
 
         private List<Integer> list;
@@ -28,7 +30,7 @@ public class CheckerListTest {
 
         @Test
         void isEmpty_shouldFailForNonEmptyList() {
-            assertThrows(Exception.class, () -> checker.isEmpty());
+            assertThrows(CheckerException.class, () -> checker.isEmpty());
         }
 
         @Test
@@ -38,7 +40,7 @@ public class CheckerListTest {
 
         @Test
         void anyMatch_shouldFailIfNoElementMatches() {
-            assertThrows(Exception.class, () -> checker.anyMatch(i -> i == 10));
+            assertThrows(CheckerException.class, () -> checker.anyMatch(i -> i == 10));
         }
 
         @Test
@@ -49,7 +51,7 @@ public class CheckerListTest {
 
         @Test
         void allMatch_shouldFailIfNotAllMatch() {
-            assertThrows(Exception.class, () -> checker.allMatch(i -> i < 5));
+            assertThrows(CheckerException.class, () -> checker.allMatch(i -> i < 5));
         }
 
         @Test
@@ -60,7 +62,7 @@ public class CheckerListTest {
         @Test
         void allDistinct_shouldFailForNonDistinctList() {
             CheckerList<Integer> dupChecker = new CheckerList<>(Arrays.asList(1, 2, 2, 3), "dupList");
-            assertThrows(Exception.class, dupChecker::allDistinct);
+            assertThrows(CheckerException.class, dupChecker::allDistinct);
         }
 
         @Test
@@ -72,7 +74,7 @@ public class CheckerListTest {
         @Test
         void isSubset_shouldFailIfNotSubset() {
             List<Integer> notSuperset = Arrays.asList(1, 2, 3);
-            assertThrows(Exception.class, () -> checker.isSubset(notSuperset));
+            assertThrows(CheckerException.class, () -> checker.isSubset(notSuperset));
         }
 
         @Test
@@ -84,7 +86,7 @@ public class CheckerListTest {
         @Test
         void isSuperset_shouldFailIfNotSuperset() {
             List<Integer> notSubset = Arrays.asList(10, 11);
-            assertThrows(Exception.class, () -> checker.isSuperset(notSubset));
+            assertThrows(CheckerException.class, () -> checker.isSuperset(notSubset));
         }
 
         @Test
@@ -94,6 +96,6 @@ public class CheckerListTest {
 
         @Test
         void isSufficientPercentage_shouldFailIfNotEnoughMatch() {
-            assertThrows(Exception.class, () -> checker.isSufficientPercentage(i -> i < 3, 60.0));
+            assertThrows(CheckerException.class, () -> checker.isSufficientPercentage(i -> i < 3, 60.0));
         }
     }

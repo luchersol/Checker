@@ -7,6 +7,8 @@ import java.util.Locale;
 
 import org.junit.jupiter.api.Test;
 
+import util.CheckerException;
+
 class CheckerCurrencyTest {
 
     @Test
@@ -20,7 +22,7 @@ class CheckerCurrencyTest {
     void hasSymbol_shouldFailForIncorrectSymbol() {
         Currency usd = Currency.getInstance("USD");
         CheckerCurrency checker = new CheckerCurrency(usd, "usd");
-        assertThrows(Exception.class, () -> checker.hasSymbol("€"));
+        assertThrows(CheckerException.class, () -> checker.hasSymbol("€"));
     }
 
     @Test
@@ -34,7 +36,7 @@ class CheckerCurrencyTest {
     void withDefaultFractionDigits_shouldFailForIncorrectDigits() {
         Currency eur = Currency.getInstance("EUR");
         CheckerCurrency checker = new CheckerCurrency(eur, "eur");
-        assertThrows(Exception.class, () -> checker.withDefaultFractionDigits(0));
+        assertThrows(CheckerException.class, () -> checker.withDefaultFractionDigits(0));
     }
 
     @Test
@@ -48,6 +50,6 @@ class CheckerCurrencyTest {
     void isFrom_shouldFailForNonMatchingLocale() {
         Currency usd = Currency.getInstance("USD");
         CheckerCurrency checker = new CheckerCurrency(usd, "usd");
-        assertThrows(Exception.class, () -> checker.isFrom(Locale.FRANCE));
+        assertThrows(CheckerException.class, () -> checker.isFrom(Locale.FRANCE));
     }
 }

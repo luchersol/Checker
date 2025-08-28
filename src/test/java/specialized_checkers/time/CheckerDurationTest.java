@@ -7,16 +7,18 @@ import java.time.temporal.ChronoUnit;
 
 import org.junit.jupiter.api.Test;
 
+import util.CheckerException;
+
 
 class CheckerDurationTest {
 
     @Test
     void testIsPositive() {
         new CheckerDuration(Duration.ofSeconds(10), "duration").isPositive();
-        assertThrows(Exception.class, () ->
+        assertThrows(CheckerException.class, () ->
             new CheckerDuration(Duration.ofSeconds(-1), "duration").isPositive()
         );
-        assertThrows(Exception.class, () ->
+        assertThrows(CheckerException.class, () ->
             new CheckerDuration(Duration.ZERO, "duration").isPositive()
         );
     }
@@ -24,10 +26,10 @@ class CheckerDurationTest {
     @Test
     void testIsNegative() {
         new CheckerDuration(Duration.ofSeconds(-5), "duration").isNegative();
-        assertThrows(Exception.class, () ->
+        assertThrows(CheckerException.class, () ->
             new CheckerDuration(Duration.ofSeconds(0), "duration").isNegative()
         );
-        assertThrows(Exception.class, () ->
+        assertThrows(CheckerException.class, () ->
             new CheckerDuration(Duration.ofSeconds(5), "duration").isNegative()
         );
     }
@@ -35,10 +37,10 @@ class CheckerDurationTest {
     @Test
     void testIsZero() {
         new CheckerDuration(Duration.ZERO, "duration").isZero();
-        assertThrows(Exception.class, () ->
+        assertThrows(CheckerException.class, () ->
             new CheckerDuration(Duration.ofSeconds(1), "duration").isZero()
         );
-        assertThrows(Exception.class, () ->
+        assertThrows(CheckerException.class, () ->
             new CheckerDuration(Duration.ofSeconds(-1), "duration").isZero()
         );
     }
@@ -47,7 +49,7 @@ class CheckerDurationTest {
     void testIsGreaterThanTemporalUnit() {
         Duration d = Duration.ofSeconds(10);
         new CheckerDuration(d, "duration").isGreaterThan(ChronoUnit.SECONDS, 5);
-        assertThrows(Exception.class, () ->
+        assertThrows(CheckerException.class, () ->
             new CheckerDuration(d, "duration").isGreaterThan(ChronoUnit.SECONDS, 10)
         );
     }
@@ -57,7 +59,7 @@ class CheckerDurationTest {
         Duration d = Duration.ofSeconds(10);
         new CheckerDuration(d, "duration").isGreaterOrEqualThan(ChronoUnit.SECONDS, 10);
         new CheckerDuration(d, "duration").isGreaterOrEqualThan(ChronoUnit.SECONDS, 5);
-        assertThrows(Exception.class, () ->
+        assertThrows(CheckerException.class, () ->
             new CheckerDuration(d, "duration").isGreaterOrEqualThan(ChronoUnit.SECONDS, 11)
         );
     }
@@ -66,7 +68,7 @@ class CheckerDurationTest {
     void testIsLessThanTemporalUnit() {
         Duration d = Duration.ofSeconds(10);
         new CheckerDuration(d, "duration").isLessThan(ChronoUnit.SECONDS, 15);
-        assertThrows(Exception.class, () ->
+        assertThrows(CheckerException.class, () ->
             new CheckerDuration(d, "duration").isLessThan(ChronoUnit.SECONDS, 10)
         );
     }
@@ -76,7 +78,7 @@ class CheckerDurationTest {
         Duration d = Duration.ofSeconds(10);
         new CheckerDuration(d, "duration").isLessOrEqualThan(ChronoUnit.SECONDS, 10);
         new CheckerDuration(d, "duration").isLessOrEqualThan(ChronoUnit.SECONDS, 15);
-        assertThrows(Exception.class, () ->
+        assertThrows(CheckerException.class, () ->
             new CheckerDuration(d, "duration").isLessOrEqualThan(ChronoUnit.SECONDS, 9)
         );
     }
@@ -85,7 +87,7 @@ class CheckerDurationTest {
     void testIsEqualTemporalUnit() {
         Duration d = Duration.ofSeconds(10);
         new CheckerDuration(d, "duration").isEqual(ChronoUnit.SECONDS, 10);
-        assertThrows(Exception.class, () ->
+        assertThrows(CheckerException.class, () ->
             new CheckerDuration(d, "duration").isEqual(ChronoUnit.SECONDS, 9)
         );
     }
@@ -95,7 +97,7 @@ class CheckerDurationTest {
         Duration d1 = Duration.ofSeconds(10);
         Duration d2 = Duration.ofSeconds(5);
         new CheckerDuration(d1, "duration").isGreaterThan(d2);
-        assertThrows(Exception.class, () ->
+        assertThrows(CheckerException.class, () ->
             new CheckerDuration(d2, "duration").isGreaterThan(d1)
         );
     }
@@ -107,7 +109,7 @@ class CheckerDurationTest {
         Duration d3 = Duration.ofSeconds(5);
         new CheckerDuration(d1, "duration").isGreaterOrEqualThan(d2);
         new CheckerDuration(d1, "duration").isGreaterOrEqualThan(d3);
-        assertThrows(Exception.class, () ->
+        assertThrows(CheckerException.class, () ->
             new CheckerDuration(d3, "duration").isGreaterOrEqualThan(d1)
         );
     }
@@ -117,7 +119,7 @@ class CheckerDurationTest {
         Duration d1 = Duration.ofSeconds(5);
         Duration d2 = Duration.ofSeconds(10);
         new CheckerDuration(d1, "duration").isLessThan(d2);
-        assertThrows(Exception.class, () ->
+        assertThrows(CheckerException.class, () ->
             new CheckerDuration(d2, "duration").isLessThan(d1)
         );
     }
@@ -128,7 +130,7 @@ class CheckerDurationTest {
         Duration d2 = Duration.ofSeconds(10);
         new CheckerDuration(d1, "duration").isLessOrEqualThan(d2);
         new CheckerDuration(d2, "duration").isLessOrEqualThan(d2);
-        assertThrows(Exception.class, () ->
+        assertThrows(CheckerException.class, () ->
             new CheckerDuration(d2, "duration").isLessOrEqualThan(d1)
         );
     }
@@ -139,7 +141,7 @@ class CheckerDurationTest {
         Duration d2 = Duration.ofSeconds(10);
         Duration d3 = Duration.ofSeconds(5);
         new CheckerDuration(d1, "duration").isEqual(d2);
-        assertThrows(Exception.class, () ->
+        assertThrows(CheckerException.class, () ->
             new CheckerDuration(d1, "duration").isEqual(d3)
         );
     }
