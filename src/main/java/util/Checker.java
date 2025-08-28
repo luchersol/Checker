@@ -13,7 +13,6 @@ import java.util.Currency;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Predicate;
 
 import specialized_checkers.CheckerColor;
 import specialized_checkers.CheckerCurrency;
@@ -23,9 +22,9 @@ import specialized_checkers.collection.CheckerList;
 import specialized_checkers.collection.CheckerMap;
 import specialized_checkers.collection.CheckerSet;
 import specialized_checkers.collection.CheckerTree;
-import specialized_checkers.file.CheckerFile;
-import specialized_checkers.file.CheckerJson;
-import specialized_checkers.file.CheckerURI;
+import specialized_checkers.io.CheckerFile;
+import specialized_checkers.io.CheckerJson;
+import specialized_checkers.io.CheckerURI;
 import specialized_checkers.math.CheckerArray;
 import specialized_checkers.math.CheckerMatrix;
 import specialized_checkers.math.numbers.bigTypes.CheckerBigDecimal;
@@ -67,28 +66,6 @@ public class Checker extends AbstractChecker<Object, Checker> {
      */
     public static Checker check(Object object) {
         return new Checker(object, "Object");
-    }
-
-    /**
-     * @return Checker
-     */
-    public Checker isNull() {
-        return is(object -> object == null, sendMessage(INIT_CHECKER, "is_null"));
-    }
-
-    /**
-     * @return Checker
-     */
-    public Checker isNonNull() {
-        return is(object -> object != null, sendMessage(INIT_CHECKER, "is_not_null"));
-    }
-
-    /**
-     * @param other
-     * @return Checker
-     */
-    public Checker isEqual(Object other){
-        return is(object -> object.equals(other), sendMessage(INIT_CHECKER, "is_equal"));
     }
 
     /**
@@ -167,9 +144,8 @@ public class Checker extends AbstractChecker<Object, Checker> {
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public <T> CheckerList<T> isList(Class<T> clazz) {
         isInstance(List.class);
-        Predicate<Object> conditionClazz = object -> ((List<?>) this.object).stream()
-                .allMatch(elem -> clazz.isInstance(elem));
-        is(conditionClazz, sendMessage(INIT_CHECKER, "is_list.clazz", clazz.getSimpleName()));
+        is(object -> ((List<?>) this.object).stream().allMatch(elem -> clazz.isInstance(elem)),
+                sendMessage(INIT_CHECKER, "is_list.clazz", clazz.getSimpleName()));
         return new CheckerList((List<T>) this.object, name);
     }
 
@@ -191,11 +167,9 @@ public class Checker extends AbstractChecker<Object, Checker> {
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public <K, V> CheckerMap<K, V> isMap(Class<K> clazzKey, Class<V> clazzValue) {
         isInstance(Map.class);
-        Predicate<Object> conditionClazz = object -> ((Map<?, ?>) object).entrySet().stream()
-                .allMatch(entry -> clazzKey.isInstance(entry.getKey()) &&
-                        clazzValue.isInstance(entry.getValue()));
-        is(conditionClazz,
-                sendMessage(INIT_CHECKER, "is_map.clazz", clazzKey.getSimpleName(), clazzValue.getSimpleName()));
+        is(object -> ((Map<?, ?>) object).entrySet().stream()
+                .allMatch(entry -> clazzKey.isInstance(entry.getKey()) && clazzValue.isInstance(entry.getValue())),
+            sendMessage(INIT_CHECKER, "is_map.clazz", clazzKey.getSimpleName(), clazzValue.getSimpleName()));
         return new CheckerMap((Map<K, V>) this.object, name);
     }
 
@@ -215,9 +189,8 @@ public class Checker extends AbstractChecker<Object, Checker> {
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public <T> CheckerSet<T> isSet(Class<T> clazz) {
         isInstance(Set.class);
-        Predicate<Object> conditionClazz = object -> ((Set<?>) object).stream()
-                .allMatch(elem -> clazz.isInstance(elem));
-        is(conditionClazz, sendMessage(INIT_CHECKER, "is_set.clazz", clazz.getSimpleName()));
+        is(object -> ((Set<?>) object).stream().allMatch(elem -> clazz.isInstance(elem)),
+            sendMessage(INIT_CHECKER, "is_set.clazz", clazz.getSimpleName()));
         return new CheckerSet((Set<T>) this.object, name);
     }
 

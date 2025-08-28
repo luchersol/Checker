@@ -28,7 +28,16 @@ public class CheckerCurrency extends AbstractChecker<Currency, CheckerCurrency> 
      * @return CheckerCurrency
      */
     public CheckerCurrency hasSymbol(String symbol){
-        return is(currency -> currency.getSymbol().equals(symbol), sendMessage(INIT_CURRENCY, "has_symbol"));
+        return is(currency -> currency.getSymbol().equals(symbol), sendMessage(INIT_CURRENCY, "has_symbol", symbol));
+    }
+
+    /**
+     * @param symbol
+     * @param locale
+     * @return CheckerCurrency
+     */
+    public CheckerCurrency hasSymbol(String symbol, Locale locale){
+        return is(currency -> currency.getSymbol(locale).equals(symbol), sendMessage(INIT_CURRENCY, "has_symbol.locale", symbol, locale));
     }
 
     /**

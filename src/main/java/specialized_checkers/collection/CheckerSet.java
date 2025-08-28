@@ -69,11 +69,10 @@ public class CheckerSet<T> extends AbstractChecker<Set<T>, CheckerSet<T>>{
      * @return CheckerSet<T>
      */
     public CheckerSet<T> isSufficientPercentage(Predicate<T> matching, double percentage){
-        Predicate<Set<T>> predicate = set -> {
+        return is(set -> {
             double percentageMatching = set.stream().filter(matching).count() * 100. / set.size();
             return percentageMatching >= percentage;
-        };
-        return is(predicate, sendMessage(INIT_SET, "is_suffcient_percentage"));
+        }, sendMessage(INIT_SET, "is_sufficient_percentage", percentage * 100));
     }
 
 }

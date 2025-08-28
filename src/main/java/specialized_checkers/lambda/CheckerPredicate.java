@@ -38,7 +38,8 @@ public class CheckerPredicate<T> extends AbstractChecker<Predicate<T>, CheckerPr
     }
 
     /**
-     * Verifica que el predicado no lance excepción al evaluarse.
+     * @param input
+     * @return CheckerPredicate<T>
      */
     public CheckerPredicate<T> testWithoutException(T input) {
         return is(p -> {
@@ -53,7 +54,8 @@ public class CheckerPredicate<T> extends AbstractChecker<Predicate<T>, CheckerPr
     }
 
     /**
-     * Verifica que el predicado retorne true con el input dado.
+     * @param input
+     * @return CheckerPredicate<T>
      */
     public CheckerPredicate<T> evaluatesTrue(T input) {
         return is(p -> {
@@ -66,7 +68,8 @@ public class CheckerPredicate<T> extends AbstractChecker<Predicate<T>, CheckerPr
     }
 
     /**
-     * Verifica que el predicado retorne false con el input dado.
+     * @param input
+     * @return CheckerPredicate<T>
      */
     public CheckerPredicate<T> evaluatesFalse(T input) {
         return is(p -> {
@@ -79,7 +82,9 @@ public class CheckerPredicate<T> extends AbstractChecker<Predicate<T>, CheckerPr
     }
 
     /**
-     * Verifica que el resultado del predicado sea exactamente el esperado.
+     * @param input
+     * @param boolean
+     * @return CheckerPredicate<T>
      */
     public CheckerPredicate<T> producesExpected(T input, boolean expected) {
         return is(p -> {

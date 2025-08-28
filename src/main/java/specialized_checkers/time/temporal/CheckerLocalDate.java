@@ -11,7 +11,7 @@ public class CheckerLocalDate extends AbstractChecker<LocalDate, CheckerLocalDat
     private static final String LOCAL_DATE_STRING = "LocalDate";
     // private static final String INIT_TIME = "time";
     private static final String INIT_TEMPORAL = "time.temporal";
-    // private static final String INIT_LOCAL_DATE = "time.temporal.local_date";
+    private static final String INIT_LOCAL_DATE = "time.temporal.local_date";
 
     public CheckerLocalDate(LocalDate object, String name) {
         super(object, name);
@@ -98,14 +98,14 @@ public class CheckerLocalDate extends AbstractChecker<LocalDate, CheckerLocalDat
      * @return CheckerLocalDate
      */
     public CheckerLocalDate isPastOrPresent() {
-        return is(time -> !time.isAfter(now()), sendMessage(INIT_TEMPORAL, "is_past_or_present", LOCAL_DATE_STRING));
+        return is(time -> !time.isAfter(now()), sendMessage(INIT_LOCAL_DATE, "is_past_or_present", LOCAL_DATE_STRING));
     }
 
     /**
      * @return CheckerLocalDate
      */
     public CheckerLocalDate isFutureOrPresent() {
-        return is(time -> !time.isBefore(now()), sendMessage(INIT_TEMPORAL, "is_future_or_present", LOCAL_DATE_STRING));
+        return is(time -> !time.isBefore(now()), sendMessage(INIT_LOCAL_DATE, "is_future_or_present", LOCAL_DATE_STRING));
     }
 
 }

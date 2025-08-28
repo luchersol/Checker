@@ -139,7 +139,7 @@ public class CheckerColor extends AbstractChecker<Color, CheckerColor> {
             float[] hsb = Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), null);
             return hsb[1] < umbral;
         };
-        return is(predicate, sendMessage(INIT_COLOR, "is_desturated"));
+        return is(predicate, sendMessage(INIT_COLOR, "is_desaturated"));
     }
 
     /**

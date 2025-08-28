@@ -1,4 +1,4 @@
-package specialized_checkers.file;
+package specialized_checkers.io;
 
 import static util.Message.*;
 
@@ -14,7 +14,7 @@ import util.AbstractChecker;
 
 public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
 
-    private static final String INIT_JSON = "json";
+    private static final String INIT_JSON = "io.json";
 
     public CheckerJson(File object, String name) throws IOException {
         super(name);
@@ -213,7 +213,7 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
         return is(json -> {
             JsonNode node = getProperty(path);
             return node != null && node.isInt() && node.asInt() >= min && node.asInt() <= max;
-        }, sendMessage(INIT_JSON, "is_in_range", path));
+        }, sendMessage(INIT_JSON, "is_in_range", path, min, max));
     }
 
     /**
@@ -225,7 +225,7 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
         return is(json -> {
             JsonNode node = getProperty(path);
             return node != null && node.isTextual() && node.asText().matches(regex);
-        }, sendMessage(INIT_JSON, "matches_regex", path));
+        }, sendMessage(INIT_JSON, "matches_regex", path, regex));
     }
 
     /**
@@ -237,7 +237,7 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
         return is(json -> {
             JsonNode node = getProperty(path);
             return node != null && node.isTextual() && allowedValues.contains(node.asText());
-        }, sendMessage(INIT_JSON, "is_in_enum", path));
+        }, sendMessage(INIT_JSON, "is_in_enum", path, allowedValues));
     }
 
     /**
@@ -250,7 +250,21 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
         return is(json -> {
             JsonNode node = getProperty(path);
             return node != null && node.isTextual() && node.asText().length() >= min && node.asText().length() <= max;
-        }, sendMessage(INIT_JSON, "has_length_between", path));
+        }, sendMessage(INIT_JSON, "has_length_between", path, min, max));
+    }
+
+
+    /**
+     * @param path
+     * @param condition
+     * @param messageKey
+     * @return CheckerJson
+     */
+    private CheckerJson checkNodeType(String path, Predicate<JsonNode> condition, String messageKey) {
+        return is(json -> {
+            JsonNode node = getProperty(path);
+            return node != null && condition.test(node);
+        }, sendMessage(INIT_JSON, messageKey, path));
     }
 
     /**
@@ -290,19 +304,6 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
      */
     private boolean containsProperty(String path) {
         return getProperty(path) != null;
-    }
-
-    /**
-     * @param path
-     * @param condition
-     * @param messageKey
-     * @return CheckerJson
-     */
-    private CheckerJson checkNodeType(String path, Predicate<JsonNode> condition, String messageKey) {
-        return is(json -> {
-            JsonNode node = getProperty(path);
-            return node != null && condition.test(node);
-        }, sendMessage(INIT_JSON, messageKey, path));
     }
 
 }

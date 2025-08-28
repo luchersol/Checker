@@ -38,7 +38,7 @@ public class CheckerTest {
         // Parámetros como Map<String, Object>
         line();
         Map<String, Object> map = Map.of("name", NAME_TEST);
-        Map<String, Object> map2 = Map.of("name", NAME_TEST, "name2", NAME_TEST + "2");
+        // Map<String, Object> map2 = Map.of("name", NAME_TEST, "name2", NAME_TEST + "2");
         System.out.println(Checker.check(persona).checkProperty("diga(1)", (Object) map).getObject());
         // System.out.println(Checker.check(persona).checkProperty("hola(name)", map).getObject());
         // System.out.println(Checker.check(persona).checkProperty("hola(name).length()", map).getObject());
@@ -56,11 +56,11 @@ public class CheckerTest {
         // System.out.println(Checker.check(persona).checkProperty("innerPerson.hola(1).length()", NAME_TEST).getObject());
         // System.out.println(Checker.check(persona).checkProperty("getInnerPerson(1).hola(1)", NAME_TEST, NAME_TEST).getObject());
         // System.out.println(Checker.check(persona).checkProperty("getInnerPerson(1).hola(1).length()", NAME_TEST, NAME_TEST).getObject());
-  
+
         // // Parámetros como List<Entry<<String, Object>>>
         // line();
         // List<Entry<Object, Class<?>>> list = List.of(Map.entry(NAME_TEST, String.class)),
-        //                               list2 = List.of(Map.entry(NAME_TEST, Object.class), 
+        //                               list2 = List.of(Map.entry(NAME_TEST, Object.class),
         //                                               Map.entry(NAME_TEST, String.class));
         // System.out.println(Checker.check(persona).checkProperty("hola(1)", list).getObject());
         // System.out.println(Checker.check(persona).checkProperty("hola(1).length()", list).getObject());
@@ -107,9 +107,9 @@ public class CheckerTest {
 
         public static class InnerPerson
         {
-            String name;    
+            String name;
             int year;
-            
+
             public InnerPerson(String name, int year){
                 this.name = name;
                 this.year = year;
@@ -118,11 +118,11 @@ public class CheckerTest {
             public String hola(String str){
                 return "Hola InnerPerson String; " + str;
             }
-    
+
             public String hola(Object str){
                 return "Hola InnerPerson Object: " + str;
             }
-            
+
         }
     }
 

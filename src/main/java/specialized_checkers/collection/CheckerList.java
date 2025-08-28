@@ -77,11 +77,10 @@ public class CheckerList<T> extends AbstractChecker<List<T>, CheckerList<T>>{
      * @return CheckerList<T>
      */
     public CheckerList<T> isSufficientPercentage(Predicate<T> matching, double percentage){
-        Predicate<List<T>> predicate = list -> {
+        return is(list -> {
             double percentageMatching = list.stream().filter(matching).count() * 100. / list.size();
             return percentageMatching >= percentage;
-        };
-        return is(predicate, sendMessage(INIT_LIST, "is_suffcient_percentage"));
+        }, sendMessage(INIT_LIST, "is_sufficient_percentage", percentage * 100));
     }
 
 }

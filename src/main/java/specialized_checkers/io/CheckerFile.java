@@ -1,4 +1,4 @@
-package specialized_checkers.file;
+package specialized_checkers.io;
 
 import static util.Message.*;
 
@@ -15,7 +15,7 @@ import util.AbstractChecker;
 
 public class CheckerFile extends AbstractChecker<File, CheckerFile> {
 
-    private static final String INIT_FILE = "file";
+    private static final String INIT_FILE = "io.file";
 
     public CheckerFile(File object, String name) {
         super(object, name);

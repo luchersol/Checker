@@ -1,4 +1,4 @@
-package specialized_checkers.file;
+package specialized_checkers.io;
 
 import static util.Message.*;
 

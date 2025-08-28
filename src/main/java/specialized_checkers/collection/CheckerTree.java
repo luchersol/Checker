@@ -38,7 +38,7 @@ public class CheckerTree<T> extends AbstractChecker<Tree<T>, CheckerTree<T>> {
      * @return CheckerTree<T>
      */
     public CheckerTree<T> isEmpty() {
-        return is(tree -> tree.isEmpty(), sendMessage(INIT_TREE, "is_binary_tree"));
+        return is(tree -> tree.isEmpty(), sendMessage(INIT_TREE, "is_empty"));
     }
 
     /**
@@ -59,7 +59,7 @@ public class CheckerTree<T> extends AbstractChecker<Tree<T>, CheckerTree<T>> {
      * @return CheckerTree<T>
      */
     public CheckerTree<T> isFull() {
-        return is(tree -> tree.isFull(), sendMessage(INIT_TREE, "is_symmetric"));
+        return is(tree -> tree.isFull(), sendMessage(INIT_TREE, "is_full"));
     }
 
     /**
@@ -67,7 +67,7 @@ public class CheckerTree<T> extends AbstractChecker<Tree<T>, CheckerTree<T>> {
      * @return CheckerTree<T>
      */
     public CheckerTree<T> minDepth(int min) {
-        return is(tree -> min <= tree.getDepth(), sendMessage(INIT_TREE, "min_depth"));
+        return is(tree -> min <= tree.getDepth(), sendMessage(INIT_TREE, "min_depth", this.object.getDepth(), min));
     }
 
     /**
@@ -75,7 +75,8 @@ public class CheckerTree<T> extends AbstractChecker<Tree<T>, CheckerTree<T>> {
      * @return CheckerTree<T>
      */
     public CheckerTree<T> maxDepth(int max) {
-        return is(tree -> tree.getDepth() <= max, sendMessage(INIT_TREE, "max_depth"));
+        return is(tree -> tree.getDepth() <= max,
+            sendMessage(INIT_TREE, "max_depth", this.object.getDepth(), max));
     }
 
     /**
@@ -84,7 +85,8 @@ public class CheckerTree<T> extends AbstractChecker<Tree<T>, CheckerTree<T>> {
      * @return CheckerTree<T>
      */
     public CheckerTree<T> inRangeDepth(int min, int max) {
-        return is(tree -> min <= tree.getDepth() && tree.getDepth() <= max, sendMessage(INIT_TREE, "in_range_depth"));
+        return is(tree -> min <= tree.getDepth() && tree.getDepth() <= max,
+            sendMessage(INIT_TREE, "in_range_depth", this.object.getDepth(), min, max));
     }
 
     /**
@@ -92,7 +94,8 @@ public class CheckerTree<T> extends AbstractChecker<Tree<T>, CheckerTree<T>> {
      * @return CheckerTree<T>
      */
     public CheckerTree<T> minLeaves(int min) {
-        return is(tree -> min <= tree.countLeaves(), sendMessage(INIT_TREE, "min_leaves"));
+        return is(tree -> min <= tree.countLeaves(),
+            sendMessage(INIT_TREE, "min_leaves", this.object.countLeaves(), min));
     }
 
     /**
@@ -100,7 +103,8 @@ public class CheckerTree<T> extends AbstractChecker<Tree<T>, CheckerTree<T>> {
      * @return CheckerTree<T>
      */
     public CheckerTree<T> maxLeaves(int max) {
-        return is(tree -> tree.countLeaves() <= max, sendMessage(INIT_TREE, "max_leaves"));
+        return is(tree -> tree.countLeaves() <= max,
+            sendMessage(INIT_TREE, "max_leaves", this.object.countLeaves(), max));
     }
 
     /**
@@ -109,7 +113,8 @@ public class CheckerTree<T> extends AbstractChecker<Tree<T>, CheckerTree<T>> {
      * @return CheckerTree<T>
      */
     public CheckerTree<T> inRangeLeaves(int min, int max) {
-        return is(tree -> min <= tree.countLeaves() && tree.countLeaves() <= max, sendMessage(INIT_TREE, "in_range_leaves"));
+        return is(tree -> min <= tree.countLeaves() && tree.countLeaves() <= max,
+            sendMessage(INIT_TREE, "in_range_leaves", this.object.countLeaves(), min, max));
     }
 
     /**
@@ -117,7 +122,8 @@ public class CheckerTree<T> extends AbstractChecker<Tree<T>, CheckerTree<T>> {
      * @return CheckerTree<T>
      */
     public CheckerTree<T> minDiamenter(int min) {
-        return is(tree -> min <= tree.diameter(), sendMessage(INIT_TREE, "min_diamenter"));
+        return is(tree -> min <= tree.diameter(),
+            sendMessage(INIT_TREE, "min_diamenter", this.object.diameter(), min));
     }
 
     /**
@@ -125,7 +131,8 @@ public class CheckerTree<T> extends AbstractChecker<Tree<T>, CheckerTree<T>> {
      * @return CheckerTree<T>
      */
     public CheckerTree<T> maxDiamenter(int max) {
-        return is(tree -> tree.diameter() <= max, sendMessage(INIT_TREE, "max_diamenter"));
+        return is(tree -> tree.diameter() <= max,
+            sendMessage(INIT_TREE, "max_diamenter", this.object.diameter(), max));
     }
 
     /**
@@ -134,7 +141,8 @@ public class CheckerTree<T> extends AbstractChecker<Tree<T>, CheckerTree<T>> {
      * @return CheckerTree<T>
      */
     public CheckerTree<T> inRangeDiamenter(int min, int max) {
-        return is(tree -> min <= tree.diameter() && tree.diameter() <= max, sendMessage(INIT_TREE, "in_range_diamenter"));
+        return is(tree -> min <= tree.diameter() && tree.diameter() <= max,
+            sendMessage(INIT_TREE, "in_range_diamenter", this.object.diameter(), min, max));
     }
 
 }

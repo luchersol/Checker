@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Queue;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
@@ -123,6 +124,28 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
      */
     public C isNot(Predicate<T> condition) {
         return is(condition.negate(), sendMessage(INIT_ABSTRACT_CHECKER, "is_not"));
+    }
+
+        /**
+     * @return C
+     */
+    public C isNull() {
+        return is(object -> object == null, sendMessage(INIT_ABSTRACT_CHECKER, "is_null"));
+    }
+
+    /**
+     * @return C
+     */
+    public C isNonNull() {
+        return is(object -> object != null, sendMessage(INIT_ABSTRACT_CHECKER, "is_not_null"));
+    }
+
+    /**
+     * @param other
+     * @return C
+     */
+    public C isEqual(Object other){
+        return is(object -> Objects.equals(other, object), sendMessage(INIT_ABSTRACT_CHECKER, "is_equal"));
     }
 
     /**

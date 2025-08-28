@@ -72,7 +72,7 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
             } catch (Exception e) {
                 return false;
             }
-        }, sendMessage(INIT_CONSUMER, "apply_without_exception"));
+        }, sendMessage(INIT_CONSUMER, "apply_without_exception", input1, input2));
     }
 
     /**
@@ -90,7 +90,7 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
                     return false;
                 }
             }
-        ), sendMessage(INIT_CONSUMER, "apply_without_exception"));
+        ), sendMessage(INIT_CONSUMER, "apply_without_exception.collection"));
     }
 
     /**
@@ -110,7 +110,7 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
             } catch (Exception e) {
                 return false;
             }
-        }, sendMessage(INIT_CONSUMER, "modifies_input"));
+        }, sendMessage(INIT_CONSUMER, "modifies_input", input1, input2));
     }
 
         /**
@@ -130,7 +130,7 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
             } catch (Exception e) {
                 return false;
             }
-        }, sendMessage(INIT_CONSUMER, "modifies_input"));
+        }, sendMessage(INIT_CONSUMER, "modifies_input", input1, input2));
     }
 
     /**
@@ -150,7 +150,7 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
                     return false;
                 }
             }
-        ), sendMessage(INIT_CONSUMER, "modifies_input", input));
+        ), sendMessage(INIT_CONSUMER, "modifies_input.collection", input));
     }
 
     /**
@@ -170,7 +170,7 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
                     return false;
                 }
             }
-        ), sendMessage(INIT_CONSUMER, "modifies_input", input));
+        ), sendMessage(INIT_CONSUMER, "modifies_input.collection", input));
     }
 
     /**
@@ -189,7 +189,7 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
             } catch (Exception e) {
                 return false;
             }
-        }, sendMessage(INIT_CONSUMER, "does_nothing"));
+        }, sendMessage(INIT_CONSUMER, "does_nothing", input1, input2));
     }
 
     /**
@@ -210,7 +210,7 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
                     }
                 }
             )
-        , sendMessage(INIT_CONSUMER, "does_nothing", input));
+        , sendMessage(INIT_CONSUMER, "does_nothing.collection"));
     }
 
 }
