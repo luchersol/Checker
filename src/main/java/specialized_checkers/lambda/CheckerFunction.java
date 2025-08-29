@@ -2,11 +2,11 @@ package specialized_checkers.lambda;
 
 import static util.Message.*;
 
-import java.util.Objects;
 import java.util.function.Function;
 
 import util.AbstractChecker;
 import util.Cloner;
+import util.Utils;
 
 public class CheckerFunction<T, R> extends AbstractChecker<Function<T, R>, CheckerFunction<T, R>> {
 
@@ -93,7 +93,7 @@ public class CheckerFunction<T, R> extends AbstractChecker<Function<T, R>, Check
         return is(f -> {
             try {
                 R result = f.apply(input);
-                return Objects.equals(expected, result);
+                return Utils.equalsContent(expected, result);
             } catch (Exception e) {
                 return false;
             }

@@ -11,6 +11,10 @@ public class Cloner {
 
     private static final Kryo kryo = new Kryo();
 
+    static {
+        kryo.setRegistrationRequired(false);
+    }
+
     /**
      * @param object
      * @return T

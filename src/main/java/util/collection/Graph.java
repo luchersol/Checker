@@ -5,10 +5,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import util.Utils;
 
 
 public class Graph<N,E extends Number> {
@@ -225,7 +226,7 @@ public class Graph<N,E extends Number> {
     public boolean containsEdge(N from, N to) {
         return this.adjacencyMap.getOrDefault(from, Collections.emptySet())
                                 .stream()
-                                .anyMatch(edge -> Objects.equals(edge.getTo(), to));
+                                .anyMatch(edge -> Utils.equalsContent(edge.getTo(), to));
     }
 
     /**

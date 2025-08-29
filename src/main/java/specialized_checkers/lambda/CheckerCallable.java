@@ -2,10 +2,10 @@ package specialized_checkers.lambda;
 
 import static util.Message.*;
 
-import java.util.Objects;
 import java.util.concurrent.Callable;
 
 import util.AbstractChecker;
+import util.Utils;
 
 public class CheckerCallable<V> extends AbstractChecker<Callable<V>, CheckerCallable<V>> {
 
@@ -63,7 +63,7 @@ public class CheckerCallable<V> extends AbstractChecker<Callable<V>, CheckerCall
         return is(c -> {
             try {
                 V result = c.call();
-                return Objects.equals(expected, result);
+                return Utils.equalsContent(expected, result);
             } catch (Exception e) {
                 return false;
             }

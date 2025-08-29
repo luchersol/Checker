@@ -2,7 +2,6 @@ package specialized_checkers.lambda;
 
 import static util.Message.*;
 
-import java.util.Objects;
 import java.util.function.BiPredicate;
 
 import util.AbstractChecker;
@@ -134,7 +133,7 @@ public class CheckerBiPredicate<T, U> extends AbstractChecker<BiPredicate<T, U>,
         return is(p -> {
             try {
                 boolean result = p.test(getInput1(input1), getInput2(input2));
-                return Objects.equals(expected, result);
+                return expected == result;
             } catch (Exception e) {
                 return false;
             }

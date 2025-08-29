@@ -2,11 +2,11 @@ package specialized_checkers.lambda;
 
 import static util.Message.*;
 
-import java.util.Objects;
 import java.util.function.BiFunction;
 
 import util.AbstractChecker;
 import util.Cloner;
+import util.Utils;
 
 public class CheckerBiFunction<T, U, R> extends AbstractChecker<BiFunction<T, U, R>, CheckerBiFunction<T, U, R>> {
 
@@ -104,7 +104,7 @@ public class CheckerBiFunction<T, U, R> extends AbstractChecker<BiFunction<T, U,
                 T processInput1 = getInput1(input1);
                 U processInput2 = getInput2(input2);
                 R result = f.apply(processInput1, processInput2);
-                return Objects.equals(expected, result);
+                return Utils.equalsContent(expected, result);
             } catch (Exception e) {
                 return false;
             }

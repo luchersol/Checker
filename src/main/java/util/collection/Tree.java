@@ -28,8 +28,7 @@ public class Tree<T> {
     }
 
     public Tree() {
-        this.root = new TreeNode<>(null);
-        this.isBinaryTree = true;
+        this(null);
     }
 
     public Tree(T rootValue) {
@@ -70,7 +69,7 @@ public class Tree<T> {
      * @return boolean
      */
     public boolean isEmpty() {
-        return this.root == null;
+        return this.root.value == null;
     }
 
     /**

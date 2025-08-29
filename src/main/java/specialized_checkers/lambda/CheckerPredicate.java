@@ -2,11 +2,11 @@ package specialized_checkers.lambda;
 
 import static util.Message.*;
 
-import java.util.Objects;
 import java.util.function.Predicate;
 
 import util.AbstractChecker;
 import util.Cloner;
+import util.Utils;
 
 public class CheckerPredicate<T> extends AbstractChecker<Predicate<T>, CheckerPredicate<T>> {
 
@@ -121,7 +121,7 @@ public class CheckerPredicate<T> extends AbstractChecker<Predicate<T>, CheckerPr
         return is(p -> {
             try {
                 boolean result = p.test(getInput(input));
-                return Objects.equals(expected, result);
+                return Utils.equalsContent(expected, result);
             } catch (Exception e) {
                 return false;
             }

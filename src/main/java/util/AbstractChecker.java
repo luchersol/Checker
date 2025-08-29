@@ -10,7 +10,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Objects;
 import java.util.Queue;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
@@ -145,7 +144,7 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
      * @return C
      */
     public C isEqual(Object other){
-        return is(object -> Objects.equals(other, object), sendMessage(INIT_ABSTRACT_CHECKER, "is_equal"));
+        return is(object -> Utils.equalsContent(other, object), sendMessage(INIT_ABSTRACT_CHECKER, "is_equal"));
     }
 
     /**

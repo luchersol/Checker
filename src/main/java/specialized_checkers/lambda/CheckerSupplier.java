@@ -2,10 +2,10 @@ package specialized_checkers.lambda;
 
 import static util.Message.*;
 
-import java.util.Objects;
 import java.util.function.Supplier;
 
 import util.AbstractChecker;
+import util.Utils;
 
 public class CheckerSupplier<T> extends AbstractChecker<Supplier<T>, CheckerSupplier<T>> {
 
@@ -65,7 +65,7 @@ public class CheckerSupplier<T> extends AbstractChecker<Supplier<T>, CheckerSupp
         return is(s -> {
             try {
                 T result = s.get();
-                return Objects.equals(expected, result);
+                return Utils.equalsContent(expected, result);
             } catch (Exception e) {
                 return false;
             }

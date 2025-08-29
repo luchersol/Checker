@@ -4,13 +4,13 @@ import static util.Message.*;
 
 import java.util.Collection;
 import java.util.Map.Entry;
-import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 import util.AbstractChecker;
 import util.Cloner;
+import util.Utils;
 
 public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, CheckerBiConsumer<T, U>> {
 
@@ -103,7 +103,7 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
      * @param input
      * @return CheckerBiConsumer<T, U>
      */
-    public CheckerBiConsumer<T, U> applyWithoutException(Collection<Entry<T, U>> input) {
+    public CheckerBiConsumer<T, U> applyWithoutException(Collection<? extends Entry<T, U>> input) {
         return is(c -> input.stream().allMatch(e -> {
                 try {
                     T processInput1 = getInput1(e.getKey());
@@ -163,7 +163,7 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
      * @param condition2
      * @return T
      */
-    public CheckerBiConsumer<T, U> modifiesInput(Collection<Entry<T, U>> input, Predicate<T> condition1, Predicate<U> condition2) {
+    public CheckerBiConsumer<T, U> modifiesInput(Collection<? extends Entry<T, U>> input, Predicate<T> condition1, Predicate<U> condition2) {
         return is(c -> input.stream().allMatch(e -> {
                 try {
                     T processInput1 = getInput1(e.getKey());
@@ -183,7 +183,7 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
      * @param condition2
      * @return T
      */
-    public CheckerBiConsumer<T, U> modifiesInput(Collection<Entry<T, U>> input, BiPredicate<T, U> condition) {
+    public CheckerBiConsumer<T, U> modifiesInput(Collection<? extends Entry<T, U>> input, BiPredicate<T, U> condition) {
         return is(c -> input.stream().allMatch(e -> {
                 try {
                     T processInput1 = getInput1(e.getKey());
@@ -209,7 +209,7 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
                 U before2 = Cloner.deepClone(input2);
                 U after2 = getInput2(input2);
                 c.accept(after1, after2);
-                return Objects.equals(after1, before1) && Objects.equals(after2, before2);
+                return Utils.equalsContent(after1, before1) && Utils.equalsContent(after2, before2);
             } catch (Exception e) {
                 return false;
             }
@@ -220,7 +220,7 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
      * @param input
      * @return T
      */
-    public CheckerBiConsumer<T, U> doesNothing(Collection<Entry<T,U>> input) {
+    public CheckerBiConsumer<T, U> doesNothing(Collection<? extends Entry<T,U>> input) {
         return is(c -> input.stream().allMatch(e -> {
                     try {
                         T before1 = Cloner.deepClone(e.getKey());
@@ -228,7 +228,7 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
                         U before2 = Cloner.deepClone(e.getValue());
                         U after2 = getInput2(e.getValue());
                         c.accept(after1, after2);
-                        return Objects.equals(after1, before1) && Objects.equals(after2, before2);
+                        return Utils.equalsContent(after1, before1) && Utils.equalsContent(after2, before2);
                     } catch (Exception exc) {
                         return false;
                     }

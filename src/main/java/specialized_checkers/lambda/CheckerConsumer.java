@@ -3,12 +3,12 @@ package specialized_checkers.lambda;
 import static util.Message.*;
 
 import java.util.Collection;
-import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 import util.AbstractChecker;
 import util.Cloner;
+import util.Utils;
 
 public class CheckerConsumer<T> extends AbstractChecker<Consumer<T>, CheckerConsumer<T>> {
 
@@ -152,7 +152,7 @@ public class CheckerConsumer<T> extends AbstractChecker<Consumer<T>, CheckerCons
                 T before = Cloner.deepClone(input);
                 T after = getInput(input);
                 c.accept(after);
-                return Objects.equals(after, before);
+                return Utils.equalsContent(after, before);
             } catch (Exception e) {
                 return false;
             }
@@ -169,7 +169,7 @@ public class CheckerConsumer<T> extends AbstractChecker<Consumer<T>, CheckerCons
                         T before = Cloner.deepClone(e);
                         T after = getInput(e);
                         c.accept(after);
-                        return Objects.equals(after, before);
+                        return Utils.equalsContent(after, before);
                     } catch (Exception exc) {
                         return false;
                     }
