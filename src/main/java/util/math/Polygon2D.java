@@ -4,15 +4,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Polygon {
+public class Polygon2D {
 
     private List<Point2D> points;
 
-    public Polygon(List<Point2D> points) {
+    public Polygon2D(List<Point2D> points) {
         this.points = points;
     }
 
-    public Polygon(double[][] points) {
+    public Polygon2D(double[][] points) {
         this.points = Arrays.stream(points).map(Point2D::new).collect(Collectors.toList());
     }
 
