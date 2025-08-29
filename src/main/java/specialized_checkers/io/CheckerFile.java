@@ -4,11 +4,11 @@ import static util.Message.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 import util.AbstractChecker;
@@ -34,11 +34,30 @@ public class CheckerFile extends AbstractChecker<File, CheckerFile> {
     }
 
     /**
+     * @param pathname
+     * @param name
+     * @return CheckerFile
+     */
+    public static CheckerFile check(String pathname, String name) {
+        File file = new File(pathname);
+        return check(file, name);
+    }
+
+    /**
      * @param file
      * @return CheckerFile
      */
     public static CheckerFile check(File file) {
         return check(file, DEFAULT_NAME);
+    }
+
+    /**
+     * @param pathname
+     * @return CheckerFile
+     */
+    public static CheckerFile check(String pathname) {
+        File file = new File(pathname);
+        return check(file);
     }
 
     /**
@@ -148,17 +167,26 @@ public class CheckerFile extends AbstractChecker<File, CheckerFile> {
      * @return boolean
      */
     private static boolean areFilesIdentical(File file1, String path2) {
+        Path file2 = Paths.get(path2);
         try {
-            Path file2 = Paths.get(path2);
-
             if (file1.length() != Files.size(file2)) return false;
 
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] hash1 = md.digest(Files.readAllBytes(file1.toPath()));
-            byte[] hash2 = md.digest(Files.readAllBytes(file2));
+            try (InputStream in1 = Files.newInputStream(file1.toPath());
+                InputStream in2 = Files.newInputStream(file2)) {
 
-            return MessageDigest.isEqual(hash1, hash2);
-        } catch (IOException | NoSuchAlgorithmException e) {
+                byte[] buf1 = new byte[8192];
+                byte[] buf2 = new byte[8192];
+
+                int n1, n2;
+                while ((n1 = in1.read(buf1)) != -1) {
+                    n2 = in2.read(buf2);
+                    if (n1 != n2 || !Arrays.equals(buf1, buf2)) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        } catch (IOException e) {
             return false;
         }
     }

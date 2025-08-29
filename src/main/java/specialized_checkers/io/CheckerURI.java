@@ -27,11 +27,30 @@ public class CheckerURI extends AbstractChecker<URI, CheckerURI> {
     }
 
     /**
+     * @param path
+     * @param name
+     * @return CheckerURI
+     */
+    public static CheckerURI check(String path, String name) {
+        URI uri = URI.create(path);
+        return new CheckerURI(uri, name);
+    }
+
+    /**
      * @param uri
      * @return CheckerURI
      */
     public static CheckerURI check(URI uri) {
         return check(uri, DEFAULT_NAME);
+    }
+
+    /**
+     * @param path
+     * @param name
+     * @return CheckerURI
+     */
+    public static CheckerURI check(String path) {
+        return check(path, DEFAULT_NAME);
     }
 
     /**

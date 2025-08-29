@@ -44,6 +44,19 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
     }
 
     /**
+     * @param pathname
+     * @param name
+     * @return CheckerJson
+     * @throws IOException
+     */
+    public static CheckerJson check(String pathname, String name) throws IOException {
+        File file = new File(pathname);
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode rootNode = mapper.readTree(file);
+        return check(rootNode, name);
+    }
+
+    /**
      * @param json
      * @return CheckerJson
      */
@@ -60,6 +73,14 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
         return check(file, DEFAULT_NAME);
     }
 
+    /**
+     * @param pathname
+     * @return CheckerJson
+     * @throws IOException
+     */
+    public static CheckerJson check(String pathname) throws IOException {
+        return check(pathname, DEFAULT_NAME);
+    }
 
     /**
      * @return CheckerJson
