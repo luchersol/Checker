@@ -37,54 +37,54 @@ class CheckerFileTest {
 
     @Test
     void testExists() {
-        assertDoesNotThrow(() -> new CheckerFile(tempFile, "tempFile").exists());
-        assertThrows(CheckerException.class, () -> new CheckerFile(new File("nonexistent.txt"), "noFile").exists());
+        assertDoesNotThrow(() -> CheckerFile.check(tempFile, "tempFile").exists());
+        assertThrows(CheckerException.class, () -> CheckerFile.check(new File("nonexistent.txt"), "noFile").exists());
     }
 
     @Test
     void testIsTypeFile() {
-        assertDoesNotThrow(() -> new CheckerFile(tempFile, "tempFile").isTypeFile());
-        assertThrows(CheckerException.class, () -> new CheckerFile(tempDir, "tempDir").isTypeFile());
+        assertDoesNotThrow(() -> CheckerFile.check(tempFile, "tempFile").isTypeFile());
+        assertThrows(CheckerException.class, () -> CheckerFile.check(tempDir, "tempDir").isTypeFile());
     }
 
     @Test
     void testIsTypeDirectory() {
-        assertDoesNotThrow(() -> new CheckerFile(tempDir, "tempDir").isTypeDirectory());
-        assertThrows(CheckerException.class, () -> new CheckerFile(tempFile, "tempFile").isTypeDirectory());
+        assertDoesNotThrow(() -> CheckerFile.check(tempDir, "tempDir").isTypeDirectory());
+        assertThrows(CheckerException.class, () -> CheckerFile.check(tempFile, "tempFile").isTypeDirectory());
     }
 
     @Test
     void testIsTypeHidden() {
-        assertDoesNotThrow(() -> new CheckerFile(hiddenFile, "hiddenFile").isTypeHidden());
-        assertThrows(CheckerException.class, () -> new CheckerFile(tempFile, "tempFile").isTypeHidden());
+        assertDoesNotThrow(() -> CheckerFile.check(hiddenFile, "hiddenFile").isTypeHidden());
+        assertThrows(CheckerException.class, () -> CheckerFile.check(tempFile, "tempFile").isTypeHidden());
     }
 
     @Test
     void testCanReadAndWrite() {
-        assertDoesNotThrow(() -> new CheckerFile(tempFile, "tempFile").canRead());
-        assertDoesNotThrow(() -> new CheckerFile(tempFile, "tempFile").canWrite());
+        assertDoesNotThrow(() -> CheckerFile.check(tempFile, "tempFile").canRead());
+        assertDoesNotThrow(() -> CheckerFile.check(tempFile, "tempFile").canWrite());
     }
 
     @Test
     void testMinMaxInRange() {
         long fileSize = tempFile.length();
-        assertDoesNotThrow(() -> new CheckerFile(tempFile, "tempFile").min((int)fileSize));
-        assertDoesNotThrow(() -> new CheckerFile(tempFile, "tempFile").max((int)fileSize));
-        assertDoesNotThrow(() -> new CheckerFile(tempFile, "tempFile").inRange((int)fileSize, (int)fileSize + 10));
-        assertThrows(CheckerException.class, () -> new CheckerFile(tempFile, "tempFile").min((int)fileSize + 100));
-        assertThrows(CheckerException.class, () -> new CheckerFile(tempFile, "tempFile").max((int)fileSize - 1));
+        assertDoesNotThrow(() -> CheckerFile.check(tempFile, "tempFile").min((int)fileSize));
+        assertDoesNotThrow(() -> CheckerFile.check(tempFile, "tempFile").max((int)fileSize));
+        assertDoesNotThrow(() -> CheckerFile.check(tempFile, "tempFile").inRange((int)fileSize, (int)fileSize + 10));
+        assertThrows(CheckerException.class, () -> CheckerFile.check(tempFile, "tempFile").min((int)fileSize + 100));
+        assertThrows(CheckerException.class, () -> CheckerFile.check(tempFile, "tempFile").max((int)fileSize - 1));
     }
 
     @Test
     void testWithExtension() {
-        assertDoesNotThrow(() -> new CheckerFile(tempFile, "tempFile").withExtension("txt"));
-        assertThrows(CheckerException.class, () -> new CheckerFile(tempFile, "tempFile").withExtension("pdf"));
+        assertDoesNotThrow(() -> CheckerFile.check(tempFile, "tempFile").withExtension("txt"));
+        assertThrows(CheckerException.class, () -> CheckerFile.check(tempFile, "tempFile").withExtension("pdf"));
     }
 
     @Test
     void testWithAnyExtension() {
-        assertDoesNotThrow(() -> new CheckerFile(tempFile, "tempFile").withAnyExtension("txt", "pdf"));
-        assertThrows(CheckerException.class, () -> new CheckerFile(tempFile, "tempFile").withAnyExtension("doc", "pdf"));
+        assertDoesNotThrow(() -> CheckerFile.check(tempFile, "tempFile").withAnyExtension("txt", "pdf"));
+        assertThrows(CheckerException.class, () -> CheckerFile.check(tempFile, "tempFile").withAnyExtension("doc", "pdf"));
     }
 
     @Test
@@ -93,13 +93,13 @@ class CheckerFileTest {
         copy.deleteOnExit();
         Files.writeString(copy.toPath(), Files.readString(tempFile.toPath()));
 
-        assertDoesNotThrow(() -> new CheckerFile(tempFile, "tempFile").isIdentical(copy.getAbsolutePath()));
+        assertDoesNotThrow(() -> CheckerFile.check(tempFile, "tempFile").isIdentical(copy.getAbsolutePath()));
 
         File different = File.createTempFile("different", ".txt");
         different.deleteOnExit();
         Files.writeString(different.toPath(), "Different content");
 
-        assertThrows(CheckerException.class, () -> new CheckerFile(tempFile, "tempFile").isIdentical(different.getAbsolutePath()));
+        assertThrows(CheckerException.class, () -> CheckerFile.check(tempFile, "tempFile").isIdentical(different.getAbsolutePath()));
     }
 
     @AfterEach

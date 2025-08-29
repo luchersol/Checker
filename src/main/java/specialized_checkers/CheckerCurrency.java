@@ -10,9 +10,27 @@ import util.AbstractChecker;
 public class CheckerCurrency extends AbstractChecker<Currency, CheckerCurrency> {
 
     private static final String INIT_CURRENCY = "currency";
+    private static final String DEFAULT_NAME = "Currency";
 
-    public CheckerCurrency(Currency object, String name) {
-        super(object, name);
+    protected CheckerCurrency(Currency currency, String name) {
+        super(currency, name);
+    }
+
+    /**
+     * @param currency
+     * @param name
+     * @return CheckerCurrency
+     */
+    public static CheckerCurrency check(Currency currency, String name) {
+        return new CheckerCurrency(currency, name);
+    }
+
+    /**
+     * @param currency
+     * @return CheckerCurrency
+     */
+    public static CheckerCurrency check(Currency currency) {
+        return check(currency, DEFAULT_NAME);
     }
 
     /**

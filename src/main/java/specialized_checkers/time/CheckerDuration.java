@@ -9,11 +9,28 @@ import util.AbstractChecker;
 
 public class CheckerDuration extends AbstractChecker<Duration, CheckerDuration> {
 
-    // private static final String INIT_TIME = "time";
     private static final String INIT_DURATION = "time.duration";
+    private static final String DEFAULT_NAME = "Duration";
 
-    public CheckerDuration(Duration object, String name) {
-        super(object, name);
+    protected CheckerDuration(Duration duration, String name) {
+        super(duration, name);
+    }
+
+    /**
+     * @param duration
+     * @param name
+     * @return CheckerDuration
+     */
+    public static CheckerDuration check(Duration duration, String name) {
+        return new CheckerDuration(duration, name);
+    }
+
+    /**
+     * @param duration
+     * @return CheckerDuration
+     */
+    public static CheckerDuration check(Duration duration) {
+        return check(duration, DEFAULT_NAME);
     }
 
     /**

@@ -14,12 +14,30 @@ import util.Cloner;
 
 public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, CheckerBiConsumer<T, U>> {
 
-    private static final String INIT_CONSUMER = "lambda.biconsumer";
+    private static final String INIT_BI_CONSUMER = "lambda.biconsumer";
+    private static final String DEFAULT_NAME = "BiConsumer";
 
     private boolean deepClone;
 
-    public CheckerBiConsumer(BiConsumer<T, U> consumer, String name) {
+    protected CheckerBiConsumer(BiConsumer<T, U> consumer, String name) {
         super(consumer, name);
+    }
+
+    /**
+     * @param biconsumer
+     * @param name
+     * @return CheckerBiConsumer<T, U>
+     */
+    public static <T,U> CheckerBiConsumer<T, U> check(BiConsumer<T, U> biconsumer, String name) {
+        return new CheckerBiConsumer<>(biconsumer, name);
+    }
+
+    /**
+     * @param biconsumer
+     * @return CheckerBiConsumer<T, U>
+     */
+    public static <T,U> CheckerBiConsumer<T, U> check(BiConsumer<T, U> biconsumer) {
+        return check(biconsumer, DEFAULT_NAME);
     }
 
     /**
@@ -31,11 +49,17 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
     }
 
 
+    /**
+     * @return CheckerBiConsumer<T, U>
+     */
     public CheckerBiConsumer<T, U> activateDeepClone() {
         this.deepClone = true;
         return self();
     }
 
+    /**
+     * @return CheckerBiConsumer<T, U>
+     */
     public CheckerBiConsumer<T, U> deactivateDeepClone() {
         this.deepClone = false;
         return self();
@@ -72,7 +96,7 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
             } catch (Exception e) {
                 return false;
             }
-        }, sendMessage(INIT_CONSUMER, "apply_without_exception", input1, input2));
+        }, sendMessage(INIT_BI_CONSUMER, "apply_without_exception", input1, input2));
     }
 
     /**
@@ -90,7 +114,7 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
                     return false;
                 }
             }
-        ), sendMessage(INIT_CONSUMER, "apply_without_exception.collection"));
+        ), sendMessage(INIT_BI_CONSUMER, "apply_without_exception.collection"));
     }
 
     /**
@@ -110,7 +134,7 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
             } catch (Exception e) {
                 return false;
             }
-        }, sendMessage(INIT_CONSUMER, "modifies_input", input1, input2));
+        }, sendMessage(INIT_BI_CONSUMER, "modifies_input", input1, input2));
     }
 
         /**
@@ -130,7 +154,7 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
             } catch (Exception e) {
                 return false;
             }
-        }, sendMessage(INIT_CONSUMER, "modifies_input", input1, input2));
+        }, sendMessage(INIT_BI_CONSUMER, "modifies_input", input1, input2));
     }
 
     /**
@@ -150,7 +174,7 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
                     return false;
                 }
             }
-        ), sendMessage(INIT_CONSUMER, "modifies_input.collection", input));
+        ), sendMessage(INIT_BI_CONSUMER, "modifies_input.collection", input));
     }
 
     /**
@@ -170,7 +194,7 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
                     return false;
                 }
             }
-        ), sendMessage(INIT_CONSUMER, "modifies_input.collection", input));
+        ), sendMessage(INIT_BI_CONSUMER, "modifies_input.collection", input));
     }
 
     /**
@@ -189,7 +213,7 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
             } catch (Exception e) {
                 return false;
             }
-        }, sendMessage(INIT_CONSUMER, "does_nothing", input1, input2));
+        }, sendMessage(INIT_BI_CONSUMER, "does_nothing", input1, input2));
     }
 
     /**
@@ -210,7 +234,7 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
                     }
                 }
             )
-        , sendMessage(INIT_CONSUMER, "does_nothing.collection"));
+        , sendMessage(INIT_BI_CONSUMER, "does_nothing.collection"));
     }
 
 }

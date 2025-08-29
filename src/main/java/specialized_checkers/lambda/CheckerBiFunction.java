@@ -10,12 +10,30 @@ import util.Cloner;
 
 public class CheckerBiFunction<T, U, R> extends AbstractChecker<BiFunction<T, U, R>, CheckerBiFunction<T, U, R>> {
 
-    private static final String INIT_FUNCTION = "lambda.bifunction";
+    private static final String INIT_BI_FUNCTION = "lambda.bifunction";
+    private static final String DEFAULT_NAME = "Function";
 
     private boolean deepClone;
 
-    public CheckerBiFunction(BiFunction<T, U, R> function, String name) {
+    protected CheckerBiFunction(BiFunction<T, U, R> function, String name) {
         super(function, name);
+    }
+
+    /**
+     * @param bifunction
+     * @param name
+     * @return CheckerBiFunction<T, U, R>
+     */
+    public static <T,U,R> CheckerBiFunction<T, U, R> check(BiFunction<T, U, R> bifunction, String name) {
+        return new CheckerBiFunction<>(bifunction, name);
+    }
+
+    /**
+     * @param bifunction
+     * @return CheckerBiFunction<T, U, R>
+     */
+    public static <T,U,R> CheckerBiFunction<T, U, R> check(BiFunction<T, U, R> bifunction) {
+        return check(bifunction, DEFAULT_NAME);
     }
 
     /**
@@ -26,11 +44,17 @@ public class CheckerBiFunction<T, U, R> extends AbstractChecker<BiFunction<T, U,
         return this;
     }
 
+    /**
+     * @return CheckerBiFunction<T, U, R>
+     */
     public CheckerBiFunction<T, U, R> activateDeepClone() {
         this.deepClone = true;
         return self();
     }
 
+    /**
+     * @return CheckerBiFunction<T, U, R>
+     */
     public CheckerBiFunction<T, U, R> deactivateDeepClone() {
         this.deepClone = false;
         return self();
@@ -66,7 +90,7 @@ public class CheckerBiFunction<T, U, R> extends AbstractChecker<BiFunction<T, U,
             } catch (Exception e) {
                 return false;
             }
-        }, sendMessage(INIT_FUNCTION, "apply_without_exception", input1, input2));
+        }, sendMessage(INIT_BI_FUNCTION, "apply_without_exception", input1, input2));
     }
 
     /**
@@ -84,7 +108,7 @@ public class CheckerBiFunction<T, U, R> extends AbstractChecker<BiFunction<T, U,
             } catch (Exception e) {
                 return false;
             }
-        }, sendMessage(INIT_FUNCTION, "produces_expected", input1, input2, expected));
+        }, sendMessage(INIT_BI_FUNCTION, "produces_expected", input1, input2, expected));
     }
 
     /**
@@ -100,6 +124,6 @@ public class CheckerBiFunction<T, U, R> extends AbstractChecker<BiFunction<T, U,
             } catch (Exception e) {
                 return false;
             }
-        }, sendMessage(INIT_FUNCTION, "produces_non_null", input1, input2));
+        }, sendMessage(INIT_BI_FUNCTION, "produces_non_null", input1, input2));
     }
 }

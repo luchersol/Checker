@@ -9,11 +9,28 @@ import util.AbstractChecker;
 
 public class CheckerPeriod extends AbstractChecker<Period, CheckerPeriod> {
 
-    // private static final String INIT_TIME = "time";
     private static final String INIT_PERIOD = "time.period";
+    private static final String DEFAULT_NAME = "Period";
 
-    public CheckerPeriod(Period object, String name) {
-        super(object, name);
+    protected CheckerPeriod(Period period, String name) {
+        super(period, name);
+    }
+
+    /**
+     * @param period
+     * @param name
+     * @return CheckerPeriod
+     */
+    public static CheckerPeriod check(Period period, String name) {
+        return new CheckerPeriod(period, name);
+    }
+
+    /**
+     * @param period
+     * @return CheckerPeriod
+     */
+    public static CheckerPeriod check(Period period) {
+        return check(period, DEFAULT_NAME);
     }
 
     /**

@@ -11,29 +11,111 @@ import util.collection.Graph;
 public class CheckerGraph<N,E extends Number> extends AbstractChecker<Graph<N,E>, CheckerGraph<N,E>>{
 
     private static final String INIT_GRAPH = "collections.graph";
+    private static final String DEFAULT_NAME = "Graph";
 
-    public CheckerGraph(Graph<N,E> object, String name) {
-        super(object, name);
+    protected CheckerGraph(Graph<N,E> graph, String name) {
+        super(graph, name);
     }
 
-    public CheckerGraph(Collection<Graph.Edge<N,E>> edges, boolean directed, String name) {
-        super(name);
-        this.object = new Graph<N,E>(edges, directed);
+    // STATIC CONSTRUCTOR WITH NAME
+
+    /**
+     * @param graph
+     * @param name
+     * @return CheckerGraph<N, E>
+     */
+    public static <N,E extends Number> CheckerGraph<N,E> check(Graph<N,E> graph, String name) {
+        return new CheckerGraph<>(graph, name);
     }
 
-    public CheckerGraph(Collection<Graph.Edge<N,E>> edges, String name) {
-        super(name);
-        this.object = new Graph<N,E>(edges);
+    /**
+     * @param edges
+     * @param directed
+     * @param name
+     * @return CheckerGraph<N, E>
+     */
+    public static <N,E extends Number> CheckerGraph<N,E> check(Collection<Graph.Edge<N,E>> edges, boolean directed, String name) {
+        Graph<N,E> graph = new Graph<N,E>(edges, directed);
+        return check(graph, name);
     }
 
-    public CheckerGraph(Collection<N> nodes, Collection<Graph.Edge<N,E>> edges, String name) {
-        super(name);
-        this.object = new Graph<N,E>(nodes, edges);
+    /**
+     * @param edges
+     * @param name
+     * @return CheckerGraph<N, E>
+     */
+    public static <N,E extends Number> CheckerGraph<N,E> check(Collection<Graph.Edge<N,E>> edges, String name) {
+        Graph<N,E> graph = new Graph<N,E>(edges);
+        return check(graph, name);
     }
 
-    public CheckerGraph(Collection<N> nodes, Collection<Graph.Edge<N,E>> edges, boolean directed, String name) {
-        super(name);
-        this.object = new Graph<N,E>(nodes, edges, directed);
+    /**
+     * @param edges
+     * @param name
+     * @return CheckerGraph<N, E>
+     */
+    public static <N,E extends Number> CheckerGraph<N,E> check(Collection<N> nodes, Collection<Graph.Edge<N,E>> edges, String name) {
+        Graph<N,E> graph = new Graph<N,E>(nodes, edges);
+        return check(graph, name);
+    }
+
+    /**
+     * @param edges
+     * @param directed
+     * @param name
+     * @return CheckerGraph<N, E>
+     */
+    public static <N,E extends Number> CheckerGraph<N,E> check(Collection<N> nodes, Collection<Graph.Edge<N,E>> edges, boolean directed, String name) {
+        Graph<N,E> graph = new Graph<N,E>(nodes, edges, directed);
+        return check(graph, name);
+    }
+
+    // STATIC CONSTRUCTOR WITHOUT NAME
+
+    /**
+     * @param graph
+     * @return CheckerGraph<N, E>
+     */
+    public static <N,E extends Number> CheckerGraph<N,E> check(Graph<N,E> graph) {
+        return check(graph, DEFAULT_NAME);
+    }
+
+    /**
+     * @param edges
+     * @param directed
+     * @return CheckerGraph<N, E>
+     */
+    public static <N,E extends Number> CheckerGraph<N,E> check(Collection<Graph.Edge<N,E>> edges, boolean directed) {
+        Graph<N,E> graph = new Graph<N,E>(edges, directed);
+        return check(graph);
+    }
+
+    /**
+     * @param edges
+     * @return CheckerGraph<N, E>
+     */
+    public static <N,E extends Number> CheckerGraph<N,E> check(Collection<Graph.Edge<N,E>> edges) {
+        Graph<N,E> graph = new Graph<N,E>(edges);
+        return check(graph);
+    }
+
+    /**
+     * @param edges
+     * @return CheckerGraph<N, E>
+     */
+    public static <N,E extends Number> CheckerGraph<N,E> check(Collection<N> nodes, Collection<Graph.Edge<N,E>> edges) {
+        Graph<N,E> graph = new Graph<N,E>(nodes, edges);
+        return check(graph);
+    }
+
+    /**
+     * @param edges
+     * @param directed
+     * @return CheckerGraph<N, E>
+     */
+    public static <N,E extends Number> CheckerGraph<N,E> check(Collection<N> nodes, Collection<Graph.Edge<N,E>> edges, boolean directed) {
+        Graph<N,E> graph = new Graph<N,E>(nodes, edges, directed);
+        return check(graph);
     }
 
     /**

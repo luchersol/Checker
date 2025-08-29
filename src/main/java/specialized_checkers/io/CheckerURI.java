@@ -11,9 +11,27 @@ import util.AbstractChecker;
 public class CheckerURI extends AbstractChecker<URI, CheckerURI> {
 
     private static final String INIT_URI = "io.uri";
+    private static final String DEFAULT_NAME = "Uri";
 
-    public CheckerURI(URI object, String name) {
-        super(object, name);
+    protected CheckerURI(URI uri, String name) {
+        super(uri, name);
+    }
+
+    /**
+     * @param uri
+     * @param name
+     * @return CheckerURI
+     */
+    public static CheckerURI check(URI uri, String name) {
+        return new CheckerURI(uri, name);
+    }
+
+    /**
+     * @param uri
+     * @return CheckerURI
+     */
+    public static CheckerURI check(URI uri) {
+        return check(uri, DEFAULT_NAME);
     }
 
     /**

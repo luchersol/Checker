@@ -11,9 +11,27 @@ import util.AbstractChecker;
 public class CheckerArray<T> extends AbstractChecker<T[], CheckerArray<T>>{
 
     private static final String INIT_ARRAY = "math.array";
+    private static final String DEFAULT_NAME = "Array";
 
-    public CheckerArray(T[] object, String name) {
-        super(object, name);
+    protected CheckerArray(T[] array, String name) {
+        super(array, name);
+    }
+
+    /**
+     * @param array
+     * @param name
+     * @return CheckerArray<T>
+     */
+    public static <T> CheckerArray<T> check(T[] array, String name){
+        return new CheckerArray<>(array, name);
+    }
+
+    /**
+     * @param array
+     * @return CheckerArray<T>
+     */
+    public static <T> CheckerArray<T> check(T[] array){
+        return check(array, DEFAULT_NAME);
     }
 
     /**

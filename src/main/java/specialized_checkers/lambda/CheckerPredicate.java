@@ -11,28 +11,59 @@ import util.Cloner;
 public class CheckerPredicate<T> extends AbstractChecker<Predicate<T>, CheckerPredicate<T>> {
 
     private static final String INIT_PREDICATE = "lambda.predicate";
+    private static final String DEFAULT_NAME = "Predicate";
 
     private boolean deepClone;
 
-    public CheckerPredicate(Predicate<T> predicate, String name) {
+    protected CheckerPredicate(Predicate<T> predicate, String name) {
         super(predicate, name);
     }
 
+    /**
+     * @param predicate
+     * @param name
+     * @return CheckerPredicate<T>
+     */
+    public static <T> CheckerPredicate<T> check(Predicate<T> predicate, String name) {
+        return new CheckerPredicate<>(predicate, name);
+    }
+
+    /**
+     * @param predicate
+     * @return CheckerPredicate<T>
+     */
+    public static <T> CheckerPredicate<T> check(Predicate<T> predicate) {
+        return check(predicate, DEFAULT_NAME);
+    }
+
+    /**
+     * @return CheckerPredicate<T>
+     */
     @Override
     protected CheckerPredicate<T> self() {
         return this;
     }
 
+    /**
+     * @return CheckerPredicate<T>
+     */
     public CheckerPredicate<T> activateDeepClone() {
         this.deepClone = true;
         return self();
     }
 
+    /**
+     * @return CheckerPredicate<T>
+     */
     public CheckerPredicate<T> deactivateDeepClone() {
         this.deepClone = false;
         return self();
     }
 
+    /**
+     * @param input
+     * @return T
+     */
     private T getInput(T input) {
         return this.deepClone ? Cloner.deepClone(input) : input;
     }

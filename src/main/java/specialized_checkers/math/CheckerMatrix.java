@@ -17,9 +17,28 @@ import util.AbstractChecker;
 public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], CheckerMatrix<T>> {
 
     private static final String INIT_MATRIX = "math.matrix";
+    private static final String DEFAULT_NAME = "Matrix";
 
-    public CheckerMatrix(T[][] object, String name) {
-        super(object, name);
+    protected CheckerMatrix(T[][] matrix, String name) {
+        super(matrix, name);
+    }
+
+
+    /**
+     * @param matrix
+     * @param name
+     * @return CheckerMatrix<T>
+     */
+    public static <T extends Number> CheckerMatrix<T> check(T[][] matrix, String name){
+        return new CheckerMatrix<>(matrix, name);
+    }
+
+    /**
+     * @param matrix
+     * @return CheckerMatrix<T>
+     */
+    public static <T extends Number> CheckerMatrix<T> check(T[][] matrix){
+        return check(matrix, DEFAULT_NAME);
     }
 
     /**

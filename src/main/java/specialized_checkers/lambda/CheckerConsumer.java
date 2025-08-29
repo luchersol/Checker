@@ -13,11 +13,29 @@ import util.Cloner;
 public class CheckerConsumer<T> extends AbstractChecker<Consumer<T>, CheckerConsumer<T>> {
 
     private static final String INIT_CONSUMER = "lambda.consumer";
+    private static final String DEFAULT_NAME = "Consumer";
 
     private boolean deepClone;
 
-    public CheckerConsumer(Consumer<T> consumer, String name) {
+    protected CheckerConsumer(Consumer<T> consumer, String name) {
         super(consumer, name);
+    }
+
+    /**
+     * @param Consumer
+     * @param name
+     * @return CheckerConsumer<T>
+     */
+    public static <T> CheckerConsumer<T> check(Consumer<T> Consumer, String name) {
+        return new CheckerConsumer<>(Consumer, name);
+    }
+
+    /**
+     * @param Consumer
+     * @return CheckerConsumer<T>
+     */
+    public static <T> CheckerConsumer<T> check(Consumer<T> Consumer) {
+        return check(Consumer, DEFAULT_NAME);
     }
 
     /**
@@ -29,11 +47,17 @@ public class CheckerConsumer<T> extends AbstractChecker<Consumer<T>, CheckerCons
     }
 
 
+    /**
+     * @return CheckerConsumer<T>
+     */
     public CheckerConsumer<T> activateDeepClone() {
         this.deepClone = true;
         return self();
     }
 
+    /**
+     * @return CheckerConsumer<T>
+     */
     public CheckerConsumer<T> deactivateDeepClone() {
         this.deepClone = false;
         return self();

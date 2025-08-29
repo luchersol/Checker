@@ -14,7 +14,7 @@ class CheckerMapTest {
         @Test
         void testIsEmptyOnEmptyMap() {
             Map<String, Integer> map = new HashMap<>();
-            CheckerMap<String, Integer> checker = new CheckerMap<>(map, "testMap");
+            CheckerMap<String, Integer> checker = CheckerMap.check(map, "testMap");
             assertDoesNotThrow(checker::isEmpty);
         }
 
@@ -22,7 +22,7 @@ class CheckerMapTest {
         void testIsEmptyOnNonEmptyMap() {
             Map<String, Integer> map = new HashMap<>();
             map.put("a", 1);
-            CheckerMap<String, Integer> checker = new CheckerMap<>(map, "testMap");
+            CheckerMap<String, Integer> checker = CheckerMap.check(map, "testMap");
             assertThrows(CheckerException.class, checker::isEmpty);
         }
 
@@ -31,7 +31,7 @@ class CheckerMapTest {
             Map<String, Integer> map = new HashMap<>();
             map.put("a", 1);
             map.put("b", 2);
-            CheckerMap<String, Integer> checker = new CheckerMap<>(map, "testMap");
+            CheckerMap<String, Integer> checker = CheckerMap.check(map, "testMap");
             assertDoesNotThrow(() -> checker.anyMatch(e -> e.getKey().equals("a")));
         }
 
@@ -40,7 +40,7 @@ class CheckerMapTest {
             Map<String, Integer> map = new HashMap<>();
             map.put("a", 1);
             map.put("b", 2);
-            CheckerMap<String, Integer> checker = new CheckerMap<>(map, "testMap");
+            CheckerMap<String, Integer> checker = CheckerMap.check(map, "testMap");
             assertThrows(CheckerException.class, () -> checker.anyMatch(e -> e.getKey().equals("c")));
         }
 
@@ -49,7 +49,7 @@ class CheckerMapTest {
             Map<String, Integer> map = new HashMap<>();
             map.put("a", 1);
             map.put("b", 1);
-            CheckerMap<String, Integer> checker = new CheckerMap<>(map, "testMap");
+            CheckerMap<String, Integer> checker = CheckerMap.check(map, "testMap");
             assertDoesNotThrow(() -> checker.allMatch(e -> e.getValue() == 1));
         }
 
@@ -58,7 +58,7 @@ class CheckerMapTest {
             Map<String, Integer> map = new HashMap<>();
             map.put("a", 1);
             map.put("b", 2);
-            CheckerMap<String, Integer> checker = new CheckerMap<>(map, "testMap");
+            CheckerMap<String, Integer> checker = CheckerMap.check(map, "testMap");
             assertThrows(CheckerException.class, () -> checker.allMatch(e -> e.getValue() == 1));
         }
 }

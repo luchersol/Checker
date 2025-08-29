@@ -12,9 +12,27 @@ import util.AbstractChecker;
 public class CheckerList<T> extends AbstractChecker<List<T>, CheckerList<T>>{
 
     private static final String INIT_LIST = "collections.list";
+    private static final String DEFAULT_NAME = "List";
 
-    public CheckerList(List<T> object, String name) {
-        super(object, name);
+    protected CheckerList(List<T> list, String name) {
+        super(list, name);
+    }
+
+    /**
+     * @param list
+     * @param name
+     * @return CheckerList<T>
+     */
+    public static <T> CheckerList<T> check(List<T> list, String name) {
+        return new CheckerList<>(list, name);
+    }
+
+    /**
+     * @param list
+     * @return CheckerList<T>
+     */
+    public static <T> CheckerList<T> check(List<T> list) {
+        return new CheckerList<>(list, DEFAULT_NAME);
     }
 
     /**

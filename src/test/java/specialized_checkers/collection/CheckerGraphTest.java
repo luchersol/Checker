@@ -23,13 +23,13 @@ class CheckerGraphTest {
             new Graph.Edge<String, Integer>("B", "C", 2)
         );
         graph = new Graph<>(nodes, edges);
-        checker = new CheckerGraph<>(graph, "testGraph");
+        checker = CheckerGraph.check(graph, "testGraph");
     }
 
     @Test
     void testIsEmpty() {
         Graph<String, Integer> emptyGraph = new Graph<>();
-        CheckerGraph<String, Integer> emptyChecker = new CheckerGraph<>(emptyGraph, "empty");
+        CheckerGraph<String, Integer> emptyChecker = CheckerGraph.check(emptyGraph, "empty");
         assertDoesNotThrow(emptyChecker::isEmpty);
     }
 

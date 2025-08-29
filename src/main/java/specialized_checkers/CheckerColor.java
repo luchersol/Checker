@@ -10,9 +10,27 @@ import util.AbstractChecker;
 public class CheckerColor extends AbstractChecker<Color, CheckerColor> {
 
     private static final String INIT_COLOR = "color";
+    private static final String DEFAULT_NAME = "Color";
 
-    public CheckerColor(Color object, String name) {
-        super(object, name);
+    protected CheckerColor(Color color, String name) {
+        super(color, name);
+    }
+
+    /**
+     * @param color
+     * @param name
+     * @return CheckerColor
+     */
+    public static CheckerColor check(Color color, String name) {
+        return new CheckerColor(color, name);
+    }
+
+    /**
+     * @param color
+     * @return CheckerColor
+     */
+    public static CheckerColor check(Color color) {
+        return check(color, DEFAULT_NAME);
     }
 
     /**

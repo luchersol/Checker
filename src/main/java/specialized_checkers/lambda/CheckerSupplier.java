@@ -10,9 +10,27 @@ import util.AbstractChecker;
 public class CheckerSupplier<T> extends AbstractChecker<Supplier<T>, CheckerSupplier<T>> {
 
     private static final String INIT_SUPPLIER = "lambda.supplier";
+    private static final String DEFAULT_NAME = "Supplier";
 
-    public CheckerSupplier(Supplier<T> supplier, String name) {
+    protected CheckerSupplier(Supplier<T> supplier, String name) {
         super(supplier, name);
+    }
+
+    /**
+     * @param supplier
+     * @param name
+     * @return CheckerSupplier<T>
+     */
+    public static <T> CheckerSupplier<T> check(Supplier<T> supplier, String name) {
+        return new CheckerSupplier<>(supplier, name);
+    }
+
+    /**
+     * @param supplier
+     * @return CheckerSupplier<T>
+     */
+    public static <T> CheckerSupplier<T> check(Supplier<T> supplier) {
+        return check(supplier, DEFAULT_NAME);
     }
 
     /**

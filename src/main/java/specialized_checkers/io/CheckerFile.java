@@ -16,9 +16,29 @@ import util.AbstractChecker;
 public class CheckerFile extends AbstractChecker<File, CheckerFile> {
 
     private static final String INIT_FILE = "io.file";
+    private static final String DEFAULT_NAME = "File";
 
-    public CheckerFile(File object, String name) {
-        super(object, name);
+
+    protected CheckerFile(File file, String name) {
+        super(file, name);
+    }
+
+
+    /**
+     * @param file
+     * @param name
+     * @return CheckerFile
+     */
+    public static CheckerFile check(File file, String name) {
+        return new CheckerFile(file, name);
+    }
+
+    /**
+     * @param file
+     * @return CheckerFile
+     */
+    public static CheckerFile check(File file) {
+        return check(file, DEFAULT_NAME);
     }
 
     /**

@@ -2,12 +2,12 @@ package util;
 
 public class CheckerException extends RuntimeException {
 
-    public CheckerException(String message) {
+    protected CheckerException(String message) {
         super(message);
     }
 
 
-    public CheckerException(Exception exception) {
+    protected CheckerException(Exception exception) {
         super(exception.getCause().getLocalizedMessage());
     }
 

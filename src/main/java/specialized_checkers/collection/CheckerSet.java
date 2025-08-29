@@ -11,9 +11,27 @@ import util.AbstractChecker;
 public class CheckerSet<T> extends AbstractChecker<Set<T>, CheckerSet<T>>{
 
     private static final String INIT_SET = "collections.set";
+    private static final String DEFAULT_NAME = "Set";
 
-    public CheckerSet(Set<T> object, String name) {
-        super(object, name);
+    protected CheckerSet(Set<T> set, String name) {
+        super(set, name);
+    }
+
+    /**
+     * @param set
+     * @param name
+     * @return CheckerSet<T>
+     */
+    public static <T> CheckerSet<T> check(Set<T> set, String name){
+        return new CheckerSet<>(set, name);
+    }
+
+    /**
+     * @param set
+     * @return CheckerSet<T>
+     */
+    public static <T> CheckerSet<T> check(Set<T> set){
+        return check(set, DEFAULT_NAME);
     }
 
     /**

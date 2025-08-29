@@ -10,11 +10,32 @@ import util.AbstractChecker;
 public class CheckerCallable<V> extends AbstractChecker<Callable<V>, CheckerCallable<V>> {
 
     private static final String INIT_CALLABLE = "lambda.callable";
+    private static final String DEFAULT_NAME = "Callable";
 
-    public CheckerCallable(Callable<V> callable, String name) {
+    protected CheckerCallable(Callable<V> callable, String name) {
         super(callable, name);
     }
 
+    /**
+     * @param callable
+     * @param name
+     * @return CheckerCallable<V>
+     */
+    public static <V> CheckerCallable<V> check(Callable<V> callable, String name) {
+        return new CheckerCallable<>(callable, name);
+    }
+
+    /**
+     * @param callable
+     * @return CheckerCallable<V>
+     */
+    public static <V> CheckerCallable<V> check(Callable<V> callable) {
+        return check(callable, DEFAULT_NAME);
+    }
+
+    /**
+     * @return CheckerCallable<V>
+     */
     @Override
     protected CheckerCallable<V> self() {
         return this;

@@ -11,19 +11,70 @@ import util.collection.Tree;
 public class CheckerTree<T> extends AbstractChecker<Tree<T>, CheckerTree<T>> {
 
     private static final String INIT_TREE = "collections.tree";
+    private static final String DEFAULT_NAME = "Tree";
 
-    public CheckerTree(Tree<T> object, String name) {
-        super(object, name);
+    protected CheckerTree(Tree<T> tree, String name) {
+        super(tree, name);
     }
 
-    public CheckerTree(T rootValue, Map<T, List<T>> childrenMap, String name) {
-        super(name);
-        this.object = new Tree<T>(rootValue, childrenMap);
+
+    // STATIC CONSTRUCTOR WITH NAME
+
+    /**
+     * @param tree
+     * @param name
+     * @return CheckerTree<T>
+     */
+    public static <T> CheckerTree<T> check(Tree<T> tree, String name) {
+        return new CheckerTree<>(tree, name);
     }
 
-    public CheckerTree(T rootValue, String name) {
-        super(name);
-        this.object = new Tree<T>(rootValue);
+    /**
+     * @param childrenMap
+     * @param name
+     * @return CheckerTree<T>
+     */
+    public static <T> CheckerTree<T> check(T rootValue, Map<T, List<T>> childrenMap, String name) {
+        Tree<T> tree = new Tree<T>(rootValue, childrenMap);
+        return check(tree, name);
+    }
+
+    /**
+     * @param rootValue
+     * @param name
+     * @return CheckerTree<T>
+     */
+    public static <T> CheckerTree<T> check(T rootValue, String name) {
+        Tree<T> tree = new Tree<T>(rootValue);
+        return check(tree, name);
+    }
+
+    // STATIC CONSTRUCTOR WITHOUT NAME
+
+    /**
+     * @param tree
+     * @return CheckerTree<T>
+     */
+    public static <T> CheckerTree<T> check(Tree<T> tree) {
+        return check(tree, DEFAULT_NAME);
+    }
+
+    /**
+     * @param childrenMap
+     * @return CheckerTree<T>
+     */
+    public static <T> CheckerTree<T> check(T rootValue, Map<T, List<T>> childrenMap) {
+        Tree<T> tree = new Tree<T>(rootValue, childrenMap);
+        return check(tree);
+    }
+
+    /**
+     * @param rootValue
+     * @return CheckerTree<T>
+     */
+    public static <T> CheckerTree<T> check(T rootValue) {
+        Tree<T> tree = new Tree<T>(rootValue);
+        return check(tree);
     }
 
     /**

@@ -7,9 +7,27 @@ import util.AbstractChecker;
 public class CheckerString extends AbstractChecker<String, CheckerString> {
 
     private static final String INIT_STRING = "string";
+    private static final String DEFAULT_NAME = "String";
 
-    public CheckerString(String object, String name) {
-        super(object, name);
+    protected CheckerString(String string, String name) {
+        super(string, name);
+    }
+
+    /**
+     * @param string
+     * @param name
+     * @return CheckerString
+     */
+    public static CheckerString check(String string, String name) {
+        return new CheckerString(string, name);
+    }
+
+    /**
+     * @param string
+     * @return CheckerString
+     */
+    public static CheckerString check(String string) {
+        return check(string, DEFAULT_NAME);
     }
 
     /**
@@ -142,8 +160,10 @@ public class CheckerString extends AbstractChecker<String, CheckerString> {
      * @return CheckerString
      */
     public CheckerString isPalindrome() {
-        String reversed = new StringBuilder(this.object).reverse().toString();
-        return is(string -> string.equals(reversed), sendMessage(INIT_STRING, "is_palindrome"));
+        return is(string -> {
+            String reversed = new StringBuilder(string).reverse().toString();
+            return string.equals(reversed);
+        }, sendMessage(INIT_STRING, "is_palindrome"));
     }
 
 

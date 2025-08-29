@@ -12,9 +12,27 @@ import util.AbstractChecker;
 public class CheckerMap<K, V> extends AbstractChecker<Map<K, V>, CheckerMap<K, V>>{
 
     private static final String INIT_MAP = "collections.map";
+    private static final String DEFAULT_NAME = "Map";
 
-    public CheckerMap(Map<K, V> object, String name) {
-        super(object, name);
+    protected CheckerMap(Map<K, V> map, String name) {
+        super(map, name);
+    }
+
+    /**
+     * @param map
+     * @param name
+     * @return CheckerMap<K, V>
+     */
+    public static <K, V> CheckerMap<K, V> check(Map<K, V> map, String name) {
+        return new CheckerMap<>(map, name);
+    }
+
+    /**
+     * @param map
+     * @return CheckerMap<K, V>
+     */
+    public static <K, V> CheckerMap<K, V> check(Map<K, V> map) {
+        return check(map, DEFAULT_NAME);
     }
 
     /**

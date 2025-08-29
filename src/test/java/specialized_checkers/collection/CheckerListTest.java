@@ -19,12 +19,12 @@ public class CheckerListTest {
         @BeforeEach
         void setUp() {
             list = Arrays.asList(1, 2, 3, 4, 5);
-            checker = new CheckerList<>(list, "testList");
+            checker = CheckerList.check(list, "testList");
         }
 
         @Test
         void isEmpty_shouldPassForEmptyList() {
-            CheckerList<?> emptyChecker = new CheckerList<>(Collections.emptyList(), "emptyList");
+            CheckerList<?> emptyChecker = CheckerList.check(Collections.emptyList(), "emptyList");
             assertDoesNotThrow(emptyChecker::isEmpty);
         }
 
@@ -45,7 +45,7 @@ public class CheckerListTest {
 
         @Test
         void allMatch_shouldPassIfAllMatch() {
-            CheckerList<Integer> evenChecker = new CheckerList<>(Arrays.asList(2, 4, 6), "evenList");
+            CheckerList<Integer> evenChecker = CheckerList.check(Arrays.asList(2, 4, 6), "evenList");
             assertDoesNotThrow(() -> evenChecker.allMatch(i -> i % 2 == 0));
         }
 
@@ -61,7 +61,7 @@ public class CheckerListTest {
 
         @Test
         void allDistinct_shouldFailForNonDistinctList() {
-            CheckerList<Integer> dupChecker = new CheckerList<>(Arrays.asList(1, 2, 2, 3), "dupList");
+            CheckerList<Integer> dupChecker = CheckerList.check(Arrays.asList(1, 2, 2, 3), "dupList");
             assertThrows(CheckerException.class, dupChecker::allDistinct);
         }
 

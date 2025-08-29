@@ -15,17 +15,51 @@ import util.AbstractChecker;
 public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
 
     private static final String INIT_JSON = "io.json";
+    private static final String DEFAULT_NAME = "Json";
 
-    public CheckerJson(File object, String name) throws IOException {
-        super(name);
+
+    protected CheckerJson(JsonNode json, String name) {
+        super(json, name);
+    }
+
+    /**
+     * @param json
+     * @param name
+     * @return CheckerJson
+     */
+    public static CheckerJson check(JsonNode json, String name) {
+        return new CheckerJson(json, name);
+    }
+
+    /**
+     * @param file
+     * @param name
+     * @return CheckerJson
+     * @throws IOException
+     */
+    public static CheckerJson check(File file, String name) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        JsonNode rootNode = mapper.readTree(object);
-        this.object = rootNode;
+        JsonNode rootNode = mapper.readTree(file);
+        return check(rootNode, name);
     }
 
-    public CheckerJson(JsonNode object, String name) {
-        super(object, name);
+    /**
+     * @param json
+     * @return CheckerJson
+     */
+    public static CheckerJson check(JsonNode json) {
+        return check(json, DEFAULT_NAME);
     }
+
+    /**
+     * @param file
+     * @return CheckerJson
+     * @throws IOException
+     */
+    public static CheckerJson check(File file) throws IOException {
+        return check(file, DEFAULT_NAME);
+    }
+
 
     /**
      * @return CheckerJson

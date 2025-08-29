@@ -10,33 +10,68 @@ import util.Cloner;
 
 public class CheckerBiPredicate<T, U> extends AbstractChecker<BiPredicate<T, U>, CheckerBiPredicate<T, U>> {
 
-    private static final String INIT_BIPREDICATE = "lambda.bipredicate";
+    private static final String INIT_BI_PREDICATE = "lambda.bipredicate";
+    private static final String DEFAULT_NAME = "BiPredicate";
 
     private boolean deepClone;
 
-    public CheckerBiPredicate(BiPredicate<T, U> biPredicate, String name) {
+    protected CheckerBiPredicate(BiPredicate<T, U> biPredicate, String name) {
         super(biPredicate, name);
     }
 
+    /**
+     * @param bipredicate
+     * @param name
+     * @return CheckerBiPredicate<T, U>
+     */
+    public static <T,U> CheckerBiPredicate<T, U> check(BiPredicate<T, U> bipredicate, String name) {
+        return new CheckerBiPredicate<>(bipredicate, name);
+    }
+
+    /**
+     * @param bipredicate
+     * @return CheckerBiPredicate<T, U>
+     */
+    public static <T,U> CheckerBiPredicate<T, U> check(BiPredicate<T, U> bipredicate) {
+        return check(bipredicate, DEFAULT_NAME);
+    }
+
+    /**
+     * @return CheckerBiPredicate<T, U>
+     */
     @Override
     protected CheckerBiPredicate<T, U> self() {
         return this;
     }
 
+    /**
+     * @return CheckerBiPredicate<T, U>
+     */
     public CheckerBiPredicate<T, U> activateDeepClone() {
         this.deepClone = true;
         return self();
     }
 
+    /**
+     * @return CheckerBiPredicate<T, U>
+     */
     public CheckerBiPredicate<T, U> deactivateDeepClone() {
         this.deepClone = false;
         return self();
     }
 
+    /**
+     * @param input
+     * @return T
+     */
     private T getInput1(T input) {
         return this.deepClone ? Cloner.deepClone(input) : input;
     }
 
+    /**
+     * @param input
+     * @return U
+     */
     private U getInput2(U input) {
         return this.deepClone ? Cloner.deepClone(input) : input;
     }
@@ -56,7 +91,7 @@ public class CheckerBiPredicate<T, U> extends AbstractChecker<BiPredicate<T, U>,
             } catch (Exception e) {
                 return false;
             }
-        }, sendMessage(INIT_BIPREDICATE, "test_without_exception", input1, input2));
+        }, sendMessage(INIT_BI_PREDICATE, "test_without_exception", input1, input2));
     }
 
     /**
@@ -71,7 +106,7 @@ public class CheckerBiPredicate<T, U> extends AbstractChecker<BiPredicate<T, U>,
             } catch (Exception e) {
                 return false;
             }
-        }, sendMessage(INIT_BIPREDICATE, "evaluates_true", input1, input2));
+        }, sendMessage(INIT_BI_PREDICATE, "evaluates_true", input1, input2));
     }
 
     /**
@@ -86,7 +121,7 @@ public class CheckerBiPredicate<T, U> extends AbstractChecker<BiPredicate<T, U>,
             } catch (Exception e) {
                 return false;
             }
-        }, sendMessage(INIT_BIPREDICATE, "evaluates_false", input1, input2));
+        }, sendMessage(INIT_BI_PREDICATE, "evaluates_false", input1, input2));
     }
 
     /**
@@ -103,7 +138,7 @@ public class CheckerBiPredicate<T, U> extends AbstractChecker<BiPredicate<T, U>,
             } catch (Exception e) {
                 return false;
             }
-        }, sendMessage(INIT_BIPREDICATE, "produces_expected", input1, input2, expected));
+        }, sendMessage(INIT_BI_PREDICATE, "produces_expected", input1, input2, expected));
     }
 
 }

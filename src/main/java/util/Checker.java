@@ -38,8 +38,9 @@ import util.collection.Graph;
 public class Checker extends AbstractChecker<Object, Checker> {
 
     private static final String INIT_CHECKER = "checker";
+    private static final String DEFAULT_NAME = "Object";
 
-    public Checker(Object object, String name) {
+    protected Checker(Object object, String name) {
         super(object, name);
     }
 
@@ -65,7 +66,7 @@ public class Checker extends AbstractChecker<Object, Checker> {
      * @return Checker
      */
     public static Checker check(Object object) {
-        return new Checker(object, "Object");
+        return new Checker(object, DEFAULT_NAME);
     }
 
     /**
@@ -100,7 +101,7 @@ public class Checker extends AbstractChecker<Object, Checker> {
      * @return CheckerGraph<N, E>
      */
     public <N,E extends Number> CheckerGraph<N,E> isGraph(Collection<Graph.Edge<N,E>> edges, boolean directed) {
-        return new CheckerGraph<N,E>(edges, directed, name);
+        return CheckerGraph.check(edges, directed, name);
     }
 
     /**
@@ -108,7 +109,7 @@ public class Checker extends AbstractChecker<Object, Checker> {
      * @return CheckerGraph<N, E>
      */
     public <N,E extends Number> CheckerGraph<N,E> isGraph(Collection<Graph.Edge<N,E>> edges) {
-        return new CheckerGraph<N,E>(edges, name);
+        return CheckerGraph.check(edges, name);
     }
 
     /**
@@ -116,7 +117,7 @@ public class Checker extends AbstractChecker<Object, Checker> {
      * @return CheckerGraph<N, E>
      */
     public <N,E extends Number> CheckerGraph<N,E> isGraph(Collection<N> nodes, Collection<Graph.Edge<N,E>> edges) {
-        return new CheckerGraph<N,E>(nodes, edges, name);
+        return CheckerGraph.check(nodes, edges, name);
     }
 
     /**
@@ -125,38 +126,36 @@ public class Checker extends AbstractChecker<Object, Checker> {
      * @return CheckerGraph<N, E>
      */
     public <N,E extends Number> CheckerGraph<N,E> isGraph(Collection<N> nodes, Collection<Graph.Edge<N,E>> edges, boolean directed) {
-        return new CheckerGraph<N,E>(nodes, edges, directed, name);
+        return CheckerGraph.check(nodes, edges, directed, name);
     }
 
     /**
      * @return CheckerList<?>
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     public CheckerList<?> isList() {
         isInstance(List.class);
-        return new CheckerList((List<?>) this.object, name);
+        return CheckerList.check((List<?>) this.object, name);
     }
 
     /**
      * @param clazz
      * @return CheckerList<T>
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({ "unchecked" })
     public <T> CheckerList<T> isList(Class<T> clazz) {
         isInstance(List.class);
         is(object -> ((List<?>) this.object).stream().allMatch(elem -> clazz.isInstance(elem)),
                 sendMessage(INIT_CHECKER, "is_list.clazz", clazz.getSimpleName()));
-        return new CheckerList((List<T>) this.object, name);
+        return CheckerList.check((List<T>) this.object, name);
     }
 
 
     /**
      * @return CheckerMap<?, ?>
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     public CheckerMap<?, ?> isMap() {
         isInstance(Map.class);
-        return new CheckerMap((Map<?, ?>) this.object, name);
+        return CheckerMap.check((Map<?, ?>) this.object, name);
     }
 
     /**
@@ -164,34 +163,33 @@ public class Checker extends AbstractChecker<Object, Checker> {
      * @param clazzValue
      * @return CheckerMap<K, V>
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({ "unchecked" })
     public <K, V> CheckerMap<K, V> isMap(Class<K> clazzKey, Class<V> clazzValue) {
         isInstance(Map.class);
         is(object -> ((Map<?, ?>) object).entrySet().stream()
                 .allMatch(entry -> clazzKey.isInstance(entry.getKey()) && clazzValue.isInstance(entry.getValue())),
             sendMessage(INIT_CHECKER, "is_map.clazz", clazzKey.getSimpleName(), clazzValue.getSimpleName()));
-        return new CheckerMap((Map<K, V>) this.object, name);
+        return CheckerMap.check((Map<K, V>) this.object, name);
     }
 
     /**
      * @return CheckerSet<?>
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     public CheckerSet<?> isSet() {
         isInstance(Set.class);
-        return new CheckerSet((Set<?>) this.object, name);
+        return CheckerSet.check((Set<?>) this.object, name);
     }
 
     /**
      * @param clazz
      * @return CheckerSet<T>
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings("unchecked")
     public <T> CheckerSet<T> isSet(Class<T> clazz) {
         isInstance(Set.class);
         is(object -> ((Set<?>) object).stream().allMatch(elem -> clazz.isInstance(elem)),
             sendMessage(INIT_CHECKER, "is_set.clazz", clazz.getSimpleName()));
-        return new CheckerSet((Set<T>) this.object, name);
+        return CheckerSet.check((Set<T>) this.object, name);
     }
 
     /**
@@ -199,7 +197,7 @@ public class Checker extends AbstractChecker<Object, Checker> {
      * @return CheckerTree<T>
      */
     public <T> CheckerTree<T> isTree(T rootValue, Map<T, List<T>> childrenMap) {
-        return new CheckerTree<T>(rootValue, childrenMap, name);
+        return CheckerTree.check(rootValue, childrenMap, name);
     }
 
     /**
@@ -207,7 +205,7 @@ public class Checker extends AbstractChecker<Object, Checker> {
      * @return CheckerTree<T>
      */
     public <T> CheckerTree<T> isTree(T rootValue) {
-        return new CheckerTree<T>(rootValue, name);
+        return CheckerTree.check(rootValue, name);
     }
 
     /**
@@ -215,7 +213,7 @@ public class Checker extends AbstractChecker<Object, Checker> {
      */
     public CheckerFile isFile() {
         isInstance(File.class);
-        return new CheckerFile(transformOfNull(this.object, File.class), name);
+        return CheckerFile.check(transformOfNull(this.object, File.class), name);
     }
 
     /**
@@ -224,7 +222,7 @@ public class Checker extends AbstractChecker<Object, Checker> {
      */
     public CheckerJson isJson() throws IOException {
         isInstance(File.class);
-        return new CheckerJson(transformOfNull(this.object, File.class), name);
+        return CheckerJson.check(transformOfNull(this.object, File.class), name);
     }
 
     /**
@@ -233,7 +231,7 @@ public class Checker extends AbstractChecker<Object, Checker> {
      */
     public CheckerURI isURI() throws IOException {
         isInstance(URI.class);
-        return new CheckerURI(transformOfNull(this.object, URI.class), name);
+        return CheckerURI.check(transformOfNull(this.object, URI.class), name);
     }
 
     /**
@@ -249,7 +247,7 @@ public class Checker extends AbstractChecker<Object, Checker> {
      */
     public CheckerBigInteger isBigInteger() {
         isInstance(BigInteger.class);
-        return new CheckerBigInteger(transformOfNull(this.object, BigInteger.class), name);
+        return CheckerBigInteger.check(transformOfNull(this.object, BigInteger.class), name);
     }
 
         /**
@@ -257,7 +255,7 @@ public class Checker extends AbstractChecker<Object, Checker> {
          */
         public CheckerBigDecimal isBigDecimal() {
         isInstance(BigDecimal.class);
-        return new CheckerBigDecimal(transformOfNull(this.object, BigDecimal.class), name);
+        return CheckerBigDecimal.check(transformOfNull(this.object, BigDecimal.class), name);
     }
 
     /**
@@ -265,7 +263,7 @@ public class Checker extends AbstractChecker<Object, Checker> {
      */
     public CheckerInteger isInteger() {
         isInstance(Integer.class);
-        return new CheckerInteger(transformOfNull(this.object, Integer.class), name);
+        return CheckerInteger.check(transformOfNull(this.object, Integer.class), name);
     }
 
     /**
@@ -273,7 +271,7 @@ public class Checker extends AbstractChecker<Object, Checker> {
      */
     public CheckerLong isLong() {
         isInstance(Long.class);
-        return new CheckerLong(transformOfNull(this.object, Long.class), name);
+        return CheckerLong.check(transformOfNull(this.object, Long.class), name);
     }
 
     /**
@@ -281,7 +279,7 @@ public class Checker extends AbstractChecker<Object, Checker> {
      */
     public CheckerFloat isFloat() {
         isInstance(Float.class);
-        return new CheckerFloat(transformOfNull(this.object, Float.class), name);
+        return CheckerFloat.check(transformOfNull(this.object, Float.class), name);
     }
 
     /**
@@ -289,52 +287,50 @@ public class Checker extends AbstractChecker<Object, Checker> {
      */
     public CheckerDouble isDouble() {
         isInstance(Double.class);
-        return new CheckerDouble(transformOfNull(this.object, Double.class), name);
+        return CheckerDouble.check(transformOfNull(this.object, Double.class), name);
     }
 
     /**
      * @return CheckerArray<?>
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     public CheckerArray<?> isArray() {
         is(object -> object.getClass().isArray(), sendMessage(INIT_CHECKER, "is_array"));
-        return new CheckerArray(((Collection<?>) this.object).toArray(), this.name);
+        return CheckerArray.check(((Collection<?>) this.object).toArray(), this.name);
     }
 
     /**
      * @param clazz
      * @return CheckerArray<T>
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({ "unchecked" })
     public <T> CheckerArray<T> isArray(Class<T> clazz) {
         is(object -> object.getClass().isArray(), sendMessage(INIT_CHECKER, "is_array", clazz.getSimpleName()));
-        return new CheckerArray(((Collection<T>) this.object).toArray(), this.name);
+        return CheckerArray.check((T[]) ((Collection<T>) this.object).toArray(), this.name);
     }
 
     /**
      * @return CheckerMatrix<?>
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     public CheckerMatrix<?> isMatrix() {
         is(object ->
             object.getClass().isArray() && object.getClass().getComponentType().isArray(),
             sendMessage(INIT_CHECKER, "is_matrix")
         );
 
-        return new CheckerMatrix((Number[][]) this.object, this.name);
+        return CheckerMatrix.check((Number[][]) this.object, this.name);
     }
 
     /**
      * @param clazz
      * @return CheckerMatrix<T>
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({ "unchecked" })
     public <T extends Number> CheckerMatrix<T> isMatrix(Class<T> clazz) {
         is(object ->
             object.getClass().isArray() && object.getClass().getComponentType().isArray(),
             sendMessage(INIT_CHECKER, "is_matrix", clazz.getSimpleName())
         );
-        return new CheckerMatrix((T[][]) this.object, this.name);
+        return CheckerMatrix.check((T[][]) this.object, this.name);
     }
 
     /**
@@ -342,7 +338,7 @@ public class Checker extends AbstractChecker<Object, Checker> {
      */
     public CheckerColor isColor() {
         isInstance(Color.class);
-        return new CheckerColor(transformOfNull(this.object, Color.class), this.name);
+        return CheckerColor.check(transformOfNull(this.object, Color.class), this.name);
     }
 
     /**
@@ -350,7 +346,7 @@ public class Checker extends AbstractChecker<Object, Checker> {
      */
     public CheckerCurrency isCurrency() {
         isInstance(Currency.class);
-        return new CheckerCurrency(transformOfNull(this.object, Currency.class), this.name);
+        return CheckerCurrency.check(transformOfNull(this.object, Currency.class), this.name);
     }
 
     /**
@@ -358,6 +354,6 @@ public class Checker extends AbstractChecker<Object, Checker> {
      */
     public CheckerString isString() {
         isInstance(String.class);
-        return new CheckerString(transformOfNull(this.object, String.class), this.name);
+        return CheckerString.check(transformOfNull(this.object, String.class), this.name);
     }
 }

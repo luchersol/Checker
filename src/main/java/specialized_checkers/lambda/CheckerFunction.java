@@ -11,11 +11,29 @@ import util.Cloner;
 public class CheckerFunction<T, R> extends AbstractChecker<Function<T, R>, CheckerFunction<T, R>> {
 
     private static final String INIT_FUNCTION = "lambda.function";
+    private static final String DEFAULT_NAME = "Function";
 
     private boolean deepClone;
 
-    public CheckerFunction(Function<T, R> function, String name) {
+    protected CheckerFunction(Function<T, R> function, String name) {
         super(function, name);
+    }
+
+    /**
+     * @param function
+     * @param name
+     * @return CheckerFunction<T, R>
+     */
+    public static <T,R> CheckerFunction<T, R> check(Function<T, R> function, String name) {
+        return new CheckerFunction<>(function, name);
+    }
+
+    /**
+     * @param function
+     * @return CheckerFunction<T, R>
+     */
+    public static <T,R> CheckerFunction<T, R> check(Function<T, R> function) {
+        return check(function, DEFAULT_NAME);
     }
 
     /**
@@ -26,11 +44,17 @@ public class CheckerFunction<T, R> extends AbstractChecker<Function<T, R>, Check
         return this;
     }
 
+    /**
+     * @return CheckerFunction<T, R>
+     */
     public CheckerFunction<T, R> activateDeepClone() {
         this.deepClone = true;
         return self();
     }
 
+    /**
+     * @return CheckerFunction<T, R>
+     */
     public CheckerFunction<T, R> deactivateDeepClone() {
         this.deepClone = false;
         return self();

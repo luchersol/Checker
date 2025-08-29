@@ -8,13 +8,28 @@ import util.AbstractChecker;
 
 public class CheckerLocalDateTime extends AbstractChecker<LocalDateTime, CheckerLocalDateTime> implements InterfaceCheckerDate<CheckerLocalDateTime, LocalDateTime>  {
 
-    private static final String LOCAL_DATE_TIME_STRING = "LocalDateTime";
-    // private static final String INIT_TIME = "time";
     private static final String INIT_TEMPORAL = "time.temporal";
-    // private static final String INIT_LOCAL_DATE_TIME = "time.temporal.local_date_time";
+    private static final String DEFAULT_NAME = "LocalDateTime";
 
-    public CheckerLocalDateTime(LocalDateTime object, String name) {
-        super(object, name);
+    protected CheckerLocalDateTime(LocalDateTime localdatetime, String name) {
+        super(localdatetime, name);
+    }
+
+    /**
+     * @param localdatetime
+     * @param name
+     * @return CheckerLocalDateTime
+     */
+    public static CheckerLocalDateTime check(LocalDateTime localdatetime, String name) {
+        return new CheckerLocalDateTime(localdatetime, name);
+    }
+
+    /**
+     * @param localdatetime
+     * @return CheckerLocalDateTime
+     */
+    public static CheckerLocalDateTime check(LocalDateTime localdatetime) {
+        return check(localdatetime, DEFAULT_NAME);
     }
 
     /**
@@ -38,7 +53,7 @@ public class CheckerLocalDateTime extends AbstractChecker<LocalDateTime, Checker
      */
     @Override
     public CheckerLocalDateTime isBefore(LocalDateTime date) {
-        return is(time -> time.isBefore(date), sendMessage(INIT_TEMPORAL, "is_before", LOCAL_DATE_TIME_STRING, date));
+        return is(time -> time.isBefore(date), sendMessage(INIT_TEMPORAL, "is_before", DEFAULT_NAME, date));
     }
 
     /**
@@ -47,7 +62,7 @@ public class CheckerLocalDateTime extends AbstractChecker<LocalDateTime, Checker
      */
     @Override
     public CheckerLocalDateTime isBeforeOrEqual(LocalDateTime date) {
-        return is(time -> time.isBefore(date) || time.equals(date), sendMessage(INIT_TEMPORAL, "is_before_or_equal", LOCAL_DATE_TIME_STRING, date));
+        return is(time -> time.isBefore(date) || time.equals(date), sendMessage(INIT_TEMPORAL, "is_before_or_equal", DEFAULT_NAME, date));
     }
 
     /**
@@ -56,7 +71,7 @@ public class CheckerLocalDateTime extends AbstractChecker<LocalDateTime, Checker
      */
     @Override
     public CheckerLocalDateTime isAfter(LocalDateTime date) {
-        return is(time -> time.isAfter(date), sendMessage(INIT_TEMPORAL, "is_after", LOCAL_DATE_TIME_STRING, date));
+        return is(time -> time.isAfter(date), sendMessage(INIT_TEMPORAL, "is_after", DEFAULT_NAME, date));
     }
 
     /**
@@ -65,7 +80,7 @@ public class CheckerLocalDateTime extends AbstractChecker<LocalDateTime, Checker
      */
     @Override
     public CheckerLocalDateTime isAfterOrEqual(LocalDateTime date) {
-        return is(time -> time.isAfter(date) || time.equals(date), sendMessage(INIT_TEMPORAL, "is_after_or_equal", LOCAL_DATE_TIME_STRING, date));
+        return is(time -> time.isAfter(date) || time.equals(date), sendMessage(INIT_TEMPORAL, "is_after_or_equal", DEFAULT_NAME, date));
     }
 
     /**
@@ -75,7 +90,7 @@ public class CheckerLocalDateTime extends AbstractChecker<LocalDateTime, Checker
      */
     @Override
     public CheckerLocalDateTime inRange(LocalDateTime date_1, LocalDateTime date_2) {
-        return is(time -> time.isAfter(date_1) && time.isBefore(date_2), sendMessage(INIT_TEMPORAL, "in_range", LOCAL_DATE_TIME_STRING, date_1, date_2));
+        return is(time -> time.isAfter(date_1) && time.isBefore(date_2), sendMessage(INIT_TEMPORAL, "in_range", DEFAULT_NAME, date_1, date_2));
     }
 
     /**
@@ -83,7 +98,7 @@ public class CheckerLocalDateTime extends AbstractChecker<LocalDateTime, Checker
      */
     @Override
     public CheckerLocalDateTime isPast() {
-        return is(time -> time.isBefore(now()), sendMessage(INIT_TEMPORAL, "is_past", LOCAL_DATE_TIME_STRING));
+        return is(time -> time.isBefore(now()), sendMessage(INIT_TEMPORAL, "is_past", DEFAULT_NAME));
     }
 
     /**
@@ -91,7 +106,7 @@ public class CheckerLocalDateTime extends AbstractChecker<LocalDateTime, Checker
      */
     @Override
     public CheckerLocalDateTime isFuture() {
-        return is(time -> time.isAfter(now()), sendMessage(INIT_TEMPORAL, "is_future", LOCAL_DATE_TIME_STRING));
+        return is(time -> time.isAfter(now()), sendMessage(INIT_TEMPORAL, "is_future", DEFAULT_NAME));
     }
 
 }
