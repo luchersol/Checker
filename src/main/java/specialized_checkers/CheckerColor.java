@@ -7,6 +7,13 @@ import java.util.function.Predicate;
 
 import util.AbstractChecker;
 
+/**
+ * CheckerColor is a specialized checker for validating and performing assertions on {@link Color} values.
+ * <p>
+ * It provides a fluent API for common color validations such as checking color equality, brightness, transparency, contrast, and more.
+ *
+ * @param <T> the type of value to be checked, which is {@link Color} in this case
+ */
 public class CheckerColor extends AbstractChecker<Color, CheckerColor> {
 
     private static final String INIT_COLOR = "color";
@@ -17,24 +24,30 @@ public class CheckerColor extends AbstractChecker<Color, CheckerColor> {
     }
 
     /**
-     * @param color
-     * @param name
-     * @return CheckerColor
+     * Creates a new CheckerColor instance for the given color and name.
+     *
+     * @param color the color value to be checked
+     * @param name  the name to identify the color in error messages
+     * @return a CheckerColor instance for further validations
      */
     public static CheckerColor check(Color color, String name) {
         return new CheckerColor(color, name);
     }
 
     /**
-     * @param color
-     * @return CheckerColor
+     * Creates a new CheckerColor instance for the given color with a default name.
+     *
+     * @param color the color value to be checked
+     * @return a CheckerColor instance for further validations
      */
     public static CheckerColor check(Color color) {
         return check(color, DEFAULT_NAME);
     }
 
     /**
-     * @return CheckerColor
+     * Returns this instance (for fluent API usage).
+     *
+     * @return this CheckerColor instance
      */
     @Override
     protected CheckerColor self() {
@@ -42,44 +55,56 @@ public class CheckerColor extends AbstractChecker<Color, CheckerColor> {
     }
 
     /**
-     * @return CheckerColor
+     * Checks if the color is black.
+     *
+     * @return this CheckerColor instance for chaining
      */
     public CheckerColor isBlack(){
         return is(color -> color.equals(Color.BLACK), sendMessage(INIT_COLOR, "is_black"));
     }
 
     /**
-     * @return CheckerColor
+     * Checks if the color is white.
+     *
+     * @return this CheckerColor instance for chaining
      */
     public CheckerColor isWhite(){
         return is(color -> color.equals(Color.WHITE), sendMessage(INIT_COLOR, "is_white"));
     }
 
     /**
-     * @return CheckerColor
+     * Checks if the color is a shade of gray (red, green, and blue components are equal).
+     *
+     * @return this CheckerColor instance for chaining
      */
     public CheckerColor isGray(){
         return is(color -> color.getRed() == color.getGreen() && color.getGreen() == color.getBlue(), sendMessage(INIT_COLOR, "is_gray"));
     }
 
     /**
-     * @param other
-     * @return CheckerColor
+     * Checks if the color is equal to another color.
+     *
+     * @param other the color to compare with
+     * @return this CheckerColor instance for chaining
      */
     public CheckerColor isColor(Color other){
         return is(color -> color.equals(other), sendMessage(INIT_COLOR, "is_color", other));
     }
 
     /**
-     * @return CheckerColor
+     * Checks if the color is considered dark using the default threshold (128).
+     *
+     * @return this CheckerColor instance for chaining
      */
     public CheckerColor isDark(){
         return isDark(128);
     }
 
     /**
-     * @param umbral
-     * @return CheckerColor
+     * Checks if the color is considered dark using the specified threshold.
+     *
+     * @param umbral the threshold for darkness (lower value means darker)
+     * @return this CheckerColor instance for chaining
      */
     public CheckerColor isDark(double umbral){
         Predicate<Color> predicate = color -> {
@@ -91,15 +116,19 @@ public class CheckerColor extends AbstractChecker<Color, CheckerColor> {
     }
 
     /**
-     * @return CheckerColor
+     * Checks if the color is considered light using the default threshold (128).
+     *
+     * @return this CheckerColor instance for chaining
      */
     public CheckerColor isLight(){
         return isLight(128);
     }
 
     /**
-     * @param umbral
-     * @return CheckerColor
+     * Checks if the color is considered light using the specified threshold.
+     *
+     * @param umbral the threshold for lightness (higher value means lighter)
+     * @return this CheckerColor instance for chaining
      */
     public CheckerColor isLight(double umbral){
         Predicate<Color> predicate = color -> {
@@ -111,25 +140,30 @@ public class CheckerColor extends AbstractChecker<Color, CheckerColor> {
     }
 
     /**
-     * @return CheckerColor
+     * Checks if the color is transparent (alpha value less than 255).
+     *
+     * @return this CheckerColor instance for chaining
      */
     public CheckerColor isTransparent(){
         return is(color -> color.getAlpha() < 255, sendMessage(INIT_COLOR, "is_transparent"));
     }
 
     /**
-     * El umbral por defecto es 128
-     * @param other
-     * @return
+     * Checks if the color has sufficient contrast with another color using the default threshold (128).
+     *
+     * @param other the color to compare contrast with
+     * @return this CheckerColor instance for chaining
      */
     public CheckerColor hasContrast(Color other){
         return hasContrast(other, 128);
     }
 
     /**
-     * @param other
-     * @param umbral
-     * @return CheckerColor
+     * Checks if the color has sufficient contrast with another color using the specified threshold.
+     *
+     * @param other  the color to compare contrast with
+     * @param umbral the threshold for contrast difference
+     * @return this CheckerColor instance for chaining
      */
     public CheckerColor hasContrast(Color other, double umbral){
         Predicate<Color> predicate = color -> {
@@ -141,16 +175,20 @@ public class CheckerColor extends AbstractChecker<Color, CheckerColor> {
     }
 
     /**
-     * @param alpha
-     * @return CheckerColor
+     * Checks if the color has the specified alpha (transparency) value.
+     *
+     * @param alpha the expected alpha value
+     * @return this CheckerColor instance for chaining
      */
     public CheckerColor hasAlpha(int alpha){
         return is(color -> color.getAlpha() == alpha, sendMessage(INIT_COLOR, "has_alpha", alpha));
     }
 
     /**
-     * @param umbral
-     * @return CheckerColor
+     * Checks if the color is desaturated (saturation below the specified threshold).
+     *
+     * @param umbral the threshold for saturation (0 = grayscale, 1 = fully saturated)
+     * @return this CheckerColor instance for chaining
      */
     public CheckerColor isDesaturated(double umbral) {
         Predicate<Color> predicate = color ->{
@@ -161,9 +199,11 @@ public class CheckerColor extends AbstractChecker<Color, CheckerColor> {
     }
 
     /**
-     * @param other
-     * @param umbral
-     * @return CheckerColor
+     * Checks if the color is similar to another color within the specified threshold.
+     *
+     * @param other  the color to compare with
+     * @param umbral the maximum allowed distance for similarity
+     * @return this CheckerColor instance for chaining
      */
     public CheckerColor isSimilar(Color other, double umbral) {
         Predicate<Color> predicate = color -> {
@@ -176,15 +216,19 @@ public class CheckerColor extends AbstractChecker<Color, CheckerColor> {
     }
 
     /**
-     * @return CheckerColor
+     * Checks if the color is fully opaque (alpha value is 255).
+     *
+     * @return this CheckerColor instance for chaining
      */
     public CheckerColor isOpaque(){
         return is(color -> color.getAlpha() == 255, sendMessage(INIT_COLOR, "is_opaque"));
     }
 
     /**
-     * @param hex
-     * @return CheckerColor
+     * Checks if the color's hexadecimal representation matches the specified string.
+     *
+     * @param hex the expected hexadecimal string (e.g., "#FFFFFF")
+     * @return this CheckerColor instance for chaining
      */
     public CheckerColor hasHexadecimal(String hex){
         Predicate<Color> predicate = color -> {

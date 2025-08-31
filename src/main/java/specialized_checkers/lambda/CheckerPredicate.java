@@ -8,6 +8,14 @@ import util.AbstractChecker;
 import util.Cloner;
 import util.Utils;
 
+/**
+ * Checker for {@link Predicate} instances, providing fluent validation methods for lambda expressions or operations that accept an input and return a boolean result.
+ * <p>
+ * This class allows you to validate and assert properties of {@code Predicate} objects in a fluent and readable way.
+ * </p>
+ *
+ * @param <T> the type of the input to the {@code Predicate} being checked
+ */
 public class CheckerPredicate<T> extends AbstractChecker<Predicate<T>, CheckerPredicate<T>> {
 
     private static final String INIT_PREDICATE = "lambda.predicate";
@@ -20,24 +28,32 @@ public class CheckerPredicate<T> extends AbstractChecker<Predicate<T>, CheckerPr
     }
 
     /**
-     * @param predicate
-     * @param name
-     * @return CheckerPredicate<T>
+     * Creates a new {@code CheckerPredicate} for the given {@link Predicate} instance with a custom name.
+     *
+     * @param predicate the {@code Predicate} instance to be checked
+     * @param name      the name to identify this checker instance (useful for error messages)
+     * @param <T>       the type of the input to the {@code Predicate}
+     * @return a new {@code CheckerPredicate} for the provided {@code Predicate}
      */
     public static <T> CheckerPredicate<T> check(Predicate<T> predicate, String name) {
         return new CheckerPredicate<>(predicate, name);
     }
 
     /**
-     * @param predicate
-     * @return CheckerPredicate<T>
+     * Creates a new {@code CheckerPredicate} for the given {@link Predicate} instance with a default name.
+     *
+     * @param predicate the {@code Predicate} instance to be checked
+     * @param <T>       the type of the input to the {@code Predicate}
+     * @return a new {@code CheckerPredicate} for the provided {@code Predicate}
      */
     public static <T> CheckerPredicate<T> check(Predicate<T> predicate) {
         return check(predicate, DEFAULT_NAME);
     }
 
     /**
-     * @return CheckerPredicate<T>
+     * Returns this checker instance (for fluent API usage).
+     *
+     * @return this {@code CheckerPredicate} instance
      */
     @Override
     protected CheckerPredicate<T> self() {
@@ -45,7 +61,10 @@ public class CheckerPredicate<T> extends AbstractChecker<Predicate<T>, CheckerPr
     }
 
     /**
-     * @return CheckerPredicate<T>
+     * Enables deep cloning of input objects before passing them to the {@code Predicate}.
+     * This is useful to ensure that the original input is not modified by the operation.
+     *
+     * @return this {@code CheckerPredicate} instance for further validation
      */
     public CheckerPredicate<T> activateDeepClone() {
         this.deepClone = true;
@@ -53,7 +72,9 @@ public class CheckerPredicate<T> extends AbstractChecker<Predicate<T>, CheckerPr
     }
 
     /**
-     * @return CheckerPredicate<T>
+     * Disables deep cloning of input objects before passing them to the {@code Predicate}.
+     *
+     * @return this {@code CheckerPredicate} instance for further validation
      */
     public CheckerPredicate<T> deactivateDeepClone() {
         this.deepClone = false;
@@ -61,16 +82,20 @@ public class CheckerPredicate<T> extends AbstractChecker<Predicate<T>, CheckerPr
     }
 
     /**
-     * @param input
-     * @return T
+     * Returns the input object, deep-cloned if deep cloning is activated, otherwise returns the original input.
+     *
+     * @param input the input object to process
+     * @return the processed input (deep-cloned or original)
      */
     private T getInput(T input) {
         return this.deepClone ? Cloner.deepClone(input) : input;
     }
 
     /**
-     * @param input
-     * @return CheckerPredicate<T>
+     * Asserts that testing the {@code Predicate} with the given input does not throw any exception.
+     *
+     * @param input the input object to be tested by the predicate
+     * @return this {@code CheckerPredicate} instance for further validation
      */
     public CheckerPredicate<T> testWithoutException(T input) {
         return is(p -> {
@@ -85,8 +110,10 @@ public class CheckerPredicate<T> extends AbstractChecker<Predicate<T>, CheckerPr
     }
 
     /**
-     * @param input
-     * @return CheckerPredicate<T>
+     * Asserts that testing the {@code Predicate} with the given input evaluates to {@code true}.
+     *
+     * @param input the input object to be tested by the predicate
+     * @return this {@code CheckerPredicate} instance for further validation
      */
     public CheckerPredicate<T> evaluatesTrue(T input) {
         return is(p -> {
@@ -99,8 +126,10 @@ public class CheckerPredicate<T> extends AbstractChecker<Predicate<T>, CheckerPr
     }
 
     /**
-     * @param input
-     * @return CheckerPredicate<T>
+     * Asserts that testing the {@code Predicate} with the given input evaluates to {@code false}.
+     *
+     * @param input the input object to be tested by the predicate
+     * @return this {@code CheckerPredicate} instance for further validation
      */
     public CheckerPredicate<T> evaluatesFalse(T input) {
         return is(p -> {
@@ -113,9 +142,11 @@ public class CheckerPredicate<T> extends AbstractChecker<Predicate<T>, CheckerPr
     }
 
     /**
-     * @param input
-     * @param boolean
-     * @return CheckerPredicate<T>
+     * Asserts that testing the {@code Predicate} with the given input produces the expected boolean result.
+     *
+     * @param input    the input object to be tested by the predicate
+     * @param expected the expected boolean result to compare with the actual result of the predicate
+     * @return this {@code CheckerPredicate} instance for further validation
      */
     public CheckerPredicate<T> producesExpected(T input, boolean expected) {
         return is(p -> {

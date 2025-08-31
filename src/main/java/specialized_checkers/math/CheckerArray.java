@@ -8,6 +8,14 @@ import java.util.function.Predicate;
 
 import util.AbstractChecker;
 
+/**
+ * Checker for array instances, providing fluent validation methods for arrays of any reference type.
+ * <p>
+ * This class allows you to validate and assert properties of array objects in a fluent and readable way.
+ * </p>
+ *
+ * @param <T> the type of the elements in the array being checked
+ */
 public class CheckerArray<T> extends AbstractChecker<T[], CheckerArray<T>>{
 
     private static final String INIT_ARRAY = "math.array";
@@ -18,24 +26,32 @@ public class CheckerArray<T> extends AbstractChecker<T[], CheckerArray<T>>{
     }
 
     /**
-     * @param array
-     * @param name
-     * @return CheckerArray<T>
+     * Creates a new {@code CheckerArray} for the given array instance with a custom name.
+     *
+     * @param array the array instance to be checked
+     * @param name  the name to identify this checker instance (useful for error messages)
+     * @param <T>   the type of the elements in the array
+     * @return a new {@code CheckerArray} for the provided array
      */
     public static <T> CheckerArray<T> check(T[] array, String name){
         return new CheckerArray<>(array, name);
     }
 
     /**
-     * @param array
-     * @return CheckerArray<T>
+     * Creates a new {@code CheckerArray} for the given array instance with a default name.
+     *
+     * @param array the array instance to be checked
+     * @param <T>   the type of the elements in the array
+     * @return a new {@code CheckerArray} for the provided array
      */
     public static <T> CheckerArray<T> check(T[] array){
         return check(array, DEFAULT_NAME);
     }
 
     /**
-     * @return CheckerArray<T>
+     * Returns this checker instance (for fluent API usage).
+     *
+     * @return this {@code CheckerArray} instance
      */
     @Override
     protected CheckerArray<T> self() {
@@ -43,22 +59,28 @@ public class CheckerArray<T> extends AbstractChecker<T[], CheckerArray<T>>{
     }
 
     /**
-     * @return String
+     * Returns the simple name of the array's component type.
+     *
+     * @return the simple name of the array's element type
      */
     private String getTypeName(){
         return this.object.getClass().getComponentType().getSimpleName();
     }
 
     /**
-     * @return CheckerArray<T>
+     * Asserts that the array is empty (has zero length).
+     *
+     * @return this {@code CheckerArray} instance for further validation
      */
     public CheckerArray<T> isEmpty(){
         return is(array -> array.length == 0, sendMessage(INIT_ARRAY, "is_empty"));
     }
 
     /**
-     * @param comparator
-     * @return CheckerArray<T>
+     * Asserts that the array is sorted in ascending order according to the provided comparator.
+     *
+     * @param comparator the comparator to determine the order of the array
+     * @return this {@code CheckerArray} instance for further validation
      */
     public CheckerArray<T> isSortedAsc(Comparator<T> comparator){
         if (this.object.length == 0)
@@ -76,7 +98,9 @@ public class CheckerArray<T> extends AbstractChecker<T[], CheckerArray<T>>{
     }
 
     /**
-     * @return CheckerArray<T>
+     * Asserts that the array is sorted in ascending order according to the natural ordering of its elements.
+     *
+     * @return this {@code CheckerArray} instance for further validation
      */
     public CheckerArray<T> isSortedAsc(){
         if (this.object.length == 0)
@@ -94,8 +118,10 @@ public class CheckerArray<T> extends AbstractChecker<T[], CheckerArray<T>>{
     }
 
     /**
-     * @param comparator
-     * @return CheckerArray<T>
+     * Asserts that the array is sorted in descending order according to the provided comparator.
+     *
+     * @param comparator the comparator to determine the order of the array
+     * @return this {@code CheckerArray} instance for further validation
      */
     public CheckerArray<T> isSortedDesc(Comparator<T> comparator){
         if (this.object.length == 0)
@@ -113,7 +139,9 @@ public class CheckerArray<T> extends AbstractChecker<T[], CheckerArray<T>>{
     }
 
     /**
-     * @return CheckerArray<T>
+     * Asserts that the array is sorted in descending order according to the natural ordering of its elements.
+     *
+     * @return this {@code CheckerArray} instance for further validation
      */
     public CheckerArray<T> isSortedDesc(){
         if (this.object.length == 0)
@@ -133,9 +161,11 @@ public class CheckerArray<T> extends AbstractChecker<T[], CheckerArray<T>>{
     }
 
     /**
-     * @param matching
-     * @param percentage
-     * @return CheckerArray<T>
+     * Asserts that at least the given percentage of elements in the array match the provided predicate.
+     *
+     * @param matching   the predicate to test elements
+     * @param percentage the minimum percentage of elements that must match
+     * @return this {@code CheckerArray} instance for further validation
      */
     public CheckerArray<T> isSufficientPercentage(Predicate<T> matching, double percentage){
         Predicate<T[]> predicate = array -> {
@@ -146,16 +176,20 @@ public class CheckerArray<T> extends AbstractChecker<T[], CheckerArray<T>>{
     }
 
     /**
-     * @param predicate
-     * @return CheckerArray<T>
+     * Asserts that any element in the array matches the provided predicate.
+     *
+     * @param predicate the predicate to test elements
+     * @return this {@code CheckerArray} instance for further validation
      */
     public CheckerArray<T> anyMatch(Predicate<T> predicate){
         return is(array -> Arrays.stream(array).anyMatch(predicate), sendMessage(INIT_ARRAY, "any_match"));
     }
 
     /**
-     * @param predicate
-     * @return CheckerArray<T>
+     * Asserts that all elements in the array match the provided predicate.
+     *
+     * @param predicate the predicate to test elements
+     * @return this {@code CheckerArray} instance for further validation
      */
     public CheckerArray<T> allMatch(Predicate<T> predicate){
         return is(array -> Arrays.stream(array).allMatch(predicate), sendMessage(INIT_ARRAY, "all_match"));

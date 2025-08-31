@@ -7,6 +7,12 @@ import java.util.function.Predicate;
 import specialized_checkers.math.numbers.InterfaceCheckerNumber;
 import util.AbstractChecker;
 
+/**
+ * Checker for {@link Long} instances, providing fluent validation methods for long integer numbers.
+ * <p>
+ * This class allows you to validate and assert properties of {@code Long} objects in a fluent and readable way.
+ * </p>
+ */
 public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements InterfaceCheckerNumber<CheckerLong> {
 
     private static final String INIT_NUMBERS = "numbers";
@@ -18,34 +24,42 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
     }
 
     /**
-     * @param number
-     * @param name
-     * @return CheckerLong
+     * Creates a new {@code CheckerLong} for the given {@link Long} instance with a custom name.
+     *
+     * @param number the {@code Long} instance to be checked
+     * @param name   the name to identify this checker instance (useful for error messages)
+     * @return a new {@code CheckerLong} for the provided {@code Long}
      */
     public static CheckerLong check(Long number, String name) {
         return new CheckerLong(number, name);
     }
 
     /**
-     * @param number
-     * @param name
-     * @return CheckerLong
+     * Creates a new {@code CheckerLong} for the given {@link Number} instance with a custom name.
+     *
+     * @param number the {@code Number} instance to be checked (converted to long)
+     * @param name   the name to identify this checker instance (useful for error messages)
+     * @return a new {@code CheckerLong} for the provided {@code Number}
      */
     public static CheckerLong check(Number number, String name) {
         return check(number.longValue(), name);
     }
 
     /**
-     * @param number
-     * @return CheckerLong
+     * Creates a new {@code CheckerLong} for the given {@link Long} instance with a default name.
+     *
+     * @param number the {@code Long} instance to be checked
+     * @return a new {@code CheckerLong} for the provided {@code Long}
      */
     public static CheckerLong check(Long number) {
         return check(number, DEFAULT_NAME);
     }
 
     /**
-     * @param number
-     * @return CheckerLong
+     * Creates a new {@code CheckerLong} for the given {@link Number} instance with a default name.
+     *
+     * @param number the {@code Number} instance to be checked (converted to long)
+     * @return a new {@code CheckerLong} for the provided {@code Number}
      */
     public static CheckerLong check(Number number) {
         return check(number.longValue());
@@ -53,7 +67,9 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
 
 
     /**
-     * @return CheckerLong
+     * Returns this checker instance (for fluent API usage).
+     *
+     * @return this {@code CheckerLong} instance
      */
     @Override
     protected CheckerLong self() {
@@ -61,21 +77,27 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
     }
 
     /**
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is even (divisible by two).
+     *
+     * @return this {@code CheckerLong} instance for further validation
      */
     public CheckerLong isEven(){
         return is(n_long -> n_long % 2 == 0, sendMessage(INIT_INTEGER_TYPES, "is_pair", DEFAULT_NAME));
     }
 
     /**
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is odd (not divisible by two).
+     *
+     * @return this {@code CheckerLong} instance for further validation
      */
     public CheckerLong isOdd(){
         return is(n_long -> n_long % 2 != 0, sendMessage(INIT_INTEGER_TYPES, "is_even", DEFAULT_NAME));
     }
 
     /**
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is prime.
+     *
+     * @return this {@code CheckerLong} instance for further validation
      */
     public CheckerLong isPrime() {
         Predicate<Long> isPrime = n_long -> {
@@ -94,7 +116,9 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
     }
 
     /**
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is positive (greater than zero).
+     *
+     * @return this {@code CheckerLong} instance for further validation
      */
     @Override
     public CheckerLong isPositive() {
@@ -102,7 +126,9 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
     }
 
     /**
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is positive or zero (greater than or equal to zero).
+     *
+     * @return this {@code CheckerLong} instance for further validation
      */
     @Override
     public CheckerLong isPositiveOrZero() {
@@ -110,7 +136,9 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
     }
 
     /**
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is negative (less than zero).
+     *
+     * @return this {@code CheckerLong} instance for further validation
      */
     @Override
     public CheckerLong isNegative() {
@@ -118,7 +146,9 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
     }
 
     /**
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is negative or zero (less than or equal to zero).
+     *
+     * @return this {@code CheckerLong} instance for further validation
      */
     @Override
     public CheckerLong isNegativeOrZero() {
@@ -126,7 +156,9 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
     }
 
     /**
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is zero.
+     *
+     * @return this {@code CheckerLong} instance for further validation
      */
     @Override
     public CheckerLong isZero() {
@@ -134,8 +166,10 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
     }
 
     /**
-     * @param number
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is greater than the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerLong} instance for further validation
      */
     @Override
     public CheckerLong isGreaterThan(Byte number) {
@@ -143,8 +177,10 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
     }
 
     /**
-     * @param number
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is greater than or equal to the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerLong} instance for further validation
      */
     @Override
     public CheckerLong isGreaterThan(Short number) {
@@ -152,8 +188,10 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
     }
 
     /**
-     * @param number
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is less than the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerLong} instance for further validation
      */
     @Override
     public CheckerLong isGreaterThan(Integer number) {
@@ -161,8 +199,10 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
     }
 
     /**
-     * @param number
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is less than or equal to the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerLong} instance for further validation
      */
     @Override
     public CheckerLong isGreaterThan(Long number) {

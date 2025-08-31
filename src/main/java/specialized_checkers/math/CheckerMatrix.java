@@ -14,6 +14,14 @@ import org.apache.commons.math3.util.Precision;
 
 import util.AbstractChecker;
 
+/**
+ * Checker for matrix (2D array) instances, providing fluent validation methods for matrices of any numeric type.
+ * <p>
+ * This class allows you to validate and assert properties of matrix objects in a fluent and readable way.
+ * </p>
+ *
+ * @param <T> the type of the elements in the matrix being checked (must extend {@link Number})
+ */
 public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], CheckerMatrix<T>> {
 
     private static final String INIT_MATRIX = "math.matrix";
@@ -25,24 +33,32 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
 
 
     /**
-     * @param matrix
-     * @param name
-     * @return CheckerMatrix<T>
+     * Creates a new {@code CheckerMatrix} for the given matrix instance with a custom name.
+     *
+     * @param matrix the matrix instance to be checked
+     * @param name   the name to identify this checker instance (useful for error messages)
+     * @param <T>    the type of the elements in the matrix (must extend {@link Number})
+     * @return a new {@code CheckerMatrix} for the provided matrix
      */
     public static <T extends Number> CheckerMatrix<T> check(T[][] matrix, String name){
         return new CheckerMatrix<>(matrix, name);
     }
 
     /**
-     * @param matrix
-     * @return CheckerMatrix<T>
+     * Creates a new {@code CheckerMatrix} for the given matrix instance with a default name.
+     *
+     * @param matrix the matrix instance to be checked
+     * @param <T>    the type of the elements in the matrix (must extend {@link Number})
+     * @return a new {@code CheckerMatrix} for the provided matrix
      */
     public static <T extends Number> CheckerMatrix<T> check(T[][] matrix){
         return check(matrix, DEFAULT_NAME);
     }
 
     /**
-     * @return CheckerMatrix<T>
+     * Returns this checker instance (for fluent API usage).
+     *
+     * @return this {@code CheckerMatrix} instance
      */
     @Override
     protected CheckerMatrix<T> self() {
@@ -50,7 +66,9 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
     }
 
     /**
-     * @return CheckerMatrix<T>
+     * Asserts that the matrix is empty (has zero rows or all rows are empty).
+     *
+     * @return this {@code CheckerMatrix} instance for further validation
      */
     public CheckerMatrix<T> isEmpty() {
         return is(matrix -> {
@@ -60,7 +78,9 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
     }
 
     /**
-     * @return CheckerMatrix<T>
+     * Asserts that the matrix is square (number of rows equals number of columns).
+     *
+     * @return this {@code CheckerMatrix} instance for further validation
      */
     public CheckerMatrix<T> isSquare() {
         Predicate<T[][]> predicate = matrix -> {
@@ -77,7 +97,9 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
     }
 
     /**
-     * @return CheckerMatrix<T>
+     * Asserts that the matrix is a zero matrix (all elements are zero).
+     *
+     * @return this {@code CheckerMatrix} instance for further validation
      */
     public CheckerMatrix<T> isZero() {
         is(matrix -> matrix.length > 0
@@ -87,7 +109,9 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
     }
 
     /**
-     * @return CheckerMatrix<T>
+     * Asserts that the matrix is an identity matrix (ones on the diagonal, zeros elsewhere).
+     *
+     * @return this {@code CheckerMatrix} instance for further validation
      */
     public CheckerMatrix<T> isIdentity() {
         isSquare();
@@ -107,7 +131,9 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
     }
 
     /**
-     * @return CheckerMatrix<T>
+     * Asserts that the matrix is symmetric (equal to its transpose).
+     *
+     * @return this {@code CheckerMatrix} instance for further validation
      */
     public CheckerMatrix<T> isSymmetric(){
         isSquare();
@@ -126,7 +152,9 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
     }
 
     /**
-     * @return CheckerMatrix<T>
+     * Asserts that the matrix is diagonal (all off-diagonal elements are zero).
+     *
+     * @return this {@code CheckerMatrix} instance for further validation
      */
     public CheckerMatrix<T> isDiagonal(){
         isSquare();
@@ -145,7 +173,9 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
     }
 
     /**
-     * @return CheckerMatrix<T>
+     * Asserts that the matrix is orthogonal (its transpose is its inverse).
+     *
+     * @return this {@code CheckerMatrix} instance for further validation
      */
     public CheckerMatrix<T> isOrthogonal(){
         isSquare();
@@ -163,7 +193,9 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
     }
 
     /**
-     * @return CheckerMatrix<T>
+     * Asserts that the matrix is invertible (has a non-zero determinant).
+     *
+     * @return this {@code CheckerMatrix} instance for further validation
      */
     public CheckerMatrix<T> isInvertible(){
         isSquare();
@@ -180,7 +212,9 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
     }
 
     /**
-     * @return CheckerMatrix<T>
+     * Asserts that the matrix is positive definite (all eigenvalues are positive).
+     *
+     * @return this {@code CheckerMatrix} instance for further validation
      */
     public CheckerMatrix<T> isPositiveDefinite(){
         isSquare();
@@ -197,7 +231,9 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
     }
 
     /**
-     * @return CheckerMatrix<T>
+     * Asserts that the matrix is upper triangular (all elements below the main diagonal are zero).
+     *
+     * @return this {@code CheckerMatrix} instance for further validation
      */
     public CheckerMatrix<T> isUpperTriangular(){
         isSquare();
@@ -216,7 +252,9 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
     }
 
     /**
-     * @return CheckerMatrix<T>
+     * Asserts that the matrix is lower triangular (all elements above the main diagonal are zero).
+     *
+     * @return this {@code CheckerMatrix} instance for further validation
      */
     public CheckerMatrix<T> isLowerTriangular(){
         isSquare();
@@ -235,8 +273,10 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
     }
 
     /**
-     * @param rank
-     * @return CheckerMatrix<T>
+     * Asserts that the matrix has the specified rank.
+     *
+     * @param rank the expected rank of the matrix
+     * @return this {@code CheckerMatrix} instance for further validation
      */
     public CheckerMatrix<T> hasRank(int rank){
         isSquare();
@@ -249,7 +289,9 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
     }
 
     /**
-     * @return CheckerMatrix<T>
+     * Asserts that the matrix has only real eigenvalues.
+     *
+     * @return this {@code CheckerMatrix} instance for further validation
      */
     public CheckerMatrix<T> hasRealEigenvalues(){
         isSquare();
@@ -267,7 +309,9 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
     }
 
     /**
-     * @return CheckerMatrix<T>
+     * Asserts that the matrix is full rank (rank equals the minimum of the number of rows and columns).
+     *
+     * @return this {@code CheckerMatrix} instance for further validation
      */
     public CheckerMatrix<T> isFullRank(){
         isSquare();
@@ -281,8 +325,10 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
     }
 
     /**
-     * @param predicate
-     * @return CheckerMatrix<T>
+     * Asserts that any element in the matrix matches the provided predicate.
+     *
+     * @param predicate the predicate to test elements
+     * @return this {@code CheckerMatrix} instance for further validation
      */
     public CheckerMatrix<T> anyMatch(Predicate<T> predicate) {
         is(matrix -> Arrays.stream(matrix).flatMap(Arrays::stream).anyMatch(elem -> predicate.test(elem)),
@@ -291,8 +337,10 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
     }
 
     /**
-     * @param predicate
-     * @return CheckerMatrix<T>
+     * Asserts that all elements in the matrix match the provided predicate.
+     *
+     * @param predicate the predicate to test elements
+     * @return this {@code CheckerMatrix} instance for further validation
      */
     public CheckerMatrix<T> allMatch(Predicate<T> predicate) {
         is(matrix -> Arrays.stream(matrix).flatMap(Arrays::stream).allMatch(elem -> predicate.test(elem)),
@@ -301,8 +349,11 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
     }
 
     /**
-     * @param matrix
-     * @return double[][]
+     * Converts a matrix of any numeric type to a matrix of doubles.
+     *
+     * @param matrix the matrix to convert
+     * @param <T>    the type of the elements in the matrix (must extend {@link Number})
+     * @return a new matrix of doubles with the same dimensions as the input
      */
     public static <T extends Number> double[][] convertToDoubleMatrix(T[][] matrix) {
         int rows = matrix.length;

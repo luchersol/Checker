@@ -15,22 +15,47 @@ import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Abstract base class for implementing checkers that validate objects of type T.
+ * Provides a fluent API for chaining validation methods and tracking exceptions.
+ *
+ * @param <T> the type of object to check
+ * @param <C> the type of the concrete checker (for fluent API)
+ */
 public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> implements InterfaceChecker<AbstractChecker<T,C>, T> {
 
     protected T object;
 
+     /**
+      * The object being checked.
+      */
     protected String name;
 
+     /**
+      * The name or label for the checked object (for error messages).
+      */
     protected ExceptionTracker exceptionTracker;
 
+     /**
+      * Tracks exceptions thrown or not thrown during checks.
+      */
     protected boolean saveErrors;
 
+     /**
+      * If true, errors are saved in the exception tracker instead of being thrown immediately.
+      */
     protected boolean stop;
 
+     /**
+      * If true, further checks are stopped (e.g., if the object is null).
+      */
     protected AbstractChecker<T, C> backObject;
 
     private static final String INIT_ABSTRACT_CHECKER = "abstract_checker";
 
+     /**
+      * Message key for this checker type.
+      */
     private static final String REGEX_POINT_PROPERTIES = "(?<!\\([^\\)]*)\\.(?![^\\(]*\\))";
     private static final String REGEX_METHOD_BY_NAME_PARAMS = "^(?<function>[a-zA-Z_][a-zA-Z0-9_]*)\\((?<nameParams>(?:[a-zA-Z_][a-zA-Z0-9_]*)(?:,\\s*[a-zA-Z_][a-zA-Z0-9_])*)?\\)$";
     private static final String REGEX_METHOD_BY_NUMBER_PARAMS = "^(?<function>[a-zA-Z_][a-zA-Z0-9_]*)\\((?<numParams>\\d+)?\\)$";

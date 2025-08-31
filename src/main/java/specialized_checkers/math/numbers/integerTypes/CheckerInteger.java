@@ -7,6 +7,12 @@ import java.util.function.Predicate;
 import specialized_checkers.math.numbers.InterfaceCheckerNumber;
 import util.AbstractChecker;
 
+/**
+ * Checker for {@link Integer} instances, providing fluent validation methods for integer numbers.
+ * <p>
+ * This class allows you to validate and assert properties of {@code Integer} objects in a fluent and readable way.
+ * </p>
+ */
 public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> implements InterfaceCheckerNumber<CheckerInteger> {
 
     private static final String INIT_NUMBERS = "numbers";
@@ -18,41 +24,51 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
     }
 
     /**
-     * @param number
-     * @param name
-     * @return CheckerInteger
+     * Creates a new {@code CheckerInteger} for the given {@link Integer} instance with a custom name.
+     *
+     * @param number the {@code Integer} instance to be checked
+     * @param name   the name to identify this checker instance (useful for error messages)
+     * @return a new {@code CheckerInteger} for the provided {@code Integer}
      */
     public static CheckerInteger check(Integer number, String name) {
         return new CheckerInteger(number, name);
     }
 
     /**
-     * @param number
-     * @param name
-     * @return CheckerInteger
+     * Creates a new {@code CheckerInteger} for the given {@link Number} instance with a custom name.
+     *
+     * @param number the {@code Number} instance to be checked (converted to int)
+     * @param name   the name to identify this checker instance (useful for error messages)
+     * @return a new {@code CheckerInteger} for the provided {@code Number}
      */
     public static CheckerInteger check(Number number, String name) {
         return check(number.intValue(), name);
     }
 
     /**
-     * @param number
-     * @return CheckerInteger
+     * Creates a new {@code CheckerInteger} for the given {@link Integer} instance with a default name.
+     *
+     * @param number the {@code Integer} instance to be checked
+     * @return a new {@code CheckerInteger} for the provided {@code Integer}
      */
     public static CheckerInteger check(Integer number) {
         return check(number, DEFAULT_NAME);
     }
 
     /**
-     * @param number
-     * @return CheckerInteger
+     * Creates a new {@code CheckerInteger} for the given {@link Number} instance with a default name.
+     *
+     * @param number the {@code Number} instance to be checked (converted to int)
+     * @return a new {@code CheckerInteger} for the provided {@code Number}
      */
     public static CheckerInteger check(Number number) {
         return check(number.intValue());
     }
 
     /**
-     * @return CheckerInteger
+     * Returns this checker instance (for fluent API usage).
+     *
+     * @return this {@code CheckerInteger} instance
      */
     @Override
     protected CheckerInteger self() {
@@ -60,21 +76,27 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
     }
 
     /**
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is even (divisible by two).
+     *
+     * @return this {@code CheckerInteger} instance for further validation
      */
     public CheckerInteger isEven(){
         return is(n_integer -> (n_integer & 1) == 0, sendMessage(INIT_INTEGER_TYPES, "is_even", DEFAULT_NAME));
     }
 
     /**
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is odd (not divisible by two).
+     *
+     * @return this {@code CheckerInteger} instance for further validation
      */
     public CheckerInteger isOdd(){
         return is(n_integer -> (n_integer & 1) == 1, sendMessage(INIT_INTEGER_TYPES, "is_odd", DEFAULT_NAME));
     }
 
     /**
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is prime.
+     *
+     * @return this {@code CheckerInteger} instance for further validation
      */
     public CheckerInteger isPrime() {
         Predicate<Integer> isPrime = n_integer -> {
@@ -93,7 +115,9 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
     }
 
     /**
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is positive (greater than zero).
+     *
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isPositive() {
@@ -101,7 +125,9 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
     }
 
     /**
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is positive or zero (greater than or equal to zero).
+     *
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isPositiveOrZero() {
@@ -109,7 +135,9 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
     }
 
     /**
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is negative (less than zero).
+     *
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isNegative() {
@@ -117,7 +145,9 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
     }
 
     /**
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is negative or zero (less than or equal to zero).
+     *
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isNegativeOrZero() {
@@ -125,7 +155,9 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
     }
 
     /**
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is zero.
+     *
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isZero() {
@@ -133,8 +165,10 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
     }
 
     /**
-     * @param number
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is greater than the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isGreaterThan(Byte number) {
@@ -142,8 +176,10 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
     }
 
     /**
-     * @param number
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is greater than or equal to the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isGreaterThan(Short number) {
@@ -151,8 +187,10 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
     }
 
     /**
-     * @param number
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is less than the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isGreaterThan(Integer number) {
@@ -160,8 +198,10 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
     }
 
     /**
-     * @param number
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is less than or equal to the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isGreaterThan(Long number) {

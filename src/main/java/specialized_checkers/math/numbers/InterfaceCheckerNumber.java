@@ -1,6 +1,13 @@
 package specialized_checkers.math.numbers;
 
-
+/**
+ * Interface for fluent number checkers, providing common validation methods for numeric types.
+ * <p>
+ * Implementations of this interface allow for fluent assertions on numeric values, such as positivity, negativity, comparison, and zero checks.
+ * </p>
+ *
+ * @param <T> the type of the implementing checker (enables fluent API chaining)
+ */
 public interface InterfaceCheckerNumber<T extends InterfaceCheckerNumber<T>> {
 
     T isPositive();
@@ -36,5 +43,5 @@ public interface InterfaceCheckerNumber<T extends InterfaceCheckerNumber<T>> {
     T isLessOrEqualTo(Long number);
     T isLessOrEqualTo(Float number);
     T isLessOrEqualTo(Double number);
-    
+
 }

@@ -6,6 +6,13 @@ import java.util.Date;
 
 import util.AbstractChecker;
 
+/**
+ * CheckerDate is a specialized checker for validating and performing assertions on {@link Date} values.
+ * <p>
+ * It provides a fluent API for common date validations such as checking if a date is before, after, in range, past, or future.
+ *
+ * @param <T> the type of value to be checked, which is {@link Date} in this case
+ */
 public class CheckerDate extends AbstractChecker<Date, CheckerDate> implements InterfaceCheckerDate<CheckerDate, Date> {
 
     private static final String INIT_TEMPORAL = "time.temporal";
@@ -16,24 +23,30 @@ public class CheckerDate extends AbstractChecker<Date, CheckerDate> implements I
     }
 
     /**
-     * @param date
-     * @param name
-     * @return CheckerDate
+     * Creates a new CheckerDate instance for the given date and name.
+     *
+     * @param date the date value to be checked
+     * @param name the name to identify the date in error messages
+     * @return a CheckerDate instance for further validations
      */
     public static CheckerDate check(Date date, String name) {
         return new CheckerDate(date, name);
     }
 
     /**
-     * @param date
-     * @return CheckerDate
+     * Creates a new CheckerDate instance for the given date with a default name.
+     *
+     * @param date the date value to be checked
+     * @return a CheckerDate instance for further validations
      */
     public static CheckerDate check(Date date) {
         return check(date, DEFAULT_NAME);
     }
 
     /**
-     * @return CheckerDate
+     * Returns this instance (for fluent API usage).
+     *
+     * @return this CheckerDate instance
      */
     @Override
     protected CheckerDate self() {
@@ -41,15 +54,19 @@ public class CheckerDate extends AbstractChecker<Date, CheckerDate> implements I
     }
 
     /**
-     * @return Date
+     * Returns the current date and time.
+     *
+     * @return the current {@link Date}
      */
     private static Date now(){
         return new Date();
     }
 
     /**
-     * @param date
-     * @return CheckerDate
+     * Checks if the date is before the specified date.
+     *
+     * @param date the date to compare with
+     * @return this CheckerDate instance for chaining
      */
     @Override
     public CheckerDate isBefore(Date date) {
@@ -57,8 +74,10 @@ public class CheckerDate extends AbstractChecker<Date, CheckerDate> implements I
     }
 
     /**
-     * @param date
-     * @return CheckerDate
+     * Checks if the date is before or equal to the specified date.
+     *
+     * @param date the date to compare with
+     * @return this CheckerDate instance for chaining
      */
     @Override
     public CheckerDate isBeforeOrEqual(Date date) {
@@ -66,8 +85,10 @@ public class CheckerDate extends AbstractChecker<Date, CheckerDate> implements I
     }
 
     /**
-     * @param date
-     * @return CheckerDate
+     * Checks if the date is after the specified date.
+     *
+     * @param date the date to compare with
+     * @return this CheckerDate instance for chaining
      */
     @Override
     public CheckerDate isAfter(Date date) {
@@ -75,8 +96,10 @@ public class CheckerDate extends AbstractChecker<Date, CheckerDate> implements I
     }
 
     /**
-     * @param date
-     * @return CheckerDate
+     * Checks if the date is after or equal to the specified date.
+     *
+     * @param date the date to compare with
+     * @return this CheckerDate instance for chaining
      */
     @Override
     public CheckerDate isAfterOrEqual(Date date) {
@@ -84,9 +107,11 @@ public class CheckerDate extends AbstractChecker<Date, CheckerDate> implements I
     }
 
     /**
-     * @param date_1
-     * @param date_2
-     * @return CheckerDate
+     * Checks if the date is within the specified range (exclusive).
+     *
+     * @param date_1 the start date (exclusive)
+     * @param date_2 the end date (exclusive)
+     * @return this CheckerDate instance for chaining
      */
     @Override
     public CheckerDate inRange(Date date_1, Date date_2) {
@@ -94,7 +119,9 @@ public class CheckerDate extends AbstractChecker<Date, CheckerDate> implements I
     }
 
     /**
-     * @return CheckerDate
+     * Checks if the date is in the past (before the current date and time).
+     *
+     * @return this CheckerDate instance for chaining
      */
     @Override
     public CheckerDate isPast() {
@@ -102,7 +129,9 @@ public class CheckerDate extends AbstractChecker<Date, CheckerDate> implements I
     }
 
     /**
-     * @return CheckerDate
+     * Checks if the date is in the future (after the current date and time).
+     *
+     * @return this CheckerDate instance for chaining
      */
     @Override
     public CheckerDate isFuture() {

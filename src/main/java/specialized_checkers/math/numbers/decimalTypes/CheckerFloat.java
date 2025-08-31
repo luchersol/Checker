@@ -5,6 +5,12 @@ import static util.Message.*;
 import specialized_checkers.math.numbers.InterfaceCheckerNumber;
 import util.AbstractChecker;
 
+/**
+ * Checker for {@link Float} instances, providing fluent validation methods for single-precision floating-point numbers.
+ * <p>
+ * This class allows you to validate and assert properties of {@code Float} objects in a fluent and readable way.
+ * </p>
+ */
 public class CheckerFloat extends AbstractChecker<Float, CheckerFloat> implements InterfaceCheckerNumber<CheckerFloat>{
 
     private static final String INIT_NUMBERS = "numbers";
@@ -16,41 +22,51 @@ public class CheckerFloat extends AbstractChecker<Float, CheckerFloat> implement
     }
 
     /**
-     * @param number
-     * @param name
-     * @return CheckerFloat
+     * Creates a new {@code CheckerFloat} for the given {@link Float} instance with a custom name.
+     *
+     * @param number the {@code Float} instance to be checked
+     * @param name   the name to identify this checker instance (useful for error messages)
+     * @return a new {@code CheckerFloat} for the provided {@code Float}
      */
     public static CheckerFloat check(Float number, String name) {
         return new CheckerFloat(number, name);
     }
 
     /**
-     * @param number
-     * @param name
-     * @return CheckerFloat
+     * Creates a new {@code CheckerFloat} for the given {@link Number} instance with a custom name.
+     *
+     * @param number the {@code Number} instance to be checked (converted to float)
+     * @param name   the name to identify this checker instance (useful for error messages)
+     * @return a new {@code CheckerFloat} for the provided {@code Number}
      */
     public static CheckerFloat check(Number number, String name) {
         return new CheckerFloat(number.floatValue(), name);
     }
 
     /**
-     * @param number
-     * @return CheckerFloat
+     * Creates a new {@code CheckerFloat} for the given {@link Float} instance with a default name.
+     *
+     * @param number the {@code Float} instance to be checked
+     * @return a new {@code CheckerFloat} for the provided {@code Float}
      */
     public static CheckerFloat check(Float number) {
         return check(number, DEFAULT_NAME);
     }
 
     /**
-     * @param number
-     * @return CheckerFloat
+     * Creates a new {@code CheckerFloat} for the given {@link Number} instance with a default name.
+     *
+     * @param number the {@code Number} instance to be checked (converted to float)
+     * @return a new {@code CheckerFloat} for the provided {@code Number}
      */
     public static CheckerFloat check(Number number) {
         return check(number.floatValue());
     }
 
     /**
-     * @return CheckerFloat
+     * Returns this checker instance (for fluent API usage).
+     *
+     * @return this {@code CheckerFloat} instance
      */
     @Override
     protected CheckerFloat self() {
@@ -58,21 +74,27 @@ public class CheckerFloat extends AbstractChecker<Float, CheckerFloat> implement
     }
 
     /**
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is NaN (not a number).
+     *
+     * @return this {@code CheckerFloat} instance for further validation
      */
     public CheckerFloat isNaN(){
         return is(n_float -> n_float.isNaN(), sendMessage(INIT_DECIMAL_TYPES, "is_nan", DEFAULT_NAME));
     }
 
     /**
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is infinite.
+     *
+     * @return this {@code CheckerFloat} instance for further validation
      */
     public CheckerFloat isInfinite(){
         return is(n_float -> n_float.isInfinite(), sendMessage(INIT_DECIMAL_TYPES, "is_infinite", DEFAULT_NAME));
     }
 
     /**
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is positive (greater than zero).
+     *
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isPositive() {
@@ -80,7 +102,9 @@ public class CheckerFloat extends AbstractChecker<Float, CheckerFloat> implement
     }
 
     /**
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is positive or zero (greater than or equal to zero).
+     *
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isPositiveOrZero() {
@@ -88,7 +112,9 @@ public class CheckerFloat extends AbstractChecker<Float, CheckerFloat> implement
     }
 
     /**
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is negative (less than zero).
+     *
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isNegative() {
@@ -96,7 +122,9 @@ public class CheckerFloat extends AbstractChecker<Float, CheckerFloat> implement
     }
 
     /**
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is negative or zero (less than or equal to zero).
+     *
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isNegativeOrZero() {
@@ -104,7 +132,9 @@ public class CheckerFloat extends AbstractChecker<Float, CheckerFloat> implement
     }
 
     /**
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is zero.
+     *
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isZero() {
@@ -112,8 +142,10 @@ public class CheckerFloat extends AbstractChecker<Float, CheckerFloat> implement
     }
 
     /**
-     * @param number
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is greater than the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isGreaterThan(Byte number) {
@@ -121,8 +153,10 @@ public class CheckerFloat extends AbstractChecker<Float, CheckerFloat> implement
     }
 
     /**
-     * @param number
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is greater than or equal to the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isGreaterThan(Short number) {
@@ -130,8 +164,10 @@ public class CheckerFloat extends AbstractChecker<Float, CheckerFloat> implement
     }
 
     /**
-     * @param number
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is less than the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isGreaterThan(Integer number) {
@@ -139,8 +175,10 @@ public class CheckerFloat extends AbstractChecker<Float, CheckerFloat> implement
     }
 
     /**
-     * @param number
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is less than or equal to the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isGreaterThan(Long number) {

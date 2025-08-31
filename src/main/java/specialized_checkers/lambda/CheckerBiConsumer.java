@@ -24,24 +24,34 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
     }
 
     /**
-     * @param biconsumer
-     * @param name
-     * @return CheckerBiConsumer<T, U>
+     * Creates a CheckerBiConsumer for the given BiConsumer and assigns a custom name.
+     *
+     * @param <T> the first input type of {@code BiConsumer}
+     * @param <U> the second input type of {@code BiConsumer}
+     * @param biconsumer the BiConsumer to check
+     * @param name the name to assign to this checker
+     * @return a CheckerBiConsumer instance for the given BiConsumer
      */
     public static <T,U> CheckerBiConsumer<T, U> check(BiConsumer<T, U> biconsumer, String name) {
         return new CheckerBiConsumer<>(biconsumer, name);
     }
 
     /**
-     * @param biconsumer
-     * @return CheckerBiConsumer<T, U>
+     * Creates a CheckerBiConsumer for the given BiConsumer with a default name.
+     *
+     * @param <T> the first input type of {@code BiConsumer}
+     * @param <U> the second input type of {@code BiConsumer}
+     * @param biconsumer the BiConsumer to check
+     * @return a CheckerBiConsumer instance for the given BiConsumer
      */
     public static <T,U> CheckerBiConsumer<T, U> check(BiConsumer<T, U> biconsumer) {
         return check(biconsumer, DEFAULT_NAME);
     }
 
     /**
-     * @return CheckerBiConsumer<T, U>
+     * Returns this instance (for fluent API).
+     *
+     * @return this CheckerBiConsumer instance
      */
     @Override
     protected CheckerBiConsumer<T, U> self() {
@@ -50,7 +60,9 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
 
 
     /**
-     * @return CheckerBiConsumer<T, U>
+     * Activates deep cloning of inputs before passing them to the BiConsumer.
+     *
+     * @return this CheckerBiConsumer instance
      */
     public CheckerBiConsumer<T, U> activateDeepClone() {
         this.deepClone = true;
@@ -58,7 +70,9 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
     }
 
     /**
-     * @return CheckerBiConsumer<T, U>
+     * Deactivates deep cloning of inputs before passing them to the BiConsumer.
+     *
+     * @return this CheckerBiConsumer instance
      */
     public CheckerBiConsumer<T, U> deactivateDeepClone() {
         this.deepClone = false;
@@ -66,16 +80,20 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
     }
 
     /**
-     * @param input
-     * @return T
+     * Returns the first input, deep cloned if deepClone is enabled.
+     *
+     * @param input the first input value
+     * @return the (possibly cloned) first input
      */
     private T getInput1(T input) {
         return this.deepClone ? Cloner.deepClone(input) : input;
     }
 
     /**
-     * @param input
-     * @return T
+     * Returns the second input, deep cloned if deepClone is enabled.
+     *
+     * @param input the second input value
+     * @return the (possibly cloned) second input
      */
     private U getInput2(U input) {
         return this.deepClone ? Cloner.deepClone(input) : input;
@@ -83,8 +101,11 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
 
 
     /**
-     * @param input
-     * @return CheckerBiConsumer<T, U>
+     * Checks that the BiConsumer can be applied to the given inputs without throwing an exception.
+     *
+     * @param input1 the first input value
+     * @param input2 the second input value
+     * @return this CheckerBiConsumer instance
      */
     public CheckerBiConsumer<T, U> applyWithoutException(T input1, U input2) {
         return is(c -> {
@@ -100,8 +121,10 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
     }
 
     /**
-     * @param input
-     * @return CheckerBiConsumer<T, U>
+     * Checks that the BiConsumer can be applied to all entries in the collection without throwing an exception.
+     *
+     * @param input the collection of key-value entries to test
+     * @return this CheckerBiConsumer instance
      */
     public CheckerBiConsumer<T, U> applyWithoutException(Collection<? extends Entry<T, U>> input) {
         return is(c -> input.stream().allMatch(e -> {
@@ -118,11 +141,13 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
     }
 
     /**
-     * @param input1
-     * @param input2
-     * @param condition1
-     * @param condition2
-     * @return T
+     * Checks that the BiConsumer modifies the inputs as expected, according to the given predicates.
+     *
+     * @param input1 the first input value
+     * @param input2 the second input value
+     * @param condition1 the predicate to test the first input after consumption
+     * @param condition2 the predicate to test the second input after consumption
+     * @return this CheckerBiConsumer instance
      */
     public CheckerBiConsumer<T, U> modifiesInput(T input1, U input2, Predicate<T> condition1, Predicate<U> condition2) {
         return is(c -> {
@@ -138,12 +163,13 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
     }
 
         /**
-     * @param input1
-     * @param input2
-     * @param condition1
-     * @param condition2
-     * @return T
-     */
+         * Checks that the BiConsumer modifies the inputs as expected, according to the given bi-predicate.
+         *
+         * @param input1 the first input value
+         * @param input2 the second input value
+         * @param condition the bi-predicate to test both inputs after consumption
+         * @return this CheckerBiConsumer instance
+         */
     public CheckerBiConsumer<T, U> modifiesInput(T input1, U input2, BiPredicate<T, U> condition) {
         return is(c -> {
             try {
@@ -158,10 +184,12 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
     }
 
     /**
-     * @param input
-     * @param condition1
-     * @param condition2
-     * @return T
+     * Checks that the BiConsumer modifies all entries in the collection as expected, according to the given predicates.
+     *
+     * @param input the collection of key-value entries to test
+     * @param condition1 the predicate to test the first input after consumption
+     * @param condition2 the predicate to test the second input after consumption
+     * @return this CheckerBiConsumer instance
      */
     public CheckerBiConsumer<T, U> modifiesInput(Collection<? extends Entry<T, U>> input, Predicate<T> condition1, Predicate<U> condition2) {
         return is(c -> input.stream().allMatch(e -> {
@@ -178,10 +206,11 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
     }
 
     /**
-     * @param input
-     * @param condition1
-     * @param condition2
-     * @return T
+     * Checks that the BiConsumer modifies all entries in the collection as expected, according to the given bi-predicate.
+     *
+     * @param input the collection of key-value entries to test
+     * @param condition the bi-predicate to test both inputs after consumption
+     * @return this CheckerBiConsumer instance
      */
     public CheckerBiConsumer<T, U> modifiesInput(Collection<? extends Entry<T, U>> input, BiPredicate<T, U> condition) {
         return is(c -> input.stream().allMatch(e -> {
@@ -198,8 +227,11 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
     }
 
     /**
-     * @param input
-     * @return T
+     * Checks that the BiConsumer does not modify the given inputs.
+     *
+     * @param input1 the first input value
+     * @param input2 the second input value
+     * @return this CheckerBiConsumer instance
      */
     public CheckerBiConsumer<T, U> doesNothing(T input1, U input2) {
         return is(c -> {
@@ -217,8 +249,10 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
     }
 
     /**
-     * @param input
-     * @return T
+     * Checks that the BiConsumer does not modify any of the entries in the collection.
+     *
+     * @param input the collection of key-value entries to test
+     * @return this CheckerBiConsumer instance
      */
     public CheckerBiConsumer<T, U> doesNothing(Collection<? extends Entry<T,U>> input) {
         return is(c -> input.stream().allMatch(e -> {

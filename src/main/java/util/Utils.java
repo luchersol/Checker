@@ -8,10 +8,27 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * Utils provides utility methods for deep equality checks and other helper functions.
+ */
 public class Utils {
 
-    public static boolean equalsContent(Object a, Object b) {
 
+    /**
+     * Checks deep equality between two objects, supporting arrays, collections, maps, atomic types, and CharSequences.
+     * <p>
+     * - For arrays, performs a deep equality check.
+     * - For collections, checks size and recursively compares elements.
+     * - For maps, checks size and recursively compares values for each key.
+     * - For CharSequences, compares content.
+     * - For AtomicInteger/AtomicLong, compares values.
+     * - Falls back to {@link Objects#equals(Object, Object)} for other types.
+     *
+     * @param a the first object to compare
+     * @param b the second object to compare
+     * @return {@code true} if the objects are deeply equal, {@code false} otherwise
+     */
+    public static boolean equalsContent(Object a, Object b) {
         if (a == b) return true;
         if (a == null || b == null) return false;
 

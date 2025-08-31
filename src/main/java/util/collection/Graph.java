@@ -12,71 +12,164 @@ import java.util.stream.Collectors;
 import util.Utils;
 
 
+/**
+ * Graph is a generic class representing a graph data structure with nodes and weighted edges.
+ * <p>
+ * It supports both directed and undirected graphs, and provides methods for common graph operations such as
+ * adding nodes and edges, checking connectivity, cycles, paths, and more.
+ *
+ * @param <N> the type of nodes in the graph
+ * @param <E> the type of edge weights, which must extend {@link Number}
+ */
 public class Graph<N,E extends Number> {
     private final Map<N, Set<Edge<N,E>>> adjacencyMap = new HashMap<>();
     private final boolean directed;
 
+    /**
+     * Edge represents a connection between two nodes in the graph, possibly with a weight and additional properties.
+     *
+     * @param <N> the type of nodes
+     * @param <E> the type of edge weight, must extend {@link Number}
+     */
     public static class Edge<N,E extends Number> {
         N from;
         N to;
         E weight;
         Map<String, ?> properties;
 
-        public Edge(N from, N to, E weight, Map<String, ?> properties){
+    /**
+     * Constructs an edge with specified nodes, weight, and properties.
+     *
+     * @param from       the source node
+     * @param to         the destination node
+     * @param weight     the weight of the edge
+     * @param properties additional properties for the edge
+     */
+    public Edge(N from, N to, E weight, Map<String, ?> properties){
             this.from = from;
             this.to = to;
             this.weight = weight;
             this.properties = properties;
         }
 
-        public Edge(N from, N to, Map<String, ?> properties){
+    /**
+     * Constructs an edge with specified nodes and properties, no weight.
+     *
+     * @param from       the source node
+     * @param to         the destination node
+     * @param properties additional properties for the edge
+     */
+    public Edge(N from, N to, Map<String, ?> properties){
             this(from, to, null, properties);
         }
 
-        public Edge(N from, N to, E weight){
+    /**
+     * Constructs an edge with specified nodes and weight, no properties.
+     *
+     * @param from   the source node
+     * @param to     the destination node
+     * @param weight the weight of the edge
+     */
+    public Edge(N from, N to, E weight){
             this(from, to, weight, new HashMap<>());
         }
 
-        public Edge(N from, N to){
+    /**
+     * Constructs an edge with specified nodes, no weight or properties.
+     *
+     * @param from the source node
+     * @param to   the destination node
+     */
+    public Edge(N from, N to){
             this(from, to, null, new HashMap<>());
         }
 
-        public N getFrom(){
+    /**
+     * Returns the source node of the edge.
+     *
+     * @return the source node
+     */
+    public N getFrom(){
             return this.from;
         }
 
-        public N getTo(){
+    /**
+     * Returns the destination node of the edge.
+     *
+     * @return the destination node
+     */
+    public N getTo(){
             return this.to;
         }
 
-        public double getWeight(){
+    /**
+     * Returns the weight of the edge as a double.
+     *
+     * @return the weight of the edge
+     */
+    public double getWeight(){
             return this.weight.doubleValue();
         }
 
-        public <T> T getProperty(String property, Class<T> clazz) {
+    /**
+     * Returns the value of a property for this edge, cast to the specified type.
+     *
+     * @param property the property name
+     * @param clazz    the class of the property value
+     * @param <T>      the type of the property value
+     * @return the property value cast to the specified type
+     */
+    public <T> T getProperty(String property, Class<T> clazz) {
             return clazz.cast(this.properties.get(property));
         }
     }
 
+    /**
+     * Constructs a graph with the specified nodes, edges, and directionality.
+     *
+     * @param nodes    the collection of nodes
+     * @param edges    the collection of edges
+     * @param directed true if the graph is directed, false if undirected
+     */
     public Graph(Collection<N> nodes, Collection<Edge<N,E>> edges, boolean directed) {
         nodes.forEach(this::addNode);
         this.addEdges(edges);
         this.directed = directed;
     }
 
+    /**
+     * Constructs an undirected graph with the specified nodes and edges.
+     *
+     * @param nodes the collection of nodes
+     * @param edges the collection of edges
+     */
     public Graph(Collection<N> nodes, Collection<Edge<N,E>> edges) {
         this(nodes, edges, false);
     }
 
+    /**
+     * Constructs a graph with the specified edges and directionality.
+     *
+     * @param edges    the collection of edges
+     * @param directed true if the graph is directed, false if undirected
+     */
     public Graph(Collection<Edge<N,E>> edges, boolean directed) {
         this.directed = directed;
         this.addEdges(edges);
     }
 
+    /**
+     * Constructs an undirected graph with the specified edges.
+     *
+     * @param edges the collection of edges
+     */
     public Graph(Collection<Edge<N,E>> edges) {
         this(edges, false);
     }
 
+    /**
+     * Constructs an empty undirected graph.
+     */
     public Graph() {
         this(Collections.emptyList(), false);
     }

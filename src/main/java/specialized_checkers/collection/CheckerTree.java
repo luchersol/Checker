@@ -21,18 +21,25 @@ public class CheckerTree<T> extends AbstractChecker<Tree<T>, CheckerTree<T>> {
     // STATIC CONSTRUCTOR WITH NAME
 
     /**
-     * @param tree
-     * @param name
-     * @return CheckerTree<T>
+     * Creates a CheckerTree for the given tree and assigns a custom name.
+     *
+     * @param <T> the {@code Tree}'s element type
+     * @param tree the tree to check
+     * @param name the name to assign to this checker
+     * @return a CheckerTree instance for the given tree
      */
     public static <T> CheckerTree<T> check(Tree<T> tree, String name) {
         return new CheckerTree<>(tree, name);
     }
 
     /**
-     * @param childrenMap
-     * @param name
-     * @return CheckerTree<T>
+     * Creates a CheckerTree from a root value and a map of children, and assigns a custom name.
+     *
+     * @param <T> the {@code Tree}'s element type
+     * @param rootValue the value of the root node
+     * @param childrenMap a map where each key is a node and the value is a list of its children
+     * @param name the name to assign to this checker
+     * @return a CheckerTree instance for the constructed tree
      */
     public static <T> CheckerTree<T> check(T rootValue, Map<T, List<T>> childrenMap, String name) {
         Tree<T> tree = new Tree<T>(rootValue, childrenMap);
@@ -40,9 +47,12 @@ public class CheckerTree<T> extends AbstractChecker<Tree<T>, CheckerTree<T>> {
     }
 
     /**
-     * @param rootValue
-     * @param name
-     * @return CheckerTree<T>
+     * Creates a CheckerTree from a root value and assigns a custom name.
+     *
+     * @param <T> the {@code Tree}'s element type
+     * @param rootValue the value of the root node
+     * @param name the name to assign to this checker
+     * @return a CheckerTree instance for the constructed tree
      */
     public static <T> CheckerTree<T> check(T rootValue, String name) {
         Tree<T> tree = new Tree<T>(rootValue);
@@ -52,16 +62,23 @@ public class CheckerTree<T> extends AbstractChecker<Tree<T>, CheckerTree<T>> {
     // STATIC CONSTRUCTOR WITHOUT NAME
 
     /**
-     * @param tree
-     * @return CheckerTree<T>
+     * Creates a CheckerTree for the given tree with a default name.
+     *
+     * @param <T>  the {@code Tree}'s element type
+     * @param tree the tree to check
+     * @return a CheckerTree instance for the given tree
      */
     public static <T> CheckerTree<T> check(Tree<T> tree) {
         return check(tree, DEFAULT_NAME);
     }
 
     /**
-     * @param childrenMap
-     * @return CheckerTree<T>
+     * Creates a CheckerTree from a root value and a map of children, with a default name.
+     *
+     * @param <T>  the {@code Tree}'s element type
+     * @param rootValue the value of the root node
+     * @param childrenMap a map where each key is a node and the value is a list of its children
+     * @return a CheckerTree instance for the constructed tree
      */
     public static <T> CheckerTree<T> check(T rootValue, Map<T, List<T>> childrenMap) {
         Tree<T> tree = new Tree<T>(rootValue, childrenMap);
@@ -69,8 +86,11 @@ public class CheckerTree<T> extends AbstractChecker<Tree<T>, CheckerTree<T>> {
     }
 
     /**
-     * @param rootValue
-     * @return CheckerTree<T>
+     * Creates a CheckerTree from a root value with a default name.
+     *
+     * @param <T>  the {@code Tree}'s element type
+     * @param rootValue the value of the root node
+     * @return a CheckerTree instance for the constructed tree
      */
     public static <T> CheckerTree<T> check(T rootValue) {
         Tree<T> tree = new Tree<T>(rootValue);
@@ -78,7 +98,9 @@ public class CheckerTree<T> extends AbstractChecker<Tree<T>, CheckerTree<T>> {
     }
 
     /**
-     * @return CheckerTree<T>
+     * Returns this instance (for fluent API).
+     *
+     * @return this CheckerTree instance
      */
     @Override
     protected CheckerTree<T> self() {
@@ -86,44 +108,56 @@ public class CheckerTree<T> extends AbstractChecker<Tree<T>, CheckerTree<T>> {
     }
 
     /**
-     * @return CheckerTree<T>
+     * Checks if the tree is empty.
+     *
+     * @return this CheckerTree instance
      */
     public CheckerTree<T> isEmpty() {
         return is(tree -> tree.isEmpty(), sendMessage(INIT_TREE, "is_empty"));
     }
 
     /**
-     * @return CheckerTree<T>
+     * Checks if the tree is a binary tree (each node has at most two children).
+     *
+     * @return this CheckerTree instance
      */
     public CheckerTree<T> isBinaryTree() {
         return is(tree -> tree.isBinaryTree(), sendMessage(INIT_TREE, "is_binary_tree"));
     }
 
     /**
-     * @return CheckerTree<T>
+     * Checks if the tree is symmetric (mirror image around its center).
+     *
+     * @return this CheckerTree instance
      */
     public CheckerTree<T> isSymmetric() {
         return is(tree -> tree.isSymmetric(), sendMessage(INIT_TREE, "is_symmetric"));
     }
 
     /**
-     * @return CheckerTree<T>
+     * Checks if the tree is full (every node has 0 or 2 children).
+     *
+     * @return this CheckerTree instance
      */
     public CheckerTree<T> isFull() {
         return is(tree -> tree.isFull(), sendMessage(INIT_TREE, "is_full"));
     }
 
     /**
-     * @param min
-     * @return CheckerTree<T>
+     * Checks if the tree's depth is at least the specified minimum.
+     *
+     * @param min the minimum depth
+     * @return this CheckerTree instance
      */
     public CheckerTree<T> minDepth(int min) {
         return is(tree -> min <= tree.getDepth(), sendMessage(INIT_TREE, "min_depth", this.object.getDepth(), min));
     }
 
     /**
-     * @param max
-     * @return CheckerTree<T>
+     * Checks if the tree's depth is at most the specified maximum.
+     *
+     * @param max the maximum depth
+     * @return this CheckerTree instance
      */
     public CheckerTree<T> maxDepth(int max) {
         return is(tree -> tree.getDepth() <= max,
@@ -131,9 +165,11 @@ public class CheckerTree<T> extends AbstractChecker<Tree<T>, CheckerTree<T>> {
     }
 
     /**
-     * @param min
-     * @param max
-     * @return CheckerTree<T>
+     * Checks if the tree's depth is within the specified range (inclusive).
+     *
+     * @param min the minimum depth
+     * @param max the maximum depth
+     * @return this CheckerTree instance
      */
     public CheckerTree<T> inRangeDepth(int min, int max) {
         return is(tree -> min <= tree.getDepth() && tree.getDepth() <= max,
@@ -141,8 +177,10 @@ public class CheckerTree<T> extends AbstractChecker<Tree<T>, CheckerTree<T>> {
     }
 
     /**
-     * @param min
-     * @return CheckerTree<T>
+     * Checks if the number of leaves in the tree is at least the specified minimum.
+     *
+     * @param min the minimum number of leaves
+     * @return this CheckerTree instance
      */
     public CheckerTree<T> minLeaves(int min) {
         return is(tree -> min <= tree.countLeaves(),
@@ -150,8 +188,10 @@ public class CheckerTree<T> extends AbstractChecker<Tree<T>, CheckerTree<T>> {
     }
 
     /**
-     * @param max
-     * @return CheckerTree<T>
+     * Checks if the number of leaves in the tree is at most the specified maximum.
+     *
+     * @param max the maximum number of leaves
+     * @return this CheckerTree instance
      */
     public CheckerTree<T> maxLeaves(int max) {
         return is(tree -> tree.countLeaves() <= max,
@@ -159,9 +199,11 @@ public class CheckerTree<T> extends AbstractChecker<Tree<T>, CheckerTree<T>> {
     }
 
     /**
-     * @param min
-     * @param max
-     * @return CheckerTree<T>
+     * Checks if the number of leaves in the tree is within the specified range (inclusive).
+     *
+     * @param min the minimum number of leaves
+     * @param max the maximum number of leaves
+     * @return this CheckerTree instance
      */
     public CheckerTree<T> inRangeLeaves(int min, int max) {
         return is(tree -> min <= tree.countLeaves() && tree.countLeaves() <= max,
@@ -169,8 +211,10 @@ public class CheckerTree<T> extends AbstractChecker<Tree<T>, CheckerTree<T>> {
     }
 
     /**
-     * @param min
-     * @return CheckerTree<T>
+     * Checks if the tree's diameter is at least the specified minimum.
+     *
+     * @param min the minimum diameter
+     * @return this CheckerTree instance
      */
     public CheckerTree<T> minDiamenter(int min) {
         return is(tree -> min <= tree.diameter(),
@@ -178,8 +222,10 @@ public class CheckerTree<T> extends AbstractChecker<Tree<T>, CheckerTree<T>> {
     }
 
     /**
-     * @param max
-     * @return CheckerTree<T>
+     * Checks if the tree's diameter is at most the specified maximum.
+     *
+     * @param max the maximum diameter
+     * @return this CheckerTree instance
      */
     public CheckerTree<T> maxDiamenter(int max) {
         return is(tree -> tree.diameter() <= max,
@@ -187,9 +233,11 @@ public class CheckerTree<T> extends AbstractChecker<Tree<T>, CheckerTree<T>> {
     }
 
     /**
-     * @param min
-     * @param max
-     * @return CheckerTree<T>
+     * Checks if the tree's diameter is within the specified range (inclusive).
+     *
+     * @param min the minimum diameter
+     * @param max the maximum diameter
+     * @return this CheckerTree instance
      */
     public CheckerTree<T> inRangeDiamenter(int min, int max) {
         return is(tree -> min <= tree.diameter() && tree.diameter() <= max,

@@ -4,42 +4,75 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+/**
+ * Polygon2D represents a polygon in 2D space defined by a list of points (vertices).
+ * Provides methods for geometric properties and checks such as area, perimeter, convexity, and validity.
+ */
 public class Polygon2D {
 
+    /**
+     * The list of points (vertices) that define the polygon.
+     */
     private List<Point2D> points;
 
+
+    /**
+     * Constructs a Polygon2D from a list of Point2D objects.
+     *
+     * @param points the list of points (vertices) defining the polygon
+     */
     public Polygon2D(List<Point2D> points) {
         this.points = points;
     }
 
+
+    /**
+     * Constructs a Polygon2D from a 2D array of coordinates.
+     * Each sub-array should have two elements: [x, y].
+     *
+     * @param points a 2D array where each sub-array is a point [x, y]
+     */
     public Polygon2D(double[][] points) {
         this.points = Arrays.stream(points).map(Point2D::new).collect(Collectors.toList());
     }
 
+
     /**
-     * @return List<Point2D>
+     * Returns the list of points (vertices) of the polygon.
+     *
+     * @return the list of points
      */
     public List<Point2D> getPoints() {
         return this.points;
     }
 
+
     /**
-     * @return int
+     * Returns the number of vertices in the polygon (excluding the closing point if present).
+     *
+     * @return the number of vertices
      */
     public int countVertex() {
         return this.points.size() - 1;
     }
 
+
     /**
-     * @return boolean
+     * Checks if the polygon is valid (has at least 3 non-null points).
+     *
+     * @return true if the polygon is valid, false otherwise
      */
     public boolean isValid() {
         if (points == null || points.size() < 3) return false;
         return points.stream().allMatch(p -> p != null);
     }
 
+
     /**
-     * @return boolean
+     * Checks if the polygon is closed (the first and last points are equal).
+     *
+     * @return true if the polygon is closed, false otherwise
      */
     public boolean isClosed() {
         if (!isValid()) return false;
@@ -48,8 +81,11 @@ public class Polygon2D {
         return first.equals(last);
     }
 
+
     /**
-     * @return boolean
+     * Checks if the polygon has any repeated points (excluding the closing point).
+     *
+     * @return true if there are repeated points, false otherwise
      */
     public boolean hasRepeatedPoints() {
         for (int i = 0; i < points.size(); i++) {
@@ -62,22 +98,28 @@ public class Polygon2D {
         return false;
     }
 
+
     /**
-     * @return double
+     * Calculates the perimeter of the polygon (sum of edge lengths).
+     *
+     * @return the perimeter of the polygon, or 0 if invalid
      */
     public double perimeter() {
         if (!isValid()) return 0;
         double sum = 0;
         for (int i = 0; i < points.size(); i++) {
             Point2D p1 = points.get(i);
-            Point2D p2 = points.get((i + 1) % points.size()); // conecta último con primero
+            Point2D p2 = points.get((i + 1) % points.size()); // connects last to first
             sum += p1.distance(p2);
         }
         return sum;
     }
 
+
     /**
-     * @return double
+     * Calculates the area of the polygon using the shoelace formula.
+     *
+     * @return the area of the polygon, or 0 if invalid
      */
     public double area() {
         if (!isValid()) return 0;
@@ -90,8 +132,11 @@ public class Polygon2D {
         return Math.abs(sum) / 2.0;
     }
 
+
     /**
-     * @return boolean
+     * Checks if the polygon is convex (all internal angles are less than 180 degrees).
+     *
+     * @return true if the polygon is convex, false otherwise
      */
     public boolean isConvex() {
         if (!isValid()) return false;

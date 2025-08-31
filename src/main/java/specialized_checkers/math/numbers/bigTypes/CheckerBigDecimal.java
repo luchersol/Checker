@@ -7,6 +7,13 @@ import java.math.BigDecimal;
 import specialized_checkers.math.numbers.InterfaceCheckerNumber;
 import util.AbstractChecker;
 
+
+/**
+ * Checker for {@link BigDecimal} instances, providing fluent validation methods for arbitrary-precision decimal numbers.
+ * <p>
+ * This class allows you to validate and assert properties of {@code BigDecimal} objects in a fluent and readable way.
+ * </p>
+ */
 public class CheckerBigDecimal extends AbstractChecker<BigDecimal, CheckerBigDecimal> implements InterfaceCheckerNumber<CheckerBigDecimal> {
 
     private static final String INIT_NUMBERS = "numbers";
@@ -17,24 +24,30 @@ public class CheckerBigDecimal extends AbstractChecker<BigDecimal, CheckerBigDec
     }
 
     /**
-     * @param number
-     * @param name
-     * @return CheckerBigDecimal
+     * Creates a new {@code CheckerBigDecimal} for the given {@link BigDecimal} instance with a custom name.
+     *
+     * @param number the {@code BigDecimal} instance to be checked
+     * @param name   the name to identify this checker instance (useful for error messages)
+     * @return a new {@code CheckerBigDecimal} for the provided {@code BigDecimal}
      */
     public static CheckerBigDecimal check(BigDecimal number, String name) {
         return new CheckerBigDecimal(number, name);
     }
 
     /**
-     * @param number
-     * @return CheckerBigDecimal
+     * Creates a new {@code CheckerBigDecimal} for the given {@link BigDecimal} instance with a default name.
+     *
+     * @param number the {@code BigDecimal} instance to be checked
+     * @return a new {@code CheckerBigDecimal} for the provided {@code BigDecimal}
      */
     public static CheckerBigDecimal check(BigDecimal number) {
         return check(number, DEFAULT_NAME);
     }
 
     /**
-     * @return CheckerBigDecimal
+     * Returns this checker instance (for fluent API usage).
+     *
+     * @return this {@code CheckerBigDecimal} instance
      */
     @Override
     protected CheckerBigDecimal self() {
@@ -42,7 +55,9 @@ public class CheckerBigDecimal extends AbstractChecker<BigDecimal, CheckerBigDec
     }
 
     /**
-     * @return CheckerBigDecimal
+     * Asserts that the {@code BigDecimal} is positive (greater than zero).
+     *
+     * @return this {@code CheckerBigDecimal} instance for further validation
      */
     @Override
     public CheckerBigDecimal isPositive() {
@@ -50,7 +65,9 @@ public class CheckerBigDecimal extends AbstractChecker<BigDecimal, CheckerBigDec
     }
 
     /**
-     * @return CheckerBigDecimal
+     * Asserts that the {@code BigDecimal} is positive or zero (greater than or equal to zero).
+     *
+     * @return this {@code CheckerBigDecimal} instance for further validation
      */
     @Override
     public CheckerBigDecimal isPositiveOrZero() {
@@ -58,7 +75,9 @@ public class CheckerBigDecimal extends AbstractChecker<BigDecimal, CheckerBigDec
     }
 
     /**
-     * @return CheckerBigDecimal
+     * Asserts that the {@code BigDecimal} is negative (less than zero).
+     *
+     * @return this {@code CheckerBigDecimal} instance for further validation
      */
     @Override
     public CheckerBigDecimal isNegative() {
@@ -66,7 +85,9 @@ public class CheckerBigDecimal extends AbstractChecker<BigDecimal, CheckerBigDec
     }
 
     /**
-     * @return CheckerBigDecimal
+     * Asserts that the {@code BigDecimal} is negative or zero (less than or equal to zero).
+     *
+     * @return this {@code CheckerBigDecimal} instance for further validation
      */
     @Override
     public CheckerBigDecimal isNegativeOrZero() {
@@ -74,7 +95,9 @@ public class CheckerBigDecimal extends AbstractChecker<BigDecimal, CheckerBigDec
     }
 
     /**
-     * @return CheckerBigDecimal
+     * Asserts that the {@code BigDecimal} is zero.
+     *
+     * @return this {@code CheckerBigDecimal} instance for further validation
      */
     @Override
     public CheckerBigDecimal isZero() {
@@ -82,8 +105,10 @@ public class CheckerBigDecimal extends AbstractChecker<BigDecimal, CheckerBigDec
     }
 
     /**
-     * @param number
-     * @return CheckerBigDecimal
+     * Asserts that the {@code BigDecimal} is greater than the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerBigDecimal} instance for further validation
      */
     @Override
     public CheckerBigDecimal isGreaterThan(Byte number) {
@@ -91,8 +116,10 @@ public class CheckerBigDecimal extends AbstractChecker<BigDecimal, CheckerBigDec
     }
 
     /**
-     * @param number
-     * @return CheckerBigDecimal
+     * Asserts that the {@code BigDecimal} is greater than or equal to the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerBigDecimal} instance for further validation
      */
     @Override
     public CheckerBigDecimal isGreaterThan(Short number) {
@@ -100,8 +127,10 @@ public class CheckerBigDecimal extends AbstractChecker<BigDecimal, CheckerBigDec
     }
 
     /**
-     * @param number
-     * @return CheckerBigDecimal
+     * Asserts that the {@code BigDecimal} is less than the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerBigDecimal} instance for further validation
      */
     @Override
     public CheckerBigDecimal isGreaterThan(Integer number) {
@@ -109,8 +138,10 @@ public class CheckerBigDecimal extends AbstractChecker<BigDecimal, CheckerBigDec
     }
 
     /**
-     * @param number
-     * @return CheckerBigDecimal
+     * Asserts that the {@code BigDecimal} is less than or equal to the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerBigDecimal} instance for further validation
      */
     @Override
     public CheckerBigDecimal isGreaterThan(Long number) {

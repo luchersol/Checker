@@ -5,6 +5,7 @@ import static util.Message.*;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.URI;
@@ -35,113 +36,196 @@ import specialized_checkers.math.numbers.integerTypes.CheckerInteger;
 import specialized_checkers.math.numbers.integerTypes.CheckerLong;
 import util.collection.Graph;
 
+
+/**
+ * Main entry point for object validation and type checking.
+ * <p>
+ * The Checker class provides a fluent API for validating and inspecting objects of various types.
+ * It supports type checks, collection checks, file and URI checks, number and matrix checks, and more.
+ * Specialized checkers are returned for specific types, enabling further type-specific validation.
+ * </p>
+ * <p>
+ * Example usage:
+ * <pre>
+ *     Checker.check(myList).isList(String.class).isNotEmpty();
+ *     Checker.check(myFile).isFile().exists();
+ * </pre>
+ * </p>
+ *
+ * Checker is the main class for validating and inspecting objects of any type.
+ * It extends AbstractChecker and provides methods to check for type, structure, and content,
+ * returning specialized checkers for further validation when appropriate.
+ */
 public class Checker extends AbstractChecker<Object, Checker> {
 
+
+    /**
+     * Message key for this checker type.
+     */
     private static final String INIT_CHECKER = "checker";
+
+    /**
+     * Default name for checked objects when none is provided.
+     */
     private static final String DEFAULT_NAME = "Object";
 
+
+    /**
+     * Constructs a Checker for the given object and name.
+     *
+     * @param object the object to check
+     * @param name   the name or label for the object (used in error messages)
+     */
     protected Checker(Object object, String name) {
         super(object, name);
     }
 
+
     /**
-     * @return Checker
+     * Returns this Checker instance (for fluent API).
+     *
+     * @return this Checker
      */
     @Override
     protected Checker self() {
         return this;
     }
 
+
     /**
-     * @param object
-     * @param name
-     * @return Checker
+     * Creates a Checker for the given object and name.
+     *
+     * @param object the object to check
+     * @param name   the name or label for the object
+     * @return a new Checker instance
      */
     public static Checker check(Object object, String name) {
         return new Checker(object, name);
     }
 
+
     /**
-     * @param object
-     * @return Checker
+     * Creates a Checker for the given object with a default name.
+     *
+     * @param object the object to check
+     * @return a new Checker instance
      */
     public static Checker check(Object object) {
         return new Checker(object, DEFAULT_NAME);
     }
 
+
     /**
-     * @param clazz
-     * @return Checker
+     * Checks if the object is an instance of the given class.
+     *
+     * @param clazz the class to check against
+     * @param <T>   the type of the class
+     * @return this Checker
      */
     public <T> Checker isInstance(Class<T> clazz) {
         return is(object -> clazz.isInstance(object), sendMessage(INIT_CHECKER, "is_instance", clazz.getSimpleName()));
     }
 
+
     /**
-     * @param obj
-     * @param clazz
-     * @return T
+     * Casts the object to the given class if possible, or returns null if not compatible.
+     *
+     * @param obj   the object to cast
+     * @param clazz the target class
+     * @param <T>   the type of the class
+     * @return the casted object or null
      */
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     private static <T> T transformOfNull(Object obj, Class<T> clazz) {
         return clazz.isInstance(obj) ? (T) obj : null;
     }
 
+
     /**
-     * @return Checker
+     * Checks if the object is a Collection.
+     *
+     * @return this Checker
      */
     public Checker isCollection() {
         isInstance(Collection.class);
         return this;
     }
 
+
     /**
-     * @param edges
-     * @param directed
-     * @return CheckerGraph<N, E>
+     * Creates a CheckerGraph for the given edges and directionality.
+     *
+     * @param edges    the collection of edges
+     * @param directed true if the graph is directed
+     * @param <N>      node type
+     * @param <E>      edge weight type (extends Number)
+     * @return a CheckerGraph instance
      */
     public <N,E extends Number> CheckerGraph<N,E> isGraph(Collection<Graph.Edge<N,E>> edges, boolean directed) {
         return CheckerGraph.check(edges, directed, name);
     }
 
+
     /**
-     * @param edges
-     * @return CheckerGraph<N, E>
+     * Creates a CheckerGraph for the given edges (undirected by default).
+     *
+     * @param edges the collection of edges
+     * @param <N>   node type
+     * @param <E>   edge weight type (extends Number)
+     * @return a CheckerGraph instance
      */
     public <N,E extends Number> CheckerGraph<N,E> isGraph(Collection<Graph.Edge<N,E>> edges) {
         return CheckerGraph.check(edges, name);
     }
 
+
     /**
-     * @param edges
-     * @return CheckerGraph<N, E>
+     * Creates a CheckerGraph for the given nodes and edges (undirected by default).
+     *
+     * @param nodes the collection of nodes
+     * @param edges the collection of edges
+     * @param <N>   node type
+     * @param <E>   edge weight type (extends Number)
+     * @return a CheckerGraph instance
      */
     public <N,E extends Number> CheckerGraph<N,E> isGraph(Collection<N> nodes, Collection<Graph.Edge<N,E>> edges) {
         return CheckerGraph.check(nodes, edges, name);
     }
 
+
     /**
-     * @param edges
-     * @param directed
-     * @return CheckerGraph<N, E>
+     * Creates a CheckerGraph for the given nodes, edges, and directionality.
+     *
+     * @param nodes    the collection of nodes
+     * @param edges    the collection of edges
+     * @param directed true if the graph is directed
+     * @param <N>      node type
+     * @param <E>      edge weight type (extends Number)
+     * @return a CheckerGraph instance
      */
     public <N,E extends Number> CheckerGraph<N,E> isGraph(Collection<N> nodes, Collection<Graph.Edge<N,E>> edges, boolean directed) {
         return CheckerGraph.check(nodes, edges, directed, name);
     }
 
     /**
-     * @return CheckerList<?>
+     * Checks if the object is a List and returns a CheckerList for further validation.
+     *
+     * @return a CheckerList instance
      */
     public CheckerList<?> isList() {
         isInstance(List.class);
         return CheckerList.check((List<?>) this.object, name);
     }
 
+
     /**
-     * @param clazz
-     * @return CheckerList<T>
+     * Checks if the object is a List whose elements are all instances of the given class.
+     *
+     * @param clazz the class of the list elements
+     * @param <T>   the element type
+     * @return a CheckerList instance
      */
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     public <T> CheckerList<T> isList(Class<T> clazz) {
         isInstance(List.class);
         is(object -> ((List<?>) this.object).stream().allMatch(elem -> clazz.isInstance(elem)),
@@ -150,8 +234,11 @@ public class Checker extends AbstractChecker<Object, Checker> {
     }
 
 
+
     /**
-     * @return CheckerMap<?, ?>
+     * Checks if the object is a Map and returns a CheckerMap for further validation.
+     *
+     * @return a CheckerMap instance
      */
     public CheckerMap<?, ?> isMap() {
         isInstance(Map.class);
@@ -159,11 +246,15 @@ public class Checker extends AbstractChecker<Object, Checker> {
     }
 
     /**
-     * @param clazzKey
-     * @param clazzValue
-     * @return CheckerMap<K, V>
+     * Checks if the object is a Map whose keys and values are instances of the given classes.
+     *
+     * @param clazzKey   the class of the map keys
+     * @param clazzValue the class of the map values
+     * @param <K>        key type
+     * @param <V>        value type
+     * @return a CheckerMap instance
      */
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     public <K, V> CheckerMap<K, V> isMap(Class<K> clazzKey, Class<V> clazzValue) {
         isInstance(Map.class);
         is(object -> ((Map<?, ?>) object).entrySet().stream()
@@ -172,17 +263,25 @@ public class Checker extends AbstractChecker<Object, Checker> {
         return CheckerMap.check((Map<K, V>) this.object, name);
     }
 
+
+
     /**
-     * @return CheckerSet<?>
+     * Checks if the object is a Set and returns a CheckerSet for further validation.
+     *
+     * @return a CheckerSet instance
      */
     public CheckerSet<?> isSet() {
         isInstance(Set.class);
         return CheckerSet.check((Set<?>) this.object, name);
     }
 
+
     /**
-     * @param clazz
-     * @return CheckerSet<T>
+     * Checks if the object is a Set whose elements are all instances of the given class.
+     *
+     * @param clazz the class of the set elements
+     * @param <T>   the element type
+     * @return a CheckerSet instance
      */
     @SuppressWarnings("unchecked")
     public <T> CheckerSet<T> isSet(Class<T> clazz) {
@@ -192,124 +291,176 @@ public class Checker extends AbstractChecker<Object, Checker> {
         return CheckerSet.check((Set<T>) this.object, name);
     }
 
+
+
     /**
-     * @param childrenMap
-     * @return CheckerTree<T>
+     * Creates a CheckerTree for the given root value and children map.
+     *
+     * @param rootValue   the root node value
+     * @param childrenMap the map of children for each node
+     * @param <T>         node type
+     * @return a CheckerTree instance
      */
     public <T> CheckerTree<T> isTree(T rootValue, Map<T, List<T>> childrenMap) {
         return CheckerTree.check(rootValue, childrenMap, name);
     }
 
+
     /**
-     * @param rootValue
-     * @return CheckerTree<T>
+     * Creates a CheckerTree for the given root value.
+     *
+     * @param rootValue the root node value
+     * @param <T>       node type
+     * @return a CheckerTree instance
      */
     public <T> CheckerTree<T> isTree(T rootValue) {
         return CheckerTree.check(rootValue, name);
     }
 
+
     /**
-     * @return CheckerFile
+     * Checks if the object is a File and returns a CheckerFile for further validation.
+     *
+     * @return a CheckerFile instance
      */
     public CheckerFile isFile() {
         isInstance(File.class);
         return CheckerFile.check(transformOfNull(this.object, File.class), name);
     }
 
+
     /**
-     * @return CheckerJson
-     * @throws IOException
+     * Checks if the object is a File and returns a CheckerJson for JSON file validation.
+     *
+     * @return a CheckerJson instance
+     * @throws IOException if file reading fails
      */
     public CheckerJson isJson() throws IOException {
         isInstance(File.class);
         return CheckerJson.check(transformOfNull(this.object, File.class), name);
     }
 
+
     /**
-     * @return CheckerURI
-     * @throws IOException
+     * Checks if the object is a URI and returns a CheckerURI for further validation.
+     *
+     * @return a CheckerURI instance
+     * @throws IOException if URI reading fails
      */
     public CheckerURI isURI() throws IOException {
         isInstance(URI.class);
         return CheckerURI.check(transformOfNull(this.object, URI.class), name);
     }
 
+
     /**
-     * @return Checker
+     * Checks if the object is a Number.
+     *
+     * @return this Checker
      */
     public Checker isNumber() {
         isInstance(Number.class);
         return this;
     }
 
+
     /**
-     * @return CheckerBigInteger
+     * Checks if the object is a BigInteger and returns a CheckerBigInteger for further validation.
+     *
+     * @return a CheckerBigInteger instance
      */
     public CheckerBigInteger isBigInteger() {
         isInstance(BigInteger.class);
         return CheckerBigInteger.check(transformOfNull(this.object, BigInteger.class), name);
     }
 
-        /**
-         * @return CheckerBigDecimal
-         */
-        public CheckerBigDecimal isBigDecimal() {
+
+    /**
+     * Checks if the object is a BigDecimal and returns a CheckerBigDecimal for further validation.
+     *
+     * @return a CheckerBigDecimal instance
+     */
+    public CheckerBigDecimal isBigDecimal() {
         isInstance(BigDecimal.class);
         return CheckerBigDecimal.check(transformOfNull(this.object, BigDecimal.class), name);
     }
 
+
     /**
-     * @return CheckerInteger
+     * Checks if the object is an Integer and returns a CheckerInteger for further validation.
+     *
+     * @return a CheckerInteger instance
      */
     public CheckerInteger isInteger() {
         isInstance(Integer.class);
         return CheckerInteger.check(transformOfNull(this.object, Integer.class), name);
     }
 
+
     /**
-     * @return CheckerLong
+     * Checks if the object is a Long and returns a CheckerLong for further validation.
+     *
+     * @return a CheckerLong instance
      */
     public CheckerLong isLong() {
         isInstance(Long.class);
         return CheckerLong.check(transformOfNull(this.object, Long.class), name);
     }
 
+
     /**
-     * @return CheckerFloat
+     * Checks if the object is a Float and returns a CheckerFloat for further validation.
+     *
+     * @return a CheckerFloat instance
      */
     public CheckerFloat isFloat() {
         isInstance(Float.class);
         return CheckerFloat.check(transformOfNull(this.object, Float.class), name);
     }
 
+
     /**
-     * @return CheckerDouble
+     * Checks if the object is a Double and returns a CheckerDouble for further validation.
+     *
+     * @return a CheckerDouble instance
      */
     public CheckerDouble isDouble() {
         isInstance(Double.class);
         return CheckerDouble.check(transformOfNull(this.object, Double.class), name);
     }
 
+
     /**
-     * @return CheckerArray<?>
+     * Checks if the object is an array and returns a CheckerArray for further validation.
+     *
+     * @return a CheckerArray instance
      */
     public CheckerArray<?> isArray() {
         is(object -> object.getClass().isArray(), sendMessage(INIT_CHECKER, "is_array"));
         return CheckerArray.check(((Collection<?>) this.object).toArray(), this.name);
     }
 
-    /**
-     * @param clazz
-     * @return CheckerArray<T>
-     */
-    @SuppressWarnings({ "unchecked" })
-    public <T> CheckerArray<T> isArray(Class<T> clazz) {
-        is(object -> object.getClass().isArray(), sendMessage(INIT_CHECKER, "is_array", clazz.getSimpleName()));
-        return CheckerArray.check((T[]) ((Collection<T>) this.object).toArray(), this.name);
-    }
 
     /**
-     * @return CheckerMatrix<?>
+     * Checks if the object is an array of the given class and returns a CheckerArray for further validation.
+     *
+     * @param clazz the class of the array elements
+     * @param <T>   the element type
+     * @return a CheckerArray instance
+     */
+    @SuppressWarnings("unchecked")
+    public <T> CheckerArray<T> isArray(Class<T> clazz) {
+        is(object -> object.getClass().isArray(), sendMessage(INIT_CHECKER, "is_array", clazz.getSimpleName()));
+        Collection<T> collection = (Collection<T>) this.object;
+        T[] array = collection.toArray(size -> (T[]) Array.newInstance(clazz, size));
+        return CheckerArray.check(array, this.name);
+    }
+
+
+    /**
+     * Checks if the object is a matrix (2D array) and returns a CheckerMatrix for further validation.
+     *
+     * @return a CheckerMatrix instance
      */
     public CheckerMatrix<?> isMatrix() {
         is(object ->
@@ -320,11 +471,15 @@ public class Checker extends AbstractChecker<Object, Checker> {
         return CheckerMatrix.check((Number[][]) this.object, this.name);
     }
 
+
     /**
-     * @param clazz
-     * @return CheckerMatrix<T>
+     * Checks if the object is a matrix (2D array) of the given class and returns a CheckerMatrix for further validation.
+     *
+     * @param clazz the class of the matrix elements
+     * @param <T>   the element type (extends Number)
+     * @return a CheckerMatrix instance
      */
-    @SuppressWarnings({ "unchecked" })
+    @SuppressWarnings("unchecked")
     public <T extends Number> CheckerMatrix<T> isMatrix(Class<T> clazz) {
         is(object ->
             object.getClass().isArray() && object.getClass().getComponentType().isArray(),
@@ -334,23 +489,31 @@ public class Checker extends AbstractChecker<Object, Checker> {
     }
 
     /**
-     * @return CheckerColor
+     * Checks if the object is a Color and returns a CheckerColor for further validation.
+     *
+     * @return a CheckerColor instance
      */
     public CheckerColor isColor() {
         isInstance(Color.class);
         return CheckerColor.check(transformOfNull(this.object, Color.class), this.name);
     }
 
+
     /**
-     * @return CheckerCurrency
+     * Checks if the object is a Currency and returns a CheckerCurrency for further validation.
+     *
+     * @return a CheckerCurrency instance
      */
     public CheckerCurrency isCurrency() {
         isInstance(Currency.class);
         return CheckerCurrency.check(transformOfNull(this.object, Currency.class), this.name);
     }
 
+
     /**
-     * @return CheckerString
+     * Checks if the object is a String and returns a CheckerString for further validation.
+     *
+     * @return a CheckerString instance
      */
     public CheckerString isString() {
         isInstance(String.class);

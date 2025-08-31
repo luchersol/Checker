@@ -7,6 +7,12 @@ import java.util.function.BiPredicate;
 import util.AbstractChecker;
 import util.Cloner;
 
+/**
+ * Checker for BiPredicate instances, providing fluent validation methods.
+ *
+ * @param <T> the type of the first input to the predicate
+ * @param <U> the type of the second input to the predicate
+ */
 public class CheckerBiPredicate<T, U> extends AbstractChecker<BiPredicate<T, U>, CheckerBiPredicate<T, U>> {
 
     private static final String INIT_BI_PREDICATE = "lambda.bipredicate";
@@ -19,24 +25,30 @@ public class CheckerBiPredicate<T, U> extends AbstractChecker<BiPredicate<T, U>,
     }
 
     /**
-     * @param bipredicate
-     * @param name
-     * @return CheckerBiPredicate<T, U>
+     * Creates a CheckerBiPredicate for the given BiPredicate and assigns a custom name.
+     *
+     * @param bipredicate the BiPredicate to check
+     * @param name the name to assign to this checker
+     * @return a CheckerBiPredicate instance for the given BiPredicate
      */
     public static <T,U> CheckerBiPredicate<T, U> check(BiPredicate<T, U> bipredicate, String name) {
         return new CheckerBiPredicate<>(bipredicate, name);
     }
 
     /**
-     * @param bipredicate
-     * @return CheckerBiPredicate<T, U>
+     * Creates a CheckerBiPredicate for the given BiPredicate with a default name.
+     *
+     * @param bipredicate the BiPredicate to check
+     * @return a CheckerBiPredicate instance for the given BiPredicate
      */
     public static <T,U> CheckerBiPredicate<T, U> check(BiPredicate<T, U> bipredicate) {
         return check(bipredicate, DEFAULT_NAME);
     }
 
     /**
-     * @return CheckerBiPredicate<T, U>
+     * Returns this instance (for fluent API).
+     *
+     * @return this CheckerBiPredicate instance
      */
     @Override
     protected CheckerBiPredicate<T, U> self() {
@@ -44,7 +56,9 @@ public class CheckerBiPredicate<T, U> extends AbstractChecker<BiPredicate<T, U>,
     }
 
     /**
-     * @return CheckerBiPredicate<T, U>
+     * Activates deep cloning of inputs before passing them to the BiPredicate.
+     *
+     * @return this CheckerBiPredicate instance
      */
     public CheckerBiPredicate<T, U> activateDeepClone() {
         this.deepClone = true;
@@ -52,7 +66,9 @@ public class CheckerBiPredicate<T, U> extends AbstractChecker<BiPredicate<T, U>,
     }
 
     /**
-     * @return CheckerBiPredicate<T, U>
+     * Deactivates deep cloning of inputs before passing them to the BiPredicate.
+     *
+     * @return this CheckerBiPredicate instance
      */
     public CheckerBiPredicate<T, U> deactivateDeepClone() {
         this.deepClone = false;
@@ -60,25 +76,31 @@ public class CheckerBiPredicate<T, U> extends AbstractChecker<BiPredicate<T, U>,
     }
 
     /**
-     * @param input
-     * @return T
+     * Returns the first input, deep cloned if deepClone is enabled.
+     *
+     * @param input the first input value
+     * @return the (possibly cloned) first input
      */
     private T getInput1(T input) {
         return this.deepClone ? Cloner.deepClone(input) : input;
     }
 
     /**
-     * @param input
-     * @return U
+     * Returns the second input, deep cloned if deepClone is enabled.
+     *
+     * @param input the second input value
+     * @return the (possibly cloned) second input
      */
     private U getInput2(U input) {
         return this.deepClone ? Cloner.deepClone(input) : input;
     }
 
     /**
-     * @param input1
-     * @param input2
-     * @return CheckerBiPredicate<T, U>
+     * Checks that the BiPredicate can be applied to the given inputs without throwing an exception.
+     *
+     * @param input1 the first input value
+     * @param input2 the second input value
+     * @return this CheckerBiPredicate instance
      */
     public CheckerBiPredicate<T, U> testWithoutException(T input1, U input2) {
         return is(p -> {
@@ -94,9 +116,11 @@ public class CheckerBiPredicate<T, U> extends AbstractChecker<BiPredicate<T, U>,
     }
 
     /**
-     * @param input1
-     * @param input2
-     * @return CheckerBiPredicate<T, U>
+     * Checks that the BiPredicate evaluates to true for the given inputs.
+     *
+     * @param input1 the first input value
+     * @param input2 the second input value
+     * @return this CheckerBiPredicate instance
      */
     public CheckerBiPredicate<T, U> evaluatesTrue(T input1, U input2) {
         return is(p -> {
@@ -109,9 +133,11 @@ public class CheckerBiPredicate<T, U> extends AbstractChecker<BiPredicate<T, U>,
     }
 
     /**
-     * @param input1
-     * @param input2
-     * @return CheckerBiPredicate<T, U>
+     * Checks that the BiPredicate evaluates to false for the given inputs.
+     *
+     * @param input1 the first input value
+     * @param input2 the second input value
+     * @return this CheckerBiPredicate instance
      */
     public CheckerBiPredicate<T, U> evaluatesFalse(T input1, U input2) {
         return is(p -> {
@@ -124,10 +150,12 @@ public class CheckerBiPredicate<T, U> extends AbstractChecker<BiPredicate<T, U>,
     }
 
     /**
-     * @param input1
-     * @param input2
-     * @param expected
-     * @return CheckerBiPredicate<T, U>
+     * Checks that the BiPredicate produces the expected boolean result for the given inputs.
+     *
+     * @param input1 the first input value
+     * @param input2 the second input value
+     * @param expected the expected boolean result
+     * @return this CheckerBiPredicate instance
      */
     public CheckerBiPredicate<T, U> producesExpected(T input1, U input2, boolean expected) {
         return is(p -> {

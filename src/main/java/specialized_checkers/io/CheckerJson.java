@@ -23,19 +23,23 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
     }
 
     /**
-     * @param json
-     * @param name
-     * @return CheckerJson
+     * Creates a CheckerJson for the given JsonNode and assigns a custom name.
+     *
+     * @param json the JsonNode to check
+     * @param name the name to assign to this checker
+     * @return a CheckerJson instance for the given JsonNode
      */
     public static CheckerJson check(JsonNode json, String name) {
         return new CheckerJson(json, name);
     }
 
     /**
-     * @param file
-     * @param name
-     * @return CheckerJson
-     * @throws IOException
+     * Creates a CheckerJson from a file and assigns a custom name.
+     *
+     * @param file the file containing JSON data
+     * @param name the name to assign to this checker
+     * @return a CheckerJson instance for the JSON in the file
+     * @throws IOException if the file cannot be read or parsed
      */
     public static CheckerJson check(File file, String name) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
@@ -44,10 +48,12 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
     }
 
     /**
-     * @param pathname
-     * @param name
-     * @return CheckerJson
-     * @throws IOException
+     * Creates a CheckerJson from a file path and assigns a custom name.
+     *
+     * @param pathname the path to the file containing JSON data
+     * @param name the name to assign to this checker
+     * @return a CheckerJson instance for the JSON in the file
+     * @throws IOException if the file cannot be read or parsed
      */
     public static CheckerJson check(String pathname, String name) throws IOException {
         File file = new File(pathname);
@@ -57,33 +63,41 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
     }
 
     /**
-     * @param json
-     * @return CheckerJson
+     * Creates a CheckerJson for the given JsonNode with a default name.
+     *
+     * @param json the JsonNode to check
+     * @return a CheckerJson instance for the given JsonNode
      */
     public static CheckerJson check(JsonNode json) {
         return check(json, DEFAULT_NAME);
     }
 
     /**
-     * @param file
-     * @return CheckerJson
-     * @throws IOException
+     * Creates a CheckerJson from a file with a default name.
+     *
+     * @param file the file containing JSON data
+     * @return a CheckerJson instance for the JSON in the file
+     * @throws IOException if the file cannot be read or parsed
      */
     public static CheckerJson check(File file) throws IOException {
         return check(file, DEFAULT_NAME);
     }
 
     /**
-     * @param pathname
-     * @return CheckerJson
-     * @throws IOException
+     * Creates a CheckerJson from a file path with a default name.
+     *
+     * @param pathname the path to the file containing JSON data
+     * @return a CheckerJson instance for the JSON in the file
+     * @throws IOException if the file cannot be read or parsed
      */
     public static CheckerJson check(String pathname) throws IOException {
         return check(pathname, DEFAULT_NAME);
     }
 
     /**
-     * @return CheckerJson
+     * Returns this instance (for fluent API).
+     *
+     * @return this CheckerJson instance
      */
     @Override
     protected CheckerJson self() {
@@ -91,178 +105,222 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
     }
 
     /**
-     * @param path
-     * @return CheckerJson
+     * Checks if the JSON contains the specified property path.
+     *
+     * @param path the dot-separated path to the property
+     * @return this CheckerJson instance
      */
     public CheckerJson hasProperty(String path){
         return is(json -> containsProperty(path), sendMessage(INIT_JSON, "has_property", path));
     }
 
     /**
-     * @param path
-     * @return CheckerJson
+     * Checks if the property at the specified path is an array.
+     *
+     * @param path the dot-separated path to the property
+     * @return this CheckerJson instance
      */
     public CheckerJson isArray(String path) {
         return checkNodeType(path, JsonNode::isArray, sendMessage(INIT_JSON, "is_array", path));
     }
 
     /**
-     * @param path
-     * @return CheckerJson
+     * Checks if the property at the specified path is a BigDecimal.
+     *
+     * @param path the dot-separated path to the property
+     * @return this CheckerJson instance
      */
     public CheckerJson isBigDecimal(String path) {
         return checkNodeType(path, JsonNode::isBigDecimal, sendMessage(INIT_JSON, "is_big_decimal", path));
     }
 
     /**
-     * @param path
-     * @return CheckerJson
+     * Checks if the property at the specified path is a BigInteger.
+     *
+     * @param path the dot-separated path to the property
+     * @return this CheckerJson instance
      */
     public CheckerJson isBigInteger(String path) {
         return checkNodeType(path, JsonNode::isBigInteger, sendMessage(INIT_JSON, "is_big_integer", path));
     }
 
     /**
-     * @param path
-     * @return CheckerJson
+     * Checks if the property at the specified path is binary data.
+     *
+     * @param path the dot-separated path to the property
+     * @return this CheckerJson instance
      */
     public CheckerJson isBinary(String path) {
         return checkNodeType(path, JsonNode::isBinary, sendMessage(INIT_JSON, "is_binary", path));
     }
 
     /**
-     * @param path
-     * @return CheckerJson
+     * Checks if the property at the specified path is a boolean value.
+     *
+     * @param path the dot-separated path to the property
+     * @return this CheckerJson instance
      */
     public CheckerJson isBoolean(String path) {
         return checkNodeType(path, JsonNode::isBoolean, sendMessage(INIT_JSON, "is_boolean", path));
     }
 
     /**
-     * @param path
-     * @return CheckerJson
+     * Checks if the property at the specified path is a container node (object or array).
+     *
+     * @param path the dot-separated path to the property
+     * @return this CheckerJson instance
      */
     public CheckerJson isContainerNode(String path) {
         return checkNodeType(path, JsonNode::isContainerNode, sendMessage(INIT_JSON, "is_container_node", path));
     }
 
     /**
-     * @param path
-     * @return CheckerJson
+     * Checks if the property at the specified path is a double value.
+     *
+     * @param path the dot-separated path to the property
+     * @return this CheckerJson instance
      */
     public CheckerJson isDouble(String path) {
         return checkNodeType(path, JsonNode::isDouble, sendMessage(INIT_JSON, "is_node", path));
     }
 
     /**
-     * @param path
-     * @return CheckerJson
+     * Checks if the property at the specified path is empty.
+     *
+     * @param path the dot-separated path to the property
+     * @return this CheckerJson instance
      */
     public CheckerJson isEmpty(String path) {
         return checkNodeType(path, JsonNode::isEmpty, sendMessage(INIT_JSON, "is_empty", path));
     }
 
     /**
-     * @param path
-     * @return CheckerJson
+     * Checks if the property at the specified path is a float value.
+     *
+     * @param path the dot-separated path to the property
+     * @return this CheckerJson instance
      */
     public CheckerJson isFloat(String path) {
         return checkNodeType(path, JsonNode::isFloat, sendMessage(INIT_JSON, "is_float", path));
     }
 
     /**
-     * @param path
-     * @return CheckerJson
+     * Checks if the property at the specified path is a floating point number.
+     *
+     * @param path the dot-separated path to the property
+     * @return this CheckerJson instance
      */
     public CheckerJson isFloatingPointNumber(String path) {
         return checkNodeType(path, JsonNode::isFloatingPointNumber, sendMessage(INIT_JSON, "is_floating_point_number", path));
     }
 
     /**
-     * @param path
-     * @return CheckerJson
+     * Checks if the property at the specified path is an integer value.
+     *
+     * @param path the dot-separated path to the property
+     * @return this CheckerJson instance
      */
     public CheckerJson isInt(String path) {
         return checkNodeType(path, JsonNode::isInt, sendMessage(INIT_JSON, "is_int", path));
     }
 
     /**
-     * @param path
-     * @return CheckerJson
+     * Checks if the property at the specified path is an integral number.
+     *
+     * @param path the dot-separated path to the property
+     * @return this CheckerJson instance
      */
     public CheckerJson isIntegralNumber(String path) {
         return checkNodeType(path, JsonNode::isIntegralNumber, sendMessage(INIT_JSON, "is_integeral_number", path));
     }
 
     /**
-     * @param path
-     * @return CheckerJson
+     * Checks if the property at the specified path is a long value.
+     *
+     * @param path the dot-separated path to the property
+     * @return this CheckerJson instance
      */
     public CheckerJson isLong(String path) {
         return checkNodeType(path, JsonNode::isLong, sendMessage(INIT_JSON, "is_long", path));
     }
 
     /**
-     * @param path
-     * @return CheckerJson
+     * Checks if the property at the specified path is a missing node.
+     *
+     * @param path the dot-separated path to the property
+     * @return this CheckerJson instance
      */
     public CheckerJson isMissingNode(String path) {
         return checkNodeType(path, JsonNode::isMissingNode, sendMessage(INIT_JSON, "is_missing_node", path));
     }
 
     /**
-     * @param path
-     * @return CheckerJson
+     * Checks if the property at the specified path is null.
+     *
+     * @param path the dot-separated path to the property
+     * @return this CheckerJson instance
      */
     public CheckerJson isNull(String path) {
         return checkNodeType(path, JsonNode::isNull, sendMessage(INIT_JSON, "is_null", path));
     }
 
     /**
-     * @param path
-     * @return CheckerJson
+     * Checks if the property at the specified path is a number.
+     *
+     * @param path the dot-separated path to the property
+     * @return this CheckerJson instance
      */
     public CheckerJson isNumber(String path) {
         return checkNodeType(path, JsonNode::isNumber, sendMessage(INIT_JSON, "is_number", path));
     }
 
     /**
-     * @param path
-     * @return CheckerJson
+     * Checks if the property at the specified path is a JSON object.
+     *
+     * @param path the dot-separated path to the property
+     * @return this CheckerJson instance
      */
     public CheckerJson isObject(String path) {
         return checkNodeType(path, JsonNode::isObject, sendMessage(INIT_JSON, "is_object", path));
     }
 
     /**
-     * @param path
-     * @return CheckerJson
+     * Checks if the property at the specified path is a POJO (Plain Old Java Object).
+     *
+     * @param path the dot-separated path to the property
+     * @return this CheckerJson instance
      */
     public CheckerJson isPojo(String path) {
         return checkNodeType(path, JsonNode::isPojo, sendMessage(INIT_JSON, "is_pojo", path));
     }
 
     /**
-     * @param path
-     * @return CheckerJson
+     * Checks if the property at the specified path is a short value.
+     *
+     * @param path the dot-separated path to the property
+     * @return this CheckerJson instance
      */
     public CheckerJson isShort(String path) {
         return checkNodeType(path, JsonNode::isShort, sendMessage(INIT_JSON, "is_short", path));
     }
 
     /**
-     * @param path
-     * @return CheckerJson
+     * Checks if the property at the specified path is a textual value (string).
+     *
+     * @param path the dot-separated path to the property
+     * @return this CheckerJson instance
      */
     public CheckerJson isTextual(String path) {
         return checkNodeType(path, JsonNode::isTextual, sendMessage(INIT_JSON, "is_textual", path));
     }
 
     /**
-     * @param path
-     * @param min
-     * @param max
-     * @return CheckerJson
+     * Checks if the integer property at the specified path is within the given range (inclusive).
+     *
+     * @param path the dot-separated path to the property
+     * @param min the minimum value
+     * @param max the maximum value
+     * @return this CheckerJson instance
      */
     public CheckerJson isInRange(String path, int min, int max) {
         return is(json -> {
@@ -272,9 +330,11 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
     }
 
     /**
-     * @param path
-     * @param regex
-     * @return CheckerJson
+     * Checks if the textual property at the specified path matches the given regular expression.
+     *
+     * @param path the dot-separated path to the property
+     * @param regex the regular expression to match
+     * @return this CheckerJson instance
      */
     public CheckerJson matchesRegex(String path, String regex) {
         return is(json -> {
@@ -284,9 +344,11 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
     }
 
     /**
-     * @param path
-     * @param allowedValues
-     * @return CheckerJson
+     * Checks if the textual property at the specified path is one of the allowed values.
+     *
+     * @param path the dot-separated path to the property
+     * @param allowedValues the list of allowed string values
+     * @return this CheckerJson instance
      */
     public CheckerJson isInEnum(String path, List<String> allowedValues) {
         return is(json -> {
@@ -296,10 +358,12 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
     }
 
     /**
-     * @param path
-     * @param min
-     * @param max
-     * @return CheckerJson
+     * Checks if the length of the textual property at the specified path is within the given range (inclusive).
+     *
+     * @param path the dot-separated path to the property
+     * @param min the minimum length
+     * @param max the maximum length
+     * @return this CheckerJson instance
      */
     public CheckerJson hasLengthBetween(String path, int min, int max) {
         return is(json -> {
@@ -310,10 +374,12 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
 
 
     /**
-     * @param path
-     * @param condition
-     * @param messageKey
-     * @return CheckerJson
+     * Checks if the property at the specified path satisfies a custom condition.
+     *
+     * @param path the dot-separated path to the property
+     * @param condition the predicate to test the JsonNode
+     * @param messageKey the message key for reporting
+     * @return this CheckerJson instance
      */
     private CheckerJson checkNodeType(String path, Predicate<JsonNode> condition, String messageKey) {
         return is(json -> {
@@ -323,9 +389,11 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
     }
 
     /**
-     * @param path
-     * @param clazz
-     * @return T
+     * Gets the property at the specified path and casts it to the given class.
+     *
+     * @param path the dot-separated path to the property
+     * @param clazz the class to cast the property to
+     * @return the property cast to the specified class, or null if not found or not castable
      */
     private <T> T getProperty(String path, Class<T> clazz) {
         try {
@@ -346,16 +414,20 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
     }
 
     /**
-     * @param path
-     * @return JsonNode
+     * Gets the property at the specified path as a JsonNode.
+     *
+     * @param path the dot-separated path to the property
+     * @return the JsonNode at the specified path, or null if not found
      */
     private JsonNode getProperty(String path) {
         return getProperty(path, JsonNode.class);
     }
 
     /**
-     * @param path
-     * @return boolean
+     * Checks if the property at the specified path exists in the JSON.
+     *
+     * @param path the dot-separated path to the property
+     * @return true if the property exists, false otherwise
      */
     private boolean containsProperty(String path) {
         return getProperty(path) != null;

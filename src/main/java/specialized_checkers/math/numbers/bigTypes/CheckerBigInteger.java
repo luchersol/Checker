@@ -8,6 +8,12 @@ import java.math.BigInteger;
 import specialized_checkers.math.numbers.InterfaceCheckerNumber;
 import util.AbstractChecker;
 
+/**
+ * Checker for {@link BigInteger} instances, providing fluent validation methods for arbitrary-precision integer numbers.
+ * <p>
+ * This class allows you to validate and assert properties of {@code BigInteger} objects in a fluent and readable way.
+ * </p>
+ */
 public class CheckerBigInteger extends AbstractChecker<BigInteger, CheckerBigInteger> implements InterfaceCheckerNumber<CheckerBigInteger> {
 
     private static final String INIT_NUMBERS = "numbers";
@@ -18,24 +24,30 @@ public class CheckerBigInteger extends AbstractChecker<BigInteger, CheckerBigInt
     }
 
     /**
-     * @param number
-     * @param name
-     * @return CheckerBigInteger
+     * Creates a new {@code CheckerBigInteger} for the given {@link BigInteger} instance with a custom name.
+     *
+     * @param number the {@code BigInteger} instance to be checked
+     * @param name   the name to identify this checker instance (useful for error messages)
+     * @return a new {@code CheckerBigInteger} for the provided {@code BigInteger}
      */
     public static CheckerBigInteger check(BigInteger number, String name) {
         return new CheckerBigInteger(number, name);
     }
 
     /**
-     * @param number
-     * @return CheckerBigInteger
+     * Creates a new {@code CheckerBigInteger} for the given {@link BigInteger} instance with a default name.
+     *
+     * @param number the {@code BigInteger} instance to be checked
+     * @return a new {@code CheckerBigInteger} for the provided {@code BigInteger}
      */
     public static CheckerBigInteger check(BigInteger number) {
         return check(number, DEFAULT_NAME);
     }
 
     /**
-     * @return CheckerBigInteger
+     * Returns this checker instance (for fluent API usage).
+     *
+     * @return this {@code CheckerBigInteger} instance
      */
     @Override
     protected CheckerBigInteger self() {
@@ -43,44 +55,56 @@ public class CheckerBigInteger extends AbstractChecker<BigInteger, CheckerBigInt
     }
 
     /**
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is even (divisible by two).
+     *
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     public CheckerBigInteger isEven(){
         return is(n_big_integer -> n_big_integer.mod(BigInteger.TWO).equals(BigInteger.ZERO), sendMessage(INIT_NUMBERS, "is_even", DEFAULT_NAME));
     }
 
     /**
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is odd (not divisible by two).
+     *
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     public CheckerBigInteger isOdd(){
         return is(n_big_integer -> !n_big_integer.mod(BigInteger.TWO).equals(BigInteger.ZERO), sendMessage(INIT_NUMBERS, "is_odd", DEFAULT_NAME));
     }
 
     /**
-     * @param divisor
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is divisible by the specified divisor.
+     *
+     * @param divisor the value to divide by
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     public CheckerBigInteger isDivisibleBy(BigInteger divisor){
         return is(n_big_integer -> n_big_integer.mod(divisor).equals(BigInteger.ZERO), sendMessage(INIT_NUMBERS, "is_odd", DEFAULT_NAME));
     }
 
     /**
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is a power of two.
+     *
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     public CheckerBigInteger isPowerOfTwo(){
         return is(n_big_integer -> n_big_integer.signum() > 0 && n_big_integer.bitCount() == 1, sendMessage(INIT_NUMBERS, "is_odd", DEFAULT_NAME));
     }
 
     /**
-     * @param certainty
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is probably prime, with the specified certainty.
+     *
+     * @param certainty a measure of the uncertainty that the caller is willing to tolerate
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     public CheckerBigInteger isProbablePrime(int certainty) {
         return is(n_big_integer -> n_big_integer.isProbablePrime(certainty), sendMessage(INIT_NUMBERS, "is_probable_prime", DEFAULT_NAME));
     }
 
     /**
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is positive (greater than zero).
+     *
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isPositive() {
@@ -88,7 +112,9 @@ public class CheckerBigInteger extends AbstractChecker<BigInteger, CheckerBigInt
     }
 
     /**
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is positive or zero (greater than or equal to zero).
+     *
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isPositiveOrZero() {
@@ -96,7 +122,9 @@ public class CheckerBigInteger extends AbstractChecker<BigInteger, CheckerBigInt
     }
 
     /**
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is negative (less than zero).
+     *
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isNegative() {
@@ -104,7 +132,9 @@ public class CheckerBigInteger extends AbstractChecker<BigInteger, CheckerBigInt
     }
 
     /**
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is negative or zero (less than or equal to zero).
+     *
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isNegativeOrZero() {
@@ -112,7 +142,9 @@ public class CheckerBigInteger extends AbstractChecker<BigInteger, CheckerBigInt
     }
 
     /**
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is zero.
+     *
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isZero() {
@@ -120,8 +152,10 @@ public class CheckerBigInteger extends AbstractChecker<BigInteger, CheckerBigInt
     }
 
     /**
-     * @param number
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is greater than the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isGreaterThan(Byte number) {
@@ -129,8 +163,10 @@ public class CheckerBigInteger extends AbstractChecker<BigInteger, CheckerBigInt
     }
 
     /**
-     * @param number
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is greater than or equal to the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isGreaterThan(Short number) {
@@ -138,8 +174,10 @@ public class CheckerBigInteger extends AbstractChecker<BigInteger, CheckerBigInt
     }
 
     /**
-     * @param number
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is less than the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isGreaterThan(Integer number) {
@@ -147,8 +185,10 @@ public class CheckerBigInteger extends AbstractChecker<BigInteger, CheckerBigInt
     }
 
     /**
-     * @param number
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is less than or equal to the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isGreaterThan(Long number) {

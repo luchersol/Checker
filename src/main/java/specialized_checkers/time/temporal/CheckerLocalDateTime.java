@@ -6,6 +6,13 @@ import java.time.LocalDateTime;
 
 import util.AbstractChecker;
 
+/**
+ * CheckerLocalDateTime is a specialized checker for validating and performing assertions on {@link LocalDateTime} values.
+ * <p>
+ * It provides a fluent API for common local date-time validations such as checking if a date-time is before, after, in range, past, or future.
+ *
+ * @param <T> the type of value to be checked, which is {@link LocalDateTime} in this case
+ */
 public class CheckerLocalDateTime extends AbstractChecker<LocalDateTime, CheckerLocalDateTime> implements InterfaceCheckerDate<CheckerLocalDateTime, LocalDateTime>  {
 
     private static final String INIT_TEMPORAL = "time.temporal";
@@ -16,24 +23,30 @@ public class CheckerLocalDateTime extends AbstractChecker<LocalDateTime, Checker
     }
 
     /**
-     * @param localdatetime
-     * @param name
-     * @return CheckerLocalDateTime
+     * Creates a new CheckerLocalDateTime instance for the given local date-time and name.
+     *
+     * @param localdatetime the local date-time value to be checked
+     * @param name         the name to identify the local date-time in error messages
+     * @return a CheckerLocalDateTime instance for further validations
      */
     public static CheckerLocalDateTime check(LocalDateTime localdatetime, String name) {
         return new CheckerLocalDateTime(localdatetime, name);
     }
 
     /**
-     * @param localdatetime
-     * @return CheckerLocalDateTime
+     * Creates a new CheckerLocalDateTime instance for the given local date-time with a default name.
+     *
+     * @param localdatetime the local date-time value to be checked
+     * @return a CheckerLocalDateTime instance for further validations
      */
     public static CheckerLocalDateTime check(LocalDateTime localdatetime) {
         return check(localdatetime, DEFAULT_NAME);
     }
 
     /**
-     * @return CheckerLocalDateTime
+     * Returns this instance (for fluent API usage).
+     *
+     * @return this CheckerLocalDateTime instance
      */
     @Override
     protected CheckerLocalDateTime self() {
@@ -41,15 +54,19 @@ public class CheckerLocalDateTime extends AbstractChecker<LocalDateTime, Checker
     }
 
     /**
-     * @return LocalDateTime
+     * Returns the current local date-time.
+     *
+     * @return the current {@link LocalDateTime}
      */
     private static LocalDateTime now(){
         return LocalDateTime.now();
     }
 
     /**
-     * @param date
-     * @return CheckerLocalDateTime
+     * Checks if the local date-time is before the specified date-time.
+     *
+     * @param date the date-time to compare with
+     * @return this CheckerLocalDateTime instance for chaining
      */
     @Override
     public CheckerLocalDateTime isBefore(LocalDateTime date) {
@@ -57,8 +74,10 @@ public class CheckerLocalDateTime extends AbstractChecker<LocalDateTime, Checker
     }
 
     /**
-     * @param date
-     * @return CheckerLocalDateTime
+     * Checks if the local date-time is before or equal to the specified date-time.
+     *
+     * @param date the date-time to compare with
+     * @return this CheckerLocalDateTime instance for chaining
      */
     @Override
     public CheckerLocalDateTime isBeforeOrEqual(LocalDateTime date) {
@@ -66,8 +85,10 @@ public class CheckerLocalDateTime extends AbstractChecker<LocalDateTime, Checker
     }
 
     /**
-     * @param date
-     * @return CheckerLocalDateTime
+     * Checks if the local date-time is after the specified date-time.
+     *
+     * @param date the date-time to compare with
+     * @return this CheckerLocalDateTime instance for chaining
      */
     @Override
     public CheckerLocalDateTime isAfter(LocalDateTime date) {
@@ -75,8 +96,10 @@ public class CheckerLocalDateTime extends AbstractChecker<LocalDateTime, Checker
     }
 
     /**
-     * @param date
-     * @return CheckerLocalDateTime
+     * Checks if the local date-time is after or equal to the specified date-time.
+     *
+     * @param date the date-time to compare with
+     * @return this CheckerLocalDateTime instance for chaining
      */
     @Override
     public CheckerLocalDateTime isAfterOrEqual(LocalDateTime date) {
@@ -84,9 +107,11 @@ public class CheckerLocalDateTime extends AbstractChecker<LocalDateTime, Checker
     }
 
     /**
-     * @param date_1
-     * @param date_2
-     * @return CheckerLocalDateTime
+     * Checks if the local date-time is within the specified range (exclusive).
+     *
+     * @param date_1 the start date-time (exclusive)
+     * @param date_2 the end date-time (exclusive)
+     * @return this CheckerLocalDateTime instance for chaining
      */
     @Override
     public CheckerLocalDateTime inRange(LocalDateTime date_1, LocalDateTime date_2) {
@@ -94,7 +119,9 @@ public class CheckerLocalDateTime extends AbstractChecker<LocalDateTime, Checker
     }
 
     /**
-     * @return CheckerLocalDateTime
+     * Checks if the local date-time is in the past (before the current date-time).
+     *
+     * @return this CheckerLocalDateTime instance for chaining
      */
     @Override
     public CheckerLocalDateTime isPast() {
@@ -102,7 +129,9 @@ public class CheckerLocalDateTime extends AbstractChecker<LocalDateTime, Checker
     }
 
     /**
-     * @return CheckerLocalDateTime
+     * Checks if the local date-time is in the future (after the current date-time).
+     *
+     * @return this CheckerLocalDateTime instance for chaining
      */
     @Override
     public CheckerLocalDateTime isFuture() {

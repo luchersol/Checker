@@ -5,6 +5,12 @@ import static util.Message.*;
 import specialized_checkers.math.numbers.InterfaceCheckerNumber;
 import util.AbstractChecker;
 
+/**
+ * Checker for {@link Double} instances, providing fluent validation methods for double-precision floating-point numbers.
+ * <p>
+ * This class allows you to validate and assert properties of {@code Double} objects in a fluent and readable way.
+ * </p>
+ */
 public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implements InterfaceCheckerNumber<CheckerDouble> {
 
     private static final String INIT_NUMBERS = "numbers";
@@ -16,18 +22,22 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @param number
-     * @param name
-     * @return CheckerDouble
+     * Creates a new {@code CheckerDouble} for the given {@link Double} instance with a custom name.
+     *
+     * @param number the {@code Double} instance to be checked
+     * @param name   the name to identify this checker instance (useful for error messages)
+     * @return a new {@code CheckerDouble} for the provided {@code Double}
      */
     public static CheckerDouble check(Double number, String name) {
         return new CheckerDouble(number, name);
     }
 
     /**
-     * @param number
-     * @param name
-     * @return CheckerDouble
+     * Creates a new {@code CheckerDouble} for the given {@link Number} instance with a custom name.
+     *
+     * @param number the {@code Number} instance to be checked (converted to double)
+     * @param name   the name to identify this checker instance (useful for error messages)
+     * @return a new {@code CheckerDouble} for the provided {@code Number}
      */
     public static CheckerDouble check(Number number, String name) {
         return check(number.doubleValue(), name);
@@ -35,23 +45,29 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
 
 
     /**
-     * @param number
-     * @return CheckerDouble
+     * Creates a new {@code CheckerDouble} for the given {@link Double} instance with a default name.
+     *
+     * @param number the {@code Double} instance to be checked
+     * @return a new {@code CheckerDouble} for the provided {@code Double}
      */
     public static CheckerDouble check(Double number) {
         return check(number, DEFAULT_NAME);
     }
 
     /**
-     * @param number
-     * @return CheckerDouble
+     * Creates a new {@code CheckerDouble} for the given {@link Number} instance with a default name.
+     *
+     * @param number the {@code Number} instance to be checked (converted to double)
+     * @return a new {@code CheckerDouble} for the provided {@code Number}
      */
     public static CheckerDouble check(Number number) {
         return check(number.doubleValue());
     }
 
     /**
-     * @return CheckerDouble
+     * Returns this checker instance (for fluent API usage).
+     *
+     * @return this {@code CheckerDouble} instance
      */
     @Override
     protected CheckerDouble self() {
@@ -59,21 +75,27 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is NaN (not a number).
+     *
+     * @return this {@code CheckerDouble} instance for further validation
      */
     public CheckerDouble isNaN(){
         return is(n_double -> n_double.isNaN(), sendMessage(INIT_DECIMAL_TYPES, "is_nan", DEFAULT_NAME));
     }
 
     /**
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is infinite.
+     *
+     * @return this {@code CheckerDouble} instance for further validation
      */
     public CheckerDouble isInfinite(){
         return is(n_double -> n_double.isInfinite(), sendMessage(INIT_DECIMAL_TYPES, "is_infinite", DEFAULT_NAME));
     }
 
     /**
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is positive (greater than zero).
+     *
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isPositive() {
@@ -81,7 +103,9 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is positive or zero (greater than or equal to zero).
+     *
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isPositiveOrZero() {
@@ -89,7 +113,9 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is negative (less than zero).
+     *
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isNegative() {
@@ -97,7 +123,9 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is negative or zero (less than or equal to zero).
+     *
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isNegativeOrZero() {
@@ -105,7 +133,9 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is zero.
+     *
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isZero() {
@@ -113,8 +143,10 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @param number
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is greater than the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isGreaterThan(Byte number) {
@@ -122,8 +154,10 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @param number
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is greater than or equal to the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isGreaterThan(Short number) {
@@ -131,8 +165,10 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @param number
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is less than the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isGreaterThan(Integer number) {
@@ -140,8 +176,10 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @param number
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is less than or equal to the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isGreaterThan(Long number) {
