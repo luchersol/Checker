@@ -8,11 +8,34 @@ import java.util.function.Predicate;
 
 import util.AbstractChecker;
 
+/**
+ * A specialized checker for {@link Set} collections, providing fluent assertion methods
+ * for validating set properties and contents.
+ * <p>
+ * This class extends {@link AbstractChecker} and offers a variety of checks such as emptiness,
+ * subset/superset relationships, and element matching based on predicates.
+ * </p>
+ *
+ * <pre>
+ * Example usage:
+ *   Set&lt;String&gt; mySet = Set.of("a", "b", "c");
+ *   CheckerSet.check(mySet).isSuperset(List.of("a")).isEmpty();
+ * </pre>
+ *
+ * @param <T> the type of elements in the set
+ * @see AbstractChecker
+ */
 public class CheckerSet<T> extends AbstractChecker<Set<T>, CheckerSet<T>>{
 
     private static final String INIT_SET = "collections.set";
     private static final String DEFAULT_NAME = "Set";
 
+    /**
+     * Constructs a new {@code CheckerSet} with the specified set and name.
+     *
+     * @param set  the underlying set to be wrapped by this CheckerSet
+     * @param name the name associated with this CheckerSet
+     */
     protected CheckerSet(Set<T> set, String name) {
         super(set, name);
     }

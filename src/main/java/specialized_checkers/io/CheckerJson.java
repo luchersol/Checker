@@ -12,12 +12,36 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import util.AbstractChecker;
 
+/**
+ * CheckerJson is a specialized checker for validating properties and structure of JSON data
+ * represented by Jackson's {@link JsonNode}. It provides a fluent API for asserting the presence,
+ * type, and value constraints of JSON properties, supporting both simple and complex validation scenarios.
+ * <p>
+ * This class offers static factory methods to create instances from {@link JsonNode}, {@link File}, or file paths,
+ * with optional custom naming. It includes a variety of assertion methods for checking property existence,
+ * type (e.g., array, object, number, string), value ranges, regular expression matches, and membership in enumerations.
+ * <p>
+ * Example usage:
+ * <pre>
+ *     JsonNode json = ...;
+ *     CheckerJson.check(json)
+ *         .hasProperty("user.name")
+ *         .isTextual("user.name")
+ *         .hasLengthBetween("user.name", 3, 20);
+ * </pre>
+ */
 public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
 
     private static final String INIT_JSON = "io.json";
     private static final String DEFAULT_NAME = "Json";
 
 
+    /**
+     * Constructs a new {@code CheckerJson} instance with the specified JSON node and name.
+     *
+     * @param json the {@link JsonNode} containing the configuration or data for this checker
+     * @param name the name associated with this checker instance
+     */
     protected CheckerJson(JsonNode json, String name) {
         super(json, name);
     }

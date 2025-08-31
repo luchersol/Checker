@@ -9,14 +9,18 @@ import util.AbstractChecker;
  * <p>
  * It provides a fluent API for common string validations such as checking for emptiness, blankness,
  * length constraints, content, format, and more.
- *
- * @param <T> the type of value to be checked, which is String in this case
  */
 public class CheckerString extends AbstractChecker<String, CheckerString> {
 
     private static final String INIT_STRING = "string";
     private static final String DEFAULT_NAME = "String";
 
+    /**
+     * Constructs a new {@code CheckerString} with the specified string and name.
+     *
+     * @param string the {@link String} to be associated with this checker
+     * @param name the name of the checker
+     */
     protected CheckerString(String string, String name) {
         super(string, name);
     }
@@ -192,7 +196,7 @@ public class CheckerString extends AbstractChecker<String, CheckerString> {
     }
 
     /**
-     * Checks if the string contains any special characters (e.g., !@#$%^&* etc.).
+     * Checks if the string contains any special characters (e.g., !@#$%^&amp;* etc.).
      *
      * @return this CheckerString instance for chaining
      */

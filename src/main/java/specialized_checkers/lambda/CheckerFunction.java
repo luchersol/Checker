@@ -9,24 +9,33 @@ import util.Cloner;
 import util.Utils;
 
 /**
- * Provides fluent validation and assertion methods for {@link Function} instances, enabling expressive checks on lambda expressions or operations that accept an input and produce a result.
- * <p>
- * This checker allows you to validate and assert properties of {@code Function} objects in a fluent and readable way, such as verifying that a function does not throw exceptions, produces expected results, or returns non-null values.
- * </p>
+ * A specialized checker for {@link java.util.function.Function} instances, providing a fluent API for validating
+ * function behavior and results. This class allows assertions such as verifying that a function does not throw
+ * exceptions, produces expected results, or returns non-null values for given inputs. It also supports optional
+ * deep cloning of input objects to ensure immutability during checks.
  *
  * <p>
- * Typical usage:
- * <pre>
- *     CheckerFunction&lt;String, Integer&gt;.check(str -&gt; str.length())
- *         .producesExpected("abc", 3)
- *         .producesNonNull("test");
- * </pre>
+ * Example usage:
  * </p>
+ * <pre>
+ *     CheckerFunction&lt;String, Integer&gt; checker = CheckerFunction.check(String::length);
+ *     checker.producesExpected("abc", 3)
+ *            .applyWithoutException("test")
+ *            .producesNonNull("hello");
+ * </pre>
+ *
+ * <p>
+ * Deep cloning can be enabled to ensure that the input object is not mutated by the function:
+ * </p>
+ * <pre>
+ *     checker.activateDeepClone();
+ * </pre>
  *
  * @param <T> the type of the input to the {@code Function} being checked
- *           (the argument type accepted by the function)
  * @param <R> the type of the result returned by the {@code Function}
- *           (the output type produced by the function)
+ *
+ * @see java.util.function.Function
+ * @see AbstractChecker
  */
 public class CheckerFunction<T, R> extends AbstractChecker<Function<T, R>, CheckerFunction<T, R>> {
 
@@ -35,6 +44,12 @@ public class CheckerFunction<T, R> extends AbstractChecker<Function<T, R>, Check
 
     private boolean deepClone;
 
+    /**
+     * Constructs a new {@code CheckerFunction} with the specified function and name.
+     *
+     * @param function the {@link Function} to be used by this checker
+     * @param name the name identifying this checker
+     */
     protected CheckerFunction(Function<T, R> function, String name) {
         super(function, name);
     }

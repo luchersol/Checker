@@ -11,14 +11,18 @@ import util.AbstractChecker;
  * CheckerColor is a specialized checker for validating and performing assertions on {@link Color} values.
  * <p>
  * It provides a fluent API for common color validations such as checking color equality, brightness, transparency, contrast, and more.
- *
- * @param <T> the type of value to be checked, which is {@link Color} in this case
  */
 public class CheckerColor extends AbstractChecker<Color, CheckerColor> {
 
     private static final String INIT_COLOR = "color";
     private static final String DEFAULT_NAME = "Color";
 
+    /**
+     * Constructs a new {@code CheckerColor} with the specified color and name.
+     *
+     * @param color the {@link Color} to be associated with this checker
+     * @param name the name of the checker
+     */
     protected CheckerColor(Color color, String name) {
         super(color, name);
     }

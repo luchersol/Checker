@@ -13,6 +13,12 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class Utils {
 
+    /**
+     * Private constructor to prevent instantiation of this utility class.
+     */
+    private Utils(){
+    }
+
 
     /**
      * Checks deep equality between two objects, supporting arrays, collections, maps, atomic types, and CharSequences.

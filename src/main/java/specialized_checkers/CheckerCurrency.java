@@ -11,14 +11,18 @@ import util.AbstractChecker;
  * CheckerCurrency is a specialized checker for validating and performing assertions on {@link Currency} values.
  * <p>
  * It provides a fluent API for common currency validations such as checking symbols, fraction digits, and locale association.
- *
- * @param <T> the type of value to be checked, which is {@link Currency} in this case
  */
 public class CheckerCurrency extends AbstractChecker<Currency, CheckerCurrency> {
 
     private static final String INIT_CURRENCY = "currency";
     private static final String DEFAULT_NAME = "Currency";
 
+    /**
+     * Constructs a new {@code CheckerCurrency} with the specified currency and name.
+     *
+     * @param currency the {@link Currency} to be associated with this checker
+     * @param name the name of the checker
+     */
     protected CheckerCurrency(Currency currency, String name) {
         super(currency, name);
     }

@@ -27,6 +27,13 @@ public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], Chec
     private static final String INIT_MATRIX = "math.matrix";
     private static final String DEFAULT_NAME = "Matrix";
 
+
+    /**
+     * Constructs a new {@code CheckerMatrix} with the specified matrix and name.
+     *
+     * @param matrix the matrix to be used by this checker
+     * @param name the name identifying this checker
+     */
     protected CheckerMatrix(T[][] matrix, String name) {
         super(matrix, name);
     }

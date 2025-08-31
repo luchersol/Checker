@@ -20,12 +20,17 @@ public class Message {
     private static final Properties PROPERTIES = new Properties();
 
     static {
-        // Loads the messages from the messages.properties file at class initialization.
         try (InputStream input = Message.class.getClassLoader().getResourceAsStream("messages.properties")) {
             PROPERTIES.load(input);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Private constructor to prevent instantiation of this utility class.
+     */
+    private Message(){
     }
 
 

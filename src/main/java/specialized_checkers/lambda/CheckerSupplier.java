@@ -8,18 +8,36 @@ import util.AbstractChecker;
 import util.Utils;
 
 /**
- * Checker for {@link Supplier} instances, providing fluent validation methods for lambda expressions or operations that supply a result without input arguments.
- * <p>
- * This class allows you to validate and assert properties of {@code Supplier} objects in a fluent and readable way.
- * </p>
+ * A specialized checker for {@link java.util.function.Supplier} instances, providing a fluent API for validating
+ * function behavior and results. This class allows assertions such as verifying that a function does not throw
+ * exceptions, produces expected results, or returns non-null values for given inputs.
  *
- * @param <T> the type of results supplied by the {@code Supplier} being checked
+ * <p>
+ * Example usage:
+ * </p>
+ * <pre>
+ *     CheckerSupplier&lt;Integer&gt; checker = CheckerSupplier.check(() -> 5)
+ *            .applyWithoutException()
+ *            .producesExpected(5)
+ *            .producesNonNull();
+ * </pre>
+ *
+ * @param <T> the type of the result returned by the {@code Supplier}
+ *
+ * @see java.util.function.Supplier
+ * @see AbstractChecker
  */
 public class CheckerSupplier<T> extends AbstractChecker<Supplier<T>, CheckerSupplier<T>> {
 
     private static final String INIT_SUPPLIER = "lambda.supplier";
     private static final String DEFAULT_NAME = "Supplier";
 
+    /**
+     * Constructs a new {@code CheckerSupplier} with the specified supplier and name.
+     *
+     * @param supplier the {@link Supplier} to be used by this checker
+     * @param name the name identifying this checker
+     */
     protected CheckerSupplier(Supplier<T> supplier, String name) {
         super(supplier, name);
     }

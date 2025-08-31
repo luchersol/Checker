@@ -8,11 +8,38 @@ import java.util.Objects;
 
 import util.AbstractChecker;
 
+/**
+ * A specialized checker for {@link URI} objects, providing fluent validation methods
+ * for various URI components such as scheme, host, port, authority, fragment, path, and query.
+ * <p>
+ * This class extends {@code AbstractChecker} to enable chainable assertions on {@code URI} instances.
+ * It supports both default and custom naming for checkers, and provides static factory methods
+ * for convenient instantiation from {@code URI} or {@code String} representations.
+ * </p>
+ *
+ * <h2>Usage Example:</h2>
+ * <pre>{@code
+ * CheckerURI.check("https://example.com", "ExampleURI")
+ *     .isAbsolute()
+ *     .hasHost("example.com")
+ *     .hasPath("/index.html");
+ * }</pre>
+ *
+ * <p>
+ * Each validation method returns {@code this} for fluent chaining.
+ * </p>
+ */
 public class CheckerURI extends AbstractChecker<URI, CheckerURI> {
 
     private static final String INIT_URI = "io.uri";
     private static final String DEFAULT_NAME = "Uri";
 
+    /**
+     * Constructs a new {@code CheckerURI} with the specified {@link URI} and name.
+     *
+     * @param uri  the URI associated with this checker
+     * @param name the name of the checker
+     */
     protected CheckerURI(URI uri, String name) {
         super(uri, name);
     }

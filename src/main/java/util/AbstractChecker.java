@@ -3,7 +3,6 @@ package util;
 import static util.Message.*;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -24,43 +23,46 @@ import java.util.regex.Pattern;
  */
 public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> implements InterfaceChecker<AbstractChecker<T,C>, T> {
 
-    protected T object;
-
-     /**
-      * The object being checked.
-      */
-    protected String name;
-
-     /**
-      * The name or label for the checked object (for error messages).
-      */
-    protected ExceptionTracker exceptionTracker;
-
-     /**
-      * Tracks exceptions thrown or not thrown during checks.
-      */
-    protected boolean saveErrors;
-
-     /**
-      * If true, errors are saved in the exception tracker instead of being thrown immediately.
-      */
-    protected boolean stop;
-
-     /**
-      * If true, further checks are stopped (e.g., if the object is null).
-      */
-    protected AbstractChecker<T, C> backObject;
-
     private static final String INIT_ABSTRACT_CHECKER = "abstract_checker";
-
-     /**
-      * Message key for this checker type.
-      */
     private static final String REGEX_POINT_PROPERTIES = "(?<!\\([^\\)]*)\\.(?![^\\(]*\\))";
     private static final String REGEX_METHOD_BY_NAME_PARAMS = "^(?<function>[a-zA-Z_][a-zA-Z0-9_]*)\\((?<nameParams>(?:[a-zA-Z_][a-zA-Z0-9_]*)(?:,\\s*[a-zA-Z_][a-zA-Z0-9_])*)?\\)$";
     private static final String REGEX_METHOD_BY_NUMBER_PARAMS = "^(?<function>[a-zA-Z_][a-zA-Z0-9_]*)\\((?<numParams>\\d+)?\\)$";
     private static final String REGEX_PARENTHESIS = "\\((.*?)\\)";
 
+    /**
+     * The object being checked.
+     */
+    protected T object;
+
+    /**
+     * The name or label for the checked object (for error messages).
+     */
+    protected String name;
+
+    /**
+     * Tracks exceptions thrown or not thrown during checks.
+     */
+    protected ExceptionTracker exceptionTracker;
+
+    /**
+     * If true, errors are saved in the exception tracker instead of being thrown immediately.
+     */
+    protected boolean saveErrors;
+
+    /**
+     * If true, further checks are stopped (e.g., if the object is null).
+     */
+    protected boolean stop;
+
+    /**
+     * The parent checker of the object being checked.
+     */
+    protected AbstractChecker<T, C> backObject;
+
+    /**
+     * Constructor initializing the checker with a name.
+     * @param name Name of the object for reporting purposes
+     */
     public AbstractChecker(String name) {
         this.object = null;
         this.name = name;
@@ -69,6 +71,11 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
         this.stop = object == null;
     }
 
+    /**
+     * Constructor initializing the checker with an object and its name.
+     * @param object Object to check
+     * @param name Name of the object
+     */
     public AbstractChecker(T object, String name) {
         this.object = object;
         this.name = name;
@@ -77,6 +84,11 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
         this.stop = object == null;
     }
 
+    /**
+     * Constructor initializing the checker with a name and an existing exception tracker.
+     * @param name Name of the object
+     * @param exceptionTracker Tracker for exceptions
+     */
     public AbstractChecker(String name, ExceptionTracker exceptionTracker) {
         this.name = name;
         this.exceptionTracker = exceptionTracker;
@@ -84,6 +96,12 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
         this.stop = object == null;
     }
 
+    /**
+     * Constructor initializing the checker with an object, its name, and an exception tracker.
+     * @param object Object to check
+     * @param name Name of the object
+     * @param exceptionTracker Tracker for exceptions
+     */
     public AbstractChecker(T object, String name, ExceptionTracker exceptionTracker) {
         this.object = object;
         this.name = name;
@@ -92,16 +110,24 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
         this.stop = object == null;
     }
 
+    /**
+     * Stops further checks in the current checker.
+     */
     public void stop() {
         this.stop = true;
     }
 
+    /**
+     * Returns the concrete checker instance (for fluent API).
+     * @return The concrete checker instance
+     */
     protected abstract C self();
 
     /**
-     * @param condition
-     * @param message
-     * @return C
+     * Validates the object with a custom condition and message.
+     * @param condition Condition to validate
+     * @param message Message to use if the check fails
+     * @return The current checker instance
      */
     public C is(Predicate<T> condition, String message) {
         CheckerException exception = new CheckerException(message);
@@ -126,54 +152,61 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
     }
 
     /**
-     * @param condition
-     * @return C
+     * Validates the object with a custom condition using a default message.
+     * @param condition Condition to validate
+     * @return The current checker instance
      */
     public C is(Predicate<T> condition) {
         return is(condition, sendMessage(INIT_ABSTRACT_CHECKER, "is"));
     }
 
     /**
-     * @param condition
-     * @param message
-     * @return C
+     * Validates that the condition is NOT true.
+     * @param condition Condition to negate
+     * @param message Message to use if the check fails
+     * @return The current checker instance
      */
     public C isNot(Predicate<T> condition, String message) {
         return is(condition.negate(), message);
     }
 
     /**
-     * @param condition
-     * @return C
+     * Validates that the condition is NOT true using a default message.
+     * @param condition Condition to negate
+     * @return The current checker instance
      */
     public C isNot(Predicate<T> condition) {
         return is(condition.negate(), sendMessage(INIT_ABSTRACT_CHECKER, "is_not"));
     }
 
-        /**
-     * @return C
+    /**
+     * Checks if the object is null.
+     * @return The current checker instance
      */
     public C isNull() {
         return is(object -> object == null, sendMessage(INIT_ABSTRACT_CHECKER, "is_null"));
     }
 
     /**
-     * @return C
+     * Checks if the object is not null.
+     * @return The current checker instance
      */
     public C isNonNull() {
         return is(object -> object != null, sendMessage(INIT_ABSTRACT_CHECKER, "is_not_null"));
     }
 
     /**
-     * @param other
-     * @return C
+     * Checks if the object equals another object.
+     * @param other Object to compare with
+     * @return The current checker instance
      */
     public C isEqual(Object other){
         return is(object -> Utils.equalsContent(other, object), sendMessage(INIT_ABSTRACT_CHECKER, "is_equal"));
     }
 
     /**
-     * @return C
+     * Enables saving errors in the exception tracker instead of throwing immediately.
+     * @return The current checker instance
      */
     public C saveErrors() {
         this.saveErrors = true;
@@ -181,7 +214,8 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
     }
 
     /**
-     * @return C
+     * Disables saving errors; exceptions will be thrown immediately.
+     * @return The current checker instance
      */
     public C notSaveErrors() {
         this.saveErrors = false;
@@ -189,39 +223,50 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
     }
 
     /**
-     * @return Boolean
+     * Checks if any errors are recorded in the exception tracker.
+     * @return true if errors exist
      */
     public Boolean hasErrors() {
         return this.exceptionTracker.hasErrors();
     }
 
     /**
-     * @return Boolean
+     * Checks if there are no errors recorded.
+     * @return true if no errors exist
      */
     public Boolean hasNotErrors() {
         return this.exceptionTracker.hasNotErrors();
     }
 
+    /**
+     * Displays exceptions that were thrown.
+     */
     public void showThrownException() {
         this.exceptionTracker.showThrownException();
     }
 
+    /**
+     * Displays exceptions that were not thrown.
+     */
     public void showNotThrownException() {
         this.exceptionTracker.showNotThrownException();
     }
 
+    /**
+     * Displays all tracked exceptions.
+     */
     public void show() {
         this.exceptionTracker.show();
     }
 
     /**
-     * Hay que tener cuidado con las clases si se usa este método.
-     * Ej: Si el método usa Map y el objeto es un HashMap internamente, fallará
+     * Caution: Be careful with class types when using this method.
+     * For example, if a method expects a Map but the object is internally a HashMap, it may fail.
+     * This method checks a nested property using reflection and supports method calls with arguments.
      *
-     *
-     * @param propertyPath
-     * @param args
-     * @return
+     * @param propertyPath Path to the property or method
+     * @param args Arguments to pass to the method
+     * @return Checker for the property or method, or null if the property/method is not found
      */
     public Checker checkProperty(String propertyPath, Object... args) {
         int numArgs = 0;
@@ -255,13 +300,14 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
     }
 
     /**
-     * Para asegurarse de que se utilizando los métodos con las clases queridas, aplicar este método.
-     * En los otros casos, se aplicará la clase del objeto que se obtenga con el método getClass()
+     * Ensures that the methods are invoked using the desired classes.
+     * If not specified, the class of the object obtained via getClass() will be used.
+     * This method is useful for checking properties or invoking methods with explicit argument types.
      *
-     * @param propertyPath
-     * @param args
-     * @return
-     * @throws Exception
+     * @param propertyPath Path to the property or method to check
+     * @param args List of argument-value and class pairs
+     * @return Checker for the property or method, or null if not found
+     * @throws Exception If a reflection-related error occurs
      */
     public Checker checkProperty(String propertyPath, List<Entry<Object, Class<?>>> args) throws Exception {
         int numArgs = 0;
@@ -290,10 +336,11 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
     }
 
     /**
-     * @param propertyPath
-     * @param args
-     * @return Checker
-     * @throws Exception
+     * Checks a property or method using a map of named arguments.
+     * @param propertyPath Path to property or method
+     * @param args Map of argument names to values
+     * @return Checker for the property, or null if not found
+     * @throws Exception On reflection failure
      */
     public Checker checkProperty(String propertyPath, Map<String, Object> args) throws Exception {
         int numArgs = 0;
@@ -322,16 +369,14 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
     }
 
     /**
-     * @param object
-     * @param properties
-     * @param args
-     * @return Object
-     * @throws SecurityException
-     * @throws IllegalArgumentException
-     * @throws IllegalAccessException
+     * Retrieves a nested property or method result using reflection.
+     * @param object Object to inspect
+     * @param properties Queue of nested property names or method calls
+     * @param args Arguments for methods
+     * @return Resulting object
+     * @throws Exception In case of failure to obtain field or method
      */
-    public static Object getProperty(Object object, Queue<String> properties, Object args)
-            throws SecurityException, IllegalArgumentException, IllegalAccessException {
+    public static Object getProperty(Object object, Queue<String> properties, Object args) throws Exception {
         try {
             return tryGetField(object, properties, args);
         } catch (NoSuchFieldException e) {
@@ -340,18 +385,15 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
     }
 
     /**
-     * @param object
-     * @param properties
-     * @param args
-     * @return Object
-     * @throws NoSuchFieldException
-     * @throws SecurityException
-     * @throws IllegalArgumentException
-     * @throws IllegalAccessException
+     * Tries to retrieve a field using different argument types.
+     * @param object Object to inspect
+     * @param properties Property path queue
+     * @param args Arguments
+     * @return Retrieved object
+     * @throws Exception In case of failure to obtain field
      */
     @SuppressWarnings("unchecked")
-    private static Object tryGetField(Object object, Queue<String> properties, Object args)
-            throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+    private static Object tryGetField(Object object, Queue<String> properties, Object args) throws Exception {
         Queue<String> propCopy = new LinkedList<>(properties);
 
         if (args instanceof Queue) {
@@ -366,10 +408,11 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
     }
 
     /**
-     * @param object
-     * @param properties
-     * @param args
-     * @return Object
+     * Tries to retrieve a method using different argument types.
+     * @param object Object to inspect
+     * @param properties Property path queue
+     * @param args Arguments
+     * @return Retrieved object
      */
     @SuppressWarnings("unchecked")
     private static Object tryGetMethod(Object object, Queue<String> properties, Object args) {
@@ -391,17 +434,14 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
     }
 
     /**
-     * @param object
-     * @param properties
-     * @param params
-     * @return Object
-     * @throws NoSuchFieldException
-     * @throws SecurityException
-     * @throws IllegalArgumentException
-     * @throws IllegalAccessException
+     * Retrieves a field value from an object recursively.
+     * @param object Object to inspect
+     * @param properties Property path queue
+     * @param params Arguments
+     * @return Field value
+     * @throws Exception In case of failure to obtain field
      */
-    private static Object getField(Object object, Queue<String> properties, Object params)
-            throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+    private static Object getField(Object object, Queue<String> properties, Object params) throws Exception {
         String propertyField = properties.poll();
         Object currentObject = object;
 
@@ -415,19 +455,14 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
     }
 
     /**
-     * @param object
-     * @param propertyPath
-     * @param params
-     * @return Object
-     * @throws NoSuchMethodException
-     * @throws SecurityException
-     * @throws IllegalAccessException
-     * @throws IllegalArgumentException
-     * @throws InvocationTargetException
+     * Retrieves a method result from an object recursively.
+     * @param object Object to inspect
+     * @param propertyPath Property path queue
+     * @param params Arguments
+     * @return Method result
+     * @throws Exception In case of failure to obtain method
      */
-    public static Object getMethod(Object object, Queue<String> propertyPath, Object params)
-            throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
-            InvocationTargetException {
+    public static Object getMethod(Object object, Queue<String> propertyPath, Object params) throws Exception {
 
         String property = propertyPath.poll();
         Pattern namePattern = Pattern.compile(REGEX_METHOD_BY_NAME_PARAMS);
@@ -448,23 +483,18 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
     }
 
     /**
-     * @param object
-     * @param propertyPath
-     * @param params
-     * @param matcher
-     * @param isNameParams
-     * @return Object
-     * @throws NoSuchMethodException
-     * @throws SecurityException
-     * @throws IllegalAccessException
-     * @throws IllegalArgumentException
-     * @throws InvocationTargetException
+     * Handles invoking a method with name-based or number-based parameters.
+     * @param object Object to inspect
+     * @param propertyPath Remaining property path queue
+     * @param params Arguments
+     * @param matcher Regex matcher
+     * @param isNameParams True if using named parameters
+     * @return Result of method invocation
+     * @throws Exception In case of failure to handle method
      */
     @SuppressWarnings("unchecked")
     private static Object handleMethod(Object object, Queue<String> propertyPath, Object params, Matcher matcher,
-            boolean isNameParams)
-            throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
-            InvocationTargetException {
+            boolean isNameParams) throws Exception {
 
         String function = matcher.group("function");
         Object[] args;
@@ -523,7 +553,11 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
     }
 
     /**
-     * @return Checker
+     * Ends the current checker and returns the previous checker in the chain.
+     * Merges the current exception tracker into the previous checker's tracker.
+     * Useful for nested property checks.
+     *
+     * @return The previous checker in the chain
      */
     public Checker end(){
         ExceptionTracker exceptionTracker = this.exceptionTracker;
@@ -532,7 +566,9 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
     }
 
     /**
-     * @return T
+     * Returns the object being checked by this checker.
+     *
+     * @return The object under validation
      */
     public T getObject() {
         return this.object;

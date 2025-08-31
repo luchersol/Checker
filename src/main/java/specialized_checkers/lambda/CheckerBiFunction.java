@@ -8,12 +8,30 @@ import util.AbstractChecker;
 import util.Cloner;
 import util.Utils;
 
+
 /**
- * Checker for BiFunction instances, providing fluent validation methods.
+ * A specialized checker for {@link BiFunction} instances, providing a fluent API for validating
+ * the behavior of a {@code BiFunction<T, U, R>}. This class allows you to assert that a given
+ * {@code BiFunction} can be applied without throwing exceptions, produces expected results,
+ * or returns non-null values for specific inputs. It also supports optional deep cloning of
+ * input arguments before passing them to the function, to ensure immutability or test side effects.
+ * <p>
+ * Example usage:
+ * <pre>
+ *     CheckerBiFunction&lt;String, Integer, String&gt; checker =
+ *         CheckerBiFunction.check((s, i) -> s.repeat(i))
+ *             .activateDeepClone()
+ *             .applyWithoutException("abc", 2)
+ *             .producesExpected("abc", 2, "abcabc")
+ *             .producesNonNull("abc", 2);
+ * </pre>
  *
- * @param <T> the type of the first input to the function
- * @param <U> the type of the second input to the function
+ * @param <T> the type of the first argument to the function
+ * @param <U> the type of the second argument to the function
  * @param <R> the type of the result of the function
+ *
+ * @see BiFunction
+ * @see AbstractChecker
  */
 public class CheckerBiFunction<T, U, R> extends AbstractChecker<BiFunction<T, U, R>, CheckerBiFunction<T, U, R>> {
 
@@ -22,6 +40,12 @@ public class CheckerBiFunction<T, U, R> extends AbstractChecker<BiFunction<T, U,
 
     private boolean deepClone;
 
+    /**
+     * Constructs a new {@code CheckerBiFunction} with the specified {@link BiFunction} and name.
+     *
+     * @param function the {@link BiFunction} to be wrapped and checked
+     * @param name the name identifying this checker function
+     */
     protected CheckerBiFunction(BiFunction<T, U, R> function, String name) {
         super(function, name);
     }
@@ -29,6 +53,9 @@ public class CheckerBiFunction<T, U, R> extends AbstractChecker<BiFunction<T, U,
     /**
      * Creates a CheckerBiFunction for the given BiFunction and assigns a custom name.
      *
+     * @param <T>      the type of the first input to the {@code BiFunction} being checked
+     * @param <U>      the type of the second input to the {@code BiFunction} being checked
+     * @param <R>      the type of the result returned by the {@code BiFunction}
      * @param bifunction the BiFunction to check
      * @param name the name to assign to this checker
      * @return a CheckerBiFunction instance for the given BiFunction
@@ -40,6 +67,9 @@ public class CheckerBiFunction<T, U, R> extends AbstractChecker<BiFunction<T, U,
     /**
      * Creates a CheckerBiFunction for the given BiFunction with a default name.
      *
+     * @param <T>      the type of the first input to the {@code BiFunction} being checked
+     * @param <U>      the type of the second input to the {@code BiFunction} being checked
+     * @param <R>      the type of the result returned by the {@code BiFunction}
      * @param bifunction the BiFunction to check
      * @return a CheckerBiFunction instance for the given BiFunction
      */

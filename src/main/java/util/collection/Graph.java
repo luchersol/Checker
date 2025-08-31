@@ -102,13 +102,14 @@ public class Graph<N,E extends Number> {
             return this.to;
         }
 
+
     /**
      * Returns the weight of the edge as a double.
      *
-     * @return the weight of the edge
+     * @return the weight of the edge as a double, or 0.0 if the weight is null
      */
     public double getWeight(){
-            return this.weight.doubleValue();
+            return this.weight == null ? 0.0 : this.weight.doubleValue();
         }
 
     /**
@@ -174,18 +175,24 @@ public class Graph<N,E extends Number> {
         this(Collections.emptyList(), false);
     }
 
+
     /**
-     * @param node
+     * Adds a node to the graph if it does not already exist.
+     *
+     * @param node the node to add
      */
     private void addNode(N node) {
         this.adjacencyMap.putIfAbsent(node, new HashSet<>());
     }
 
+
     /**
-     * @param from
-     * @param to
-     * @param weight
-     * @param properties
+     * Adds an edge to the graph between two nodes, with optional weight and properties.
+     *
+     * @param from       the source node
+     * @param to         the destination node
+     * @param weight     the weight of the edge (nullable)
+     * @param properties additional properties for the edge (nullable)
      */
     private void addEdge(N from, N to, E weight, Map<String, ?> properties) {
         addNode(from);
@@ -196,18 +203,24 @@ public class Graph<N,E extends Number> {
         }
     }
 
-    /**
-     * @param edges
-     */
-    private void addEdges(Collection<Edge<N,E>> edges) {
-       for (Edge<N,E> edge : edges) {
-            this.addEdge(edge.from, edge.to, edge.weight, edge.properties);
-       }
-    }
+
+     /**
+      * Adds a collection of edges to the graph.
+      *
+      * @param edges the collection of edges to add
+      */
+     private void addEdges(Collection<Edge<N,E>> edges) {
+         for (Edge<N,E> edge : edges) {
+                this.addEdge(edge.from, edge.to, edge.weight, edge.properties);
+         }
+     }
+
 
     /**
-     * @param node
-     * @return Set<N>
+     * Returns the set of neighbors for a given node.
+     *
+     * @param node the node whose neighbors are to be returned
+     * @return a set of neighboring nodes
      */
     public Set<N> getNeighbors(N node) {
         return this.adjacencyMap.getOrDefault(node, Collections.emptySet())
@@ -216,38 +229,51 @@ public class Graph<N,E extends Number> {
                                 .collect(Collectors.toSet());
     }
 
+
     /**
-     * @return Set<N>
+     * Returns the set of all nodes in the graph.
+     *
+     * @return a set of all nodes
      */
     public Set<N> getNodes() {
         return this.adjacencyMap.keySet();
     }
 
+
     /**
-     * @return Set<Edge<N, E>>
+     * Returns the set of all edges in the graph.
+     *
+     * @return a set of all edges
      */
     public Set<Graph.Edge<N,E>> getEdges() {
         return this.adjacencyMap.values().stream().flatMap(Set::stream).collect(Collectors.toSet());
     }
 
-    /**
-     * @return boolean
-     */
-    // CHECKERS
 
+    /**
+     * Checks if the graph is empty (contains no nodes).
+     *
+     * @return true if the graph is empty, false otherwise
+     */
     public boolean isEmpty() {
         return this.adjacencyMap.isEmpty();
     }
 
+
     /**
-     * @return boolean
+     * Checks if the graph is a tree (undirected, connected, and acyclic).
+     *
+     * @return true if the graph is a tree, false otherwise
      */
     public boolean isTree() {
         return !isDirected() && isConnected() && !hasCycle();
     }
 
+
     /**
-     * @return boolean
+     * Checks if the graph is a binary tree (each node has at most two children).
+     *
+     * @return true if the graph is a binary tree, false otherwise
      */
     public boolean isBinaryTree() {
         if(isTree()) return false;
@@ -272,15 +298,21 @@ public class Graph<N,E extends Number> {
         return true;
     }
 
+
     /**
-     * @return boolean
+     * Checks if the graph is directed.
+     *
+     * @return true if the graph is directed, false otherwise
      */
     public boolean isDirected() {
         return this.directed;
     }
 
+
     /**
-     * @return boolean
+     * Checks if the graph is connected (there is a path between every pair of nodes).
+     *
+     * @return true if the graph is connected, false otherwise
      */
     public boolean isConnected() {
         if (this.adjacencyMap.isEmpty()) return true;
@@ -290,8 +322,11 @@ public class Graph<N,E extends Number> {
         return visited.size() == this.adjacencyMap.size();
     }
 
+
     /**
-     * @return boolean
+     * Checks if the graph contains any cycles.
+     *
+     * @return true if the graph has a cycle, false otherwise
      */
     public boolean hasCycle() {
         Set<N> visited = new HashSet<>();
@@ -303,18 +338,24 @@ public class Graph<N,E extends Number> {
         return false;
     }
 
+
     /**
-     * @param node
-     * @return boolean
+     * Checks if the graph contains the specified node.
+     *
+     * @param node the node to check
+     * @return true if the node exists in the graph, false otherwise
      */
     public boolean containsNode(N node) {
         return this.adjacencyMap.containsKey(node);
     }
 
+
     /**
-     * @param from
-     * @param to
-     * @return boolean
+     * Checks if the graph contains an edge from one node to another.
+     *
+     * @param from the source node
+     * @param to   the destination node
+     * @return true if the edge exists, false otherwise
      */
     public boolean containsEdge(N from, N to) {
         return this.adjacencyMap.getOrDefault(from, Collections.emptySet())
@@ -322,61 +363,82 @@ public class Graph<N,E extends Number> {
                                 .anyMatch(edge -> Utils.equalsContent(edge.getTo(), to));
     }
 
+
     /**
-     * @param edge
-     * @return boolean
+     * Checks if the graph contains the specified edge.
+     *
+     * @param edge the edge to check
+     * @return true if the edge exists, false otherwise
      */
     public boolean containsEdge(Graph.Edge<N,E> edge) {
         return this.adjacencyMap.containsKey(edge.from) && this.adjacencyMap.get(edge.from).contains(edge.to);
     }
 
+
     /**
-     * @param condition
-     * @return boolean
+     * Checks if any node in the graph matches the given condition.
+     *
+     * @param condition the predicate to test nodes
+     * @return true if any node matches, false otherwise
      */
     public boolean anyNodesMatch(Predicate<N> condition) {
         return this.adjacencyMap.keySet().stream().anyMatch(condition);
     }
 
+
     /**
-     * @param condition
-     * @return boolean
+     * Checks if all nodes in the graph match the given condition.
+     *
+     * @param condition the predicate to test nodes
+     * @return true if all nodes match, false otherwise
      */
     public boolean allNodesMatch(Predicate<N> condition) {
         return this.adjacencyMap.keySet().stream().allMatch(condition);
     }
 
+
     /**
-     * @param condition
-     * @return boolean
+     * Checks if any edge in the graph matches the given condition.
+     *
+     * @param condition the predicate to test edges
+     * @return true if any edge matches, false otherwise
      */
     public boolean anyEdgesMatch(Predicate<Edge<N,E>> condition) {
         return this.adjacencyMap.values().stream().flatMap(set -> set.stream()).anyMatch(condition);
     }
 
+
     /**
-     * @param condition
-     * @return boolean
+     * Checks if all edges in the graph match the given condition.
+     *
+     * @param condition the predicate to test edges
+     * @return true if all edges match, false otherwise
      */
     public boolean allEdgesMatch(Predicate<Edge<N,E>> condition) {
         return this.adjacencyMap.values().stream().flatMap(set -> set.stream()).allMatch(condition);
     }
 
+
     /**
-     * @param start
-     * @param end
-     * @return boolean
+     * Checks if there is a path between two nodes in the graph.
+     *
+     * @param start the starting node
+     * @param end   the target node
+     * @return true if a path exists, false otherwise
      */
     public boolean hasPath(N start, N end) {
         Set<N> visited = new HashSet<>();
         return dfsPath(start, end, visited);
     }
 
+
     /**
-     * @param current
-     * @param target
-     * @param visited
-     * @return boolean
+     * Depth-first search to determine if a path exists between two nodes.
+     *
+     * @param current the current node
+     * @param target  the target node
+     * @param visited the set of already visited nodes
+     * @return true if a path exists, false otherwise
      */
     private boolean dfsPath(N current, N target, Set<N> visited) {
         if (current.equals(target)) return true;
@@ -388,24 +450,33 @@ public class Graph<N,E extends Number> {
         return false;
     }
 
+
     /**
-     * @return int
+     * Returns the number of nodes in the graph.
+     *
+     * @return the number of nodes
      */
     public int countNodes(){
         return this.adjacencyMap.size();
     }
 
+
     /**
-     * @return int
+     * Returns the number of edges in the graph.
+     *
+     * @return the number of edges
      */
     public int countEdges(){
         int count = adjacencyMap.values().stream().mapToInt(Set::size).sum();
         return directed ? count : count / 2;
     }
 
+
     /**
-     * @param node
-     * @param visited
+     * Depth-first search to visit all nodes reachable from a given node.
+     *
+     * @param node    the starting node
+     * @param visited the set of already visited nodes
      */
     private void dfsVisit(N node, Set<N> visited) {
         if (!visited.add(node)) return;
@@ -414,11 +485,14 @@ public class Graph<N,E extends Number> {
         }
     }
 
+
     /**
-     * @param node
-     * @param visited
-     * @param recStack
-     * @return boolean
+     * Depth-first search to detect cycles in the graph.
+     *
+     * @param node     the current node
+     * @param visited  the set of already visited nodes
+     * @param recStack the recursion stack for cycle detection
+     * @return true if a cycle is detected, false otherwise
      */
     private boolean dfsCycle(N node, Set<N> visited, Set<N> recStack) {
         if (recStack.contains(node)) return true;
@@ -435,8 +509,11 @@ public class Graph<N,E extends Number> {
         return false;
     }
 
+
     /**
-     * @return int
+     * Returns the number of connected components in the graph.
+     *
+     * @return the number of connected components
      */
     public int connectedComponents() {
         Set<N> visited = new HashSet<>();

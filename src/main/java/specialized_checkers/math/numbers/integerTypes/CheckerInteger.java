@@ -2,8 +2,6 @@ package specialized_checkers.math.numbers.integerTypes;
 
 import static util.Message.*;
 
-import java.util.function.Predicate;
-
 import specialized_checkers.math.numbers.InterfaceCheckerNumber;
 import util.AbstractChecker;
 
@@ -19,8 +17,15 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
     private static final String INIT_INTEGER_TYPES = "numbers.integer_types";
     private static final String DEFAULT_NAME = "Integer";
 
-    protected CheckerInteger(Integer object, String name) {
-        super(object, name);
+
+    /**
+     * Constructs a new {@code CheckerInteger} with the specified nInteger and name.
+     *
+     * @param nInteger the {@link Integer} to be wrapped and checked
+     * @param name the name identifying this checker function
+     */
+    protected CheckerInteger(Integer nInteger, String name) {
+        super(nInteger, name);
     }
 
     /**
@@ -99,7 +104,7 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
      * @return this {@code CheckerInteger} instance for further validation
      */
     public CheckerInteger isPrime() {
-        Predicate<Integer> isPrime = n_integer -> {
+        return is(n_integer -> {
             if (n_integer <= 1) return false;
             if (n_integer <= 3) return true;
             if (n_integer % 2 == 0 || n_integer % 3 == 0) return false;
@@ -109,9 +114,7 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
             }
 
             return true;
-        };
-
-        return is(isPrime, sendMessage(INIT_INTEGER_TYPES, "is_prime", DEFAULT_NAME));
+        }, sendMessage(INIT_INTEGER_TYPES, "is_prime", DEFAULT_NAME));
     }
 
     /**
@@ -208,18 +211,24 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
         return is(n_integer -> n_integer > number, sendMessage(INIT_NUMBERS, "is_greather_than", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is greater than the specified {@code Float} value.
+     *
+     * @param number the {@code Float} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isGreaterThan(Float number) {
         return is(n_integer -> n_integer > number, sendMessage(INIT_NUMBERS, "is_greather_than", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is greater than the specified {@code Double} value.
+     *
+     * @param number the {@code Double} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isGreaterThan(Double number) {
@@ -227,8 +236,10 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
     }
 
     /**
-     * @param number
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is greater than or equal to the specified {@code Byte} value.
+     *
+     * @param number the {@code Byte} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isGreaterOrEqualTo(Byte number) {
@@ -236,8 +247,10 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
     }
 
     /**
-     * @param number
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is greater than or equal to the specified {@code Short} value.
+     *
+     * @param number the {@code Short} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isGreaterOrEqualTo(Short number) {
@@ -245,8 +258,10 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
     }
 
     /**
-     * @param number
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is greater than or equal to the specified {@code Integer} value.
+     *
+     * @param number the {@code Integer} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isGreaterOrEqualTo(Integer number) {
@@ -254,26 +269,34 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
     }
 
     /**
-     * @param number
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is greater than or equal to the specified {@code Long} value.
+     *
+     * @param number the {@code Long} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isGreaterOrEqualTo(Long number) {
         return is(n_integer -> n_integer >= number, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is greater than or equal to the specified {@code Float} value.
+     *
+     * @param number the {@code Float} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isGreaterOrEqualTo(Float number) {
         return is(n_integer -> n_integer >= number, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is greater than or equal to the specified {@code Double} value.
+     *
+     * @param number the {@code Double} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isGreaterOrEqualTo(Double number) {
@@ -281,8 +304,10 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
     }
 
     /**
-     * @param number
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is less than or equal to the specified {@code Byte} value.
+     *
+     * @param number the {@code Byte} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isLessThan(Byte number) {
@@ -290,8 +315,10 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
     }
 
     /**
-     * @param number
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is less than or equal to the specified {@code Short} value.
+     *
+     * @param number the {@code Short} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isLessThan(Short number) {
@@ -299,8 +326,10 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
     }
 
     /**
-     * @param number
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is less than or equal to the specified {@code Integer} value.
+     *
+     * @param number the {@code Integer} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isLessThan(Integer number) {
@@ -308,8 +337,10 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
     }
 
     /**
-     * @param number
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is less than or equal to the specified {@code Long} value.
+     *
+     * @param number the {@code Long} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isLessThan(Long number) {
@@ -317,8 +348,10 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
     }
 
     /**
-     * @param number
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is less than the specified {@code Float} value.
+     *
+     * @param number the {@code Float} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isLessThan(Float number) {
@@ -326,8 +359,10 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
     }
 
     /**
-     * @param number
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is less than the specified {@code Double} value.
+     *
+     * @param number the {@code Double} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isLessThan(Double number) {
@@ -335,8 +370,10 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
     }
 
     /**
-     * @param number
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is less than or equal to the specified {@code Byte} value.
+     *
+     * @param number the {@code Byte} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isLessOrEqualTo(Byte number) {
@@ -344,8 +381,10 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
     }
 
     /**
-     * @param number
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is less than or equal to the specified {@code Short} value.
+     *
+     * @param number the {@code Short} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isLessOrEqualTo(Short number) {
@@ -353,8 +392,10 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
     }
 
     /**
-     * @param number
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is less than or equal to the specified {@code Integer} value.
+     *
+     * @param number the {@code Integer} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isLessOrEqualTo(Integer number) {
@@ -362,26 +403,34 @@ public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> imp
     }
 
     /**
-     * @param number
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is less than or equal to the specified {@code Long} value.
+     *
+     * @param number the {@code Long} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isLessOrEqualTo(Long number) {
         return is(n_integer -> n_integer <= number, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is less than or equal to the specified {@code Float} value.
+     *
+     * @param number the {@code Float} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isLessOrEqualTo(Float number) {
         return is(n_integer -> n_integer <= number, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerInteger
+     * Asserts that the {@code Integer} value is less than or equal to the specified {@code Double} value.
+     *
+     * @param number the {@code Double} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
      */
     @Override
     public CheckerInteger isLessOrEqualTo(Double number) {

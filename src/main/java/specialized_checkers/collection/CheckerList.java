@@ -9,11 +9,35 @@ import java.util.function.Predicate;
 
 import util.AbstractChecker;
 
+/**
+ * A specialized checker for {@link List} collections, providing fluent API methods
+ * to perform various checks and validations on lists.
+ * <p>
+ * This class extends {@link AbstractChecker} and offers methods to check for emptiness,
+ * element matching, distinctness, subset/superset relationships, and percentage-based conditions.
+ * </p>
+ *
+ * <p>Example usage:</p>
+ * <pre>{@code
+ * List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+ * CheckerList<String> checker = CheckerList.check(names);
+ * checker.isEmpty().allDistinct().anyMatch(name -> name.startsWith("A"));
+ * }</pre>
+ *
+ * @param <T> the type of elements in the list
+ * @see AbstractChecker
+ */
 public class CheckerList<T> extends AbstractChecker<List<T>, CheckerList<T>>{
 
     private static final String INIT_LIST = "collections.list";
     private static final String DEFAULT_NAME = "List";
 
+    /**
+     * Constructs a new {@code CheckerList} with the specified list and name.
+     *
+     * @param list the underlying list to be wrapped by this {@code CheckerList}
+     * @param name the name associated with this {@code CheckerList}
+     */
     protected CheckerList(List<T> list, String name) {
         super(list, name);
     }

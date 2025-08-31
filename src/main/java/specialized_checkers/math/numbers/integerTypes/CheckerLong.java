@@ -19,8 +19,15 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
     private static final String INIT_INTEGER_TYPES = "numbers.integer_types";
     private static final String DEFAULT_NAME = "Long";
 
-    protected CheckerLong(Long object, String name) {
-        super(object, name);
+
+    /**
+     * Constructs a new {@code CheckerLong} with the specified nLong and name.
+     *
+     * @param nLong the {@link Long} to be wrapped and checked
+     * @param name the name identifying this checker function
+     */
+    protected CheckerLong(Long nLong, String name) {
+        super(nLong, name);
     }
 
     /**
@@ -65,7 +72,6 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
         return check(number.longValue());
     }
 
-
     /**
      * Returns this checker instance (for fluent API usage).
      *
@@ -82,7 +88,7 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
      * @return this {@code CheckerLong} instance for further validation
      */
     public CheckerLong isEven(){
-        return is(n_long -> n_long % 2 == 0, sendMessage(INIT_INTEGER_TYPES, "is_pair", DEFAULT_NAME));
+        return is(n_long -> (n_long & 1) == 0, sendMessage(INIT_INTEGER_TYPES, "is_even", DEFAULT_NAME));
     }
 
     /**
@@ -91,7 +97,7 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
      * @return this {@code CheckerLong} instance for further validation
      */
     public CheckerLong isOdd(){
-        return is(n_long -> n_long % 2 != 0, sendMessage(INIT_INTEGER_TYPES, "is_even", DEFAULT_NAME));
+        return is(n_long -> (n_long & 1) == 1, sendMessage(INIT_INTEGER_TYPES, "is_odd", DEFAULT_NAME));
     }
 
     /**
@@ -209,18 +215,24 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
         return is(n_long -> n_long > number, sendMessage(INIT_NUMBERS, "is_greather_than", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is greater than the specified {@code Float} value.
+     *
+     * @param number the {@code Float} value to compare against
+     * @return this {@code CheckerLong} instance for further validation
      */
     @Override
     public CheckerLong isGreaterThan(Float number) {
         return is(n_long -> n_long > number, sendMessage(INIT_NUMBERS, "is_greather_than", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is greater than the specified {@code Double} value.
+     *
+     * @param number the {@code Double} value to compare against
+     * @return this {@code CheckerLong} instance for further validation
      */
     @Override
     public CheckerLong isGreaterThan(Double number) {
@@ -228,8 +240,10 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
     }
 
     /**
-     * @param number
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is greater than or equal to the specified {@code Byte} value.
+     *
+     * @param number the {@code Byte} value to compare against
+     * @return this {@code CheckerLong} instance for further validation
      */
     @Override
     public CheckerLong isGreaterOrEqualTo(Byte number) {
@@ -237,8 +251,10 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
     }
 
     /**
-     * @param number
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is greater than or equal to the specified {@code Short} value.
+     *
+     * @param number the {@code Short} value to compare against
+     * @return this {@code CheckerLong} instance for further validation
      */
     @Override
     public CheckerLong isGreaterOrEqualTo(Short number) {
@@ -246,8 +262,10 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
     }
 
     /**
-     * @param number
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is greater than or equal to the specified {@code Integer} value.
+     *
+     * @param number the {@code Integer} value to compare against
+     * @return this {@code CheckerLong} instance for further validation
      */
     @Override
     public CheckerLong isGreaterOrEqualTo(Integer number) {
@@ -255,35 +273,43 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
     }
 
     /**
-     * @param number
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is greater than or equal to the specified {@code Long} value.
+     *
+     * @param number the {@code Long} value to compare against
+     * @return this {@code CheckerLong} instance for further validation
      */
     @Override
     public CheckerLong isGreaterOrEqualTo(Long number) {
         return is(n_long -> n_long >= number, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is greater than or equal to the specified {@code Float} value.
+     *
+     * @param number the {@code Float} value to compare against
+     * @return this {@code CheckerLong} instance for further validation
      */
-    @Override
     public CheckerLong isGreaterOrEqualTo(Float number) {
         return is(n_long -> n_long >= number, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is greater than or equal to the specified {@code Double} value.
+     *
+     * @param number the {@code Double} value to compare against
+     * @return this {@code CheckerLong} instance for further validation
      */
-    @Override
     public CheckerLong isGreaterOrEqualTo(Double number) {
         return is(n_long -> n_long >= number, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", DEFAULT_NAME, number));
     }
 
     /**
-     * @param number
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is less than the specified {@code Byte} value.
+     *
+     * @param number the {@code Byte} value to compare against
+     * @return this {@code CheckerLong} instance for further validation
      */
     @Override
     public CheckerLong isLessThan(Byte number) {
@@ -291,8 +317,10 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
     }
 
     /**
-     * @param number
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is less than the specified {@code Short} value.
+     *
+     * @param number the {@code Short} value to compare against
+     * @return this {@code CheckerLong} instance for further validation
      */
     @Override
     public CheckerLong isLessThan(Short number) {
@@ -300,8 +328,10 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
     }
 
     /**
-     * @param number
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is less than the specified {@code Integer} value.
+     *
+     * @param number the {@code Integer} value to compare against
+     * @return this {@code CheckerLong} instance for further validation
      */
     @Override
     public CheckerLong isLessThan(Integer number) {
@@ -309,8 +339,10 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
     }
 
     /**
-     * @param number
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is less than the specified {@code Long} value.
+     *
+     * @param number the {@code Long} value to compare against
+     * @return this {@code CheckerLong} instance for further validation
      */
     @Override
     public CheckerLong isLessThan(Long number) {
@@ -318,8 +350,10 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
     }
 
     /**
-     * @param number
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is less than the specified {@code Float} value.
+     *
+     * @param number the {@code Float} value to compare against
+     * @return this {@code CheckerLong} instance for further validation
      */
     @Override
     public CheckerLong isLessThan(Float number) {
@@ -327,8 +361,10 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
     }
 
     /**
-     * @param number
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is less than the specified {@code Double} value.
+     *
+     * @param number the {@code Double} value to compare against
+     * @return this {@code CheckerLong} instance for further validation
      */
     @Override
     public CheckerLong isLessThan(Double number) {
@@ -336,8 +372,10 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
     }
 
     /**
-     * @param number
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is less than or equal to the specified {@code Byte} value.
+     *
+     * @param number the {@code Byte} value to compare against
+     * @return this {@code CheckerLong} instance for further validation
      */
     @Override
     public CheckerLong isLessOrEqualTo(Byte number) {
@@ -345,8 +383,10 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
     }
 
     /**
-     * @param number
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is less than or equal to the specified {@code Short} value.
+     *
+     * @param number the {@code Short} value to compare against
+     * @return this {@code CheckerLong} instance for further validation
      */
     @Override
     public CheckerLong isLessOrEqualTo(Short number) {
@@ -354,8 +394,10 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
     }
 
     /**
-     * @param number
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is less than or equal to the specified {@code Integer} value.
+     *
+     * @param number the {@code Integer} value to compare against
+     * @return this {@code CheckerLong} instance for further validation
      */
     @Override
     public CheckerLong isLessOrEqualTo(Integer number) {
@@ -363,8 +405,10 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
     }
 
     /**
-     * @param number
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is less than or equal to the specified {@code Long} value.
+     *
+     * @param number the {@code Long} value to compare against
+     * @return this {@code CheckerLong} instance for further validation
      */
     @Override
     public CheckerLong isLessOrEqualTo(Long number) {
@@ -372,17 +416,22 @@ public class CheckerLong extends AbstractChecker<Long, CheckerLong> implements I
     }
 
     /**
-     * @param number
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is less than or equal to the specified {@code Float} value.
+     *
+     * @param number the {@code Float} value to compare against
+     * @return this {@code CheckerLong} instance for further validation
      */
     @Override
     public CheckerLong isLessOrEqualTo(Float number) {
         return is(n_long -> n_long <= number, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerLong
+     * Asserts that the {@code Long} value is less than or equal to the specified {@code Double} value.
+     *
+     * @param number the {@code Double} value to compare against
+     * @return this {@code CheckerLong} instance for further validation
      */
     @Override
     public CheckerLong isLessOrEqualTo(Double number) {

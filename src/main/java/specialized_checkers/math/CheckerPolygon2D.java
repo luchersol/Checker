@@ -11,9 +11,16 @@ import util.math.Polygon2D;
  */
 public class CheckerPolygon2D extends AbstractChecker<Polygon2D, CheckerPolygon2D> {
 
-    private static final String INIT_POLYGON_2D = "math.polygon2d";
+    // private static final String INIT_POLYGON_2D = "math.polygon2d";
     private static final String DEFAULT_NAME = "Polygon2D";
 
+
+    /**
+     * Constructs a new {@code CheckerPolygon2D} with the specified polygon2d and name.
+     *
+     * @param polygon2d the {@code Polygon2D} to be used by this checker
+     * @param name the name identifying this checker
+     */
     protected CheckerPolygon2D(Polygon2D polygon2d, String name) {
         super(polygon2d, name);
     }

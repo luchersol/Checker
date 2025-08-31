@@ -11,14 +11,18 @@ import util.AbstractChecker;
  * CheckerDuration is a specialized checker for validating and performing assertions on {@link Duration} values.
  * <p>
  * It provides a fluent API for common duration validations such as checking positivity, negativity, zero, and comparisons with other durations or temporal units.
- *
- * @param <T> the type of value to be checked, which is {@link Duration} in this case
  */
 public class CheckerDuration extends AbstractChecker<Duration, CheckerDuration> {
 
     private static final String INIT_DURATION = "time.duration";
     private static final String DEFAULT_NAME = "Duration";
 
+    /**
+     * Constructs a new {@code CheckerDuration} with the specified duration and name.
+     *
+     * @param duration the {@link Duration} to be associated with this checker
+     * @param name the name of the checker
+     */
     protected CheckerDuration(Duration duration, String name) {
         super(duration, name);
     }

@@ -10,14 +10,18 @@ import util.AbstractChecker;
  * CheckerDate is a specialized checker for validating and performing assertions on {@link Date} values.
  * <p>
  * It provides a fluent API for common date validations such as checking if a date is before, after, in range, past, or future.
- *
- * @param <T> the type of value to be checked, which is {@link Date} in this case
  */
 public class CheckerDate extends AbstractChecker<Date, CheckerDate> implements InterfaceCheckerDate<CheckerDate, Date> {
 
     private static final String INIT_TEMPORAL = "time.temporal";
     private static final String DEFAULT_NAME = "Date";
 
+    /**
+     * Constructs a new {@code CheckerDate} with the specified date and name.
+     *
+     * @param date the {@link Date} to be wrapped and checked
+     * @param name the name identifying this checker function
+     */
     protected CheckerDate(Date date, String name) {
         super(date, name);
     }

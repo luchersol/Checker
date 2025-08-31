@@ -10,13 +10,27 @@ import util.AbstractChecker;
 import util.Cloner;
 import util.Utils;
 
+
 /**
- * Checker for {@link Consumer} instances, providing fluent validation methods for lambda expressions or operations that accept a single input argument and return no result.
+ * A specialized checker for {@link java.util.function.Consumer} instances, providing fluent assertions
+ * for verifying the behavior of Consumer operations. This class allows you to check if a Consumer
+ * executes without exceptions, modifies its input as expected, or leaves its input unchanged.
  * <p>
- * This class allows you to validate and assert properties of {@code Consumer} objects in a fluent and readable way.
- * </p>
+ * Supports optional deep cloning of input objects to ensure that original inputs are not modified
+ * during validation.
  *
- * @param <T> the type of the input to the {@code Consumer} operation being checked
+ * <p>Example usage:
+ * <pre>{@code
+ * CheckerConsumer<MyObject> checker = CheckerConsumer.check(myConsumer)
+ *     .activateDeepClone()
+ *     .applyWithoutException(myObject)
+ *     .modifiesInput(myObject, obj -> obj.isModified());
+ * }</pre>
+ *
+ * @param <T> the type of the input to the {@code Consumer}
+ *
+ * @see java.util.function.Consumer
+ * @see AbstractChecker
  */
 public class CheckerConsumer<T> extends AbstractChecker<Consumer<T>, CheckerConsumer<T>> {
 
@@ -25,6 +39,12 @@ public class CheckerConsumer<T> extends AbstractChecker<Consumer<T>, CheckerCons
 
     private boolean deepClone;
 
+    /**
+     * Constructs a new {@code CheckerConsumer} with the specified consumer and name.
+     *
+     * @param consumer the {@link Consumer} to be used by this checker
+     * @param name the name identifying this checker
+     */
     protected CheckerConsumer(Consumer<T> consumer, String name) {
         super(consumer, name);
     }

@@ -8,11 +8,38 @@ import java.util.Map;
 import util.AbstractChecker;
 import util.collection.Tree;
 
+/**
+ * A specialized checker for {@link Tree} data structures, providing a fluent API to assert various properties
+ * and invariants about a tree. This class extends {@link AbstractChecker} and allows for custom or default
+ * naming of the checker instance.
+ * <p>
+ * CheckerTree provides static factory methods for convenient construction from a {@code Tree} instance,
+ * a root value, or a root value with a map of children. It supports checks for emptiness, binary structure,
+ * symmetry, fullness, depth, number of leaves, and diameter, among others.
+ * </p>
+ *
+ * <h2>Usage Example:</h2>
+ * <pre>{@code
+ * Tree<Integer> tree = new Tree<>(1);
+ * CheckerTree<Integer> checker = CheckerTree.check(tree);
+ * checker.isBinaryTree().minDepth(1);
+ * }</pre>
+ *
+ * @param <T> the type of elements stored in the tree
+ * @see Tree
+ * @see AbstractChecker
+ */
 public class CheckerTree<T> extends AbstractChecker<Tree<T>, CheckerTree<T>> {
 
     private static final String INIT_TREE = "collections.tree";
     private static final String DEFAULT_NAME = "Tree";
 
+    /**
+     * Constructs a new {@code CheckerTree} with the specified tree and name.
+     *
+     * @param tree the underlying tree structure to be wrapped or checked
+     * @param name the name associated with this {@code CheckerTree}
+     */
     protected CheckerTree(Tree<T> tree, String name) {
         super(tree, name);
     }

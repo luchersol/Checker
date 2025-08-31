@@ -10,14 +10,18 @@ import util.AbstractChecker;
  * CheckerLocalDateTime is a specialized checker for validating and performing assertions on {@link LocalDateTime} values.
  * <p>
  * It provides a fluent API for common local date-time validations such as checking if a date-time is before, after, in range, past, or future.
- *
- * @param <T> the type of value to be checked, which is {@link LocalDateTime} in this case
  */
 public class CheckerLocalDateTime extends AbstractChecker<LocalDateTime, CheckerLocalDateTime> implements InterfaceCheckerDate<CheckerLocalDateTime, LocalDateTime>  {
 
     private static final String INIT_TEMPORAL = "time.temporal";
     private static final String DEFAULT_NAME = "LocalDateTime";
 
+    /**
+     * Constructs a new {@code CheckerLocalDateTime} with the specified localdatetime and name.
+     *
+     * @param localdatetime the {@link LocalDateTime} to be wrapped and checked
+     * @param name the name identifying this checker function
+     */
     protected CheckerLocalDateTime(LocalDateTime localdatetime, String name) {
         super(localdatetime, name);
     }

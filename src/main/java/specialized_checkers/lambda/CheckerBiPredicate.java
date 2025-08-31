@@ -8,10 +8,15 @@ import util.AbstractChecker;
 import util.Cloner;
 
 /**
- * Checker for BiPredicate instances, providing fluent validation methods.
+ * A specialized checker for {@link BiPredicate} instances, providing a fluent API to verify
+ * their behavior with optional deep cloning of input arguments.
+ * <p>
+ * This class allows for testing whether a {@code BiPredicate} can be applied without exceptions,
+ * whether it evaluates to true or false for specific inputs, and whether it produces an expected result.
+ * Deep cloning of inputs can be enabled to ensure immutability during checks.
  *
- * @param <T> the type of the first input to the predicate
- * @param <U> the type of the second input to the predicate
+ * @param <T> the type of the first argument to the BiPredicate
+ * @param <U> the type of the second argument to the BiPredicate
  */
 public class CheckerBiPredicate<T, U> extends AbstractChecker<BiPredicate<T, U>, CheckerBiPredicate<T, U>> {
 
@@ -20,6 +25,12 @@ public class CheckerBiPredicate<T, U> extends AbstractChecker<BiPredicate<T, U>,
 
     private boolean deepClone;
 
+    /**
+     * Constructs a new {@code CheckerBiPredicate} with the specified {@link BiPredicate} and name.
+     *
+     * @param biPredicate the {@code BiPredicate} logic to be used by this checker
+     * @param name the name identifying this checker
+     */
     protected CheckerBiPredicate(BiPredicate<T, U> biPredicate, String name) {
         super(biPredicate, name);
     }
@@ -27,6 +38,8 @@ public class CheckerBiPredicate<T, U> extends AbstractChecker<BiPredicate<T, U>,
     /**
      * Creates a CheckerBiPredicate for the given BiPredicate and assigns a custom name.
      *
+     * @param <T>      the type of the first input to the {@code BiPredicate} being checked
+     * @param <U>      the type of the second input to the {@code BiPredicate} being checked
      * @param bipredicate the BiPredicate to check
      * @param name the name to assign to this checker
      * @return a CheckerBiPredicate instance for the given BiPredicate
@@ -38,6 +51,8 @@ public class CheckerBiPredicate<T, U> extends AbstractChecker<BiPredicate<T, U>,
     /**
      * Creates a CheckerBiPredicate for the given BiPredicate with a default name.
      *
+     * @param <T>      the type of the first input to the {@code BiPredicate} being checked
+     * @param <U>      the type of the second input to the {@code BiPredicate} being checked
      * @param bipredicate the BiPredicate to check
      * @return a CheckerBiPredicate instance for the given BiPredicate
      */

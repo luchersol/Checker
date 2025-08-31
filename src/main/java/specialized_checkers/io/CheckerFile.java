@@ -13,12 +13,38 @@ import java.util.stream.Stream;
 
 import util.AbstractChecker;
 
+/**
+ * {@code CheckerFile} provides a fluent API for performing various checks and validations on {@link java.io.File} objects.
+ * <p>
+ * This class extends {@code AbstractChecker} and allows users to verify file properties such as existence, type, permissions,
+ * size, extension, and content identity. It supports both files and directories, and can be used to validate files by path or by {@code File} instance.
+ * </p>
+ * <p>
+ * Example usage:
+ * </p>
+ * <pre>
+ *     CheckerFile.check("example.txt")
+ *         .exists()
+ *         .canRead()
+ *         .withExtension("txt");
+ * </pre>
+ *
+ * <p>
+ * The class supports method chaining for fluent validation.
+ * </p>
+ */
 public class CheckerFile extends AbstractChecker<File, CheckerFile> {
 
     private static final String INIT_FILE = "io.file";
     private static final String DEFAULT_NAME = "File";
 
 
+    /**
+     * Constructs a new {@code CheckerFile} with the specified file and name.
+     *
+     * @param file the {@link File} object representing the file to be associated with this {@code CheckerFile}
+     * @param name the name to be assigned to this {@code CheckerFile}
+     */
     protected CheckerFile(File file, String name) {
         super(file, name);
     }

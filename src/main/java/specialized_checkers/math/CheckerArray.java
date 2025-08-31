@@ -21,6 +21,12 @@ public class CheckerArray<T> extends AbstractChecker<T[], CheckerArray<T>>{
     private static final String INIT_ARRAY = "math.array";
     private static final String DEFAULT_NAME = "Array";
 
+    /**
+     * Constructs a new {@code CheckerArray} with the specified array and name.
+     *
+     * @param array the array to be used by this checker
+     * @param name the name identifying this checker
+     */
     protected CheckerArray(T[] array, String name) {
         super(array, name);
     }

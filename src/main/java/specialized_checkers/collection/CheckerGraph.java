@@ -8,11 +8,42 @@ import java.util.function.Predicate;
 import util.AbstractChecker;
 import util.collection.Graph;
 
+/**
+ * A specialized checker for validating properties and constraints on graph data structures.
+ * <p>
+ * The {@code CheckerGraph} class provides a fluent API for asserting various conditions
+ * on graphs, such as connectivity, acyclicity, node and edge existence, and more.
+ * It supports both directed and undirected graphs, as well as weighted edges.
+ * </p>
+ *
+ * <p>
+ * Example usage:
+ * </p>
+ * <pre>{@code
+ * Graph<String, Integer> graph = ...;
+ * CheckerGraph.check(graph)
+ *     .isConnected()
+ *     .minNodes(3)
+ *     .hasCycle();
+ * }</pre>
+ *
+ * @param <N> the type of nodes in the graph
+ * @param <E> the type of edge weights (must extend {@link Number})
+ *
+ * @see Graph
+ * @see AbstractChecker
+ */
 public class CheckerGraph<N,E extends Number> extends AbstractChecker<Graph<N,E>, CheckerGraph<N,E>>{
 
     private static final String INIT_GRAPH = "collections.graph";
     private static final String DEFAULT_NAME = "Graph";
 
+    /**
+     * Constructs a new {@code CheckerGraph} with the specified underlying graph and name.
+     *
+     * @param graph the underlying graph structure to be used by this {@code CheckerGraph}
+     * @param name the name assigned to this {@code CheckerGraph}
+     */
     protected CheckerGraph(Graph<N,E> graph, String name) {
         super(graph, name);
     }

@@ -1,7 +1,3 @@
-
-/**
- * Cloner provides a utility method for deep cloning objects using Kryo serialization.
- */
 package util;
 
 import java.io.ByteArrayInputStream;
@@ -11,6 +7,9 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 
+/**
+ * Cloner provides a utility method for deep cloning objects using Kryo serialization.
+ */
 public class Cloner {
 
     /**
@@ -23,6 +22,11 @@ public class Cloner {
         kryo.setRegistrationRequired(false);
     }
 
+    /**
+     * Private constructor to prevent instantiation of this utility class.
+     */
+    private Cloner(){
+    }
 
     /**
      * Performs a deep clone of the given object using Kryo serialization.

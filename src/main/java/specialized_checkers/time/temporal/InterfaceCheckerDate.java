@@ -1,3 +1,4 @@
+package specialized_checkers.time.temporal;
 
 /**
  * InterfaceCheckerDate defines a contract for date/time checker classes, providing common validation methods
@@ -6,9 +7,6 @@
  * @param <T> the type of the checker implementing this interface (for fluent API chaining)
  * @param <U> the type of the date/time value being checked
  */
-package specialized_checkers.time.temporal;
-
-
 public interface InterfaceCheckerDate<T extends InterfaceCheckerDate<T, U>, U> {
 
     /**

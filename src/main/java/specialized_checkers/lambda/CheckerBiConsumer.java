@@ -12,6 +12,29 @@ import util.AbstractChecker;
 import util.Cloner;
 import util.Utils;
 
+/**
+ * A specialized checker for {@link BiConsumer} instances, providing fluent API methods
+ * to assert various behaviors and properties of a BiConsumer, such as exception safety,
+ * input modification, and no-op behavior. Supports optional deep cloning of inputs
+ * before passing them to the BiConsumer under test.
+ *
+ * <p>Typical usage:</p>
+ * <pre>{@code
+ * CheckerBiConsumer<MyType, OtherType> checker = CheckerBiConsumer.check(myBiConsumer)
+ *     .activateDeepClone()
+ *     .applyWithoutException(input1, input2)
+ *     .modifiesInput(input1, input2, condition1, condition2);
+ * }</pre>
+ *
+ *
+ * @param <T> the type of the first argument to the BiConsumer
+ * @param <U> the type of the second argument to the BiConsumer
+ *
+ * @see java.util.function.BiConsumer
+ * @see java.util.function.Predicate
+ * @see java.util.function.BiPredicate
+ * @see java.util.Map.Entry
+ */
 public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, CheckerBiConsumer<T, U>> {
 
     private static final String INIT_BI_CONSUMER = "lambda.biconsumer";
@@ -19,6 +42,12 @@ public class CheckerBiConsumer<T, U> extends AbstractChecker<BiConsumer<T, U>, C
 
     private boolean deepClone;
 
+    /**
+     * Constructs a new {@code CheckerBiConsumer} with the specified {@link BiConsumer} and name.
+     *
+     * @param consumer the {@code BiConsumer} to be wrapped and checked
+     * @param name the name identifying this checker
+     */
     protected CheckerBiConsumer(BiConsumer<T, U> consumer, String name) {
         super(consumer, name);
     }

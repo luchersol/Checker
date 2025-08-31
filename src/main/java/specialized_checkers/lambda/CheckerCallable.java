@@ -7,19 +7,39 @@ import java.util.concurrent.Callable;
 import util.AbstractChecker;
 import util.Utils;
 
+
 /**
- * Checker for {@link Callable} instances, providing fluent validation methods for lambda expressions or tasks that return a result and may throw an exception.
+ * A specialized checker for {@link Callable} instances, providing fluent assertions
+ * for validating the behavior and results of {@code Callable} tasks.
  * <p>
- * This class allows you to validate and assert properties of {@code Callable} objects in a fluent and readable way.
+ * This class extends {@link AbstractChecker} to offer convenient methods for
+ * asserting that a {@code Callable} does not throw exceptions, produces expected
+ * results, or returns non-null values.
  * </p>
  *
- * @param <V> the result type returned by the {@code call()} method of the {@link Callable} being checked
+ * <p>Example usage:</p>
+ * <pre>{@code
+ * CheckerCallable<Integer> checker = CheckerCallable.check(() -> 42)
+ *        .callWithoutException()
+ *        .producesExpected(42)
+ *        .producesNonNull();
+ * }</pre>
+ *
+ * @param <V> the result type returned by the {@code call()} method of the {@code Callable}
+ * @see java.util.concurrent.Callable
+ * @see AbstractChecker
  */
 public class CheckerCallable<V> extends AbstractChecker<Callable<V>, CheckerCallable<V>> {
 
     private static final String INIT_CALLABLE = "lambda.callable";
     private static final String DEFAULT_NAME = "Callable";
 
+    /**
+     * Constructs a new {@code CheckerCallable} with the specified {@link Callable} task and a name.
+     *
+     * @param callable the {@code Callable} task to be executed by this checker
+     * @param name the name associated with this checker
+     */
     protected CheckerCallable(Callable<V> callable, String name) {
         super(callable, name);
     }

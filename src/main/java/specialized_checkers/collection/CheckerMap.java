@@ -9,11 +9,33 @@ import java.util.function.Predicate;
 
 import util.AbstractChecker;
 
+/**
+ * A specialized checker for {@link Map} instances, providing fluent assertion methods
+ * for validating map properties and contents.
+ * <p>
+ * This class extends {@code AbstractChecker} and allows for expressive, chainable
+ * checks on {@code Map} objects, such as verifying emptiness, matching entries
+ * against predicates, and more.
+ * </p>
+ *
+ * @param <K> the type of keys maintained by the map
+ * @param <V> the type of mapped values
+ *
+ * @see java.util.Map
+ * @see java.util.function.Predicate
+ * @see java.util.function.BiPredicate
+ */
 public class CheckerMap<K, V> extends AbstractChecker<Map<K, V>, CheckerMap<K, V>>{
 
     private static final String INIT_MAP = "collections.map";
     private static final String DEFAULT_NAME = "Map";
 
+    /**
+     * Constructs a new {@code CheckerMap} with the specified backing map and name.
+     *
+     * @param map  the backing map to be used by this {@code CheckerMap}
+     * @param name the name associated with this {@code CheckerMap}
+     */
     protected CheckerMap(Map<K, V> map, String name) {
         super(map, name);
     }
@@ -64,7 +86,7 @@ public class CheckerMap<K, V> extends AbstractChecker<Map<K, V>, CheckerMap<K, V
     /**
      * Checks if any entry in the map matches the given predicate.
      *
-     * @param predicate the condition to test map entries (Entry<K,V>)
+     * @param predicate the condition to test map entries
      * @return this CheckerMap instance
      */
     public CheckerMap<K,V> anyMatch(Predicate<Entry<K,V>> predicate){
@@ -74,7 +96,7 @@ public class CheckerMap<K, V> extends AbstractChecker<Map<K, V>, CheckerMap<K, V
     /**
      * Checks if any entry in the map matches the given bi-predicate.
      *
-     * @param predicate the condition to test key-value pairs (BiPredicate<K,V>)
+     * @param predicate the condition to test key-value pairs
      * @return this CheckerMap instance
      */
     public CheckerMap<K,V> anyMatch(BiPredicate<K,V> predicate){
@@ -84,7 +106,7 @@ public class CheckerMap<K, V> extends AbstractChecker<Map<K, V>, CheckerMap<K, V
     /**
      * Checks if all entries in the map match the given predicate.
      *
-     * @param predicate the condition to test map entries (Entry<K,V>)
+     * @param predicate the condition to test map entries
      * @return this CheckerMap instance
      */
     public CheckerMap<K,V> allMatch(Predicate<Entry<K,V>> predicate){
@@ -94,7 +116,7 @@ public class CheckerMap<K, V> extends AbstractChecker<Map<K, V>, CheckerMap<K, V
     /**
      * Checks if all entries in the map match the given bi-predicate.
      *
-     * @param predicate the condition to test key-value pairs (BiPredicate<K,V>)
+     * @param predicate the condition to test key-value pairs
      * @return this CheckerMap instance
      */
     public CheckerMap<K,V> allMatch(BiPredicate<K,V> predicate){

@@ -19,8 +19,15 @@ public class CheckerBigInteger extends AbstractChecker<BigInteger, CheckerBigInt
     private static final String INIT_NUMBERS = "numbers";
     private static final String DEFAULT_NAME = "Big Integer";
 
-    protected CheckerBigInteger(BigInteger object, String name) {
-        super(object, name);
+
+    /**
+     * Constructs a new {@code CheckerBigInteger} with the specified bigInteger and name.
+     *
+     * @param bigInteger the {@link BigInteger} to be wrapped and checked
+     * @param name the name identifying this checker function
+     */
+    protected CheckerBigInteger(BigInteger bigInteger, String name) {
+        super(bigInteger, name);
     }
 
     /**
@@ -79,7 +86,7 @@ public class CheckerBigInteger extends AbstractChecker<BigInteger, CheckerBigInt
      * @return this {@code CheckerBigInteger} instance for further validation
      */
     public CheckerBigInteger isDivisibleBy(BigInteger divisor){
-        return is(n_big_integer -> n_big_integer.mod(divisor).equals(BigInteger.ZERO), sendMessage(INIT_NUMBERS, "is_odd", DEFAULT_NAME));
+        return is(n_big_integer -> n_big_integer.mod(divisor).equals(BigInteger.ZERO), sendMessage(INIT_NUMBERS, "is_divisible_by", DEFAULT_NAME, divisor));
     }
 
     /**
@@ -88,7 +95,7 @@ public class CheckerBigInteger extends AbstractChecker<BigInteger, CheckerBigInt
      * @return this {@code CheckerBigInteger} instance for further validation
      */
     public CheckerBigInteger isPowerOfTwo(){
-        return is(n_big_integer -> n_big_integer.signum() > 0 && n_big_integer.bitCount() == 1, sendMessage(INIT_NUMBERS, "is_odd", DEFAULT_NAME));
+        return is(n_big_integer -> n_big_integer.signum() > 0 && n_big_integer.bitCount() == 1, sendMessage(INIT_NUMBERS, "is_power_of_two", DEFAULT_NAME));
     }
 
     /**
@@ -98,7 +105,7 @@ public class CheckerBigInteger extends AbstractChecker<BigInteger, CheckerBigInt
      * @return this {@code CheckerBigInteger} instance for further validation
      */
     public CheckerBigInteger isProbablePrime(int certainty) {
-        return is(n_big_integer -> n_big_integer.isProbablePrime(certainty), sendMessage(INIT_NUMBERS, "is_probable_prime", DEFAULT_NAME));
+        return is(n_big_integer -> n_big_integer.isProbablePrime(certainty), sendMessage(INIT_NUMBERS, "is_probable_prime", DEFAULT_NAME, certainty));
     }
 
     /**
@@ -195,180 +202,240 @@ public class CheckerBigInteger extends AbstractChecker<BigInteger, CheckerBigInt
         return is(n_big_integer -> n_big_integer.compareTo(BigInteger.valueOf(number)) > 0, sendMessage(INIT_NUMBERS, "is_greather_than", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is greater than the specified {@code Float} value.
+     *
+     * @param number the {@code Float} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isGreaterThan(Float number) {
         return is(n_big_integer -> new BigDecimal(n_big_integer).compareTo(BigDecimal.valueOf(number)) > 0, sendMessage(INIT_NUMBERS, "is_greather_than", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is greater than the specified {@code Double} value.
+     *
+     * @param number the {@code Double} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isGreaterThan(Double number) {
         return is(n_big_integer -> new BigDecimal(n_big_integer).compareTo(BigDecimal.valueOf(number)) > 0, sendMessage(INIT_NUMBERS, "is_greather_than", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is greater than or equal to the specified {@code Byte} value.
+     *
+     * @param number the {@code Byte} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isGreaterOrEqualTo(Byte number) {
         return is(n_big_integer -> n_big_integer.compareTo(BigInteger.valueOf(number)) >= 0, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is greater than or equal to the specified {@code Short} value.
+     *
+     * @param number the {@code Short} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isGreaterOrEqualTo(Short number) {
         return is(n_big_integer -> n_big_integer.compareTo(BigInteger.valueOf(number)) >= 0, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is greater than or equal to the specified {@code Integer} value.
+     *
+     * @param number the {@code Integer} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isGreaterOrEqualTo(Integer number) {
         return is(n_big_integer -> n_big_integer.compareTo(BigInteger.valueOf(number)) >= 0, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is greater than or equal to the specified {@code Long} value.
+     *
+     * @param number the {@code Long} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isGreaterOrEqualTo(Long number) {
         return is(n_big_integer -> n_big_integer.compareTo(BigInteger.valueOf(number)) >= 0, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is greater than or equal to the specified {@code Float} value.
+     *
+     * @param number the {@code Float} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isGreaterOrEqualTo(Float number) {
         return is(n_big_integer -> new BigDecimal(n_big_integer).compareTo(BigDecimal.valueOf(number)) >= 0, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is greater than or equal to the specified {@code Double} value.
+     *
+     * @param number the {@code Double} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isGreaterOrEqualTo(Double number) {
         return is(n_big_integer -> new BigDecimal(n_big_integer).compareTo(BigDecimal.valueOf(number)) >= 0, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is less than the specified {@code Byte} value.
+     *
+     * @param number the {@code Byte} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isLessThan(Byte number) {
         return is(n_big_integer -> n_big_integer.compareTo(BigInteger.valueOf(number)) < 0, sendMessage(INIT_NUMBERS, "is_less_than", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is less than the specified {@code Short} value.
+     *
+     * @param number the {@code Short} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isLessThan(Short number) {
         return is(n_big_integer -> n_big_integer.compareTo(BigInteger.valueOf(number)) < 0, sendMessage(INIT_NUMBERS, "is_less_than", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is less than the specified {@code Integer} value.
+     *
+     * @param number the {@code Integer} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isLessThan(Integer number) {
         return is(n_big_integer -> n_big_integer.compareTo(BigInteger.valueOf(number)) < 0, sendMessage(INIT_NUMBERS, "is_less_than", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is less than the specified {@code Long} value.
+     *
+     * @param number the {@code Long} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isLessThan(Long number) {
         return is(n_big_integer -> n_big_integer.compareTo(BigInteger.valueOf(number)) < 0, sendMessage(INIT_NUMBERS, "is_less_than", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is less than the specified {@code Float} value.
+     *
+     * @param number the {@code Float} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isLessThan(Float number) {
         return is(n_big_integer -> new BigDecimal(n_big_integer).compareTo(BigDecimal.valueOf(number)) < 0, sendMessage(INIT_NUMBERS, "is_less_than", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is less than the specified {@code Double} value.
+     *
+     * @param number the {@code Double} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isLessThan(Double number) {
         return is(n_big_integer -> new BigDecimal(n_big_integer).compareTo(BigDecimal.valueOf(number)) < 0, sendMessage(INIT_NUMBERS, "is_less_than", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is less than or equal to the specified {@code Byte} value.
+     *
+     * @param number the {@code Byte} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isLessOrEqualTo(Byte number) {
         return is(n_big_integer -> n_big_integer.compareTo(BigInteger.valueOf(number)) <= 0, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is less than or equal to the specified {@code Short} value.
+     *
+     * @param number the {@code Short} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isLessOrEqualTo(Short number) {
         return is(n_big_integer -> n_big_integer.compareTo(BigInteger.valueOf(number)) <= 0, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is less than or equal to the specified {@code Integer} value.
+     *
+     * @param number the {@code Integer} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isLessOrEqualTo(Integer number) {
         return is(n_big_integer -> n_big_integer.compareTo(BigInteger.valueOf(number)) <= 0, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is less than or equal to the specified {@code Long} value.
+     *
+     * @param number the {@code Long} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isLessOrEqualTo(Long number) {
         return is(n_big_integer -> n_big_integer.compareTo(BigInteger.valueOf(number)) <= 0, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is less than or equal to the specified {@code Float} value.
+     *
+     * @param number the {@code Float} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isLessOrEqualTo(Float number) {
         return is(n_big_integer -> new BigDecimal(n_big_integer).compareTo(BigDecimal.valueOf(number)) <= 0, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerBigInteger
+     * Asserts that the {@code BigInteger} is less than or equal to the specified {@code Double} value.
+     *
+     * @param number the {@code Double} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
      */
     @Override
     public CheckerBigInteger isLessOrEqualTo(Double number) {

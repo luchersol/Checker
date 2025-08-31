@@ -17,8 +17,14 @@ public class CheckerFloat extends AbstractChecker<Float, CheckerFloat> implement
     private static final String INIT_DECIMAL_TYPES = "numbers.decimal_types";
     private static final String DEFAULT_NAME = "Float";
 
-    protected CheckerFloat(Float object, String name) {
-        super(object, name);
+    /**
+     * Constructs a new {@code CheckerFloat} with the specified nFloat and name.
+     *
+     * @param nFloat the {@link Float} to be wrapped and checked
+     * @param name the name identifying this checker function
+     */
+    protected CheckerFloat(Float nFloat, String name) {
+        super(nFloat, name);
     }
 
     /**
@@ -141,10 +147,11 @@ public class CheckerFloat extends AbstractChecker<Float, CheckerFloat> implement
         return is(n_float -> n_float == 0, sendMessage(INIT_NUMBERS, "is_zero", DEFAULT_NAME));
     }
 
+
     /**
-     * Asserts that the {@code Float} value is greater than the specified value.
+     * Asserts that the {@code Float} value is greater than the specified {@code Byte} value.
      *
-     * @param number the value to compare against
+     * @param number the {@code Byte} value to compare against
      * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
@@ -152,10 +159,11 @@ public class CheckerFloat extends AbstractChecker<Float, CheckerFloat> implement
         return is(n_float -> n_float > number, sendMessage(INIT_NUMBERS, "is_greather_than", DEFAULT_NAME, number));
     }
 
+
     /**
-     * Asserts that the {@code Float} value is greater than or equal to the specified value.
+     * Asserts that the {@code Float} value is greater than the specified {@code Short} value.
      *
-     * @param number the value to compare against
+     * @param number the {@code Short} value to compare against
      * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
@@ -163,10 +171,11 @@ public class CheckerFloat extends AbstractChecker<Float, CheckerFloat> implement
         return is(n_float -> n_float > number, sendMessage(INIT_NUMBERS, "is_greather_than", DEFAULT_NAME, number));
     }
 
+
     /**
-     * Asserts that the {@code Float} value is less than the specified value.
+     * Asserts that the {@code Float} value is greater than the specified {@code Integer} value.
      *
-     * @param number the value to compare against
+     * @param number the {@code Integer} value to compare against
      * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
@@ -174,10 +183,11 @@ public class CheckerFloat extends AbstractChecker<Float, CheckerFloat> implement
         return is(n_float -> n_float > number, sendMessage(INIT_NUMBERS, "is_greather_than", DEFAULT_NAME, number));
     }
 
+
     /**
-     * Asserts that the {@code Float} value is less than or equal to the specified value.
+     * Asserts that the {@code Float} value is greater than the specified {@code Long} value.
      *
-     * @param number the value to compare against
+     * @param number the {@code Long} value to compare against
      * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
@@ -185,162 +195,216 @@ public class CheckerFloat extends AbstractChecker<Float, CheckerFloat> implement
         return is(n_float -> n_float > number, sendMessage(INIT_NUMBERS, "is_greather_than", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is greater than the specified {@code Float} value.
+     *
+     * @param number the {@code Float} value to compare against
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isGreaterThan(Float number) {
         return is(n_float -> n_float > number, sendMessage(INIT_NUMBERS, "is_greather_than", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is greater than the specified {@code Double} value.
+     *
+     * @param number the {@code Double} value to compare against
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isGreaterThan(Double number) {
         return is(n_float -> n_float > number, sendMessage(INIT_NUMBERS, "is_greather_than", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is greater than or equal to the specified {@code Byte} value.
+     *
+     * @param number the {@code Byte} value to compare against
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isGreaterOrEqualTo(Byte number) {
         return is(n_float -> n_float >= number, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is greater than or equal to the specified {@code Short} value.
+     *
+     * @param number the {@code Short} value to compare against
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isGreaterOrEqualTo(Short number) {
         return is(n_float -> n_float >= number, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is greater than or equal to the specified {@code Integer} value.
+     *
+     * @param number the {@code Integer} value to compare against
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isGreaterOrEqualTo(Integer number) {
         return is(n_float -> n_float >= number, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is greater than or equal to the specified {@code Long} value.
+     *
+     * @param number the {@code Long} value to compare against
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isGreaterOrEqualTo(Long number) {
         return is(n_float -> n_float >= number, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is greater than or equal to the specified {@code Float} value.
+     *
+     * @param number the {@code Float} value to compare against
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isGreaterOrEqualTo(Float number) {
         return is(n_float -> n_float >= number, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is greater than or equal to the specified {@code Double} value.
+     *
+     * @param number the {@code Double} value to compare against
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isGreaterOrEqualTo(Double number) {
         return is(n_float -> n_float >= number, sendMessage(INIT_NUMBERS, "is_greather_or_equal_to", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is less than the specified {@code Byte} value.
+     *
+     * @param number the {@code Byte} value to compare against
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isLessThan(Byte number) {
         return is(n_float -> n_float < number, sendMessage(INIT_NUMBERS, "is_less_than", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is less than the specified {@code Short} value.
+     *
+     * @param number the {@code Short} value to compare against
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isLessThan(Short number) {
         return is(n_float -> n_float < number, sendMessage(INIT_NUMBERS, "is_less_than", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is less than the specified {@code Integer} value.
+     *
+     * @param number the {@code Integer} value to compare against
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isLessThan(Integer number) {
         return is(n_float -> n_float < number, sendMessage(INIT_NUMBERS, "is_less_than", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is less than the specified {@code Long} value.
+     *
+     * @param number the {@code Long} value to compare against
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isLessThan(Long number) {
         return is(n_float -> n_float < number, sendMessage(INIT_NUMBERS, "is_less_than", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is less than the specified {@code Float} value.
+     *
+     * @param number the {@code Float} value to compare against
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isLessThan(Float number) {
         return is(n_float -> n_float < number, sendMessage(INIT_NUMBERS, "is_less_than", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is less than the specified {@code Double} value.
+     *
+     * @param number the {@code Double} value to compare against
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isLessThan(Double number) {
         return is(n_float -> n_float < number, sendMessage(INIT_NUMBERS, "is_less_than", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is less than or equal to the specified {@code Byte} value.
+     *
+     * @param number the {@code Byte} value to compare against
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isLessOrEqualTo(Byte number) {
         return is(n_float -> n_float <= number, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is less than or equal to the specified {@code Short} value.
+     *
+     * @param number the {@code Short} value to compare against
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isLessOrEqualTo(Short number) {
         return is(n_float -> n_float <= number, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is less than or equal to the specified {@code Integer} value.
+     *
+     * @param number the {@code Integer} value to compare against
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isLessOrEqualTo(Integer number) {
         return is(n_float -> n_float <= number, sendMessage(INIT_NUMBERS, "is_less_or_equal_to", DEFAULT_NAME, number));
     }
 
+
     /**
-     * @param number
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is less than or equal to the specified {@code Long} value.
+     *
+     * @param number the {@code Long} value to compare against
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isLessOrEqualTo(Long number) {
@@ -348,8 +412,10 @@ public class CheckerFloat extends AbstractChecker<Float, CheckerFloat> implement
     }
 
     /**
-     * @param number
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is less than or equal to the specified {@code Float} value.
+     *
+     * @param number the {@code Float} value to compare against
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isLessOrEqualTo(Float number) {
@@ -357,8 +423,10 @@ public class CheckerFloat extends AbstractChecker<Float, CheckerFloat> implement
     }
 
     /**
-     * @param number
-     * @return CheckerFloat
+     * Asserts that the {@code Float} value is less than or equal to the specified {@code Double} value.
+     *
+     * @param number the {@code Double} value to compare against
+     * @return this {@code CheckerFloat} instance for further validation
      */
     @Override
     public CheckerFloat isLessOrEqualTo(Double number) {

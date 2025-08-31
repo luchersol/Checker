@@ -5,16 +5,33 @@ import static util.Message.*;
 import util.AbstractChecker;
 
 /**
- * Checker for {@link Runnable} instances, providing fluent validation methods for lambda expressions or operations that take no arguments and return no result.
+ * A specialized checker for {@link java.lang.Runnable} instances, providing a fluent API for validating
+ * function behavior and results. This class allows assertions such as verifying that a function does not throw
+ * exceptions, produces expected results, or returns non-null values for given inputs.
+ *
  * <p>
- * This class allows you to validate and assert properties of {@code Runnable} objects in a fluent and readable way.
+ * Example usage:
  * </p>
+ * <pre>
+ *     CheckerRunnable checker = CheckerRunnable.check(() -> {})
+ *            .runWithoutException();
+ * </pre>
+ *
+ *
+ * @see java.lang.Runnable
+ * @see AbstractChecker
  */
 public class CheckerRunnable extends AbstractChecker<Runnable, CheckerRunnable> {
 
     private static final String INIT_RUNNABLE = "lambda.runnable";
     private static final String DEFAULT_NAME = "Runnable";
 
+    /**
+     * Constructs a new {@code CheckerRunnable} with the specified runnable and name.
+     *
+     * @param runnable the {@link CheckerRunnable} to be used by this checker
+     * @param name the name identifying this checker
+     */
     protected CheckerRunnable(Runnable runnable, String name) {
         super(runnable, name);
     }

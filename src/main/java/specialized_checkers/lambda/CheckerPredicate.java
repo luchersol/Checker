@@ -9,12 +9,32 @@ import util.Cloner;
 import util.Utils;
 
 /**
- * Checker for {@link Predicate} instances, providing fluent validation methods for lambda expressions or operations that accept an input and return a boolean result.
+ * A specialized checker for {@link java.util.function.Predicate} instances, providing a fluent API for validating
+ * function behavior and results. This class allows assertions such as verifying that a function does not throw
+ * exceptions, produces expected results, or returns non-null values for given inputs. It also supports optional
+ * deep cloning of input objects to ensure immutability during checks.
+ *
  * <p>
- * This class allows you to validate and assert properties of {@code Predicate} objects in a fluent and readable way.
+ * Example usage:
  * </p>
+ * <pre>
+ *     CheckerPredicate&lt;String&gt; checker = CheckerPredicate.check(String::isEmpty);
+ *     checker.producesExpected("   ", false)
+ *            .evaluatesTrue("")
+ *            .testWithoutException("hello");
+ * </pre>
+ *
+ * <p>
+ * Deep cloning can be enabled to ensure that the input object is not mutated by the function:
+ * </p>
+ * <pre>
+ *     checker.activateDeepClone();
+ * </pre>
  *
  * @param <T> the type of the input to the {@code Predicate} being checked
+ *
+ * @see java.util.function.Predicate
+ * @see AbstractChecker
  */
 public class CheckerPredicate<T> extends AbstractChecker<Predicate<T>, CheckerPredicate<T>> {
 
@@ -23,6 +43,12 @@ public class CheckerPredicate<T> extends AbstractChecker<Predicate<T>, CheckerPr
 
     private boolean deepClone;
 
+    /**
+     * Constructs a new {@code CheckerPredicate} with the specified predicate and name.
+     *
+     * @param predicate the {@link Predicate} to be used by this checker
+     * @param name the name identifying this checker
+     */
     protected CheckerPredicate(Predicate<T> predicate, String name) {
         super(predicate, name);
     }

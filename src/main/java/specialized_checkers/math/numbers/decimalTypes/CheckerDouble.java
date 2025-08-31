@@ -17,8 +17,14 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     private static final String INIT_DECIMAL_TYPES = "numbers.decimal_types";
     private static final String DEFAULT_NAME = "Double";
 
-    protected CheckerDouble(Double object, String name) {
-        super(object, name);
+    /**
+     * Constructs a new {@code CheckerDouble} with the specified nDouble and name.
+     *
+     * @param nDouble the {@link Double} to be wrapped and checked
+     * @param name the name identifying this checker function
+     */
+    protected CheckerDouble(Double nDouble, String name) {
+        super(nDouble, name);
     }
 
     /**
@@ -187,8 +193,10 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @param number
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is greater than the specified {@code Float} value.
+     *
+     * @param number the {@code Float} value to compare against
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isGreaterThan(Float number) {
@@ -196,8 +204,10 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @param number
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is greater than the specified {@code Double} value.
+     *
+     * @param number the {@code Double} value to compare against
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isGreaterThan(Double number) {
@@ -205,8 +215,10 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @param number
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is greater than or equal to the specified {@code Byte} value.
+     *
+     * @param number the {@code Byte} value to compare against
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isGreaterOrEqualTo(Byte number) {
@@ -214,8 +226,10 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @param number
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is greater than or equal to the specified {@code Short} value.
+     *
+     * @param number the {@code Short} value to compare against
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isGreaterOrEqualTo(Short number) {
@@ -223,8 +237,10 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @param number
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is greater than or equal to the specified {@code Integer} value.
+     *
+     * @param number the {@code Integer} value to compare against
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isGreaterOrEqualTo(Integer number) {
@@ -232,8 +248,10 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @param number
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is greater than or equal to the specified {@code Long} value.
+     *
+     * @param number the {@code Long} value to compare against
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isGreaterOrEqualTo(Long number) {
@@ -241,8 +259,10 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @param number
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is greater than or equal to the specified {@code Float} value.
+     *
+     * @param number the {@code Float} value to compare against
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isGreaterOrEqualTo(Float number) {
@@ -250,8 +270,10 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @param number
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is greater than or equal to the specified {@code Double} value.
+     *
+     * @param number the {@code Double} value to compare against
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isGreaterOrEqualTo(Double number) {
@@ -259,8 +281,10 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @param number
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is less than to the specified {@code Byte} value.
+     *
+     * @param number the {@code Byte} value to compare against
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isLessThan(Byte number) {
@@ -268,8 +292,10 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @param number
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is less than to the specified {@code Short} value.
+     *
+     * @param number the {@code Short} value to compare against
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isLessThan(Short number) {
@@ -277,8 +303,10 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @param number
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is less than to the specified {@code Integer} value.
+     *
+     * @param number the {@code Integer} value to compare against
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isLessThan(Integer number) {
@@ -286,8 +314,10 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @param number
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is less than to the specified {@code Long} value.
+     *
+     * @param number the {@code Long} value to compare against
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isLessThan(Long number) {
@@ -295,8 +325,10 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @param number
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is less than the specified {@code Float} value.
+     *
+     * @param number the {@code Float} value to compare against
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isLessThan(Float number) {
@@ -304,8 +336,10 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @param number
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is less than the specified {@code Double} value.
+     *
+     * @param number the {@code Double} value to compare against
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isLessThan(Double number) {
@@ -313,8 +347,10 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @param number
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is less than or equal to the specified {@code Byte} value.
+     *
+     * @param number the {@code Byte} value to compare against
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isLessOrEqualTo(Byte number) {
@@ -322,8 +358,10 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @param number
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is less than or equal to the specified {@code Short} value.
+     *
+     * @param number the {@code Short} value to compare against
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isLessOrEqualTo(Short number) {
@@ -331,8 +369,10 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @param number
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is less than or equal to the specified {@code Integer} value.
+     *
+     * @param number the {@code Integer} value to compare against
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isLessOrEqualTo(Integer number) {
@@ -340,8 +380,10 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @param number
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is less than or equal to the specified {@code Long} value.
+     *
+     * @param number the {@code Long} value to compare against
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isLessOrEqualTo(Long number) {
@@ -349,8 +391,10 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @param number
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is less than or equal to the specified {@code Float} value.
+     *
+     * @param number the {@code Float} value to compare against
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isLessOrEqualTo(Float number) {
@@ -358,8 +402,10 @@ public class CheckerDouble extends AbstractChecker<Double, CheckerDouble> implem
     }
 
     /**
-     * @param number
-     * @return CheckerDouble
+     * Asserts that the {@code Double} value is less than or equal to the specified {@code Double} value.
+     *
+     * @param number the {@code Double} value to compare against
+     * @return this {@code CheckerDouble} instance for further validation
      */
     @Override
     public CheckerDouble isLessOrEqualTo(Double number) {

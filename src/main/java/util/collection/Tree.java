@@ -24,7 +24,16 @@ public class Tree<T> {
      * @param <T> the type of value stored in the node
      */
     public static class TreeNode<T> {
+
+        /**
+         * The value stored in this tree node. It can be of any generic type.
+         */
         public final T value;
+
+        /**
+         * The list of child nodes of this node. Each element in the list is a {@link TreeNode} representing a subtree.
+         * Initially, the list is empty.
+         */
         public final List<TreeNode<T>> children = new ArrayList<>();
 
         /**

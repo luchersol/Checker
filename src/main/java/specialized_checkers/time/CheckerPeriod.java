@@ -11,14 +11,18 @@ import util.AbstractChecker;
  * CheckerPeriod is a specialized checker for validating and performing assertions on {@link Period} values.
  * <p>
  * It provides a fluent API for common period validations such as checking positivity, negativity, zero, and comparisons with other periods or temporal units.
- *
- * @param <T> the type of value to be checked, which is {@link Period} in this case
  */
 public class CheckerPeriod extends AbstractChecker<Period, CheckerPeriod> {
 
     private static final String INIT_PERIOD = "time.period";
     private static final String DEFAULT_NAME = "Period";
 
+    /**
+     * Constructs a new {@code CheckerPeriod} with the specified period and name.
+     *
+     * @param period the {@link Period} to be associated with this checker
+     * @param name the name of the checker
+     */
     protected CheckerPeriod(Period period, String name) {
         super(period, name);
     }
