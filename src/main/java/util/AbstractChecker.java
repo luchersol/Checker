@@ -446,8 +446,14 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
         Object currentObject = object;
 
         Field field = currentObject.getClass().getDeclaredField(propertyField);
-        field.setAccessible(true);
-        currentObject = field.get(currentObject);
+        boolean wasAccessible = field.canAccess(currentObject);
+
+        try {
+            if (!wasAccessible) field.setAccessible(true);
+            currentObject = field.get(currentObject);
+        } finally {
+            if (!wasAccessible) field.setAccessible(false);
+        }
 
         return currentObject == null ? null
                 : properties.isEmpty() ? currentObject : getProperty(currentObject, properties, params);
@@ -546,8 +552,14 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
         }
 
         Method method = object.getClass().getDeclaredMethod(function, parameterTypes);
-        method.setAccessible(true);
-        Object result = method.invoke(object, args);
+        boolean wasAccessible = method.canAccess(object);
+        Object result = null;
+        try {
+            if (!wasAccessible) method.setAccessible(true);
+            result = method.invoke(object, args);
+        } finally {
+            if (!wasAccessible) method.setAccessible(false);
+        }
 
         return result == null ? null : propertyPath.isEmpty() ? result : getProperty(result, propertyPath, params);
     }

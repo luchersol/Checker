@@ -35,8 +35,7 @@ public class Utils {
      * @return {@code true} if the objects are deeply equal, {@code false} otherwise
      */
     public static boolean equalsContent(Object a, Object b) {
-        if (a == b) return true;
-        if (a == null || b == null) return false;
+        if (Objects.equals(a, b)) return true;
 
         // CharSequence (StringBuilder, StringBuffer, String)
         if (a instanceof CharSequence && b instanceof CharSequence) {
@@ -76,7 +75,7 @@ public class Utils {
             return al.get() == bl.get();
         }
 
-        return Objects.equals(a, b);
+        return false;
     }
 
 }
