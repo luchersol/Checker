@@ -11,4 +11,3 @@ specialized_checkers.time
 specialized_checkers.time.temporal
 util
 util.collection
-util.math

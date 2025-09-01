@@ -44,7 +44,7 @@ public class CheckerPolygon extends AbstractChecker<Polygon, CheckerPolygon> {
      *
      * @param xpoints an array of X coordinates
      * @param ypoints an array of Y coordinates
-     * @param npoints the total number of points in the
+     * @param npoints the total number of points in the {@code Polygon}
      * @param name      the name to identify this checker instance (useful for error messages)
      * @return a new {@code CheckerPolygon} for the provided {@code Polygon}
      */
@@ -68,8 +68,7 @@ public class CheckerPolygon extends AbstractChecker<Polygon, CheckerPolygon> {
      *
      * @param xpoints an array of X coordinates
      * @param ypoints an array of Y coordinates
-     * @param npoints the total number of points in the
-     * @param name      the name to identify this checker instance (useful for error messages)
+     * @param npoints the total number of points in the {@code Polygon}
      * @return a new {@code CheckerPolygon} for the provided {@code Polygon}
      */
     public static CheckerPolygon check(int[] xpoints, int[] ypoints, int npoints) {
