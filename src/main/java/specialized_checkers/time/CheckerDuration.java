@@ -8,9 +8,26 @@ import java.time.temporal.TemporalUnit;
 import util.AbstractChecker;
 
 /**
- * CheckerDuration is a specialized checker for validating and performing assertions on {@link Duration} values.
- * <p>
- * It provides a fluent API for common duration validations such as checking positivity, negativity, zero, and comparisons with other durations or temporal units.
+ * A specialized checker for {@link java.time.Duration} instances, providing fluent API methods
+ * to assert various temporal properties such as positivity, negativity, zero value,
+ * and comparisons with other durations or specific temporal units.
+ *
+ * <p>Typical usage:</p>
+ * <pre>{@code
+ * Duration d1 = Duration.ofMinutes(5);
+ * Duration d2 = Duration.ofMinutes(10);
+ *
+ * CheckerDuration checker = CheckerDuration.check(d1)
+ *     .isPositive()
+ *     .isLessThan(d2)
+ *     .isGreaterOrEqualThan(Duration.ofMinutes(3));
+ * }</pre>
+ *
+ * <p>This class supports chaining multiple assertions in a fluent style and integrates
+ * with {@link util.AbstractChecker} for generalized validation handling.</p>
+ *
+ * @see java.time.Duration
+ * @see util.AbstractChecker
  */
 public class CheckerDuration extends AbstractChecker<Duration, CheckerDuration> {
 

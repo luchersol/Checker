@@ -8,9 +8,27 @@ import java.util.function.Predicate;
 import util.AbstractChecker;
 
 /**
- * CheckerColor is a specialized checker for validating and performing assertions on {@link Color} values.
- * <p>
- * It provides a fluent API for common color validations such as checking color equality, brightness, transparency, contrast, and more.
+ * A specialized checker for {@link java.awt.Color} instances, providing a fluent API
+ * to assert various color properties such as equality, brightness, transparency,
+ * contrast, saturation, similarity, and hexadecimal representation.
+ *
+ * <p>Typical usage:</p>
+ * <pre>{@code
+ * Color c1 = new Color(255, 0, 0);
+ * Color c2 = new Color(128, 0, 0);
+ *
+ * CheckerColor.check(c1)
+ *     .isRed()             // Custom method if implemented
+ *     .isDark()
+ *     .hasContrast(c2)
+ *     .isOpaque();
+ * }</pre>
+ *
+ * <p>This class supports chaining multiple assertions in a fluent style and integrates
+ * with {@link util.AbstractChecker} for generalized validation handling.</p>
+ *
+ * @see java.awt.Color
+ * @see util.AbstractChecker
  */
 public class CheckerColor extends AbstractChecker<Color, CheckerColor> {
 

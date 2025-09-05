@@ -6,10 +6,23 @@ import specialized_checkers.math.numbers.InterfaceCheckerNumber;
 import util.AbstractChecker;
 
 /**
- * Checker for {@link Integer} instances, providing fluent validation methods for integer numbers.
- * <p>
- * This class allows you to validate and assert properties of {@code Integer} objects in a fluent and readable way.
- * </p>
+ * A specialized checker for {@link Integer} instances, providing fluent API methods
+ * to assert various properties, such as positivity, negativity, zero value, even or odd
+ * and numeric comparisons.
+ *
+ * <p>Typical usage:</p>
+ * <pre>{@code
+ * CheckerInteger checker = CheckerInteger.check(myInteger)
+ *     .isPositive()
+ *     .isLessThan(100.0)
+ *     .isOdd();
+ * }</pre>
+ *
+ * <p>This class supports chaining multiple assertions in a fluent style and integrates
+ * with {@link InterfaceCheckerNumber} for numeric-specific validations.</p>
+ *
+ * @see java.lang.Integer
+ * @see specialized_checkers.math.numbers.InterfaceCheckerNumber
  */
 public class CheckerInteger extends AbstractChecker<Integer, CheckerInteger> implements InterfaceCheckerNumber<CheckerInteger> {
 

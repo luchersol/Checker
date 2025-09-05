@@ -14,9 +14,7 @@ import util.Utils;
  * exceptions, produces expected results, or returns non-null values for given inputs. It also supports optional
  * deep cloning of input objects to ensure immutability during checks.
  *
- * <p>
- * Example usage:
- * </p>
+ * <p>Example usage:</p>
  * <pre>
  *     CheckerFunction&lt;String, Integer&gt; checker = CheckerFunction.check(String::length);
  *     checker.producesExpected("abc", 3)

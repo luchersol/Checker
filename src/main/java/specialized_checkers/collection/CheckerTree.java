@@ -18,11 +18,12 @@ import util.collection.Tree;
  * symmetry, fullness, depth, number of leaves, and diameter, among others.
  * </p>
  *
- * <h2>Usage Example:</h2>
+ * <p>Usage Example:</p>
  * <pre>{@code
  * Tree<Integer> tree = new Tree<>(1);
  * CheckerTree<Integer> checker = CheckerTree.check(tree);
- * checker.isBinaryTree().minDepth(1);
+ *      .isBinaryTree()
+ *      .minDepth(1);
  * }</pre>
  *
  * @param <T> the type of elements stored in the tree

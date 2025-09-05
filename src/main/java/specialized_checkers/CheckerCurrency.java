@@ -8,9 +8,24 @@ import java.util.Locale;
 import util.AbstractChecker;
 
 /**
- * CheckerCurrency is a specialized checker for validating and performing assertions on {@link Currency} values.
- * <p>
- * It provides a fluent API for common currency validations such as checking symbols, fraction digits, and locale association.
+ * A specialized checker for {@link java.util.Currency} instances, providing a fluent API
+ * to assert various currency properties such as symbol, fraction digits, and locale association.
+ *
+ * <p>Typical usage:</p>
+ * <pre>{@code
+ * Currency usd = Currency.getInstance("USD");
+ *
+ * CheckerCurrency.check(usd)
+ *     .hasSymbol("$")
+ *     .withDefaultFractionDigits(2)
+ *     .isFrom(Locale.US);
+ * }</pre>
+ *
+ * <p>This class supports chaining multiple assertions in a fluent style and integrates
+ * with {@link util.AbstractChecker} for generalized validation handling.</p>
+ *
+ * @see java.util.Currency
+ * @see util.AbstractChecker
  */
 public class CheckerCurrency extends AbstractChecker<Currency, CheckerCurrency> {
 

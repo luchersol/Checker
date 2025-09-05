@@ -7,9 +7,27 @@ import java.util.Date;
 import util.AbstractChecker;
 
 /**
- * CheckerDate is a specialized checker for validating and performing assertions on {@link Date} values.
- * <p>
- * It provides a fluent API for common date validations such as checking if a date is before, after, in range, past, or future.
+ * A specialized checker for {@link java.util.Date} instances, providing fluent API methods
+ * to assert temporal properties such as being before/after another date, inclusivity checks,
+ * range validations, and whether a date lies in the past or future.
+ *
+ * <p>Typical usage:</p>
+ * <pre>{@code
+ * Date deadline = ...;
+ * Date now = new Date();
+ *
+ * CheckerDate checker = CheckerDate.check(deadline)
+ *     .isAfter(now)
+ *     .inRange(now, new Date(now.getTime() + 86400000)) // within the next 24 hours
+ *     .isFuture();
+ * }</pre>
+ *
+ * <p>This class integrates with {@link InterfaceCheckerDate} for standardized temporal
+ * validations and supports chaining multiple assertions in a fluent, expressive style.</p>
+ *
+ * @see java.util.Date
+ * @see specialized_checkers.time.temporal.InterfaceCheckerDate
+ * @see util.AbstractChecker
  */
 public class CheckerDate extends AbstractChecker<Date, CheckerDate> implements InterfaceCheckerDate<CheckerDate, Date> {
 

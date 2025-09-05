@@ -10,10 +10,23 @@ import util.AbstractChecker;
 // TODO: cambiar javadocs de cada clase de adelante
 
 /**
- * Checker for {@link BigDecimal} instances, providing fluent validation methods for arbitrary-precision decimal numbers.
- * <p>
- * This class allows you to validate and assert properties of {@code BigDecimal} objects in a fluent and readable way.
- * </p>
+ * A specialized checker for {@link BigDecimal} instances, providing fluent API methods
+ * to assert various behaviors and properties of arbitrary-precision decimal numbers,
+ * such as positivity, negativity, zero value, and comparisons against other numeric values.
+ *
+ * <p>Typical usage:</p>
+ * <pre>{@code
+ * CheckerBigDecimal checker = CheckerBigDecimal.check(myBigDecimal)
+ *     .isPositive()
+ *     .isGreaterThan(10)
+ *     .isLessOrEqualTo(100);
+ * }</pre>
+ *
+ * <p>This class supports chaining multiple assertions in a fluent style and integrates
+ * with {@link InterfaceCheckerNumber} for numeric-specific validations.</p>
+ *
+ * @see java.math.BigDecimal
+ * @see specialized_checkers.math.numbers.InterfaceCheckerNumber
  */
 public class CheckerBigDecimal extends AbstractChecker<BigDecimal, CheckerBigDecimal> implements InterfaceCheckerNumber<CheckerBigDecimal> {
 

@@ -19,7 +19,9 @@ import util.AbstractChecker;
  * <pre>
  * Example usage:
  *   Set&lt;String&gt; mySet = Set.of("a", "b", "c");
- *   CheckerSet.check(mySet).isSuperset(List.of("a")).isEmpty();
+ *   CheckerSet checker = CheckerSet.check(mySet)
+ *         .isSuperset(List.of("a"))
+ *         .isEmpty();
  * </pre>
  *
  * @param <T> the type of elements in the set

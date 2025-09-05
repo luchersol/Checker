@@ -21,7 +21,7 @@ import util.collection.Graph;
  * </p>
  * <pre>{@code
  * Graph<String, Integer> graph = ...;
- * CheckerGraph.check(graph)
+ * CheckerGraph<String, Integer> checker = CheckerGraph.check(graph)
  *     .isConnected()
  *     .minNodes(3)
  *     .hasCycle();

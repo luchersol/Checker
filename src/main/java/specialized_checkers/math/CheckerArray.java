@@ -9,12 +9,28 @@ import java.util.function.Predicate;
 import util.AbstractChecker;
 
 /**
- * Checker for array instances, providing fluent validation methods for arrays of any reference type.
- * <p>
- * This class allows you to validate and assert properties of array objects in a fluent and readable way.
- * </p>
+ * A specialized checker for array instances, providing fluent API methods
+ * to assert various properties such as emptiness, sorting order (ascending/descending),
+ * element matching conditions, and percentage-based validations.
  *
- * @param <T> the type of the elements in the array being checked
+ * <p>Typical usage:</p>
+ * <pre>{@code
+ * String[] names = {"Alice", "Bob", "Charlie"};
+ * CheckerArray<String> checker = CheckerArray.check(names)
+ *     .isSortedAsc()
+ *     .anyMatch(name -> name.startsWith("A"))
+ *     .isSufficientPercentage(n -> n.length() > 2, 50.0);
+ * }</pre>
+ *
+ * <p>This class supports chaining multiple assertions in a fluent style,
+ * making array validations more expressive and readable.</p>
+ *
+ * @param <T> the type of the array elements
+ *
+ * @see java.util.Arrays
+ * @see java.util.Comparator
+ * @see java.util.function.Predicate
+ * @see util.AbstractChecker
  */
 public class CheckerArray<T> extends AbstractChecker<T[], CheckerArray<T>>{
 

@@ -19,7 +19,16 @@ import java.util.regex.Pattern;
  * Provides a fluent API for chaining validation methods and tracking exceptions.
  *
  * @param <T> the type of object to check
- * @param <C> the type of the concrete checker (for fluent API)
+ * @param <C> the concrete checker type (must extend {@code AbstractChecker<T, C>}).
+ * This ensures the fluent API returns the correct subtype
+ *
+ *
+ * <p>Example:</p>
+ * <pre>{@code
+ * class MyChecker extends AbstractChecker<MyType, MyChecker> {
+ *     // implementation...
+ * }
+ * }</pre>
  */
 public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> implements InterfaceChecker<AbstractChecker<T,C>, T> {
 
@@ -64,11 +73,7 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
      * @param name Name of the object for reporting purposes
      */
     public AbstractChecker(String name) {
-        this.object = null;
-        this.name = name;
-        this.exceptionTracker = ExceptionTracker.empty(name);
-        this.saveErrors = false;
-        this.stop = object == null;
+        this(null, name);
     }
 
     /**
@@ -77,11 +82,7 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
      * @param name Name of the object
      */
     public AbstractChecker(T object, String name) {
-        this.object = object;
-        this.name = name;
-        this.exceptionTracker = ExceptionTracker.empty(name);
-        this.saveErrors = false;
-        this.stop = object == null;
+        this(object, name, ExceptionTracker.empty(name));
     }
 
     /**
@@ -90,10 +91,7 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
      * @param exceptionTracker Tracker for exceptions
      */
     public AbstractChecker(String name, ExceptionTracker exceptionTracker) {
-        this.name = name;
-        this.exceptionTracker = exceptionTracker;
-        this.saveErrors = false;
-        this.stop = object == null;
+        this(null, name, exceptionTracker);
     }
 
     /**
@@ -108,6 +106,7 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
         this.exceptionTracker = exceptionTracker;
         this.saveErrors = false;
         this.stop = object == null;
+        this.backObject = self();
     }
 
     /**
@@ -446,15 +445,8 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
         Object currentObject = object;
 
         Field field = currentObject.getClass().getDeclaredField(propertyField);
-        boolean wasAccessible = field.canAccess(currentObject);
-
-        try {
-            if (!wasAccessible) field.setAccessible(true);
-            currentObject = field.get(currentObject);
-        } finally {
-            if (!wasAccessible) field.setAccessible(false);
-        }
-
+        field.setAccessible(true);
+        currentObject = field.get(currentObject);
         return currentObject == null ? null
                 : properties.isEmpty() ? currentObject : getProperty(currentObject, properties, params);
 
@@ -552,14 +544,8 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
         }
 
         Method method = object.getClass().getDeclaredMethod(function, parameterTypes);
-        boolean wasAccessible = method.canAccess(object);
-        Object result = null;
-        try {
-            if (!wasAccessible) method.setAccessible(true);
-            result = method.invoke(object, args);
-        } finally {
-            if (!wasAccessible) method.setAccessible(false);
-        }
+        method.setAccessible(true);
+        Object result = method.invoke(object, args);
 
         return result == null ? null : propertyPath.isEmpty() ? result : getProperty(result, propertyPath, params);
     }

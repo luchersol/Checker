@@ -20,8 +20,10 @@ import util.AbstractChecker;
  * <p>Example usage:</p>
  * <pre>{@code
  * List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
- * CheckerList<String> checker = CheckerList.check(names);
- * checker.isEmpty().allDistinct().anyMatch(name -> name.startsWith("A"));
+ * CheckerList<String> checker = CheckerList.check(names)
+ *      .isEmpty()
+ *      .allDistinct()
+ *      .anyMatch(name -> name.startsWith("A"));
  * }</pre>
  *
  * @param <T> the type of elements in the list

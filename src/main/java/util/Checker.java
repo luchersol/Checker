@@ -48,8 +48,9 @@ import util.collection.Graph;
  * Example usage:
  * </p>
  * <pre>
- *     Checker.check(myList).isList(String.class).isNotEmpty();
- *     Checker.check(myFile).isFile().exists();
+ * Checker = Checker.check(myList)
+ *     .isList(String.class)
+ *     .isNotEmpty();
  * </pre>
  *
  * Checker is the main class for validating and inspecting objects of any type.

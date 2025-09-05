@@ -5,10 +5,25 @@ import static util.Message.*;
 import util.AbstractChecker;
 
 /**
- * CheckerString is a specialized checker for validating and performing assertions on String values.
- * <p>
- * It provides a fluent API for common string validations such as checking for emptiness, blankness,
- * length constraints, content, format, and more.
+ * A specialized checker for {@link String} instances, providing a fluent API
+ * to assert various string properties such as emptiness, length, content, format and patterns.
+ *
+ * <p>Typical usage:</p>
+ * <pre>{@code
+ * CheckerString.check("HelloWorld")
+ *     .isBlank()
+ *     .min(5)
+ *     .max(20)
+ *     .contains("Hello")
+ *     .startsWith("H")
+ *     .endsWith("d")
+ *     .matches("[A-Za-z]+");
+ * }</pre>
+ *
+ * <p>This class supports chaining multiple assertions in a fluent style and integrates
+ * with {@link util.AbstractChecker} for generalized validation handling.</p>
+ *
+ * @see util.AbstractChecker
  */
 public class CheckerString extends AbstractChecker<String, CheckerString> {
 

@@ -18,6 +18,14 @@ import util.AbstractChecker;
  * against predicates, and more.
  * </p>
  *
+ * <p>Example usage:</p>
+ * <pre>{@code
+ * Map<String, Integer> ages = Map.of("Alice", 19, "Bob", 40);
+ * CheckerMap<String> checker = CheckerMap.check(ages)
+ *      .isEmpty()
+ *      .anyMatch((name, age) -> name.startsWith("A") && age >= 18);
+ * }</pre>
+ *
  * @param <K> the type of keys maintained by the map
  * @param <V> the type of mapped values
  *

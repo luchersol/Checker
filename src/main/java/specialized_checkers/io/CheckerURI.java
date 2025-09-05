@@ -19,7 +19,7 @@ import util.AbstractChecker;
  *
  * <h2>Usage Example:</h2>
  * <pre>{@code
- * CheckerURI.check("https://example.com", "ExampleURI")
+ * CheckerURI checker = CheckerURI.check("https://example.com")
  *     .isAbsolute()
  *     .hasHost("example.com")
  *     .hasPath("/index.html");

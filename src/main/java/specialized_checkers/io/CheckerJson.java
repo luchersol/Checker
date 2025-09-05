@@ -24,7 +24,7 @@ import util.AbstractChecker;
  * Example usage:
  * <pre>
  *     JsonNode json = ...;
- *     CheckerJson.check(json)
+ *     CheckerJson checker = CheckerJson.check(json)
  *         .hasProperty("user.name")
  *         .isTextual("user.name")
  *         .hasLengthBetween("user.name", 3, 20);

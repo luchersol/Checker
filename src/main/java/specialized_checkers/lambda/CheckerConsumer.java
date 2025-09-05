@@ -18,8 +18,9 @@ import util.Utils;
  * <p>
  * Supports optional deep cloning of input objects to ensure that original inputs are not modified
  * during validation.
+ * </p>
  *
- * <p>Example usage:
+ * Example usage:
  * <pre>{@code
  * CheckerConsumer<MyObject> checker = CheckerConsumer.check(myConsumer)
  *     .activateDeepClone()

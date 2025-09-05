@@ -7,9 +7,27 @@ import java.time.LocalDate;
 import util.AbstractChecker;
 
 /**
- * CheckerLocalDate is a specialized checker for validating and performing assertions on {@link LocalDate} values.
- * <p>
- * It provides a fluent API for common local date validations such as checking if a date is before, after, in range, past, future, or present.
+ * A specialized checker for {@link java.time.LocalDate} instances, providing fluent API methods
+ * to assert temporal properties such as being before/after another date, inclusivity checks,
+ * range validations, and whether a date lies in the past, future, or present.
+ *
+ * <p>Typical usage:</p>
+ * <pre>{@code
+ * LocalDate today = LocalDate.now();
+ * LocalDate tomorrow = today.plusDays(1);
+ *
+ * CheckerLocalDate checker = CheckerLocalDate.check(today)
+ *     .isBeforeOrEqual(tomorrow)
+ *     .isPastOrPresent()
+ *     .isFutureOrPresent();
+ * }</pre>
+ *
+ * <p>This class integrates with {@link InterfaceCheckerDate} for standardized temporal
+ * validations and supports chaining multiple assertions in a fluent, expressive style.</p>
+ *
+ * @see java.time.LocalDate
+ * @see specialized_checkers.time.temporal.InterfaceCheckerDate
+ * @see util.AbstractChecker
  */
 public class CheckerLocalDate extends AbstractChecker<LocalDate, CheckerLocalDate> implements InterfaceCheckerDate<CheckerLocalDate, LocalDate>  {
 

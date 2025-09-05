@@ -15,12 +15,36 @@ import org.apache.commons.math3.util.Precision;
 import util.AbstractChecker;
 
 /**
- * Checker for matrix (2D array) instances, providing fluent validation methods for matrices of any numeric type.
- * <p>
- * This class allows you to validate and assert properties of matrix objects in a fluent and readable way.
- * </p>
+ * A specialized checker for matrix (2D array) instances, providing fluent API methods
+ * to assert structural and algebraic properties, such as emptiness, squareness,
+ * identity, diagonal, triangular, symmetric, orthogonal, invertibility, eigenvalue-based
+ * validations, and rank conditions.
  *
- * @param <T> the type of the elements in the matrix being checked (must extend {@link Number})
+ * <p>Typical usage:</p>
+ * <pre>{@code
+ * Double[][] matrix = {
+ *     {1.0, 0.0, 0.0},
+ *     {0.0, 1.0, 0.0},
+ *     {0.0, 0.0, 1.0}
+ * };
+ *
+ * CheckerMatrix<Double> checker = CheckerMatrix.check(matrix)
+ *     .isSquare()
+ *     .isIdentity()
+ *     .isFullRank();
+ * }</pre>
+ *
+ * <p>This class integrates with Apache Commons Math for advanced operations
+ * (eigenvalues, decompositions, determinants, etc.), and supports chaining
+ * multiple assertions in a fluent, expressive style.</p>
+ *
+ * @param <T> the type of the elements in the matrix (must extend {@link Number})
+ *
+ * @see org.apache.commons.math3.linear.RealMatrix
+ * @see org.apache.commons.math3.linear.EigenDecomposition
+ * @see org.apache.commons.math3.linear.LUDecomposition
+ * @see org.apache.commons.math3.linear.SingularValueDecomposition
+ * @see util.AbstractChecker
  */
 public class CheckerMatrix<T extends Number> extends AbstractChecker<T[][], CheckerMatrix<T>> {
 

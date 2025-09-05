@@ -9,10 +9,24 @@ import specialized_checkers.math.numbers.InterfaceCheckerNumber;
 import util.AbstractChecker;
 
 /**
- * Checker for {@link BigInteger} instances, providing fluent validation methods for arbitrary-precision integer numbers.
- * <p>
- * This class allows you to validate and assert properties of {@code BigInteger} objects in a fluent and readable way.
- * </p>
+ * A specialized checker for {@link BigInteger} instances, providing fluent API methods
+ * to assert various behaviors and properties of arbitrary-precision integer numbers,
+ * such as evenness, oddness, divisibility, primality, positivity, negativity, zero value,
+ * and comparisons against other numeric values.
+ *
+ * <p>Typical usage:</p>
+ * <pre>{@code
+ * CheckerBigInteger checker = CheckerBigInteger.check(myBigInteger)
+ *     .isPositive()
+ *     .isEven()
+ *     .isGreaterThan(100);
+ * }</pre>
+ *
+ * <p>This class supports chaining multiple assertions in a fluent style and integrates
+ * with {@link InterfaceCheckerNumber} for numeric-specific validations.</p>
+ *
+ * @see java.math.BigInteger
+ * @see specialized_checkers.math.numbers.InterfaceCheckerNumber
  */
 public class CheckerBigInteger extends AbstractChecker<BigInteger, CheckerBigInteger> implements InterfaceCheckerNumber<CheckerBigInteger> {
 

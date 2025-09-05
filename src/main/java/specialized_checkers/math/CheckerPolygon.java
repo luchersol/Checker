@@ -5,10 +5,25 @@ import java.awt.Polygon;
 import util.AbstractChecker;
 
 /**
- * Checker for {@link java.awt.Polygon} instances, providing fluent validation methods for 2D polygon objects.
- * <p>
- * This class allows you to validate and assert properties of {@code Polygon} objects in a fluent and readable way.
- * </p>
+ * A specialized checker for {@link java.awt.Polygon} instances, providing fluent API methods
+ * to assert properties of 2D polygonal shapes.
+ *
+ * <p>Typical usage:</p>
+ * <pre>{@code
+ * int[] xpoints = {0, 50, 100};
+ * int[] ypoints = {0, 100, 0};
+ *
+ * CheckerPolygon checker = CheckerPolygon.check(xpoints, ypoints, 3)
+ *     // future validations can be chained here
+ *     .self();
+ * }</pre>
+ *
+ * <p>This class supports multiple factory methods to create a checker directly
+ * from a {@code Polygon} instance or from arrays of coordinates, making it flexible
+ * for geometric validations in a fluent and readable style.</p>
+ *
+ * @see java.awt.Polygon
+ * @see util.AbstractChecker
  */
 public class CheckerPolygon extends AbstractChecker<Polygon, CheckerPolygon> {
 

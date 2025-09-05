@@ -8,9 +8,26 @@ import java.time.temporal.TemporalUnit;
 import util.AbstractChecker;
 
 /**
- * CheckerPeriod is a specialized checker for validating and performing assertions on {@link Period} values.
- * <p>
- * It provides a fluent API for common period validations such as checking positivity, negativity, zero, and comparisons with other periods or temporal units.
+ * A specialized checker for {@link java.time.Period} instances, providing a fluent API
+ * to assert various temporal properties such as positivity, negativity, zero value,
+ * and comparisons with other periods or specific temporal units.
+ *
+ * <p>Typical usage:</p>
+ * <pre>{@code
+ * Period p1 = Period.ofMonths(6);
+ * Period p2 = Period.ofYears(1);
+ *
+ * CheckerPeriod.check(p1)
+ *     .isPositive()
+ *     .isLessThan(p2)
+ *     .isGreaterOrEqualThan(Period.ofMonths(3));
+ * }</pre>
+ *
+ * <p>This class supports chaining multiple assertions in a fluent style and integrates
+ * with {@link util.AbstractChecker} for generalized validation handling.</p>
+ *
+ * @see java.time.Period
+ * @see util.AbstractChecker
  */
 public class CheckerPeriod extends AbstractChecker<Period, CheckerPeriod> {
 
