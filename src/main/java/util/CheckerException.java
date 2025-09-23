@@ -1,5 +1,7 @@
 package util;
 
+import java.util.Optional;
+
 /**
  * CheckerException is a custom unchecked exception used for validation and checking errors.
  * It provides factory methods and custom string representation for error reporting.
@@ -24,7 +26,9 @@ public class CheckerException extends RuntimeException {
      * @param exception the exception to wrap
      */
     protected CheckerException(Exception exception) {
-        super(exception.getCause().getLocalizedMessage());
+        super(Optional.ofNullable(exception.getCause())
+                    .map(e -> e.getMessage())
+                    .orElse(exception.getMessage()));
     }
 
 
@@ -47,7 +51,7 @@ public class CheckerException extends RuntimeException {
     @Override
     public String toString() {
         return new StringBuilder(" - ")
-                    .append(getLocalizedMessage())
+                    .append(getMessage())
                     .toString();
     }
 }

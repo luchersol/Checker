@@ -560,7 +560,21 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
     public Checker end(){
         ExceptionTracker exceptionTracker = this.exceptionTracker;
         this.backObject.exceptionTracker.merge(exceptionTracker);
-        return (Checker) this.backObject;
+        return this.backObject.toChecker();
+    }
+
+    /**
+     *
+     * @return This instance transform to Checker
+     */
+    @SuppressWarnings("unchecked")
+    public Checker toChecker() {
+        Checker checker = new Checker(this.object, this.name);
+        checker.backObject = (AbstractChecker<Object, Checker>) this.backObject;
+        checker.exceptionTracker = this.exceptionTracker;
+        checker.saveErrors = this.saveErrors;
+        checker.stop = this.stop;
+        return checker;
     }
 
     /**
