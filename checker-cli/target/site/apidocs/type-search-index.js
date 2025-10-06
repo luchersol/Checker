@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"com.luchersol.cli.command","l":"CreateClassCommand"},{"p":"com.luchersol.cli","l":"MainCLI"}];updateSearchResults();

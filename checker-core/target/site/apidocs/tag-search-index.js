@@ -1,1 +1,0 @@
-tagSearchIndex = [{"l":"Serialized Form","h":"","u":"serialized-form.html"},{"l":"Usage Example:","h":"class com.luchersol.core.specialized_checkers.io.CheckerURI","d":"Section","u":"com/luchersol/core/specialized_checkers/io/CheckerURI.html#usage-example--heading"}];updateSearchResults();

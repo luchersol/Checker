@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.luchersol.cli"},{"l":"com.luchersol.cli.command"}];updateSearchResults();
