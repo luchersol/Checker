@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CheckerFunction.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">checker-core</a> &gt; <a href="index.source.html" class="el_package">com.luchersol.core.specialized_checkers.lambda</a> &gt; <span class="el_source">CheckerFunction.java</span></div><h1>CheckerFunction.java</h1><pre class="source lang-java linenums">package com.luchersol.core.specialized_checkers.lambda;
+
+import static com.luchersol.core.util.Message.*;
+
+import java.util.function.Function;
+
+import com.luchersol.core.util.AbstractChecker;
+import com.luchersol.core.util.Cloner;
+import com.luchersol.core.util.Utils;
+
+/**
+ * A specialized checker for {@link java.util.function.Function} instances, providing a fluent API for validating
+ * function behavior and results. This class allows assertions such as verifying that a function does not throw
+ * exceptions, produces expected results, or returns non-null values for given inputs. It also supports optional
+ * deep cloning of input objects to ensure immutability during checks.
+ *
+ * &lt;p&gt;Example usage:&lt;/p&gt;
+ * &lt;pre&gt;
+ *     CheckerFunction&amp;lt;String, Integer&amp;gt; checker = CheckerFunction.check(String::length);
+ *     checker.producesExpected(&quot;abc&quot;, 3)
+ *            .applyWithoutException(&quot;test&quot;)
+ *            .producesNonNull(&quot;hello&quot;);
+ * &lt;/pre&gt;
+ *
+ * &lt;p&gt;
+ * Deep cloning can be enabled to ensure that the input object is not mutated by the function:
+ * &lt;/p&gt;
+ * &lt;pre&gt;
+ *     checker.activateDeepClone();
+ * &lt;/pre&gt;
+ *
+ * @param &lt;T&gt; the type of the input to the {@code Function} being checked
+ * @param &lt;R&gt; the type of the result returned by the {@code Function}
+ *
+ * @see java.util.function.Function
+ * @see AbstractChecker
+ */
+public class CheckerFunction&lt;T, R&gt; extends AbstractChecker&lt;Function&lt;T, R&gt;, CheckerFunction&lt;T, R&gt;&gt; {
+
+    private static final String INIT_FUNCTION = &quot;lambda.function&quot;;
+    private static final String DEFAULT_NAME = &quot;Function&quot;;
+
+    private boolean deepClone;
+
+    /**
+     * Constructs a new {@code CheckerFunction} with the specified function and name.
+     *
+     * @param function the {@link Function} to be used by this checker
+     * @param name the name identifying this checker
+     */
+    protected CheckerFunction(Function&lt;T, R&gt; function, String name) {
+<span class="fc" id="L52">        super(function, name);</span>
+<span class="fc" id="L53">    }</span>
+
+    /**
+     * Creates a new {@code CheckerFunction} for the given {@link Function} instance with a custom name.
+     *
+     * @param function the {@code Function} instance to be checked
+     * @param name     the name to identify this checker instance (useful for error messages)
+     * @param &lt;T&gt;      the type of the input to the {@code Function} being checked
+     * @param &lt;R&gt;      the type of the result returned by the {@code Function}
+     * @return a new {@code CheckerFunction} for the provided {@code Function}
+     */
+    public static &lt;T,R&gt; CheckerFunction&lt;T, R&gt; check(Function&lt;T, R&gt; function, String name) {
+<span class="fc" id="L65">        return new CheckerFunction&lt;&gt;(function, name);</span>
+    }
+
+    /**
+     * Creates a new {@code CheckerFunction} for the given {@link Function} instance with a default name.
+     *
+     * @param function the {@code Function} instance to be checked
+     * @param &lt;T&gt;      the type of the input to the {@code Function} being checked
+     * @param &lt;R&gt;      the type of the result returned by the {@code Function}
+     * @return a new {@code CheckerFunction} for the provided {@code Function}
+     */
+    public static &lt;T,R&gt; CheckerFunction&lt;T, R&gt; check(Function&lt;T, R&gt; function) {
+<span class="fc" id="L77">        return check(function, DEFAULT_NAME);</span>
+    }
+
+    /**
+     * Returns this checker instance (for fluent API usage).
+     *
+     * @return this {@code CheckerFunction} instance for further validation and chaining
+     */
+    @Override
+    protected CheckerFunction&lt;T, R&gt; self() {
+<span class="fc" id="L87">        return this;</span>
+    }
+
+    /**
+     * Enables deep cloning of input objects before passing them to the {@code Function}.
+     * &lt;p&gt;
+     * This is useful to ensure that the original input is not modified by the operation, especially when the function may mutate its input.
+     * &lt;/p&gt;
+     *
+     * @return this {@code CheckerFunction} instance for further validation and chaining
+     */
+    public CheckerFunction&lt;T, R&gt; activateDeepClone() {
+<span class="fc" id="L99">        this.deepClone = true;</span>
+<span class="fc" id="L100">        return self();</span>
+    }
+
+    /**
+     * Disables deep cloning of input objects before passing them to the {@code Function}.
+     *
+     * @return this {@code CheckerFunction} instance for further validation and chaining
+     */
+    public CheckerFunction&lt;T, R&gt; deactivateDeepClone() {
+<span class="fc" id="L109">        this.deepClone = false;</span>
+<span class="fc" id="L110">        return self();</span>
+    }
+
+    /**
+     * Returns the input object, deep-cloned if deep cloning is activated, otherwise returns the original input.
+     *
+     * @param input the input object to process
+     * @return the processed input (deep-cloned or original), depending on the current deep clone setting
+     */
+    public T getInput(T input) {
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">        return this.deepClone ? Cloner.deepClone(input) : input;</span>
+    }
+
+    /**
+     * Asserts that applying the {@code Function} to the given input does not throw any exception.
+     * &lt;p&gt;
+     * This check is useful to ensure that the function is safe to apply to the provided input and does not result in runtime errors.
+     * &lt;/p&gt;
+     *
+     * @param input the input object to be processed by the function
+     * @return this {@code CheckerFunction} instance for further validation and chaining
+     */
+    public CheckerFunction&lt;T, R&gt; applyWithoutException(T input) {
+<span class="fc" id="L133">        return is(f -&gt; {</span>
+            try {
+<span class="fc" id="L135">                T processInput = getInput(input);</span>
+<span class="fc" id="L136">                f.apply(processInput);</span>
+<span class="fc" id="L137">                return true;</span>
+<span class="fc" id="L138">            } catch (Exception e) {</span>
+<span class="fc" id="L139">                return false;</span>
+            }
+<span class="fc" id="L141">        }, sendMessage(INIT_FUNCTION, &quot;apply_without_exception&quot;, input));</span>
+    }
+
+    /**
+     * Asserts that applying the {@code Function} to the given input produces the expected result.
+     * &lt;p&gt;
+     * This check compares the actual result of the function with the expected value using content equality.
+     * &lt;/p&gt;
+     *
+     * @param input    the input object to be processed by the function
+     * @param expected the expected result to compare with the actual result of the function
+     * @return this {@code CheckerFunction} instance for further validation and chaining
+     */
+    public CheckerFunction&lt;T, R&gt; producesExpected(T input, R expected) {
+<span class="fc" id="L155">        return is(f -&gt; {</span>
+            try {
+<span class="fc" id="L157">                R result = f.apply(input);</span>
+<span class="fc" id="L158">                return Utils.equalsContent(expected, result);</span>
+<span class="nc" id="L159">            } catch (Exception e) {</span>
+<span class="nc" id="L160">                return false;</span>
+            }
+<span class="fc" id="L162">        }, sendMessage(INIT_FUNCTION, &quot;produces_expected&quot;, input, expected));</span>
+    }
+
+    /**
+     * Asserts that applying the {@code Function} to the given input produces a non-null result.
+     * &lt;p&gt;
+     * This check is useful to ensure that the function always returns a valid (non-null) result for the given input.
+     * &lt;/p&gt;
+     *
+     * @param input the input object to be processed by the function
+     * @return this {@code CheckerFunction} instance for further validation and chaining
+     */
+    public CheckerFunction&lt;T, R&gt; producesNonNull(T input) {
+<span class="fc" id="L175">        return is(f -&gt; {</span>
+            try {
+<span class="fc bfc" id="L177" title="All 2 branches covered.">                return f.apply(input) != null;</span>
+<span class="nc" id="L178">            } catch (Exception e) {</span>
+<span class="nc" id="L179">                return false;</span>
+            }
+<span class="fc" id="L181">        }, sendMessage(INIT_FUNCTION, &quot;produces_non_null&quot;, input));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

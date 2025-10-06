@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CheckerBigInteger.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">checker-core</a> &gt; <a href="index.source.html" class="el_package">com.luchersol.core.specialized_checkers.math.numbers.bigTypes</a> &gt; <span class="el_source">CheckerBigInteger.java</span></div><h1>CheckerBigInteger.java</h1><pre class="source lang-java linenums">package com.luchersol.core.specialized_checkers.math.numbers.bigTypes;
+
+import static com.luchersol.core.util.Message.*;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
+import com.luchersol.core.specialized_checkers.math.numbers.InterfaceCheckerNumber;
+import com.luchersol.core.util.AbstractChecker;
+
+/**
+ * A specialized checker for {@link BigInteger} instances, providing fluent API methods
+ * to assert various behaviors and properties of arbitrary-precision integer numbers,
+ * such as evenness, oddness, divisibility, primality, positivity, negativity, zero value,
+ * and comparisons against other numeric values.
+ *
+ * &lt;p&gt;Typical usage:&lt;/p&gt;
+ * &lt;pre&gt;{@code
+ * CheckerBigInteger checker = CheckerBigInteger.check(myBigInteger)
+ *     .isPositive()
+ *     .isEven()
+ *     .isGreaterThan(100);
+ * }&lt;/pre&gt;
+ *
+ * &lt;p&gt;This class supports chaining multiple assertions in a fluent style and integrates
+ * with {@link InterfaceCheckerNumber} for numeric-specific validations.&lt;/p&gt;
+ *
+ * @see java.math.BigInteger
+ * @see com.luchersol.core.specialized_checkers.math.numbers.InterfaceCheckerNumber
+ */
+public class CheckerBigInteger extends AbstractChecker&lt;BigInteger, CheckerBigInteger&gt; implements InterfaceCheckerNumber&lt;CheckerBigInteger&gt; {
+
+    private static final String INIT_NUMBERS = &quot;numbers&quot;;
+    private static final String DEFAULT_NAME = &quot;Big Integer&quot;;
+
+
+    /**
+     * Constructs a new {@code CheckerBigInteger} with the specified bigInteger and name.
+     *
+     * @param bigInteger the {@link BigInteger} to be wrapped and checked
+     * @param name the name identifying this checker function
+     */
+    protected CheckerBigInteger(BigInteger bigInteger, String name) {
+<span class="fc" id="L44">        super(bigInteger, name);</span>
+<span class="fc" id="L45">    }</span>
+
+    /**
+     * Creates a new {@code CheckerBigInteger} for the given {@link BigInteger} instance with a custom name.
+     *
+     * @param number the {@code BigInteger} instance to be checked
+     * @param name   the name to identify this checker instance (useful for error messages)
+     * @return a new {@code CheckerBigInteger} for the provided {@code BigInteger}
+     */
+    public static CheckerBigInteger check(BigInteger number, String name) {
+<span class="fc" id="L55">        return new CheckerBigInteger(number, name);</span>
+    }
+
+    /**
+     * Creates a new {@code CheckerBigInteger} for the given {@link BigInteger} instance with a default name.
+     *
+     * @param number the {@code BigInteger} instance to be checked
+     * @return a new {@code CheckerBigInteger} for the provided {@code BigInteger}
+     */
+    public static CheckerBigInteger check(BigInteger number) {
+<span class="fc" id="L65">        return check(number, DEFAULT_NAME);</span>
+    }
+
+    /**
+     * Returns this checker instance (for fluent API usage).
+     *
+     * @return this {@code CheckerBigInteger} instance
+     */
+    @Override
+    protected CheckerBigInteger self() {
+<span class="fc" id="L75">        return this;</span>
+    }
+
+    /**
+     * Asserts that the {@code BigInteger} is even (divisible by two).
+     *
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    public CheckerBigInteger isEven(){
+<span class="fc" id="L84">        return is(n_big_integer -&gt; n_big_integer.mod(BigInteger.TWO).equals(BigInteger.ZERO), sendMessage(INIT_NUMBERS, &quot;is_even&quot;, DEFAULT_NAME));</span>
+    }
+
+    /**
+     * Asserts that the {@code BigInteger} is odd (not divisible by two).
+     *
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    public CheckerBigInteger isOdd(){
+<span class="fc bfc" id="L93" title="All 2 branches covered.">        return is(n_big_integer -&gt; !n_big_integer.mod(BigInteger.TWO).equals(BigInteger.ZERO), sendMessage(INIT_NUMBERS, &quot;is_odd&quot;, DEFAULT_NAME));</span>
+    }
+
+    /**
+     * Asserts that the {@code BigInteger} is divisible by the specified divisor.
+     *
+     * @param divisor the value to divide by
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    public CheckerBigInteger isDivisibleBy(BigInteger divisor){
+<span class="fc" id="L103">        return is(n_big_integer -&gt; n_big_integer.mod(divisor).equals(BigInteger.ZERO), sendMessage(INIT_NUMBERS, &quot;is_divisible_by&quot;, DEFAULT_NAME, divisor));</span>
+    }
+
+    /**
+     * Asserts that the {@code BigInteger} is a power of two.
+     *
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    public CheckerBigInteger isPowerOfTwo(){
+<span class="pc bpc" id="L112" title="1 of 4 branches missed.">        return is(n_big_integer -&gt; n_big_integer.signum() &gt; 0 &amp;&amp; n_big_integer.bitCount() == 1, sendMessage(INIT_NUMBERS, &quot;is_power_of_two&quot;, DEFAULT_NAME));</span>
+    }
+
+    /**
+     * Asserts that the {@code BigInteger} is probably prime, with the specified certainty.
+     *
+     * @param certainty a measure of the uncertainty that the caller is willing to tolerate
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    public CheckerBigInteger isProbablePrime(int certainty) {
+<span class="fc" id="L122">        return is(n_big_integer -&gt; n_big_integer.isProbablePrime(certainty), sendMessage(INIT_NUMBERS, &quot;is_probable_prime&quot;, DEFAULT_NAME, certainty));</span>
+    }
+
+    /**
+     * Asserts that the {@code BigInteger} is positive (greater than zero).
+     *
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isPositive() {
+<span class="fc bfc" id="L132" title="All 2 branches covered.">        return is(n_big_integer -&gt; n_big_integer.signum() &gt; 0, sendMessage(INIT_NUMBERS, &quot;is_positive&quot;, DEFAULT_NAME));</span>
+    }
+
+    /**
+     * Asserts that the {@code BigInteger} is positive or zero (greater than or equal to zero).
+     *
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isPositiveOrZero() {
+<span class="fc bfc" id="L142" title="All 2 branches covered.">        return is(n_big_integer -&gt; n_big_integer.signum() &gt;= 0, sendMessage(INIT_NUMBERS, &quot;is_positive_or_zero&quot;, DEFAULT_NAME));</span>
+    }
+
+    /**
+     * Asserts that the {@code BigInteger} is negative (less than zero).
+     *
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isNegative() {
+<span class="fc bfc" id="L152" title="All 2 branches covered.">        return is(n_big_integer -&gt; n_big_integer.signum() &lt; 0, sendMessage(INIT_NUMBERS, &quot;is_negative&quot;, DEFAULT_NAME));</span>
+    }
+
+    /**
+     * Asserts that the {@code BigInteger} is negative or zero (less than or equal to zero).
+     *
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isNegativeOrZero() {
+<span class="fc bfc" id="L162" title="All 2 branches covered.">        return is(n_big_integer -&gt; n_big_integer.signum() &lt;= 0, sendMessage(INIT_NUMBERS, &quot;is_negative_or_zero&quot;, DEFAULT_NAME));</span>
+    }
+
+    /**
+     * Asserts that the {@code BigInteger} is zero.
+     *
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isZero() {
+<span class="fc bfc" id="L172" title="All 2 branches covered.">        return is(n_big_integer -&gt; n_big_integer.signum() == 0, sendMessage(INIT_NUMBERS, &quot;is_zero&quot;, DEFAULT_NAME));</span>
+    }
+
+    /**
+     * Asserts that the {@code BigInteger} is greater than the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isGreaterThan(Byte number) {
+<span class="nc bnc" id="L183" title="All 2 branches missed.">        return is(n_big_integer -&gt; n_big_integer.compareTo(BigInteger.valueOf(number)) &gt; 0, sendMessage(INIT_NUMBERS, &quot;is_greather_than&quot;, DEFAULT_NAME, number));</span>
+    }
+
+    /**
+     * Asserts that the {@code BigInteger} is greater than or equal to the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isGreaterThan(Short number) {
+<span class="nc bnc" id="L194" title="All 2 branches missed.">        return is(n_big_integer -&gt; n_big_integer.compareTo(BigInteger.valueOf(number)) &gt; 0, sendMessage(INIT_NUMBERS, &quot;is_greather_than&quot;, DEFAULT_NAME, number));</span>
+    }
+
+    /**
+     * Asserts that the {@code BigInteger} is less than the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isGreaterThan(Integer number) {
+<span class="fc bfc" id="L205" title="All 2 branches covered.">        return is(n_big_integer -&gt; n_big_integer.compareTo(BigInteger.valueOf(number)) &gt; 0, sendMessage(INIT_NUMBERS, &quot;is_greather_than&quot;, DEFAULT_NAME, number));</span>
+    }
+
+    /**
+     * Asserts that the {@code BigInteger} is less than or equal to the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isGreaterThan(Long number) {
+<span class="nc bnc" id="L216" title="All 2 branches missed.">        return is(n_big_integer -&gt; n_big_integer.compareTo(BigInteger.valueOf(number)) &gt; 0, sendMessage(INIT_NUMBERS, &quot;is_greather_than&quot;, DEFAULT_NAME, number));</span>
+    }
+
+
+    /**
+     * Asserts that the {@code BigInteger} is greater than the specified {@code Float} value.
+     *
+     * @param number the {@code Float} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isGreaterThan(Float number) {
+<span class="nc bnc" id="L228" title="All 2 branches missed.">        return is(n_big_integer -&gt; new BigDecimal(n_big_integer).compareTo(BigDecimal.valueOf(number)) &gt; 0, sendMessage(INIT_NUMBERS, &quot;is_greather_than&quot;, DEFAULT_NAME, number));</span>
+    }
+
+
+    /**
+     * Asserts that the {@code BigInteger} is greater than the specified {@code Double} value.
+     *
+     * @param number the {@code Double} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isGreaterThan(Double number) {
+<span class="nc bnc" id="L240" title="All 2 branches missed.">        return is(n_big_integer -&gt; new BigDecimal(n_big_integer).compareTo(BigDecimal.valueOf(number)) &gt; 0, sendMessage(INIT_NUMBERS, &quot;is_greather_than&quot;, DEFAULT_NAME, number));</span>
+    }
+
+
+    /**
+     * Asserts that the {@code BigInteger} is greater than or equal to the specified {@code Byte} value.
+     *
+     * @param number the {@code Byte} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isGreaterOrEqualTo(Byte number) {
+<span class="nc bnc" id="L252" title="All 2 branches missed.">        return is(n_big_integer -&gt; n_big_integer.compareTo(BigInteger.valueOf(number)) &gt;= 0, sendMessage(INIT_NUMBERS, &quot;is_greather_or_equal_to&quot;, DEFAULT_NAME, number));</span>
+    }
+
+
+    /**
+     * Asserts that the {@code BigInteger} is greater than or equal to the specified {@code Short} value.
+     *
+     * @param number the {@code Short} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isGreaterOrEqualTo(Short number) {
+<span class="nc bnc" id="L264" title="All 2 branches missed.">        return is(n_big_integer -&gt; n_big_integer.compareTo(BigInteger.valueOf(number)) &gt;= 0, sendMessage(INIT_NUMBERS, &quot;is_greather_or_equal_to&quot;, DEFAULT_NAME, number));</span>
+    }
+
+
+    /**
+     * Asserts that the {@code BigInteger} is greater than or equal to the specified {@code Integer} value.
+     *
+     * @param number the {@code Integer} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isGreaterOrEqualTo(Integer number) {
+<span class="fc bfc" id="L276" title="All 2 branches covered.">        return is(n_big_integer -&gt; n_big_integer.compareTo(BigInteger.valueOf(number)) &gt;= 0, sendMessage(INIT_NUMBERS, &quot;is_greather_or_equal_to&quot;, DEFAULT_NAME, number));</span>
+    }
+
+
+    /**
+     * Asserts that the {@code BigInteger} is greater than or equal to the specified {@code Long} value.
+     *
+     * @param number the {@code Long} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isGreaterOrEqualTo(Long number) {
+<span class="nc bnc" id="L288" title="All 2 branches missed.">        return is(n_big_integer -&gt; n_big_integer.compareTo(BigInteger.valueOf(number)) &gt;= 0, sendMessage(INIT_NUMBERS, &quot;is_greather_or_equal_to&quot;, DEFAULT_NAME, number));</span>
+    }
+
+
+    /**
+     * Asserts that the {@code BigInteger} is greater than or equal to the specified {@code Float} value.
+     *
+     * @param number the {@code Float} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isGreaterOrEqualTo(Float number) {
+<span class="nc bnc" id="L300" title="All 2 branches missed.">        return is(n_big_integer -&gt; new BigDecimal(n_big_integer).compareTo(BigDecimal.valueOf(number)) &gt;= 0, sendMessage(INIT_NUMBERS, &quot;is_greather_or_equal_to&quot;, DEFAULT_NAME, number));</span>
+    }
+
+
+    /**
+     * Asserts that the {@code BigInteger} is greater than or equal to the specified {@code Double} value.
+     *
+     * @param number the {@code Double} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isGreaterOrEqualTo(Double number) {
+<span class="nc bnc" id="L312" title="All 2 branches missed.">        return is(n_big_integer -&gt; new BigDecimal(n_big_integer).compareTo(BigDecimal.valueOf(number)) &gt;= 0, sendMessage(INIT_NUMBERS, &quot;is_greather_or_equal_to&quot;, DEFAULT_NAME, number));</span>
+    }
+
+
+    /**
+     * Asserts that the {@code BigInteger} is less than the specified {@code Byte} value.
+     *
+     * @param number the {@code Byte} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isLessThan(Byte number) {
+<span class="nc bnc" id="L324" title="All 2 branches missed.">        return is(n_big_integer -&gt; n_big_integer.compareTo(BigInteger.valueOf(number)) &lt; 0, sendMessage(INIT_NUMBERS, &quot;is_less_than&quot;, DEFAULT_NAME, number));</span>
+    }
+
+
+    /**
+     * Asserts that the {@code BigInteger} is less than the specified {@code Short} value.
+     *
+     * @param number the {@code Short} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isLessThan(Short number) {
+<span class="nc bnc" id="L336" title="All 2 branches missed.">        return is(n_big_integer -&gt; n_big_integer.compareTo(BigInteger.valueOf(number)) &lt; 0, sendMessage(INIT_NUMBERS, &quot;is_less_than&quot;, DEFAULT_NAME, number));</span>
+    }
+
+
+    /**
+     * Asserts that the {@code BigInteger} is less than the specified {@code Integer} value.
+     *
+     * @param number the {@code Integer} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isLessThan(Integer number) {
+<span class="fc bfc" id="L348" title="All 2 branches covered.">        return is(n_big_integer -&gt; n_big_integer.compareTo(BigInteger.valueOf(number)) &lt; 0, sendMessage(INIT_NUMBERS, &quot;is_less_than&quot;, DEFAULT_NAME, number));</span>
+    }
+
+
+    /**
+     * Asserts that the {@code BigInteger} is less than the specified {@code Long} value.
+     *
+     * @param number the {@code Long} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isLessThan(Long number) {
+<span class="nc bnc" id="L360" title="All 2 branches missed.">        return is(n_big_integer -&gt; n_big_integer.compareTo(BigInteger.valueOf(number)) &lt; 0, sendMessage(INIT_NUMBERS, &quot;is_less_than&quot;, DEFAULT_NAME, number));</span>
+    }
+
+
+    /**
+     * Asserts that the {@code BigInteger} is less than the specified {@code Float} value.
+     *
+     * @param number the {@code Float} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isLessThan(Float number) {
+<span class="nc bnc" id="L372" title="All 2 branches missed.">        return is(n_big_integer -&gt; new BigDecimal(n_big_integer).compareTo(BigDecimal.valueOf(number)) &lt; 0, sendMessage(INIT_NUMBERS, &quot;is_less_than&quot;, DEFAULT_NAME, number));</span>
+    }
+
+
+    /**
+     * Asserts that the {@code BigInteger} is less than the specified {@code Double} value.
+     *
+     * @param number the {@code Double} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isLessThan(Double number) {
+<span class="nc bnc" id="L384" title="All 2 branches missed.">        return is(n_big_integer -&gt; new BigDecimal(n_big_integer).compareTo(BigDecimal.valueOf(number)) &lt; 0, sendMessage(INIT_NUMBERS, &quot;is_less_than&quot;, DEFAULT_NAME, number));</span>
+    }
+
+
+    /**
+     * Asserts that the {@code BigInteger} is less than or equal to the specified {@code Byte} value.
+     *
+     * @param number the {@code Byte} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isLessOrEqualTo(Byte number) {
+<span class="nc bnc" id="L396" title="All 2 branches missed.">        return is(n_big_integer -&gt; n_big_integer.compareTo(BigInteger.valueOf(number)) &lt;= 0, sendMessage(INIT_NUMBERS, &quot;is_less_or_equal_to&quot;, DEFAULT_NAME, number));</span>
+    }
+
+
+    /**
+     * Asserts that the {@code BigInteger} is less than or equal to the specified {@code Short} value.
+     *
+     * @param number the {@code Short} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isLessOrEqualTo(Short number) {
+<span class="nc bnc" id="L408" title="All 2 branches missed.">        return is(n_big_integer -&gt; n_big_integer.compareTo(BigInteger.valueOf(number)) &lt;= 0, sendMessage(INIT_NUMBERS, &quot;is_less_or_equal_to&quot;, DEFAULT_NAME, number));</span>
+    }
+
+
+    /**
+     * Asserts that the {@code BigInteger} is less than or equal to the specified {@code Integer} value.
+     *
+     * @param number the {@code Integer} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isLessOrEqualTo(Integer number) {
+<span class="fc bfc" id="L420" title="All 2 branches covered.">        return is(n_big_integer -&gt; n_big_integer.compareTo(BigInteger.valueOf(number)) &lt;= 0, sendMessage(INIT_NUMBERS, &quot;is_less_or_equal_to&quot;, DEFAULT_NAME, number));</span>
+    }
+
+
+    /**
+     * Asserts that the {@code BigInteger} is less than or equal to the specified {@code Long} value.
+     *
+     * @param number the {@code Long} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isLessOrEqualTo(Long number) {
+<span class="nc bnc" id="L432" title="All 2 branches missed.">        return is(n_big_integer -&gt; n_big_integer.compareTo(BigInteger.valueOf(number)) &lt;= 0, sendMessage(INIT_NUMBERS, &quot;is_less_or_equal_to&quot;, DEFAULT_NAME, number));</span>
+    }
+
+
+    /**
+     * Asserts that the {@code BigInteger} is less than or equal to the specified {@code Float} value.
+     *
+     * @param number the {@code Float} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isLessOrEqualTo(Float number) {
+<span class="nc bnc" id="L444" title="All 2 branches missed.">        return is(n_big_integer -&gt; new BigDecimal(n_big_integer).compareTo(BigDecimal.valueOf(number)) &lt;= 0, sendMessage(INIT_NUMBERS, &quot;is_less_or_equal_to&quot;, DEFAULT_NAME, number));</span>
+    }
+
+
+    /**
+     * Asserts that the {@code BigInteger} is less than or equal to the specified {@code Double} value.
+     *
+     * @param number the {@code Double} value to compare against
+     * @return this {@code CheckerBigInteger} instance for further validation
+     */
+    @Override
+    public CheckerBigInteger isLessOrEqualTo(Double number) {
+<span class="nc bnc" id="L456" title="All 2 branches missed.">        return is(n_big_integer -&gt; new BigDecimal(n_big_integer).compareTo(BigDecimal.valueOf(number)) &lt;= 0, sendMessage(INIT_NUMBERS, &quot;is_less_or_equal_to&quot;, DEFAULT_NAME, number));</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

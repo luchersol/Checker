@@ -1,0 +1,113 @@
+@options
+@packages
+@argfile
+-classpath
+'C:/Users/lmher/.m2/repository/org/apache/commons/commons-math3/3.6.1/commons-math3-3.6.1.jar;C:/Users/lmher/.m2/repository/org/fusesource/jansi/jansi/2.4.0/jansi-2.4.0.jar;C:/Users/lmher/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.19.0/jackson-databind-2.19.0.jar;C:/Users/lmher/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.19.0/jackson-annotations-2.19.0.jar;C:/Users/lmher/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.19.0/jackson-core-2.19.0.jar;C:/Users/lmher/.m2/repository/org/yaml/snakeyaml/2.4/snakeyaml-2.4.jar;C:/Users/lmher/.m2/repository/com/esotericsoftware/kryo/5.5.0/kryo-5.5.0.jar;C:/Users/lmher/.m2/repository/com/esotericsoftware/reflectasm/1.11.9/reflectasm-1.11.9.jar;C:/Users/lmher/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar;C:/Users/lmher/.m2/repository/com/esotericsoftware/minlog/1.3.1/minlog-1.3.1.jar'
+-encoding
+'UTF-8'
+-protected
+-source
+'17'
+-sourcepath
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2025. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'Checker'
+-use
+-version
+-windowtitle
+'checker-core 1.0-SNAPSHOT API'
+com.luchersol.core.specialized_checkers
+com.luchersol.core.specialized_checkers.collection
+com.luchersol.core.specialized_checkers.io
+com.luchersol.core.specialized_checkers.lambda
+com.luchersol.core.specialized_checkers.math
+com.luchersol.core.specialized_checkers.math.numbers.bigTypes
+com.luchersol.core.specialized_checkers.math.numbers.decimalTypes
+com.luchersol.core.specialized_checkers.math.numbers.integerTypes
+com.luchersol.core.specialized_checkers.math.numbers
+com.luchersol.core.specialized_checkers.time
+com.luchersol.core.specialized_checkers.time.temporal
+com.luchersol.core.util
+com.luchersol.core.util.collection
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/CheckerColor.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/CheckerCurrency.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/CheckerString.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/collection/CheckerGraph.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/collection/CheckerList.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/collection/CheckerMap.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/collection/CheckerSet.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/collection/CheckerTree.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/io/CheckerFile.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/io/CheckerJson.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/io/CheckerURI.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/lambda/CheckerBiConsumer.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/lambda/CheckerBiFunction.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/lambda/CheckerBiPredicate.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/lambda/CheckerCallable.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/lambda/CheckerConsumer.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/lambda/CheckerFunction.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/lambda/CheckerPredicate.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/lambda/CheckerRunnable.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/lambda/CheckerSupplier.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/math/CheckerArray.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/math/CheckerMatrix.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/math/CheckerPolygon.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/math/numbers/bigTypes/CheckerBigDecimal.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/math/numbers/bigTypes/CheckerBigInteger.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/math/numbers/decimalTypes/CheckerDouble.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/math/numbers/decimalTypes/CheckerFloat.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/math/numbers/integerTypes/CheckerInteger.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/math/numbers/integerTypes/CheckerLong.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/math/numbers/InterfaceCheckerNumber.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/time/CheckerDuration.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/time/CheckerPeriod.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/time/temporal/CheckerDate.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/time/temporal/CheckerLocalDate.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/time/temporal/CheckerLocalDateTime.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/time/temporal/CheckerLocalTime.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/specialized_checkers/time/temporal/InterfaceCheckerDate.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/util/AbstractChecker.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/util/Checker.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/util/CheckerException.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/util/Cloner.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/util/collection/Graph.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/util/collection/Tree.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/util/ExceptionTracker.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/util/InterfaceChecker.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/util/Message.java'
+'C:/Users/lmher/Java_Proyectos/Checker/checker-core/src/main/java/com/luchersol/core/util/Utils.java'
+C:\Users\lmher\.m2\repository\org\apache\commons\commons-math3\3.6.1\commons-math3-3.6.1.jar = 1725302599739
+C:\Users\lmher\.m2\repository\org\fusesource\jansi\jansi\2.4.0\jansi-2.4.0.jar = 1677338505467
+C:\Users\lmher\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.19.0\jackson-databind-2.19.0.jar = 1755521234067
+C:\Users\lmher\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.19.0\jackson-annotations-2.19.0.jar = 1755521234181
+C:\Users\lmher\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.19.0\jackson-core-2.19.0.jar = 1755521234628
+C:\Users\lmher\.m2\repository\org\yaml\snakeyaml\2.4\snakeyaml-2.4.jar = 1755601324831
+C:\Users\lmher\.m2\repository\com\esotericsoftware\kryo\5.5.0\kryo-5.5.0.jar = 1756205905769
+C:\Users\lmher\.m2\repository\com\esotericsoftware\reflectasm\1.11.9\reflectasm-1.11.9.jar = 1756205905866
+C:\Users\lmher\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar = 1694874711668
+C:\Users\lmher\.m2\repository\com\esotericsoftware\minlog\1.3.1\minlog-1.3.1.jar = 1756205905819
+C:\Users\lmher\Java_Proyectos\Checker\checker-core\src\main\java = 1759766638244
+C:\Users\lmher\Java_Proyectos\Checker\checker-core\target\site\apidocs\allclasses-index.html = 1759771447912
+C:\Users\lmher\Java_Proyectos\Checker\checker-core\target\site\apidocs\allpackages-index.html = 1759771447926
+C:\Users\lmher\Java_Proyectos\Checker\checker-core\target\site\apidocs\element-list = 1759771447544
+C:\Users\lmher\Java_Proyectos\Checker\checker-core\target\site\apidocs\help-doc.html = 1759771447983
+C:\Users\lmher\Java_Proyectos\Checker\checker-core\target\site\apidocs\index-all.html = 1759771447983
+C:\Users\lmher\Java_Proyectos\Checker\checker-core\target\site\apidocs\index.html = 1759771447883
+C:\Users\lmher\Java_Proyectos\Checker\checker-core\target\site\apidocs\member-search-index.js = 1759771447927
+C:\Users\lmher\Java_Proyectos\Checker\checker-core\target\site\apidocs\module-search-index.js = 1759771447927
+C:\Users\lmher\Java_Proyectos\Checker\checker-core\target\site\apidocs\overview-summary.html = 1759771447983
+C:\Users\lmher\Java_Proyectos\Checker\checker-core\target\site\apidocs\overview-tree.html = 1759771447883
+C:\Users\lmher\Java_Proyectos\Checker\checker-core\target\site\apidocs\package-search-index.js = 1759771447927
+C:\Users\lmher\Java_Proyectos\Checker\checker-core\target\site\apidocs\search.html = 1759771447983
+C:\Users\lmher\Java_Proyectos\Checker\checker-core\target\site\apidocs\serialized-form.html = 1759771447628
+C:\Users\lmher\Java_Proyectos\Checker\checker-core\target\site\apidocs\tag-search-index.js = 1759771447927
+C:\Users\lmher\Java_Proyectos\Checker\checker-core\target\site\apidocs\type-search-index.js = 1759771447927

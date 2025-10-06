@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CheckerCallable.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">checker-core</a> &gt; <a href="index.source.html" class="el_package">com.luchersol.core.specialized_checkers.lambda</a> &gt; <span class="el_source">CheckerCallable.java</span></div><h1>CheckerCallable.java</h1><pre class="source lang-java linenums">package com.luchersol.core.specialized_checkers.lambda;
+
+import static com.luchersol.core.util.Message.*;
+
+import java.util.concurrent.Callable;
+
+import com.luchersol.core.util.AbstractChecker;
+import com.luchersol.core.util.Utils;
+
+
+/**
+ * A specialized checker for {@link Callable} instances, providing fluent assertions
+ * for validating the behavior and results of {@code Callable} tasks.
+ * &lt;p&gt;
+ * This class extends {@link AbstractChecker} to offer convenient methods for
+ * asserting that a {@code Callable} does not throw exceptions, produces expected
+ * results, or returns non-null values.
+ * &lt;/p&gt;
+ *
+ * &lt;p&gt;Example usage:&lt;/p&gt;
+ * &lt;pre&gt;{@code
+ * CheckerCallable&lt;Integer&gt; checker = CheckerCallable.check(() -&gt; 42)
+ *        .callWithoutException()
+ *        .producesExpected(42)
+ *        .producesNonNull();
+ * }&lt;/pre&gt;
+ *
+ * @param &lt;V&gt; the result type returned by the {@code call()} method of the {@code Callable}
+ * @see java.util.concurrent.Callable
+ * @see AbstractChecker
+ */
+public class CheckerCallable&lt;V&gt; extends AbstractChecker&lt;Callable&lt;V&gt;, CheckerCallable&lt;V&gt;&gt; {
+
+    private static final String INIT_CALLABLE = &quot;lambda.callable&quot;;
+    private static final String DEFAULT_NAME = &quot;Callable&quot;;
+
+    /**
+     * Constructs a new {@code CheckerCallable} with the specified {@link Callable} task and a name.
+     *
+     * @param callable the {@code Callable} task to be executed by this checker
+     * @param name the name associated with this checker
+     */
+    protected CheckerCallable(Callable&lt;V&gt; callable, String name) {
+<span class="fc" id="L44">        super(callable, name);</span>
+<span class="fc" id="L45">    }</span>
+
+    /**
+     * Creates a new {@code CheckerCallable} for the given {@link Callable} instance with a custom name.
+     *
+     * @param callable the {@code Callable} instance to be checked
+     * @param name     the name to identify this checker instance (useful for error messages)
+     * @param &lt;V&gt;      the result type returned by the {@code call()} method of the {@code Callable}
+     * @return a new {@code CheckerCallable} for the provided {@code Callable}
+     */
+    public static &lt;V&gt; CheckerCallable&lt;V&gt; check(Callable&lt;V&gt; callable, String name) {
+<span class="fc" id="L56">        return new CheckerCallable&lt;&gt;(callable, name);</span>
+    }
+
+    /**
+     * Creates a new {@code CheckerCallable} for the given {@link Callable} instance with a default name.
+     *
+     * @param callable the {@code Callable} instance to be checked
+     * @param &lt;V&gt;      the result type returned by the {@code call()} method of the {@code Callable}
+     * @return a new {@code CheckerCallable} for the provided {@code Callable}
+     */
+    public static &lt;V&gt; CheckerCallable&lt;V&gt; check(Callable&lt;V&gt; callable) {
+<span class="fc" id="L67">        return check(callable, DEFAULT_NAME);</span>
+    }
+
+    /**
+     * Returns this checker instance (for fluent API usage).
+     *
+     * @return this {@code CheckerCallable} instance
+     */
+    @Override
+    protected CheckerCallable&lt;V&gt; self() {
+<span class="fc" id="L77">        return this;</span>
+    }
+
+    /**
+     * Asserts that calling the {@code call()} method of the {@link Callable} does not throw any exception.
+     *
+     * @return this {@code CheckerCallable} instance for further validation
+     */
+    public CheckerCallable&lt;V&gt; callWithoutException() {
+<span class="fc" id="L86">        return is(c -&gt; {</span>
+            try {
+<span class="fc" id="L88">                c.call();</span>
+<span class="fc" id="L89">                return true;</span>
+<span class="fc" id="L90">            } catch (Exception e) {</span>
+<span class="fc" id="L91">                return false;</span>
+            }
+<span class="fc" id="L93">        }, sendMessage(INIT_CALLABLE, &quot;call_without_exception&quot;));</span>
+    }
+
+    /**
+     * Asserts that the {@code call()} method of the {@link Callable} produces the expected result.
+     *
+     * @param expected the expected result to compare with the actual result of {@code call()}
+     * @return this {@code CheckerCallable} instance for further validation
+     */
+    public CheckerCallable&lt;V&gt; producesExpected(V expected) {
+<span class="fc" id="L103">        return is(c -&gt; {</span>
+            try {
+<span class="fc" id="L105">                V result = c.call();</span>
+<span class="fc" id="L106">                return Utils.equalsContent(expected, result);</span>
+<span class="fc" id="L107">            } catch (Exception e) {</span>
+<span class="fc" id="L108">                return false;</span>
+            }
+<span class="fc" id="L110">        }, sendMessage(INIT_CALLABLE, &quot;produces_expected&quot;, expected));</span>
+    }
+
+    /**
+     * Asserts that the {@code call()} method of the {@link Callable} produces a non-null result.
+     *
+     * @return this {@code CheckerCallable} instance for further validation
+     */
+    public CheckerCallable&lt;V&gt; producesNonNull() {
+<span class="fc" id="L119">        return is(c -&gt; {</span>
+            try {
+<span class="fc bfc" id="L121" title="All 2 branches covered.">                return c.call() != null;</span>
+<span class="nc" id="L122">            } catch (Exception e) {</span>
+<span class="nc" id="L123">                return false;</span>
+            }
+<span class="fc" id="L125">        }, sendMessage(INIT_CALLABLE, &quot;produces_non_null&quot;));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

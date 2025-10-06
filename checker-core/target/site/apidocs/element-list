@@ -1,0 +1,13 @@
+com.luchersol.core.specialized_checkers
+com.luchersol.core.specialized_checkers.collection
+com.luchersol.core.specialized_checkers.io
+com.luchersol.core.specialized_checkers.lambda
+com.luchersol.core.specialized_checkers.math
+com.luchersol.core.specialized_checkers.math.numbers
+com.luchersol.core.specialized_checkers.math.numbers.bigTypes
+com.luchersol.core.specialized_checkers.math.numbers.decimalTypes
+com.luchersol.core.specialized_checkers.math.numbers.integerTypes
+com.luchersol.core.specialized_checkers.time
+com.luchersol.core.specialized_checkers.time.temporal
+com.luchersol.core.util
+com.luchersol.core.util.collection

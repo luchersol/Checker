@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CheckerPredicate.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">checker-core</a> &gt; <a href="index.source.html" class="el_package">com.luchersol.core.specialized_checkers.lambda</a> &gt; <span class="el_source">CheckerPredicate.java</span></div><h1>CheckerPredicate.java</h1><pre class="source lang-java linenums">package com.luchersol.core.specialized_checkers.lambda;
+
+import static com.luchersol.core.util.Message.*;
+
+import java.util.function.Predicate;
+
+import com.luchersol.core.util.AbstractChecker;
+import com.luchersol.core.util.Cloner;
+import com.luchersol.core.util.Utils;
+
+/**
+ * A specialized checker for {@link java.util.function.Predicate} instances, providing a fluent API for validating
+ * function behavior and results. This class allows assertions such as verifying that a function does not throw
+ * exceptions, produces expected results, or returns non-null values for given inputs. It also supports optional
+ * deep cloning of input objects to ensure immutability during checks.
+ *
+ * &lt;p&gt;
+ * Example usage:
+ * &lt;/p&gt;
+ * &lt;pre&gt;
+ *     CheckerPredicate&amp;lt;String&amp;gt; checker = CheckerPredicate.check(String::isEmpty);
+ *     checker.producesExpected(&quot;   &quot;, false)
+ *            .evaluatesTrue(&quot;&quot;)
+ *            .testWithoutException(&quot;hello&quot;);
+ * &lt;/pre&gt;
+ *
+ * &lt;p&gt;
+ * Deep cloning can be enabled to ensure that the input object is not mutated by the function:
+ * &lt;/p&gt;
+ * &lt;pre&gt;
+ *     checker.activateDeepClone();
+ * &lt;/pre&gt;
+ *
+ * @param &lt;T&gt; the type of the input to the {@code Predicate} being checked
+ *
+ * @see java.util.function.Predicate
+ * @see AbstractChecker
+ */
+public class CheckerPredicate&lt;T&gt; extends AbstractChecker&lt;Predicate&lt;T&gt;, CheckerPredicate&lt;T&gt;&gt; {
+
+    private static final String INIT_PREDICATE = &quot;lambda.predicate&quot;;
+    private static final String DEFAULT_NAME = &quot;Predicate&quot;;
+
+    private boolean deepClone;
+
+    /**
+     * Constructs a new {@code CheckerPredicate} with the specified predicate and name.
+     *
+     * @param predicate the {@link Predicate} to be used by this checker
+     * @param name the name identifying this checker
+     */
+    protected CheckerPredicate(Predicate&lt;T&gt; predicate, String name) {
+<span class="fc" id="L53">        super(predicate, name);</span>
+<span class="fc" id="L54">    }</span>
+
+    /**
+     * Creates a new {@code CheckerPredicate} for the given {@link Predicate} instance with a custom name.
+     *
+     * @param predicate the {@code Predicate} instance to be checked
+     * @param name      the name to identify this checker instance (useful for error messages)
+     * @param &lt;T&gt;       the type of the input to the {@code Predicate}
+     * @return a new {@code CheckerPredicate} for the provided {@code Predicate}
+     */
+    public static &lt;T&gt; CheckerPredicate&lt;T&gt; check(Predicate&lt;T&gt; predicate, String name) {
+<span class="fc" id="L65">        return new CheckerPredicate&lt;&gt;(predicate, name);</span>
+    }
+
+    /**
+     * Creates a new {@code CheckerPredicate} for the given {@link Predicate} instance with a default name.
+     *
+     * @param predicate the {@code Predicate} instance to be checked
+     * @param &lt;T&gt;       the type of the input to the {@code Predicate}
+     * @return a new {@code CheckerPredicate} for the provided {@code Predicate}
+     */
+    public static &lt;T&gt; CheckerPredicate&lt;T&gt; check(Predicate&lt;T&gt; predicate) {
+<span class="fc" id="L76">        return check(predicate, DEFAULT_NAME);</span>
+    }
+
+    /**
+     * Returns this checker instance (for fluent API usage).
+     *
+     * @return this {@code CheckerPredicate} instance
+     */
+    @Override
+    protected CheckerPredicate&lt;T&gt; self() {
+<span class="fc" id="L86">        return this;</span>
+    }
+
+    /**
+     * Enables deep cloning of input objects before passing them to the {@code Predicate}.
+     * This is useful to ensure that the original input is not modified by the operation.
+     *
+     * @return this {@code CheckerPredicate} instance for further validation
+     */
+    public CheckerPredicate&lt;T&gt; activateDeepClone() {
+<span class="fc" id="L96">        this.deepClone = true;</span>
+<span class="fc" id="L97">        return self();</span>
+    }
+
+    /**
+     * Disables deep cloning of input objects before passing them to the {@code Predicate}.
+     *
+     * @return this {@code CheckerPredicate} instance for further validation
+     */
+    public CheckerPredicate&lt;T&gt; deactivateDeepClone() {
+<span class="fc" id="L106">        this.deepClone = false;</span>
+<span class="fc" id="L107">        return self();</span>
+    }
+
+    /**
+     * Returns the input object, deep-cloned if deep cloning is activated, otherwise returns the original input.
+     *
+     * @param input the input object to process
+     * @return the processed input (deep-cloned or original)
+     */
+    private T getInput(T input) {
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">        return this.deepClone ? Cloner.deepClone(input) : input;</span>
+    }
+
+    /**
+     * Asserts that testing the {@code Predicate} with the given input does not throw any exception.
+     *
+     * @param input the input object to be tested by the predicate
+     * @return this {@code CheckerPredicate} instance for further validation
+     */
+    public CheckerPredicate&lt;T&gt; testWithoutException(T input) {
+<span class="fc" id="L127">        return is(p -&gt; {</span>
+            try {
+<span class="fc" id="L129">                T processInput = getInput(input);</span>
+<span class="fc" id="L130">                p.test(processInput);</span>
+<span class="fc" id="L131">                return true;</span>
+<span class="fc" id="L132">            } catch (Exception e) {</span>
+<span class="fc" id="L133">                return false;</span>
+            }
+<span class="fc" id="L135">        }, sendMessage(INIT_PREDICATE, &quot;test_without_exception&quot;, input));</span>
+    }
+
+    /**
+     * Asserts that testing the {@code Predicate} with the given input evaluates to {@code true}.
+     *
+     * @param input the input object to be tested by the predicate
+     * @return this {@code CheckerPredicate} instance for further validation
+     */
+    public CheckerPredicate&lt;T&gt; evaluatesTrue(T input) {
+<span class="fc" id="L145">        return is(p -&gt; {</span>
+            try {
+<span class="fc" id="L147">                return p.test(getInput(input));</span>
+<span class="nc" id="L148">            } catch (Exception e) {</span>
+<span class="nc" id="L149">                return false;</span>
+            }
+<span class="fc" id="L151">        }, sendMessage(INIT_PREDICATE, &quot;evaluates_true&quot;, input));</span>
+    }
+
+    /**
+     * Asserts that testing the {@code Predicate} with the given input evaluates to {@code false}.
+     *
+     * @param input the input object to be tested by the predicate
+     * @return this {@code CheckerPredicate} instance for further validation
+     */
+    public CheckerPredicate&lt;T&gt; evaluatesFalse(T input) {
+<span class="fc" id="L161">        return is(p -&gt; {</span>
+            try {
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">                return !p.test(getInput(input));</span>
+<span class="nc" id="L164">            } catch (Exception e) {</span>
+<span class="nc" id="L165">                return false;</span>
+            }
+<span class="fc" id="L167">        }, sendMessage(INIT_PREDICATE, &quot;evaluates_false&quot;, input));</span>
+    }
+
+    /**
+     * Asserts that testing the {@code Predicate} with the given input produces the expected boolean result.
+     *
+     * @param input    the input object to be tested by the predicate
+     * @param expected the expected boolean result to compare with the actual result of the predicate
+     * @return this {@code CheckerPredicate} instance for further validation
+     */
+    public CheckerPredicate&lt;T&gt; producesExpected(T input, boolean expected) {
+<span class="fc" id="L178">        return is(p -&gt; {</span>
+            try {
+<span class="fc" id="L180">                boolean result = p.test(getInput(input));</span>
+<span class="fc" id="L181">                return Utils.equalsContent(expected, result);</span>
+<span class="nc" id="L182">            } catch (Exception e) {</span>
+<span class="nc" id="L183">                return false;</span>
+            }
+<span class="fc" id="L185">        }, sendMessage(INIT_PREDICATE, &quot;produces_expected&quot;, input, expected));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

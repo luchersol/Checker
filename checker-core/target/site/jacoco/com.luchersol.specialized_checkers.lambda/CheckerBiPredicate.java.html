@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CheckerBiPredicate.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">checker-core</a> &gt; <a href="index.source.html" class="el_package">com.luchersol.core.specialized_checkers.lambda</a> &gt; <span class="el_source">CheckerBiPredicate.java</span></div><h1>CheckerBiPredicate.java</h1><pre class="source lang-java linenums">package com.luchersol.core.specialized_checkers.lambda;
+
+import static com.luchersol.core.util.Message.*;
+
+import java.util.function.BiPredicate;
+
+import com.luchersol.core.util.AbstractChecker;
+import com.luchersol.core.util.Cloner;
+
+/**
+ * A specialized checker for {@link BiPredicate} instances, providing a fluent API to verify
+ * their behavior with optional deep cloning of input arguments.
+ * &lt;p&gt;
+ * This class allows for testing whether a {@code BiPredicate} can be applied without exceptions,
+ * whether it evaluates to true or false for specific inputs, and whether it produces an expected result.
+ * Deep cloning of inputs can be enabled to ensure immutability during checks.
+ *
+ * @param &lt;T&gt; the type of the first argument to the BiPredicate
+ * @param &lt;U&gt; the type of the second argument to the BiPredicate
+ */
+public class CheckerBiPredicate&lt;T, U&gt; extends AbstractChecker&lt;BiPredicate&lt;T, U&gt;, CheckerBiPredicate&lt;T, U&gt;&gt; {
+
+    private static final String INIT_BI_PREDICATE = &quot;lambda.bipredicate&quot;;
+    private static final String DEFAULT_NAME = &quot;BiPredicate&quot;;
+
+    private boolean deepClone;
+
+    /**
+     * Constructs a new {@code CheckerBiPredicate} with the specified {@link BiPredicate} and name.
+     *
+     * @param biPredicate the {@code BiPredicate} logic to be used by this checker
+     * @param name the name identifying this checker
+     */
+    protected CheckerBiPredicate(BiPredicate&lt;T, U&gt; biPredicate, String name) {
+<span class="fc" id="L35">        super(biPredicate, name);</span>
+<span class="fc" id="L36">    }</span>
+
+    /**
+     * Creates a CheckerBiPredicate for the given BiPredicate and assigns a custom name.
+     *
+     * @param &lt;T&gt;      the type of the first input to the {@code BiPredicate} being checked
+     * @param &lt;U&gt;      the type of the second input to the {@code BiPredicate} being checked
+     * @param bipredicate the BiPredicate to check
+     * @param name the name to assign to this checker
+     * @return a CheckerBiPredicate instance for the given BiPredicate
+     */
+    public static &lt;T,U&gt; CheckerBiPredicate&lt;T, U&gt; check(BiPredicate&lt;T, U&gt; bipredicate, String name) {
+<span class="fc" id="L48">        return new CheckerBiPredicate&lt;&gt;(bipredicate, name);</span>
+    }
+
+    /**
+     * Creates a CheckerBiPredicate for the given BiPredicate with a default name.
+     *
+     * @param &lt;T&gt;      the type of the first input to the {@code BiPredicate} being checked
+     * @param &lt;U&gt;      the type of the second input to the {@code BiPredicate} being checked
+     * @param bipredicate the BiPredicate to check
+     * @return a CheckerBiPredicate instance for the given BiPredicate
+     */
+    public static &lt;T,U&gt; CheckerBiPredicate&lt;T, U&gt; check(BiPredicate&lt;T, U&gt; bipredicate) {
+<span class="fc" id="L60">        return check(bipredicate, DEFAULT_NAME);</span>
+    }
+
+    /**
+     * Returns this instance (for fluent API).
+     *
+     * @return this CheckerBiPredicate instance
+     */
+    @Override
+    protected CheckerBiPredicate&lt;T, U&gt; self() {
+<span class="fc" id="L70">        return this;</span>
+    }
+
+    /**
+     * Activates deep cloning of inputs before passing them to the BiPredicate.
+     *
+     * @return this CheckerBiPredicate instance
+     */
+    public CheckerBiPredicate&lt;T, U&gt; activateDeepClone() {
+<span class="fc" id="L79">        this.deepClone = true;</span>
+<span class="fc" id="L80">        return self();</span>
+    }
+
+    /**
+     * Deactivates deep cloning of inputs before passing them to the BiPredicate.
+     *
+     * @return this CheckerBiPredicate instance
+     */
+    public CheckerBiPredicate&lt;T, U&gt; deactivateDeepClone() {
+<span class="fc" id="L89">        this.deepClone = false;</span>
+<span class="fc" id="L90">        return self();</span>
+    }
+
+    /**
+     * Returns the first input, deep cloned if deepClone is enabled.
+     *
+     * @param input the first input value
+     * @return the (possibly cloned) first input
+     */
+    private T getInput1(T input) {
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">        return this.deepClone ? Cloner.deepClone(input) : input;</span>
+    }
+
+    /**
+     * Returns the second input, deep cloned if deepClone is enabled.
+     *
+     * @param input the second input value
+     * @return the (possibly cloned) second input
+     */
+    private U getInput2(U input) {
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">        return this.deepClone ? Cloner.deepClone(input) : input;</span>
+    }
+
+    /**
+     * Checks that the BiPredicate can be applied to the given inputs without throwing an exception.
+     *
+     * @param input1 the first input value
+     * @param input2 the second input value
+     * @return this CheckerBiPredicate instance
+     */
+    public CheckerBiPredicate&lt;T, U&gt; testWithoutException(T input1, U input2) {
+<span class="fc" id="L121">        return is(p -&gt; {</span>
+            try {
+<span class="fc" id="L123">                T first = getInput1(input1);</span>
+<span class="fc" id="L124">                U second = getInput2(input2);</span>
+<span class="fc" id="L125">                p.test(first, second);</span>
+<span class="fc" id="L126">                return true;</span>
+<span class="fc" id="L127">            } catch (Exception e) {</span>
+<span class="fc" id="L128">                return false;</span>
+            }
+<span class="fc" id="L130">        }, sendMessage(INIT_BI_PREDICATE, &quot;test_without_exception&quot;, input1, input2));</span>
+    }
+
+    /**
+     * Checks that the BiPredicate evaluates to true for the given inputs.
+     *
+     * @param input1 the first input value
+     * @param input2 the second input value
+     * @return this CheckerBiPredicate instance
+     */
+    public CheckerBiPredicate&lt;T, U&gt; evaluatesTrue(T input1, U input2) {
+<span class="fc" id="L141">        return is(p -&gt; {</span>
+            try {
+<span class="fc" id="L143">                return p.test(getInput1(input1), getInput2(input2));</span>
+<span class="nc" id="L144">            } catch (Exception e) {</span>
+<span class="nc" id="L145">                return false;</span>
+            }
+<span class="fc" id="L147">        }, sendMessage(INIT_BI_PREDICATE, &quot;evaluates_true&quot;, input1, input2));</span>
+    }
+
+    /**
+     * Checks that the BiPredicate evaluates to false for the given inputs.
+     *
+     * @param input1 the first input value
+     * @param input2 the second input value
+     * @return this CheckerBiPredicate instance
+     */
+    public CheckerBiPredicate&lt;T, U&gt; evaluatesFalse(T input1, U input2) {
+<span class="fc" id="L158">        return is(p -&gt; {</span>
+            try {
+<span class="fc bfc" id="L160" title="All 2 branches covered.">                return !p.test(getInput1(input1), getInput2(input2));</span>
+<span class="nc" id="L161">            } catch (Exception e) {</span>
+<span class="nc" id="L162">                return false;</span>
+            }
+<span class="fc" id="L164">        }, sendMessage(INIT_BI_PREDICATE, &quot;evaluates_false&quot;, input1, input2));</span>
+    }
+
+    /**
+     * Checks that the BiPredicate produces the expected boolean result for the given inputs.
+     *
+     * @param input1 the first input value
+     * @param input2 the second input value
+     * @param expected the expected boolean result
+     * @return this CheckerBiPredicate instance
+     */
+    public CheckerBiPredicate&lt;T, U&gt; producesExpected(T input1, U input2, boolean expected) {
+<span class="fc" id="L176">        return is(p -&gt; {</span>
+            try {
+<span class="fc" id="L178">                boolean result = p.test(getInput1(input1), getInput2(input2));</span>
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">                return expected == result;</span>
+<span class="nc" id="L180">            } catch (Exception e) {</span>
+<span class="nc" id="L181">                return false;</span>
+            }
+<span class="fc" id="L183">        }, sendMessage(INIT_BI_PREDICATE, &quot;produces_expected&quot;, input1, input2, expected));</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

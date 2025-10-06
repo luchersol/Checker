@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.luchersol.core.specialized_checkers.math.numbers.decimalTypes.CheckerDoubleTest
+-------------------------------------------------------------------------------
+Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.048 s -- in com.luchersol.core.specialized_checkers.math.numbers.decimalTypes.CheckerDoubleTest

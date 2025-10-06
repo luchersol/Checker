@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CheckerSet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">checker-core</a> &gt; <a href="index.source.html" class="el_package">com.luchersol.core.specialized_checkers.collection</a> &gt; <span class="el_source">CheckerSet.java</span></div><h1>CheckerSet.java</h1><pre class="source lang-java linenums">package com.luchersol.core.specialized_checkers.collection;
+
+import static com.luchersol.core.util.Message.*;
+
+import java.util.Collection;
+import java.util.Set;
+import java.util.function.Predicate;
+
+import com.luchersol.core.util.AbstractChecker;
+
+/**
+ * A specialized checker for {@link Set} collections, providing fluent assertion methods
+ * for validating set properties and contents.
+ * &lt;p&gt;
+ * This class extends {@link AbstractChecker} and offers a variety of checks such as emptiness,
+ * subset/superset relationships, and element matching based on predicates.
+ * &lt;/p&gt;
+ *
+ * &lt;pre&gt;
+ * Example usage:
+ *   Set&amp;lt;String&amp;gt; mySet = Set.of(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;);
+ *   CheckerSet checker = CheckerSet.check(mySet)
+ *         .isSuperset(List.of(&quot;a&quot;))
+ *         .isEmpty();
+ * &lt;/pre&gt;
+ *
+ * @param &lt;T&gt; the type of elements in the set
+ * @see AbstractChecker
+ */
+public class CheckerSet&lt;T&gt; extends AbstractChecker&lt;Set&lt;T&gt;, CheckerSet&lt;T&gt;&gt;{
+
+    private static final String INIT_SET = &quot;collections.set&quot;;
+    private static final String DEFAULT_NAME = &quot;Set&quot;;
+
+    /**
+     * Constructs a new {@code CheckerSet} with the specified set and name.
+     *
+     * @param set  the underlying set to be wrapped by this CheckerSet
+     * @param name the name associated with this CheckerSet
+     */
+    protected CheckerSet(Set&lt;T&gt; set, String name) {
+<span class="fc" id="L42">        super(set, name);</span>
+<span class="fc" id="L43">    }</span>
+
+    /**
+     * Creates a CheckerSet for the given set and assigns a custom name.
+     *
+     * @param &lt;T&gt;  the {@code Set}'s element type
+     * @param set the set to check
+     * @param name the name to assign to this checker
+     * @return a CheckerSet instance for the given set
+     */
+    public static &lt;T&gt; CheckerSet&lt;T&gt; check(Set&lt;T&gt; set, String name){
+<span class="fc" id="L54">        return new CheckerSet&lt;&gt;(set, name);</span>
+    }
+
+    /**
+     * Creates a CheckerSet for the given set with a default name.
+     *
+     * @param &lt;T&gt;  the {@code Set}'s element type
+     * @param set the set to check
+     * @return a CheckerSet instance for the given set
+     */
+    public static &lt;T&gt; CheckerSet&lt;T&gt; check(Set&lt;T&gt; set){
+<span class="nc" id="L65">        return check(set, DEFAULT_NAME);</span>
+    }
+
+    /**
+     * Returns this instance (for fluent API).
+     *
+     * @return this CheckerSet instance
+     */
+    @Override
+    protected CheckerSet&lt;T&gt; self() {
+<span class="fc" id="L75">        return this;</span>
+    }
+
+    /**
+     * Checks if the set is empty.
+     *
+     * @return this CheckerSet instance
+     */
+    public CheckerSet&lt;T&gt; isEmpty(){
+<span class="fc" id="L84">        return is(set -&gt; set.isEmpty(), sendMessage(INIT_SET, &quot;is_empty&quot;));</span>
+    }
+
+    /**
+     * Checks if any element in the set matches the given predicate.
+     *
+     * @param predicate the condition to test elements
+     * @return this CheckerSet instance
+     */
+    public CheckerSet&lt;T&gt; anyMatch(Predicate&lt;T&gt; predicate){
+<span class="fc" id="L94">        return is(set -&gt; set.stream().anyMatch(predicate), sendMessage(INIT_SET, &quot;any_match&quot;));</span>
+    }
+
+    /**
+     * Checks if all elements in the set match the given predicate.
+     *
+     * @param predicate the condition to test elements
+     * @return this CheckerSet instance
+     */
+    public CheckerSet&lt;T&gt; allMatch(Predicate&lt;T&gt; predicate){
+<span class="fc" id="L104">        return is(set -&gt; set.stream().allMatch(predicate), sendMessage(INIT_SET, &quot;all_match&quot;));</span>
+    }
+
+    /**
+     * Checks if the set is a subset of the given collection.
+     *
+     * @param collection the collection to compare with
+     * @return this CheckerSet instance
+     */
+    public CheckerSet&lt;T&gt; isSubset(Collection&lt;T&gt; collection){
+<span class="fc" id="L114">        return is(set -&gt; collection.containsAll(set), sendMessage(INIT_SET, &quot;is_subset&quot;));</span>
+    }
+
+    /**
+     * Checks if the set is a superset of the given collection.
+     *
+     * @param collection the collection to compare with
+     * @return this CheckerSet instance
+     */
+    public CheckerSet&lt;T&gt; isSuperset(Collection&lt;T&gt; collection){
+<span class="fc" id="L124">        return is(set -&gt; set.containsAll(collection), sendMessage(INIT_SET, &quot;is_superset&quot;));</span>
+    }
+
+    /**
+     * Checks if at least the specified percentage of elements in the set match the given predicate.
+     *
+     * @param matching the condition to test elements
+     * @param percentage the minimum percentage (0-100) of elements that must match
+     * @return this CheckerSet instance
+     */
+    public CheckerSet&lt;T&gt; isSufficientPercentage(Predicate&lt;T&gt; matching, double percentage){
+<span class="fc" id="L135">        return is(set -&gt; {</span>
+<span class="fc" id="L136">            double percentageMatching = set.stream().filter(matching).count() * 100. / set.size();</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">            return percentageMatching &gt;= percentage;</span>
+<span class="fc" id="L138">        }, sendMessage(INIT_SET, &quot;is_sufficient_percentage&quot;, percentage * 100));</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

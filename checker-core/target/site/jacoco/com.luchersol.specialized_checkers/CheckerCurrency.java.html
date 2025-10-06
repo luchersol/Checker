@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CheckerCurrency.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">checker-core</a> &gt; <a href="index.source.html" class="el_package">com.luchersol.core.specialized_checkers</a> &gt; <span class="el_source">CheckerCurrency.java</span></div><h1>CheckerCurrency.java</h1><pre class="source lang-java linenums">package com.luchersol.core.specialized_checkers;
+
+import static com.luchersol.core.util.Message.*;
+
+import java.util.Currency;
+import java.util.Locale;
+
+import com.luchersol.core.util.AbstractChecker;
+
+/**
+ * A specialized checker for {@link java.util.Currency} instances, providing a fluent API
+ * to assert various currency properties such as symbol, fraction digits, and locale association.
+ *
+ * &lt;p&gt;Typical usage:&lt;/p&gt;
+ * &lt;pre&gt;{@code
+ * Currency usd = Currency.getInstance(&quot;USD&quot;);
+ *
+ * CheckerCurrency.check(usd)
+ *     .hasSymbol(&quot;$&quot;)
+ *     .withDefaultFractionDigits(2)
+ *     .isFrom(Locale.US);
+ * }&lt;/pre&gt;
+ *
+ * &lt;p&gt;This class supports chaining multiple assertions in a fluent style and integrates
+ * with {@link com.luchersol.core.util.AbstractChecker} for generalized validation handling.&lt;/p&gt;
+ *
+ * @see java.util.Currency
+ * @see com.luchersol.core.util.AbstractChecker
+ */
+public class CheckerCurrency extends AbstractChecker&lt;Currency, CheckerCurrency&gt; {
+
+    private static final String INIT_CURRENCY = &quot;currency&quot;;
+    private static final String DEFAULT_NAME = &quot;Currency&quot;;
+
+    /**
+     * Constructs a new {@code CheckerCurrency} with the specified currency and name.
+     *
+     * @param currency the {@link Currency} to be associated with this checker
+     * @param name the name of the checker
+     */
+    protected CheckerCurrency(Currency currency, String name) {
+<span class="fc" id="L42">        super(currency, name);</span>
+<span class="fc" id="L43">    }</span>
+
+    /**
+     * Creates a new CheckerCurrency instance for the given currency and name.
+     *
+     * @param currency the currency value to be checked
+     * @param name     the name to identify the currency in error messages
+     * @return a CheckerCurrency instance for further validations
+     */
+    public static CheckerCurrency check(Currency currency, String name) {
+<span class="nc" id="L53">        return new CheckerCurrency(currency, name);</span>
+    }
+
+    /**
+     * Creates a new CheckerCurrency instance for the given currency with a default name.
+     *
+     * @param currency the currency value to be checked
+     * @return a CheckerCurrency instance for further validations
+     */
+    public static CheckerCurrency check(Currency currency) {
+<span class="nc" id="L63">        return check(currency, DEFAULT_NAME);</span>
+    }
+
+    /**
+     * Returns this instance (for fluent API usage).
+     *
+     * @return this CheckerCurrency instance
+     */
+    @Override
+    protected CheckerCurrency self() {
+<span class="fc" id="L73">        return this;</span>
+    }
+
+    /**
+     * Checks if the currency has the specified symbol in the default locale.
+     *
+     * @param symbol the symbol to compare with the currency's symbol
+     * @return this CheckerCurrency instance for chaining
+     */
+    public CheckerCurrency hasSymbol(String symbol){
+<span class="fc" id="L83">        return is(currency -&gt; currency.getSymbol().equals(symbol), sendMessage(INIT_CURRENCY, &quot;has_symbol&quot;, symbol));</span>
+    }
+
+    /**
+     * Checks if the currency has the specified symbol in the given locale.
+     *
+     * @param symbol the symbol to compare with the currency's symbol
+     * @param locale the locale to use for symbol lookup
+     * @return this CheckerCurrency instance for chaining
+     */
+    public CheckerCurrency hasSymbol(String symbol, Locale locale){
+<span class="nc" id="L94">        return is(currency -&gt; currency.getSymbol(locale).equals(symbol), sendMessage(INIT_CURRENCY, &quot;has_symbol.locale&quot;, symbol, locale));</span>
+    }
+
+    /**
+     * Checks if the currency has the specified number of default fraction digits.
+     *
+     * @param n the expected number of fraction digits
+     * @return this CheckerCurrency instance for chaining
+     */
+    public CheckerCurrency withDefaultFractionDigits(int n){
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        return is(currency -&gt; currency.getDefaultFractionDigits() == n, sendMessage(INIT_CURRENCY, &quot;with_default_fraction_digits&quot;, n));</span>
+    }
+
+    /**
+     * Checks if the currency is the one used in the specified locale.
+     *
+     * @param locale the locale to check against
+     * @return this CheckerCurrency instance for chaining
+     */
+    public CheckerCurrency isFrom(Locale locale){
+<span class="fc" id="L114">        return is(currency -&gt; Currency.getInstance(locale).equals(currency), sendMessage(INIT_CURRENCY, &quot;is_from&quot;, locale));</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

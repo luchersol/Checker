@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CheckerLocalDate.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">checker-core</a> &gt; <a href="index.source.html" class="el_package">com.luchersol.core.specialized_checkers.time.temporal</a> &gt; <span class="el_source">CheckerLocalDate.java</span></div><h1>CheckerLocalDate.java</h1><pre class="source lang-java linenums">package com.luchersol.core.specialized_checkers.time.temporal;
+
+import static com.luchersol.core.util.Message.*;
+
+import java.time.LocalDate;
+
+import com.luchersol.core.util.AbstractChecker;
+
+/**
+ * A specialized checker for {@link java.time.LocalDate} instances, providing fluent API methods
+ * to assert temporal properties such as being before/after another date, inclusivity checks,
+ * range validations, and whether a date lies in the past, future, or present.
+ *
+ * &lt;p&gt;Typical usage:&lt;/p&gt;
+ * &lt;pre&gt;{@code
+ * LocalDate today = LocalDate.now();
+ * LocalDate tomorrow = today.plusDays(1);
+ *
+ * CheckerLocalDate checker = CheckerLocalDate.check(today)
+ *     .isBeforeOrEqual(tomorrow)
+ *     .isPastOrPresent()
+ *     .isFutureOrPresent();
+ * }&lt;/pre&gt;
+ *
+ * &lt;p&gt;This class integrates with {@link InterfaceCheckerDate} for standardized temporal
+ * validations and supports chaining multiple assertions in a fluent, expressive style.&lt;/p&gt;
+ *
+ * @see java.time.LocalDate
+ * @see com.luchersol.core.specialized_checkers.time.temporal.InterfaceCheckerDate
+ * @see com.luchersol.core.util.AbstractChecker
+ */
+public class CheckerLocalDate extends AbstractChecker&lt;LocalDate, CheckerLocalDate&gt; implements InterfaceCheckerDate&lt;CheckerLocalDate, LocalDate&gt;  {
+
+    private static final String INIT_TEMPORAL = &quot;time.temporal&quot;;
+    private static final String INIT_LOCAL_DATE = &quot;time.temporal.local_date&quot;;
+    private static final String DEFAULT_NAME = &quot;LocalDate&quot;;
+
+    /**
+     * Constructs a new {@code CheckerLocalDate} with the specified localdate and name.
+     *
+     * @param localdate the {@link LocalDate} to be wrapped and checked
+     * @param name the name identifying this checker function
+     */
+    protected CheckerLocalDate(LocalDate localdate, String name) {
+<span class="fc" id="L45">        super(localdate, name);</span>
+<span class="fc" id="L46">    }</span>
+
+    /**
+     * Creates a new CheckerLocalDate instance for the given local date and name.
+     *
+     * @param localdate the local date value to be checked
+     * @param name      the name to identify the local date in error messages
+     * @return a CheckerLocalDate instance for further validations
+     */
+    public static CheckerLocalDate check(LocalDate localdate, String name) {
+<span class="nc" id="L56">        return new CheckerLocalDate(localdate, name);</span>
+    }
+
+    /**
+     * Creates a new CheckerLocalDate instance for the given local date with a default name.
+     *
+     * @param localdate the local date value to be checked
+     * @return a CheckerLocalDate instance for further validations
+     */
+    public static CheckerLocalDate check(LocalDate localdate) {
+<span class="nc" id="L66">        return check(localdate, DEFAULT_NAME);</span>
+    }
+
+    /**
+     * Returns this instance (for fluent API usage).
+     *
+     * @return this CheckerLocalDate instance
+     */
+    @Override
+    protected CheckerLocalDate self() {
+<span class="fc" id="L76">        return this;</span>
+    }
+
+    /**
+     * Returns the current local date.
+     *
+     * @return the current {@link LocalDate}
+     */
+    private static LocalDate now(){
+<span class="fc" id="L85">        return LocalDate.now();</span>
+    }
+
+    /**
+     * Checks if the local date is before the specified date.
+     *
+     * @param date the date to compare with
+     * @return this CheckerLocalDate instance for chaining
+     */
+    @Override
+    public CheckerLocalDate isBefore(LocalDate date) {
+<span class="fc" id="L96">        return is(time -&gt; time.isBefore(date), sendMessage(INIT_TEMPORAL, &quot;is_before&quot;, DEFAULT_NAME, date));</span>
+    }
+
+    /**
+     * Checks if the local date is before or equal to the specified date.
+     *
+     * @param date the date to compare with
+     * @return this CheckerLocalDate instance for chaining
+     */
+    @Override
+    public CheckerLocalDate isBeforeOrEqual(LocalDate date) {
+<span class="fc bfc" id="L107" title="All 4 branches covered.">        return is(time -&gt; time.isBefore(date) || time.isEqual(date), sendMessage(INIT_TEMPORAL, &quot;is_before_or_equal&quot;, DEFAULT_NAME, date));</span>
+    }
+
+    /**
+     * Checks if the local date is after the specified date.
+     *
+     * @param date the date to compare with
+     * @return this CheckerLocalDate instance for chaining
+     */
+    @Override
+    public CheckerLocalDate isAfter(LocalDate date) {
+<span class="fc" id="L118">        return is(time -&gt; time.isAfter(date), sendMessage(INIT_TEMPORAL, &quot;is_after&quot;, DEFAULT_NAME, date));</span>
+    }
+
+    /**
+     * Checks if the local date is after or equal to the specified date.
+     *
+     * @param date the date to compare with
+     * @return this CheckerLocalDate instance for chaining
+     */
+    @Override
+    public CheckerLocalDate isAfterOrEqual(LocalDate date) {
+<span class="fc bfc" id="L129" title="All 4 branches covered.">        return is(time -&gt; time.isAfter(date) || time.isEqual(date), sendMessage(INIT_TEMPORAL, &quot;is_after_or_equal&quot;, DEFAULT_NAME, date));</span>
+    }
+
+    /**
+     * Checks if the local date is within the specified range (exclusive).
+     *
+     * @param date_1 the start date (exclusive)
+     * @param date_2 the end date (exclusive)
+     * @return this CheckerLocalDate instance for chaining
+     */
+    @Override
+    public CheckerLocalDate inRange(LocalDate date_1, LocalDate date_2) {
+<span class="fc bfc" id="L141" title="All 4 branches covered.">        return is(time -&gt; time.isAfter(date_1) &amp;&amp; time.isBefore(date_2), sendMessage(INIT_TEMPORAL, &quot;in_range&quot;, DEFAULT_NAME, date_1, date_2));</span>
+    }
+
+    /**
+     * Checks if the local date is in the past (before the current date).
+     *
+     * @return this CheckerLocalDate instance for chaining
+     */
+    @Override
+    public CheckerLocalDate isPast() {
+<span class="fc" id="L151">        return is(time -&gt; time.isBefore(now()), sendMessage(INIT_TEMPORAL, &quot;is_past&quot;, DEFAULT_NAME));</span>
+    }
+
+    /**
+     * Checks if the local date is in the future (after the current date).
+     *
+     * @return this CheckerLocalDate instance for chaining
+     */
+    @Override
+    public CheckerLocalDate isFuture() {
+<span class="fc" id="L161">        return is(time -&gt; time.isAfter(now()), sendMessage(INIT_TEMPORAL, &quot;is_future&quot;, DEFAULT_NAME));</span>
+    }
+
+    /**
+     * Checks if the local date is in the past or present (not after the current date).
+     *
+     * @return this CheckerLocalDate instance for chaining
+     */
+    public CheckerLocalDate isPastOrPresent() {
+<span class="fc bfc" id="L170" title="All 2 branches covered.">        return is(time -&gt; !time.isAfter(now()), sendMessage(INIT_LOCAL_DATE, &quot;is_past_or_present&quot;, DEFAULT_NAME));</span>
+    }
+
+    /**
+     * Checks if the local date is in the future or present (not before the current date).
+     *
+     * @return this CheckerLocalDate instance for chaining
+     */
+    public CheckerLocalDate isFutureOrPresent() {
+<span class="fc bfc" id="L179" title="All 2 branches covered.">        return is(time -&gt; !time.isBefore(now()), sendMessage(INIT_LOCAL_DATE, &quot;is_future_or_present&quot;, DEFAULT_NAME));</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

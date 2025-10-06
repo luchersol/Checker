@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CheckerInteger.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">checker-core</a> &gt; <a href="index.source.html" class="el_package">com.luchersol.core.specialized_checkers.math.numbers.integerTypes</a> &gt; <span class="el_source">CheckerInteger.java</span></div><h1>CheckerInteger.java</h1><pre class="source lang-java linenums">package com.luchersol.core.specialized_checkers.math.numbers.integerTypes;
+
+import static com.luchersol.core.util.Message.*;
+
+import com.luchersol.core.specialized_checkers.math.numbers.InterfaceCheckerNumber;
+import com.luchersol.core.util.AbstractChecker;
+
+/**
+ * A specialized checker for {@link Integer} instances, providing fluent API methods
+ * to assert various properties, such as positivity, negativity, zero value, even or odd
+ * and numeric comparisons.
+ *
+ * &lt;p&gt;Typical usage:&lt;/p&gt;
+ * &lt;pre&gt;{@code
+ * CheckerInteger checker = CheckerInteger.check(myInteger)
+ *     .isPositive()
+ *     .isLessThan(100.0)
+ *     .isOdd();
+ * }&lt;/pre&gt;
+ *
+ * &lt;p&gt;This class supports chaining multiple assertions in a fluent style and integrates
+ * with {@link InterfaceCheckerNumber} for numeric-specific validations.&lt;/p&gt;
+ *
+ * @see java.lang.Integer
+ * @see com.luchersol.core.specialized_checkers.math.numbers.InterfaceCheckerNumber
+ */
+public class CheckerInteger extends AbstractChecker&lt;Integer, CheckerInteger&gt; implements InterfaceCheckerNumber&lt;CheckerInteger&gt; {
+
+    private static final String INIT_NUMBERS = &quot;numbers&quot;;
+    private static final String INIT_INTEGER_TYPES = &quot;numbers.integer_types&quot;;
+    private static final String DEFAULT_NAME = &quot;Integer&quot;;
+
+
+    /**
+     * Constructs a new {@code CheckerInteger} with the specified nInteger and name.
+     *
+     * @param nInteger the {@link Integer} to be wrapped and checked
+     * @param name the name identifying this checker function
+     */
+    protected CheckerInteger(Integer nInteger, String name) {
+<span class="fc" id="L41">        super(nInteger, name);</span>
+<span class="fc" id="L42">    }</span>
+
+    /**
+     * Creates a new {@code CheckerInteger} for the given {@link Integer} instance with a custom name.
+     *
+     * @param number the {@code Integer} instance to be checked
+     * @param name   the name to identify this checker instance (useful for error messages)
+     * @return a new {@code CheckerInteger} for the provided {@code Integer}
+     */
+    public static CheckerInteger check(Integer number, String name) {
+<span class="nc" id="L52">        return new CheckerInteger(number, name);</span>
+    }
+
+    /**
+     * Creates a new {@code CheckerInteger} for the given {@link Number} instance with a custom name.
+     *
+     * @param number the {@code Number} instance to be checked (converted to int)
+     * @param name   the name to identify this checker instance (useful for error messages)
+     * @return a new {@code CheckerInteger} for the provided {@code Number}
+     */
+    public static CheckerInteger check(Number number, String name) {
+<span class="nc" id="L63">        return check(number.intValue(), name);</span>
+    }
+
+    /**
+     * Creates a new {@code CheckerInteger} for the given {@link Integer} instance with a default name.
+     *
+     * @param number the {@code Integer} instance to be checked
+     * @return a new {@code CheckerInteger} for the provided {@code Integer}
+     */
+    public static CheckerInteger check(Integer number) {
+<span class="nc" id="L73">        return check(number, DEFAULT_NAME);</span>
+    }
+
+    /**
+     * Creates a new {@code CheckerInteger} for the given {@link Number} instance with a default name.
+     *
+     * @param number the {@code Number} instance to be checked (converted to int)
+     * @return a new {@code CheckerInteger} for the provided {@code Number}
+     */
+    public static CheckerInteger check(Number number) {
+<span class="nc" id="L83">        return check(number.intValue());</span>
+    }
+
+    /**
+     * Returns this checker instance (for fluent API usage).
+     *
+     * @return this {@code CheckerInteger} instance
+     */
+    @Override
+    protected CheckerInteger self() {
+<span class="fc" id="L93">        return this;</span>
+    }
+
+    /**
+     * Asserts that the {@code Integer} value is even (divisible by two).
+     *
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    public CheckerInteger isEven(){
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        return is(n_integer -&gt; (n_integer &amp; 1) == 0, sendMessage(INIT_INTEGER_TYPES, &quot;is_even&quot;, DEFAULT_NAME));</span>
+    }
+
+    /**
+     * Asserts that the {@code Integer} value is odd (not divisible by two).
+     *
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    public CheckerInteger isOdd(){
+<span class="fc bfc" id="L111" title="All 2 branches covered.">        return is(n_integer -&gt; (n_integer &amp; 1) == 1, sendMessage(INIT_INTEGER_TYPES, &quot;is_odd&quot;, DEFAULT_NAME));</span>
+    }
+
+    /**
+     * Asserts that the {@code Integer} value is prime.
+     *
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    public CheckerInteger isPrime() {
+<span class="fc" id="L120">        return is(n_integer -&gt; {</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">            if (n_integer &lt;= 1) return false;</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">            if (n_integer &lt;= 3) return true;</span>
+<span class="pc bpc" id="L123" title="1 of 4 branches missed.">            if (n_integer % 2 == 0 || n_integer % 3 == 0) return false;</span>
+
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">            for (int i = 5; i * i &lt;= n_integer; i += 6) {</span>
+<span class="nc bnc" id="L126" title="All 4 branches missed.">                if (n_integer % i == 0 || n_integer % (i + 2) == 0) return false;</span>
+            }
+
+<span class="fc" id="L129">            return true;</span>
+<span class="fc" id="L130">        }, sendMessage(INIT_INTEGER_TYPES, &quot;is_prime&quot;, DEFAULT_NAME));</span>
+    }
+
+    /**
+     * Asserts that the {@code Integer} value is positive (greater than zero).
+     *
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isPositive() {
+<span class="fc bfc" id="L140" title="All 2 branches covered.">        return is(n_integer -&gt; n_integer &gt; 0, sendMessage(INIT_NUMBERS, &quot;is_positive&quot;, DEFAULT_NAME));</span>
+    }
+
+    /**
+     * Asserts that the {@code Integer} value is positive or zero (greater than or equal to zero).
+     *
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isPositiveOrZero() {
+<span class="fc bfc" id="L150" title="All 2 branches covered.">        return is(n_integer -&gt; n_integer &gt;= 0, sendMessage(INIT_NUMBERS, &quot;is_positive_or_zero&quot;, DEFAULT_NAME));</span>
+    }
+
+    /**
+     * Asserts that the {@code Integer} value is negative (less than zero).
+     *
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isNegative() {
+<span class="fc bfc" id="L160" title="All 2 branches covered.">        return is(n_integer -&gt; n_integer &lt; 0, sendMessage(INIT_NUMBERS, &quot;is_negative&quot;, DEFAULT_NAME));</span>
+    }
+
+    /**
+     * Asserts that the {@code Integer} value is negative or zero (less than or equal to zero).
+     *
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isNegativeOrZero() {
+<span class="fc bfc" id="L170" title="All 2 branches covered.">        return is(n_integer -&gt; n_integer &lt;= 0, sendMessage(INIT_NUMBERS, &quot;is_negative_or_zero&quot;, DEFAULT_NAME));</span>
+    }
+
+    /**
+     * Asserts that the {@code Integer} value is zero.
+     *
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isZero() {
+<span class="fc bfc" id="L180" title="All 2 branches covered.">        return is(n_integer -&gt; n_integer == 0, sendMessage(INIT_NUMBERS, &quot;is_zero&quot;, DEFAULT_NAME));</span>
+    }
+
+    /**
+     * Asserts that the {@code Integer} value is greater than the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isGreaterThan(Byte number) {
+<span class="nc bnc" id="L191" title="All 2 branches missed.">        return is(n_integer -&gt; n_integer &gt; number, sendMessage(INIT_NUMBERS, &quot;is_greather_than&quot;, DEFAULT_NAME, number));</span>
+    }
+
+    /**
+     * Asserts that the {@code Integer} value is greater than or equal to the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isGreaterThan(Short number) {
+<span class="nc bnc" id="L202" title="All 2 branches missed.">        return is(n_integer -&gt; n_integer &gt; number, sendMessage(INIT_NUMBERS, &quot;is_greather_than&quot;, DEFAULT_NAME, number));</span>
+    }
+
+    /**
+     * Asserts that the {@code Integer} value is less than the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isGreaterThan(Integer number) {
+<span class="fc bfc" id="L213" title="All 2 branches covered.">        return is(n_integer -&gt; n_integer &gt; number, sendMessage(INIT_NUMBERS, &quot;is_greather_than&quot;, DEFAULT_NAME, number));</span>
+    }
+
+    /**
+     * Asserts that the {@code Integer} value is less than or equal to the specified value.
+     *
+     * @param number the value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isGreaterThan(Long number) {
+<span class="nc bnc" id="L224" title="All 2 branches missed.">        return is(n_integer -&gt; n_integer &gt; number, sendMessage(INIT_NUMBERS, &quot;is_greather_than&quot;, DEFAULT_NAME, number));</span>
+    }
+
+
+    /**
+     * Asserts that the {@code Integer} value is greater than the specified {@code Float} value.
+     *
+     * @param number the {@code Float} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isGreaterThan(Float number) {
+<span class="nc bnc" id="L236" title="All 2 branches missed.">        return is(n_integer -&gt; n_integer &gt; number, sendMessage(INIT_NUMBERS, &quot;is_greather_than&quot;, DEFAULT_NAME, number));</span>
+    }
+
+
+    /**
+     * Asserts that the {@code Integer} value is greater than the specified {@code Double} value.
+     *
+     * @param number the {@code Double} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isGreaterThan(Double number) {
+<span class="nc bnc" id="L248" title="All 2 branches missed.">        return is(n_integer -&gt; n_integer &gt; number, sendMessage(INIT_NUMBERS, &quot;is_greather_than&quot;, DEFAULT_NAME, number));</span>
+    }
+
+    /**
+     * Asserts that the {@code Integer} value is greater than or equal to the specified {@code Byte} value.
+     *
+     * @param number the {@code Byte} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isGreaterOrEqualTo(Byte number) {
+<span class="nc bnc" id="L259" title="All 2 branches missed.">        return is(n_integer -&gt; n_integer &gt;= number, sendMessage(INIT_NUMBERS, &quot;is_greather_or_equal_to&quot;, DEFAULT_NAME, number));</span>
+    }
+
+    /**
+     * Asserts that the {@code Integer} value is greater than or equal to the specified {@code Short} value.
+     *
+     * @param number the {@code Short} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isGreaterOrEqualTo(Short number) {
+<span class="nc bnc" id="L270" title="All 2 branches missed.">        return is(n_integer -&gt; n_integer &gt;= number, sendMessage(INIT_NUMBERS, &quot;is_greather_or_equal_to&quot;, DEFAULT_NAME, number));</span>
+    }
+
+    /**
+     * Asserts that the {@code Integer} value is greater than or equal to the specified {@code Integer} value.
+     *
+     * @param number the {@code Integer} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isGreaterOrEqualTo(Integer number) {
+<span class="fc bfc" id="L281" title="All 2 branches covered.">        return is(n_integer -&gt; n_integer &gt;= number, sendMessage(INIT_NUMBERS, &quot;is_greather_or_equal_to&quot;, DEFAULT_NAME, number));</span>
+    }
+
+    /**
+     * Asserts that the {@code Integer} value is greater than or equal to the specified {@code Long} value.
+     *
+     * @param number the {@code Long} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isGreaterOrEqualTo(Long number) {
+<span class="nc bnc" id="L292" title="All 2 branches missed.">        return is(n_integer -&gt; n_integer &gt;= number, sendMessage(INIT_NUMBERS, &quot;is_greather_or_equal_to&quot;, DEFAULT_NAME, number));</span>
+    }
+
+
+    /**
+     * Asserts that the {@code Integer} value is greater than or equal to the specified {@code Float} value.
+     *
+     * @param number the {@code Float} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isGreaterOrEqualTo(Float number) {
+<span class="nc bnc" id="L304" title="All 2 branches missed.">        return is(n_integer -&gt; n_integer &gt;= number, sendMessage(INIT_NUMBERS, &quot;is_greather_or_equal_to&quot;, DEFAULT_NAME, number));</span>
+    }
+
+
+    /**
+     * Asserts that the {@code Integer} value is greater than or equal to the specified {@code Double} value.
+     *
+     * @param number the {@code Double} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isGreaterOrEqualTo(Double number) {
+<span class="nc bnc" id="L316" title="All 2 branches missed.">        return is(n_integer -&gt; n_integer &gt;= number, sendMessage(INIT_NUMBERS, &quot;is_greather_or_equal_to&quot;, DEFAULT_NAME, number));</span>
+    }
+
+    /**
+     * Asserts that the {@code Integer} value is less than or equal to the specified {@code Byte} value.
+     *
+     * @param number the {@code Byte} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isLessThan(Byte number) {
+<span class="nc bnc" id="L327" title="All 2 branches missed.">        return is(n_integer -&gt; n_integer &lt; number, sendMessage(INIT_NUMBERS, &quot;is_less_than&quot;, DEFAULT_NAME, number));</span>
+    }
+
+    /**
+     * Asserts that the {@code Integer} value is less than or equal to the specified {@code Short} value.
+     *
+     * @param number the {@code Short} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isLessThan(Short number) {
+<span class="nc bnc" id="L338" title="All 2 branches missed.">        return is(n_integer -&gt; n_integer &lt; number, sendMessage(INIT_NUMBERS, &quot;is_less_than&quot;, DEFAULT_NAME, number));</span>
+    }
+
+    /**
+     * Asserts that the {@code Integer} value is less than or equal to the specified {@code Integer} value.
+     *
+     * @param number the {@code Integer} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isLessThan(Integer number) {
+<span class="fc bfc" id="L349" title="All 2 branches covered.">        return is(n_integer -&gt; n_integer &lt; number, sendMessage(INIT_NUMBERS, &quot;is_less_than&quot;, DEFAULT_NAME, number));</span>
+    }
+
+    /**
+     * Asserts that the {@code Integer} value is less than or equal to the specified {@code Long} value.
+     *
+     * @param number the {@code Long} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isLessThan(Long number) {
+<span class="nc bnc" id="L360" title="All 2 branches missed.">        return is(n_integer -&gt; n_integer &lt; number, sendMessage(INIT_NUMBERS, &quot;is_less_than&quot;, DEFAULT_NAME, number));</span>
+    }
+
+    /**
+     * Asserts that the {@code Integer} value is less than the specified {@code Float} value.
+     *
+     * @param number the {@code Float} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isLessThan(Float number) {
+<span class="nc bnc" id="L371" title="All 2 branches missed.">        return is(n_integer -&gt; n_integer &lt; number, sendMessage(INIT_NUMBERS, &quot;is_less_than&quot;, DEFAULT_NAME, number));</span>
+    }
+
+    /**
+     * Asserts that the {@code Integer} value is less than the specified {@code Double} value.
+     *
+     * @param number the {@code Double} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isLessThan(Double number) {
+<span class="nc bnc" id="L382" title="All 2 branches missed.">        return is(n_integer -&gt; n_integer &lt; number, sendMessage(INIT_NUMBERS, &quot;is_less_than&quot;, DEFAULT_NAME, number));</span>
+    }
+
+    /**
+     * Asserts that the {@code Integer} value is less than or equal to the specified {@code Byte} value.
+     *
+     * @param number the {@code Byte} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isLessOrEqualTo(Byte number) {
+<span class="nc bnc" id="L393" title="All 2 branches missed.">        return is(n_integer -&gt; n_integer &lt;= number, sendMessage(INIT_NUMBERS, &quot;is_less_or_equal_to&quot;, DEFAULT_NAME, number));</span>
+    }
+
+    /**
+     * Asserts that the {@code Integer} value is less than or equal to the specified {@code Short} value.
+     *
+     * @param number the {@code Short} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isLessOrEqualTo(Short number) {
+<span class="nc bnc" id="L404" title="All 2 branches missed.">        return is(n_integer -&gt; n_integer &lt;= number, sendMessage(INIT_NUMBERS, &quot;is_less_or_equal_to&quot;, DEFAULT_NAME, number));</span>
+    }
+
+    /**
+     * Asserts that the {@code Integer} value is less than or equal to the specified {@code Integer} value.
+     *
+     * @param number the {@code Integer} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isLessOrEqualTo(Integer number) {
+<span class="fc bfc" id="L415" title="All 2 branches covered.">        return is(n_integer -&gt; n_integer &lt;= number, sendMessage(INIT_NUMBERS, &quot;is_less_or_equal_to&quot;, DEFAULT_NAME, number));</span>
+    }
+
+    /**
+     * Asserts that the {@code Integer} value is less than or equal to the specified {@code Long} value.
+     *
+     * @param number the {@code Long} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isLessOrEqualTo(Long number) {
+<span class="nc bnc" id="L426" title="All 2 branches missed.">        return is(n_integer -&gt; n_integer &lt;= number, sendMessage(INIT_NUMBERS, &quot;is_less_or_equal_to&quot;, DEFAULT_NAME, number));</span>
+    }
+
+
+    /**
+     * Asserts that the {@code Integer} value is less than or equal to the specified {@code Float} value.
+     *
+     * @param number the {@code Float} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isLessOrEqualTo(Float number) {
+<span class="nc bnc" id="L438" title="All 2 branches missed.">        return is(n_integer -&gt; n_integer &lt;= number, sendMessage(INIT_NUMBERS, &quot;is_less_or_equal_to&quot;, DEFAULT_NAME, number));</span>
+    }
+
+
+    /**
+     * Asserts that the {@code Integer} value is less than or equal to the specified {@code Double} value.
+     *
+     * @param number the {@code Double} value to compare against
+     * @return this {@code CheckerInteger} instance for further validation
+     */
+    @Override
+    public CheckerInteger isLessOrEqualTo(Double number) {
+<span class="nc bnc" id="L450" title="All 2 branches missed.">        return is(n_integer -&gt; n_integer &lt;= number, sendMessage(INIT_NUMBERS, &quot;is_less_or_equal_to&quot;, DEFAULT_NAME, number));</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

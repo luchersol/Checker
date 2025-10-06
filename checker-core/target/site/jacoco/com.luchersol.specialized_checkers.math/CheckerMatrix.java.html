@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CheckerMatrix.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">checker-core</a> &gt; <a href="index.source.html" class="el_package">com.luchersol.core.specialized_checkers.math</a> &gt; <span class="el_source">CheckerMatrix.java</span></div><h1>CheckerMatrix.java</h1><pre class="source lang-java linenums">package com.luchersol.core.specialized_checkers.math;
+
+import static com.luchersol.core.util.Message.*;
+
+import java.util.Arrays;
+import java.util.function.Predicate;
+
+import org.apache.commons.math3.linear.Array2DRowRealMatrix;
+import org.apache.commons.math3.linear.EigenDecomposition;
+import org.apache.commons.math3.linear.LUDecomposition;
+import org.apache.commons.math3.linear.RealMatrix;
+import org.apache.commons.math3.linear.SingularValueDecomposition;
+import org.apache.commons.math3.util.Precision;
+
+import com.luchersol.core.util.AbstractChecker;
+
+/**
+ * A specialized checker for matrix (2D array) instances, providing fluent API methods
+ * to assert structural and algebraic properties, such as emptiness, squareness,
+ * identity, diagonal, triangular, symmetric, orthogonal, invertibility, eigenvalue-based
+ * validations, and rank conditions.
+ *
+ * &lt;p&gt;Typical usage:&lt;/p&gt;
+ * &lt;pre&gt;{@code
+ * Double[][] matrix = {
+ *     {1.0, 0.0, 0.0},
+ *     {0.0, 1.0, 0.0},
+ *     {0.0, 0.0, 1.0}
+ * };
+ *
+ * CheckerMatrix&lt;Double&gt; checker = CheckerMatrix.check(matrix)
+ *     .isSquare()
+ *     .isIdentity()
+ *     .isFullRank();
+ * }&lt;/pre&gt;
+ *
+ * &lt;p&gt;This class integrates with Apache Commons Math for advanced operations
+ * (eigenvalues, decompositions, determinants, etc.), and supports chaining
+ * multiple assertions in a fluent, expressive style.&lt;/p&gt;
+ *
+ * @param &lt;T&gt; the type of the elements in the matrix (must extend {@link Number})
+ *
+ * @see org.apache.commons.math3.linear.RealMatrix
+ * @see org.apache.commons.math3.linear.EigenDecomposition
+ * @see org.apache.commons.math3.linear.LUDecomposition
+ * @see org.apache.commons.math3.linear.SingularValueDecomposition
+ * @see com.luchersol.core.util.AbstractChecker
+ */
+public class CheckerMatrix&lt;T extends Number&gt; extends AbstractChecker&lt;T[][], CheckerMatrix&lt;T&gt;&gt; {
+
+    private static final String INIT_MATRIX = &quot;math.matrix&quot;;
+    private static final String DEFAULT_NAME = &quot;Matrix&quot;;
+
+
+    /**
+     * Constructs a new {@code CheckerMatrix} with the specified matrix and name.
+     *
+     * @param matrix the matrix to be used by this checker
+     * @param name the name identifying this checker
+     */
+    protected CheckerMatrix(T[][] matrix, String name) {
+<span class="fc" id="L62">        super(matrix, name);</span>
+<span class="fc" id="L63">    }</span>
+
+
+    /**
+     * Creates a new {@code CheckerMatrix} for the given matrix instance with a custom name.
+     *
+     * @param matrix the matrix instance to be checked
+     * @param name   the name to identify this checker instance (useful for error messages)
+     * @param &lt;T&gt;    the type of the elements in the matrix (must extend {@link Number})
+     * @return a new {@code CheckerMatrix} for the provided matrix
+     */
+    public static &lt;T extends Number&gt; CheckerMatrix&lt;T&gt; check(T[][] matrix, String name){
+<span class="nc" id="L75">        return new CheckerMatrix&lt;&gt;(matrix, name);</span>
+    }
+
+    /**
+     * Creates a new {@code CheckerMatrix} for the given matrix instance with a default name.
+     *
+     * @param matrix the matrix instance to be checked
+     * @param &lt;T&gt;    the type of the elements in the matrix (must extend {@link Number})
+     * @return a new {@code CheckerMatrix} for the provided matrix
+     */
+    public static &lt;T extends Number&gt; CheckerMatrix&lt;T&gt; check(T[][] matrix){
+<span class="nc" id="L86">        return check(matrix, DEFAULT_NAME);</span>
+    }
+
+    /**
+     * Returns this checker instance (for fluent API usage).
+     *
+     * @return this {@code CheckerMatrix} instance
+     */
+    @Override
+    protected CheckerMatrix&lt;T&gt; self() {
+<span class="fc" id="L96">        return this;</span>
+    }
+
+    /**
+     * Asserts that the matrix is empty (has zero rows or all rows are empty).
+     *
+     * @return this {@code CheckerMatrix} instance for further validation
+     */
+    public CheckerMatrix&lt;T&gt; isEmpty() {
+<span class="fc" id="L105">        return is(matrix -&gt; {</span>
+<span class="pc bpc" id="L106" title="2 of 4 branches missed.">            if (matrix == null || matrix.length == 0) return true;</span>
+<span class="nc bnc" id="L107" title="All 4 branches missed.">            return Arrays.stream(matrix).allMatch(row -&gt; row == null || row.length == 0);</span>
+<span class="fc" id="L108">        }, sendMessage(INIT_MATRIX, &quot;is_empty&quot;));</span>
+    }
+
+    /**
+     * Asserts that the matrix is square (number of rows equals number of columns).
+     *
+     * @return this {@code CheckerMatrix} instance for further validation
+     */
+    public CheckerMatrix&lt;T&gt; isSquare() {
+<span class="fc" id="L117">        Predicate&lt;T[][]&gt; predicate = matrix -&gt; {</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">            if (matrix.length == 0)</span>
+<span class="nc" id="L119">                return false;</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">            for (T[] ts : matrix) {</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">                if (ts.length != matrix.length) {</span>
+<span class="fc" id="L122">                    return false;</span>
+                }
+            }
+<span class="fc" id="L125">            return true;</span>
+        };
+<span class="fc" id="L127">        return is(predicate, sendMessage(INIT_MATRIX, &quot;is_square&quot;));</span>
+    }
+
+    /**
+     * Asserts that the matrix is a zero matrix (all elements are zero).
+     *
+     * @return this {@code CheckerMatrix} instance for further validation
+     */
+    public CheckerMatrix&lt;T&gt; isZero() {
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">        is(matrix -&gt; matrix.length &gt; 0</span>
+<span class="fc bfc" id="L137" title="All 4 branches covered.">                &amp;&amp; Arrays.stream(matrix).flatMap(Arrays::stream).allMatch(elem -&gt; elem.doubleValue() == 0),</span>
+<span class="fc" id="L138">                sendMessage(INIT_MATRIX, &quot;is_zero&quot;));</span>
+<span class="fc" id="L139">        return this;</span>
+    }
+
+    /**
+     * Asserts that the matrix is an identity matrix (ones on the diagonal, zeros elsewhere).
+     *
+     * @return this {@code CheckerMatrix} instance for further validation
+     */
+    public CheckerMatrix&lt;T&gt; isIdentity() {
+<span class="fc" id="L148">        isSquare();</span>
+<span class="fc" id="L149">        Predicate&lt;T[][]&gt; predicate = matrix -&gt; {</span>
+<span class="fc" id="L150">            int n = matrix.length;</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">            for (int i = 0; i &lt; n; i++) {</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">                for (int j = 0; j &lt; n; j++) {</span>
+<span class="pc bpc" id="L153" title="1 of 4 branches missed.">                    if (i == j &amp;&amp; matrix[i][j].doubleValue() != 1)</span>
+<span class="nc" id="L154">                        return false;</span>
+<span class="fc bfc" id="L155" title="All 4 branches covered.">                    else if (i != j &amp;&amp; matrix[i][j].doubleValue() != 0)</span>
+<span class="fc" id="L156">                        return false;</span>
+                }
+            }
+<span class="fc" id="L159">            return true;</span>
+        };
+<span class="fc" id="L161">        return is(predicate, sendMessage(INIT_MATRIX, &quot;is_identity&quot;));</span>
+    }
+
+    /**
+     * Asserts that the matrix is symmetric (equal to its transpose).
+     *
+     * @return this {@code CheckerMatrix} instance for further validation
+     */
+    public CheckerMatrix&lt;T&gt; isSymmetric(){
+<span class="fc" id="L170">        isSquare();</span>
+<span class="fc" id="L171">        Predicate&lt;T[][]&gt; predicate = matrix -&gt; {</span>
+<span class="fc" id="L172">            int n = matrix.length;</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">            for (int i = 0; i &lt; n; i++) {</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">                for (int j = 0; j &lt; n; j++) {</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">                    if (matrix[i][j] != matrix[j][i]) {</span>
+<span class="fc" id="L176">                        return false;</span>
+                    }
+                }
+            }
+<span class="fc" id="L180">            return true;</span>
+        };
+<span class="fc" id="L182">        return is(predicate, sendMessage(INIT_MATRIX, &quot;is_symmetric&quot;));</span>
+    }
+
+    /**
+     * Asserts that the matrix is diagonal (all off-diagonal elements are zero).
+     *
+     * @return this {@code CheckerMatrix} instance for further validation
+     */
+    public CheckerMatrix&lt;T&gt; isDiagonal(){
+<span class="fc" id="L191">        isSquare();</span>
+<span class="fc" id="L192">        Predicate&lt;T[][]&gt; predicate = matrix -&gt; {</span>
+<span class="fc" id="L193">            int n = matrix.length;</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">            for (int i = 0; i &lt; n; i++) {</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">                for (int j = 0; j &lt; n; j++) {</span>
+<span class="fc bfc" id="L196" title="All 4 branches covered.">                    if (i != j &amp;&amp; matrix[i][j].doubleValue() != 0) {</span>
+<span class="fc" id="L197">                        return false;</span>
+                    }
+                }
+            }
+<span class="fc" id="L201">            return true;</span>
+        };
+<span class="fc" id="L203">        return is(predicate, sendMessage(INIT_MATRIX, &quot;is_diagonal&quot;));</span>
+    }
+
+    /**
+     * Asserts that the matrix is orthogonal (its transpose is its inverse).
+     *
+     * @return this {@code CheckerMatrix} instance for further validation
+     */
+    public CheckerMatrix&lt;T&gt; isOrthogonal(){
+<span class="nc" id="L212">        isSquare();</span>
+<span class="nc" id="L213">        Predicate&lt;T[][]&gt; predicate = matrix -&gt; {</span>
+<span class="nc" id="L214">            RealMatrix mat = new Array2DRowRealMatrix(convertToDoubleMatrix(matrix));</span>
+<span class="nc" id="L215">            RealMatrix transpose = mat.transpose();</span>
+<span class="nc" id="L216">            RealMatrix product = mat.multiply(transpose);</span>
+<span class="nc" id="L217">            RealMatrix identity = new Array2DRowRealMatrix(matrix.length, matrix.length);</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">            for (int i = 0; i &lt; matrix.length; i++) {</span>
+<span class="nc" id="L219">                identity.setEntry(i, i, 1);</span>
+            }
+<span class="nc" id="L221">            return product.equals(identity);</span>
+        };
+<span class="nc" id="L223">        return is(predicate, sendMessage(INIT_MATRIX, &quot;is_orthogonal&quot;));</span>
+    }
+
+    /**
+     * Asserts that the matrix is invertible (has a non-zero determinant).
+     *
+     * @return this {@code CheckerMatrix} instance for further validation
+     */
+    public CheckerMatrix&lt;T&gt; isInvertible(){
+<span class="fc" id="L232">        isSquare();</span>
+<span class="fc" id="L233">        Predicate&lt;T[][]&gt; predicate = matrix -&gt; {</span>
+<span class="fc" id="L234">            RealMatrix mat = new Array2DRowRealMatrix(convertToDoubleMatrix(matrix));</span>
+            try {
+<span class="fc" id="L236">                LUDecomposition luDecomposition = new LUDecomposition(mat);</span>
+<span class="fc" id="L237">                return luDecomposition.getSolver().isNonSingular();</span>
+<span class="nc" id="L238">            } catch (Exception e) {</span>
+<span class="nc" id="L239">                return false;</span>
+            }
+        };
+<span class="fc" id="L242">        return is(predicate, sendMessage(INIT_MATRIX, &quot;is_invertible&quot;));</span>
+    }
+
+    /**
+     * Asserts that the matrix is positive definite (all eigenvalues are positive).
+     *
+     * @return this {@code CheckerMatrix} instance for further validation
+     */
+    public CheckerMatrix&lt;T&gt; isPositiveDefinite(){
+<span class="fc" id="L251">        isSquare();</span>
+<span class="fc" id="L252">        Predicate&lt;T[][]&gt; predicate = matrix -&gt; {</span>
+<span class="fc" id="L253">            RealMatrix mat = new Array2DRowRealMatrix(convertToDoubleMatrix(matrix));</span>
+<span class="fc" id="L254">            EigenDecomposition eigenDecomposition = new EigenDecomposition(mat);</span>
+<span class="fc bfc" id="L255" title="All 2 branches covered.">            for (double eigenvalue : eigenDecomposition.getRealEigenvalues()) {</span>
+<span class="fc bfc" id="L256" title="All 2 branches covered.">                if (eigenvalue &lt;= 0)</span>
+<span class="fc" id="L257">                    return false;</span>
+            }
+<span class="fc" id="L259">            return true;</span>
+        };
+<span class="fc" id="L261">        return is(predicate, sendMessage(INIT_MATRIX, &quot;is_positive_definite&quot;));</span>
+    }
+
+    /**
+     * Asserts that the matrix is upper triangular (all elements below the main diagonal are zero).
+     *
+     * @return this {@code CheckerMatrix} instance for further validation
+     */
+    public CheckerMatrix&lt;T&gt; isUpperTriangular(){
+<span class="fc" id="L270">        isSquare();</span>
+<span class="fc" id="L271">        Predicate&lt;T[][]&gt; predicate = matrix -&gt; {</span>
+<span class="fc" id="L272">            int n = matrix.length;</span>
+<span class="fc bfc" id="L273" title="All 2 branches covered.">            for (int i = 1; i &lt; n; i++) {</span>
+<span class="fc bfc" id="L274" title="All 2 branches covered.">                for (int j = 0; j &lt; i; j++) {</span>
+<span class="fc bfc" id="L275" title="All 2 branches covered.">                    if (matrix[i][j].doubleValue() != 0) {</span>
+<span class="fc" id="L276">                        return false;</span>
+                    }
+                }
+            }
+<span class="fc" id="L280">            return true;</span>
+        };
+<span class="fc" id="L282">        return is(predicate, sendMessage(INIT_MATRIX, &quot;is_upper_triangular&quot;));</span>
+    }
+
+    /**
+     * Asserts that the matrix is lower triangular (all elements above the main diagonal are zero).
+     *
+     * @return this {@code CheckerMatrix} instance for further validation
+     */
+    public CheckerMatrix&lt;T&gt; isLowerTriangular(){
+<span class="fc" id="L291">        isSquare();</span>
+<span class="fc" id="L292">        Predicate&lt;T[][]&gt; predicate = matrix -&gt; {</span>
+<span class="fc" id="L293">            int n = matrix.length;</span>
+<span class="fc bfc" id="L294" title="All 2 branches covered.">            for (int i = 0; i &lt; n; i++) {</span>
+<span class="fc bfc" id="L295" title="All 2 branches covered.">                for (int j = i + 1; j &lt; n; j++) {</span>
+<span class="fc bfc" id="L296" title="All 2 branches covered.">                    if (matrix[i][j].doubleValue() != 0) {</span>
+<span class="fc" id="L297">                        return false;</span>
+                    }
+                }
+            }
+<span class="fc" id="L301">            return true;</span>
+        };
+<span class="fc" id="L303">        return is(predicate, sendMessage(INIT_MATRIX, &quot;is_lower_triangular&quot;));</span>
+    }
+
+    /**
+     * Asserts that the matrix has the specified rank.
+     *
+     * @param rank the expected rank of the matrix
+     * @return this {@code CheckerMatrix} instance for further validation
+     */
+    public CheckerMatrix&lt;T&gt; hasRank(int rank){
+<span class="fc" id="L313">        isSquare();</span>
+<span class="fc" id="L314">        Predicate&lt;T[][]&gt; predicate = matrix -&gt; {</span>
+<span class="fc" id="L315">            RealMatrix mat = new Array2DRowRealMatrix(convertToDoubleMatrix(matrix));</span>
+<span class="fc" id="L316">            SingularValueDecomposition svd = new SingularValueDecomposition(mat);</span>
+<span class="fc" id="L317">            return Precision.equals(svd.getRank(), rank);</span>
+        };
+<span class="fc" id="L319">        return is(predicate, sendMessage(INIT_MATRIX, &quot;has_rank&quot;, rank));</span>
+    }
+
+    /**
+     * Asserts that the matrix has only real eigenvalues.
+     *
+     * @return this {@code CheckerMatrix} instance for further validation
+     */
+    public CheckerMatrix&lt;T&gt; hasRealEigenvalues(){
+<span class="nc" id="L328">        isSquare();</span>
+<span class="nc" id="L329">        Predicate&lt;T[][]&gt; predicate = matrix -&gt; {</span>
+<span class="nc" id="L330">            RealMatrix mat = new Array2DRowRealMatrix(convertToDoubleMatrix(matrix));</span>
+<span class="nc" id="L331">            EigenDecomposition eigenDecomposition = new EigenDecomposition(mat);</span>
+<span class="nc bnc" id="L332" title="All 2 branches missed.">            for (double eigenvalue : eigenDecomposition.getRealEigenvalues()) {</span>
+<span class="nc bnc" id="L333" title="All 2 branches missed.">                if (Double.isNaN(eigenvalue)) {</span>
+<span class="nc" id="L334">                    return false;</span>
+                }
+            }
+<span class="nc" id="L337">            return true;</span>
+        };
+<span class="nc" id="L339">        return is(predicate, sendMessage(INIT_MATRIX, &quot;has_real_eigenvalues&quot;));</span>
+    }
+
+    /**
+     * Asserts that the matrix is full rank (rank equals the minimum of the number of rows and columns).
+     *
+     * @return this {@code CheckerMatrix} instance for further validation
+     */
+    public CheckerMatrix&lt;T&gt; isFullRank(){
+<span class="nc" id="L348">        isSquare();</span>
+<span class="nc" id="L349">        Predicate&lt;T[][]&gt; predicate = matrix -&gt; {</span>
+<span class="nc" id="L350">            RealMatrix mat = new Array2DRowRealMatrix(convertToDoubleMatrix(matrix));</span>
+<span class="nc" id="L351">            SingularValueDecomposition svd = new SingularValueDecomposition(mat);</span>
+<span class="nc" id="L352">            int rank = svd.getRank();</span>
+<span class="nc bnc" id="L353" title="All 2 branches missed.">            return rank == Math.min(matrix.length, matrix[0].length);</span>
+        };
+<span class="nc" id="L355">        return is(predicate, sendMessage(INIT_MATRIX, &quot;is_full_rank&quot;));</span>
+    }
+
+    /**
+     * Asserts that any element in the matrix matches the provided predicate.
+     *
+     * @param predicate the predicate to test elements
+     * @return this {@code CheckerMatrix} instance for further validation
+     */
+    public CheckerMatrix&lt;T&gt; anyMatch(Predicate&lt;T&gt; predicate) {
+<span class="fc" id="L365">        is(matrix -&gt; Arrays.stream(matrix).flatMap(Arrays::stream).anyMatch(elem -&gt; predicate.test(elem)),</span>
+<span class="fc" id="L366">                sendMessage(INIT_MATRIX, &quot;any_match&quot;));</span>
+<span class="fc" id="L367">        return this;</span>
+    }
+
+    /**
+     * Asserts that all elements in the matrix match the provided predicate.
+     *
+     * @param predicate the predicate to test elements
+     * @return this {@code CheckerMatrix} instance for further validation
+     */
+    public CheckerMatrix&lt;T&gt; allMatch(Predicate&lt;T&gt; predicate) {
+<span class="fc" id="L377">        is(matrix -&gt; Arrays.stream(matrix).flatMap(Arrays::stream).allMatch(elem -&gt; predicate.test(elem)),</span>
+<span class="fc" id="L378">                sendMessage(INIT_MATRIX, &quot;all_match&quot;));</span>
+<span class="fc" id="L379">        return this;</span>
+    }
+
+    /**
+     * Converts a matrix of any numeric type to a matrix of doubles.
+     *
+     * @param matrix the matrix to convert
+     * @param &lt;T&gt;    the type of the elements in the matrix (must extend {@link Number})
+     * @return a new matrix of doubles with the same dimensions as the input
+     */
+    public static &lt;T extends Number&gt; double[][] convertToDoubleMatrix(T[][] matrix) {
+<span class="fc" id="L390">        int rows = matrix.length;</span>
+<span class="fc" id="L391">        int cols = matrix[0].length;</span>
+<span class="fc" id="L392">        double[][] res = new double[rows][cols];</span>
+
+<span class="fc bfc" id="L394" title="All 2 branches covered.">        for (int i = 0; i &lt; rows; i++) {</span>
+<span class="fc bfc" id="L395" title="All 2 branches covered.">            for (int j = 0; j &lt; cols; j++) {</span>
+<span class="fc" id="L396">                res[i][j] = matrix[i][j].doubleValue();</span>
+            }
+        }
+
+<span class="fc" id="L400">        return res;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

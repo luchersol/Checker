@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CheckerColor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">checker-core</a> &gt; <a href="index.source.html" class="el_package">com.luchersol.core.specialized_checkers</a> &gt; <span class="el_source">CheckerColor.java</span></div><h1>CheckerColor.java</h1><pre class="source lang-java linenums">package com.luchersol.core.specialized_checkers;
+
+import static com.luchersol.core.util.Message.*;
+
+import java.awt.Color;
+import java.util.function.Predicate;
+
+import com.luchersol.core.util.AbstractChecker;
+
+/**
+ * A specialized checker for {@link java.awt.Color} instances, providing a fluent API
+ * to assert various color properties such as equality, brightness, transparency,
+ * contrast, saturation, similarity, and hexadecimal representation.
+ *
+ * &lt;p&gt;Typical usage:&lt;/p&gt;
+ * &lt;pre&gt;{@code
+ * Color c1 = new Color(255, 0, 0);
+ * Color c2 = new Color(128, 0, 0);
+ *
+ * CheckerColor.check(c1)
+ *     .isRed()             // Custom method if implemented
+ *     .isDark()
+ *     .hasContrast(c2)
+ *     .isOpaque();
+ * }&lt;/pre&gt;
+ *
+ * &lt;p&gt;This class supports chaining multiple assertions in a fluent style and integrates
+ * with {@link com.luchersol.core.util.AbstractChecker} for generalized validation handling.&lt;/p&gt;
+ *
+ * @see java.awt.Color
+ * @see com.luchersol.core.util.AbstractChecker
+ */
+public class CheckerColor extends AbstractChecker&lt;Color, CheckerColor&gt; {
+
+    private static final String INIT_COLOR = &quot;color&quot;;
+    private static final String DEFAULT_NAME = &quot;Color&quot;;
+
+    /**
+     * Constructs a new {@code CheckerColor} with the specified color and name.
+     *
+     * @param color the {@link Color} to be associated with this checker
+     * @param name the name of the checker
+     */
+    protected CheckerColor(Color color, String name) {
+<span class="fc" id="L45">        super(color, name);</span>
+<span class="fc" id="L46">    }</span>
+
+    /**
+     * Creates a new CheckerColor instance for the given color and name.
+     *
+     * @param color the color value to be checked
+     * @param name  the name to identify the color in error messages
+     * @return a CheckerColor instance for further validations
+     */
+    public static CheckerColor check(Color color, String name) {
+<span class="nc" id="L56">        return new CheckerColor(color, name);</span>
+    }
+
+    /**
+     * Creates a new CheckerColor instance for the given color with a default name.
+     *
+     * @param color the color value to be checked
+     * @return a CheckerColor instance for further validations
+     */
+    public static CheckerColor check(Color color) {
+<span class="nc" id="L66">        return check(color, DEFAULT_NAME);</span>
+    }
+
+    /**
+     * Returns this instance (for fluent API usage).
+     *
+     * @return this CheckerColor instance
+     */
+    @Override
+    protected CheckerColor self() {
+<span class="fc" id="L76">        return this;</span>
+    }
+
+    /**
+     * Checks if the color is black.
+     *
+     * @return this CheckerColor instance for chaining
+     */
+    public CheckerColor isBlack(){
+<span class="fc" id="L85">        return is(color -&gt; color.equals(Color.BLACK), sendMessage(INIT_COLOR, &quot;is_black&quot;));</span>
+    }
+
+    /**
+     * Checks if the color is white.
+     *
+     * @return this CheckerColor instance for chaining
+     */
+    public CheckerColor isWhite(){
+<span class="fc" id="L94">        return is(color -&gt; color.equals(Color.WHITE), sendMessage(INIT_COLOR, &quot;is_white&quot;));</span>
+    }
+
+    /**
+     * Checks if the color is a shade of gray (red, green, and blue components are equal).
+     *
+     * @return this CheckerColor instance for chaining
+     */
+    public CheckerColor isGray(){
+<span class="pc bpc" id="L103" title="1 of 4 branches missed.">        return is(color -&gt; color.getRed() == color.getGreen() &amp;&amp; color.getGreen() == color.getBlue(), sendMessage(INIT_COLOR, &quot;is_gray&quot;));</span>
+    }
+
+    /**
+     * Checks if the color is equal to another color.
+     *
+     * @param other the color to compare with
+     * @return this CheckerColor instance for chaining
+     */
+    public CheckerColor isColor(Color other){
+<span class="fc" id="L113">        return is(color -&gt; color.equals(other), sendMessage(INIT_COLOR, &quot;is_color&quot;, other));</span>
+    }
+
+    /**
+     * Checks if the color is considered dark using the default threshold (128).
+     *
+     * @return this CheckerColor instance for chaining
+     */
+    public CheckerColor isDark(){
+<span class="fc" id="L122">        return isDark(128);</span>
+    }
+
+    /**
+     * Checks if the color is considered dark using the specified threshold.
+     *
+     * @param umbral the threshold for darkness (lower value means darker)
+     * @return this CheckerColor instance for chaining
+     */
+    public CheckerColor isDark(double umbral){
+<span class="fc" id="L132">        Predicate&lt;Color&gt; predicate = color -&gt; {</span>
+<span class="fc" id="L133">            double luminosidad = 0.2126 * color.getRed() + 0.7152 * color.getGreen() + 0.0722 * color.getBlue();</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">            return luminosidad &lt; umbral;</span>
+        };
+
+<span class="fc" id="L137">        return is(predicate, sendMessage(INIT_COLOR, &quot;is_dark&quot;, umbral));</span>
+    }
+
+    /**
+     * Checks if the color is considered light using the default threshold (128).
+     *
+     * @return this CheckerColor instance for chaining
+     */
+    public CheckerColor isLight(){
+<span class="fc" id="L146">        return isLight(128);</span>
+    }
+
+    /**
+     * Checks if the color is considered light using the specified threshold.
+     *
+     * @param umbral the threshold for lightness (higher value means lighter)
+     * @return this CheckerColor instance for chaining
+     */
+    public CheckerColor isLight(double umbral){
+<span class="fc" id="L156">        Predicate&lt;Color&gt; predicate = color -&gt; {</span>
+<span class="fc" id="L157">            double luminosidad = 0.2126 * color.getRed() + 0.7152 * color.getGreen() + 0.0722 * color.getBlue();</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">            return luminosidad &gt; umbral;</span>
+        };
+
+<span class="fc" id="L161">        return is(predicate, sendMessage(INIT_COLOR, &quot;is_light&quot;, umbral));</span>
+    }
+
+    /**
+     * Checks if the color is transparent (alpha value less than 255).
+     *
+     * @return this CheckerColor instance for chaining
+     */
+    public CheckerColor isTransparent(){
+<span class="fc bfc" id="L170" title="All 2 branches covered.">        return is(color -&gt; color.getAlpha() &lt; 255, sendMessage(INIT_COLOR, &quot;is_transparent&quot;));</span>
+    }
+
+    /**
+     * Checks if the color has sufficient contrast with another color using the default threshold (128).
+     *
+     * @param other the color to compare contrast with
+     * @return this CheckerColor instance for chaining
+     */
+    public CheckerColor hasContrast(Color other){
+<span class="fc" id="L180">        return hasContrast(other, 128);</span>
+    }
+
+    /**
+     * Checks if the color has sufficient contrast with another color using the specified threshold.
+     *
+     * @param other  the color to compare contrast with
+     * @param umbral the threshold for contrast difference
+     * @return this CheckerColor instance for chaining
+     */
+    public CheckerColor hasContrast(Color other, double umbral){
+<span class="fc" id="L191">        Predicate&lt;Color&gt; predicate = color -&gt; {</span>
+<span class="fc" id="L192">            double luminancia1 = 0.2126 * color.getRed() + 0.7152 * color.getGreen() + 0.0722 * color.getBlue();</span>
+<span class="fc" id="L193">            double luminancia2 = 0.2126 * other.getRed() + 0.7152 * other.getGreen() + 0.0722 * other.getBlue();</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">            return Math.abs(luminancia1 - luminancia2) &gt; umbral;</span>
+        };
+<span class="fc" id="L196">        return is(predicate, sendMessage(INIT_COLOR, &quot;has_contrast&quot;, umbral));</span>
+    }
+
+    /**
+     * Checks if the color has the specified alpha (transparency) value.
+     *
+     * @param alpha the expected alpha value
+     * @return this CheckerColor instance for chaining
+     */
+    public CheckerColor hasAlpha(int alpha){
+<span class="fc bfc" id="L206" title="All 2 branches covered.">        return is(color -&gt; color.getAlpha() == alpha, sendMessage(INIT_COLOR, &quot;has_alpha&quot;, alpha));</span>
+    }
+
+    /**
+     * Checks if the color is desaturated (saturation below the specified threshold).
+     *
+     * @param umbral the threshold for saturation (0 = grayscale, 1 = fully saturated)
+     * @return this CheckerColor instance for chaining
+     */
+    public CheckerColor isDesaturated(double umbral) {
+<span class="fc" id="L216">        Predicate&lt;Color&gt; predicate = color -&gt;{</span>
+<span class="fc" id="L217">            float[] hsb = Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), null);</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">            return hsb[1] &lt; umbral;</span>
+        };
+<span class="fc" id="L220">        return is(predicate, sendMessage(INIT_COLOR, &quot;is_desaturated&quot;));</span>
+    }
+
+    /**
+     * Checks if the color is similar to another color within the specified threshold.
+     *
+     * @param other  the color to compare with
+     * @param umbral the maximum allowed distance for similarity
+     * @return this CheckerColor instance for chaining
+     */
+    public CheckerColor isSimilar(Color other, double umbral) {
+<span class="fc" id="L231">        Predicate&lt;Color&gt; predicate = color -&gt; {</span>
+<span class="fc" id="L232">            int r1 = color.getRed(), g1 = color.getGreen(), b1 = color.getBlue();</span>
+<span class="fc" id="L233">            int r2 = other.getRed(), g2 = other.getGreen(), b2 = other.getBlue();</span>
+<span class="fc" id="L234">            double distancia = Math.sqrt(Math.pow(r1 - r2, 2) + Math.pow(g1 - g2, 2) + Math.pow(b1 - b2, 2));</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">            return distancia &lt; umbral;</span>
+        };
+<span class="fc" id="L237">        return is(predicate, sendMessage(INIT_COLOR, &quot;is_similar&quot;));</span>
+    }
+
+    /**
+     * Checks if the color is fully opaque (alpha value is 255).
+     *
+     * @return this CheckerColor instance for chaining
+     */
+    public CheckerColor isOpaque(){
+<span class="fc bfc" id="L246" title="All 2 branches covered.">        return is(color -&gt; color.getAlpha() == 255, sendMessage(INIT_COLOR, &quot;is_opaque&quot;));</span>
+    }
+
+    /**
+     * Checks if the color's hexadecimal representation matches the specified string.
+     *
+     * @param hex the expected hexadecimal string (e.g., &quot;#FFFFFF&quot;)
+     * @return this CheckerColor instance for chaining
+     */
+    public CheckerColor hasHexadecimal(String hex){
+<span class="fc" id="L256">        Predicate&lt;Color&gt; predicate = color -&gt; {</span>
+<span class="fc" id="L257">            int rgb = color.getRGB();</span>
+<span class="fc" id="L258">            String hexadecimal = String.format(&quot;#%06X&quot;, (0xFFFFFF &amp; rgb));</span>
+<span class="fc" id="L259">            return hexadecimal.equals(hex);</span>
+        };
+<span class="fc" id="L261">        return is(predicate, sendMessage(INIT_COLOR, &quot;has_hexadecimal&quot;));</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

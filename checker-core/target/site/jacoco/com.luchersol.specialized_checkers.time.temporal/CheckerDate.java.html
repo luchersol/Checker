@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CheckerDate.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">checker-core</a> &gt; <a href="index.source.html" class="el_package">com.luchersol.core.specialized_checkers.time.temporal</a> &gt; <span class="el_source">CheckerDate.java</span></div><h1>CheckerDate.java</h1><pre class="source lang-java linenums">package com.luchersol.core.specialized_checkers.time.temporal;
+
+import static com.luchersol.core.util.Message.*;
+
+import java.util.Date;
+
+import com.luchersol.core.util.AbstractChecker;
+
+/**
+ * A specialized checker for {@link java.util.Date} instances, providing fluent API methods
+ * to assert temporal properties such as being before/after another date, inclusivity checks,
+ * range validations, and whether a date lies in the past or future.
+ *
+ * &lt;p&gt;Typical usage:&lt;/p&gt;
+ * &lt;pre&gt;{@code
+ * Date deadline = ...;
+ * Date now = new Date();
+ *
+ * CheckerDate checker = CheckerDate.check(deadline)
+ *     .isAfter(now)
+ *     .inRange(now, new Date(now.getTime() + 86400000)) // within the next 24 hours
+ *     .isFuture();
+ * }&lt;/pre&gt;
+ *
+ * &lt;p&gt;This class integrates with {@link InterfaceCheckerDate} for standardized temporal
+ * validations and supports chaining multiple assertions in a fluent, expressive style.&lt;/p&gt;
+ *
+ * @see java.util.Date
+ * @see com.luchersol.core.specialized_checkers.time.temporal.InterfaceCheckerDate
+ * @see com.luchersol.core.util.AbstractChecker
+ */
+public class CheckerDate extends AbstractChecker&lt;Date, CheckerDate&gt; implements InterfaceCheckerDate&lt;CheckerDate, Date&gt; {
+
+    private static final String INIT_TEMPORAL = &quot;time.temporal&quot;;
+    private static final String DEFAULT_NAME = &quot;Date&quot;;
+
+    /**
+     * Constructs a new {@code CheckerDate} with the specified date and name.
+     *
+     * @param date the {@link Date} to be wrapped and checked
+     * @param name the name identifying this checker function
+     */
+    protected CheckerDate(Date date, String name) {
+<span class="fc" id="L44">        super(date, name);</span>
+<span class="fc" id="L45">    }</span>
+
+    /**
+     * Creates a new CheckerDate instance for the given date and name.
+     *
+     * @param date the date value to be checked
+     * @param name the name to identify the date in error messages
+     * @return a CheckerDate instance for further validations
+     */
+    public static CheckerDate check(Date date, String name) {
+<span class="nc" id="L55">        return new CheckerDate(date, name);</span>
+    }
+
+    /**
+     * Creates a new CheckerDate instance for the given date with a default name.
+     *
+     * @param date the date value to be checked
+     * @return a CheckerDate instance for further validations
+     */
+    public static CheckerDate check(Date date) {
+<span class="nc" id="L65">        return check(date, DEFAULT_NAME);</span>
+    }
+
+    /**
+     * Returns this instance (for fluent API usage).
+     *
+     * @return this CheckerDate instance
+     */
+    @Override
+    protected CheckerDate self() {
+<span class="fc" id="L75">        return this;</span>
+    }
+
+    /**
+     * Returns the current date and time.
+     *
+     * @return the current {@link Date}
+     */
+    private static Date now(){
+<span class="fc" id="L84">        return new Date();</span>
+    }
+
+    /**
+     * Checks if the date is before the specified date.
+     *
+     * @param date the date to compare with
+     * @return this CheckerDate instance for chaining
+     */
+    @Override
+    public CheckerDate isBefore(Date date) {
+<span class="fc" id="L95">        return is(time -&gt; time.before(date), sendMessage(INIT_TEMPORAL, &quot;is_before&quot;, DEFAULT_NAME, date));</span>
+    }
+
+    /**
+     * Checks if the date is before or equal to the specified date.
+     *
+     * @param date the date to compare with
+     * @return this CheckerDate instance for chaining
+     */
+    @Override
+    public CheckerDate isBeforeOrEqual(Date date) {
+<span class="pc bpc" id="L106" title="2 of 4 branches missed.">        return is(time -&gt; time.before(date) || time.equals(date), sendMessage(INIT_TEMPORAL, &quot;is_before_or_equal&quot;, DEFAULT_NAME, date));</span>
+    }
+
+    /**
+     * Checks if the date is after the specified date.
+     *
+     * @param date the date to compare with
+     * @return this CheckerDate instance for chaining
+     */
+    @Override
+    public CheckerDate isAfter(Date date) {
+<span class="fc" id="L117">        return is(time -&gt; time.after(date), sendMessage(INIT_TEMPORAL, &quot;is_after&quot;, DEFAULT_NAME, date));</span>
+    }
+
+    /**
+     * Checks if the date is after or equal to the specified date.
+     *
+     * @param date the date to compare with
+     * @return this CheckerDate instance for chaining
+     */
+    @Override
+    public CheckerDate isAfterOrEqual(Date date) {
+<span class="pc bpc" id="L128" title="2 of 4 branches missed.">        return is(time -&gt; time.after(date) || time.equals(date), sendMessage(INIT_TEMPORAL, &quot;is_after_or_equal&quot;, DEFAULT_NAME, date));</span>
+    }
+
+    /**
+     * Checks if the date is within the specified range (exclusive).
+     *
+     * @param date_1 the start date (exclusive)
+     * @param date_2 the end date (exclusive)
+     * @return this CheckerDate instance for chaining
+     */
+    @Override
+    public CheckerDate inRange(Date date_1, Date date_2) {
+<span class="pc bpc" id="L140" title="1 of 4 branches missed.">        return is(time -&gt; time.after(date_1) &amp;&amp; time.before(date_2), sendMessage(INIT_TEMPORAL, &quot;in_range&quot;, DEFAULT_NAME, date_1, date_2));</span>
+    }
+
+    /**
+     * Checks if the date is in the past (before the current date and time).
+     *
+     * @return this CheckerDate instance for chaining
+     */
+    @Override
+    public CheckerDate isPast() {
+<span class="fc" id="L150">        return is(time -&gt; time.before(now()), sendMessage(INIT_TEMPORAL, &quot;is_past&quot;, DEFAULT_NAME));</span>
+    }
+
+    /**
+     * Checks if the date is in the future (after the current date and time).
+     *
+     * @return this CheckerDate instance for chaining
+     */
+    @Override
+    public CheckerDate isFuture() {
+<span class="fc" id="L160">        return is(time -&gt; time.after(now()), sendMessage(INIT_TEMPORAL, &quot;is_future&quot;, DEFAULT_NAME));</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

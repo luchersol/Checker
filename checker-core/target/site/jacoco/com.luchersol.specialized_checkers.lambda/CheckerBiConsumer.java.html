@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CheckerBiConsumer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">checker-core</a> &gt; <a href="index.source.html" class="el_package">com.luchersol.core.specialized_checkers.lambda</a> &gt; <span class="el_source">CheckerBiConsumer.java</span></div><h1>CheckerBiConsumer.java</h1><pre class="source lang-java linenums">package com.luchersol.core.specialized_checkers.lambda;
+
+import static com.luchersol.core.util.Message.*;
+
+import java.util.Collection;
+import java.util.Map.Entry;
+import java.util.function.BiConsumer;
+import java.util.function.BiPredicate;
+import java.util.function.Predicate;
+
+import com.luchersol.core.util.AbstractChecker;
+import com.luchersol.core.util.Cloner;
+import com.luchersol.core.util.Utils;
+
+/**
+ * A specialized checker for {@link BiConsumer} instances, providing fluent API methods
+ * to assert various behaviors and properties of a BiConsumer, such as exception safety,
+ * input modification, and no-op behavior. Supports optional deep cloning of inputs
+ * before passing them to the BiConsumer under test.
+ *
+ * &lt;p&gt;Typical usage:&lt;/p&gt;
+ * &lt;pre&gt;{@code
+ * CheckerBiConsumer&lt;MyType, OtherType&gt; checker = CheckerBiConsumer.check(myBiConsumer)
+ *     .activateDeepClone()
+ *     .applyWithoutException(input1, input2)
+ *     .modifiesInput(input1, input2, condition1, condition2);
+ * }&lt;/pre&gt;
+ *
+ *
+ * @param &lt;T&gt; the type of the first argument to the BiConsumer
+ * @param &lt;U&gt; the type of the second argument to the BiConsumer
+ *
+ * @see java.util.function.BiConsumer
+ * @see java.util.function.Predicate
+ * @see java.util.function.BiPredicate
+ * @see java.util.Map.Entry
+ */
+public class CheckerBiConsumer&lt;T, U&gt; extends AbstractChecker&lt;BiConsumer&lt;T, U&gt;, CheckerBiConsumer&lt;T, U&gt;&gt; {
+
+    private static final String INIT_BI_CONSUMER = &quot;lambda.biconsumer&quot;;
+    private static final String DEFAULT_NAME = &quot;BiConsumer&quot;;
+
+    private boolean deepClone;
+
+    /**
+     * Constructs a new {@code CheckerBiConsumer} with the specified {@link BiConsumer} and name.
+     *
+     * @param consumer the {@code BiConsumer} to be wrapped and checked
+     * @param name the name identifying this checker
+     */
+    protected CheckerBiConsumer(BiConsumer&lt;T, U&gt; consumer, String name) {
+<span class="fc" id="L52">        super(consumer, name);</span>
+<span class="fc" id="L53">    }</span>
+
+    /**
+     * Creates a CheckerBiConsumer for the given BiConsumer and assigns a custom name.
+     *
+     * @param &lt;T&gt; the first input type of {@code BiConsumer}
+     * @param &lt;U&gt; the second input type of {@code BiConsumer}
+     * @param biconsumer the BiConsumer to check
+     * @param name the name to assign to this checker
+     * @return a CheckerBiConsumer instance for the given BiConsumer
+     */
+    public static &lt;T,U&gt; CheckerBiConsumer&lt;T, U&gt; check(BiConsumer&lt;T, U&gt; biconsumer, String name) {
+<span class="fc" id="L65">        return new CheckerBiConsumer&lt;&gt;(biconsumer, name);</span>
+    }
+
+    /**
+     * Creates a CheckerBiConsumer for the given BiConsumer with a default name.
+     *
+     * @param &lt;T&gt; the first input type of {@code BiConsumer}
+     * @param &lt;U&gt; the second input type of {@code BiConsumer}
+     * @param biconsumer the BiConsumer to check
+     * @return a CheckerBiConsumer instance for the given BiConsumer
+     */
+    public static &lt;T,U&gt; CheckerBiConsumer&lt;T, U&gt; check(BiConsumer&lt;T, U&gt; biconsumer) {
+<span class="fc" id="L77">        return check(biconsumer, DEFAULT_NAME);</span>
+    }
+
+    /**
+     * Returns this instance (for fluent API).
+     *
+     * @return this CheckerBiConsumer instance
+     */
+    @Override
+    protected CheckerBiConsumer&lt;T, U&gt; self() {
+<span class="fc" id="L87">        return this;</span>
+    }
+
+
+    /**
+     * Activates deep cloning of inputs before passing them to the BiConsumer.
+     *
+     * @return this CheckerBiConsumer instance
+     */
+    public CheckerBiConsumer&lt;T, U&gt; activateDeepClone() {
+<span class="fc" id="L97">        this.deepClone = true;</span>
+<span class="fc" id="L98">        return self();</span>
+    }
+
+    /**
+     * Deactivates deep cloning of inputs before passing them to the BiConsumer.
+     *
+     * @return this CheckerBiConsumer instance
+     */
+    public CheckerBiConsumer&lt;T, U&gt; deactivateDeepClone() {
+<span class="fc" id="L107">        this.deepClone = false;</span>
+<span class="fc" id="L108">        return self();</span>
+    }
+
+    /**
+     * Returns the first input, deep cloned if deepClone is enabled.
+     *
+     * @param input the first input value
+     * @return the (possibly cloned) first input
+     */
+    private T getInput1(T input) {
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">        return this.deepClone ? Cloner.deepClone(input) : input;</span>
+    }
+
+    /**
+     * Returns the second input, deep cloned if deepClone is enabled.
+     *
+     * @param input the second input value
+     * @return the (possibly cloned) second input
+     */
+    private U getInput2(U input) {
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">        return this.deepClone ? Cloner.deepClone(input) : input;</span>
+    }
+
+
+    /**
+     * Checks that the BiConsumer can be applied to the given inputs without throwing an exception.
+     *
+     * @param input1 the first input value
+     * @param input2 the second input value
+     * @return this CheckerBiConsumer instance
+     */
+    public CheckerBiConsumer&lt;T, U&gt; applyWithoutException(T input1, U input2) {
+<span class="fc" id="L140">        return is(c -&gt; {</span>
+            try {
+<span class="fc" id="L142">                T processInput1 = getInput1(input1);</span>
+<span class="fc" id="L143">                U processInput2 = getInput2(input2);</span>
+<span class="fc" id="L144">                c.accept(processInput1, processInput2);</span>
+<span class="fc" id="L145">                return true;</span>
+<span class="fc" id="L146">            } catch (Exception e) {</span>
+<span class="fc" id="L147">                return false;</span>
+            }
+<span class="fc" id="L149">        }, sendMessage(INIT_BI_CONSUMER, &quot;apply_without_exception&quot;, input1, input2));</span>
+    }
+
+    /**
+     * Checks that the BiConsumer can be applied to all entries in the collection without throwing an exception.
+     *
+     * @param input the collection of key-value entries to test
+     * @return this CheckerBiConsumer instance
+     */
+    public CheckerBiConsumer&lt;T, U&gt; applyWithoutException(Collection&lt;? extends Entry&lt;T, U&gt;&gt; input) {
+<span class="fc" id="L159">        return is(c -&gt; input.stream().allMatch(e -&gt; {</span>
+                try {
+<span class="fc" id="L161">                    T processInput1 = getInput1(e.getKey());</span>
+<span class="fc" id="L162">                    U processInput2 = getInput2(e.getValue());</span>
+<span class="fc" id="L163">                    c.accept(processInput1, processInput2);</span>
+<span class="fc" id="L164">                    return true;</span>
+<span class="nc" id="L165">                } catch (Exception exc) {</span>
+<span class="nc" id="L166">                    return false;</span>
+                }
+            }
+<span class="fc" id="L169">        ), sendMessage(INIT_BI_CONSUMER, &quot;apply_without_exception.collection&quot;));</span>
+    }
+
+    /**
+     * Checks that the BiConsumer modifies the inputs as expected, according to the given predicates.
+     *
+     * @param input1 the first input value
+     * @param input2 the second input value
+     * @param condition1 the predicate to test the first input after consumption
+     * @param condition2 the predicate to test the second input after consumption
+     * @return this CheckerBiConsumer instance
+     */
+    public CheckerBiConsumer&lt;T, U&gt; modifiesInput(T input1, U input2, Predicate&lt;T&gt; condition1, Predicate&lt;U&gt; condition2) {
+<span class="fc" id="L182">        return is(c -&gt; {</span>
+            try {
+<span class="fc" id="L184">                T processInput1 = getInput1(input1);</span>
+<span class="fc" id="L185">                U processInput2 = getInput2(input2);</span>
+<span class="fc" id="L186">                c.accept(processInput1, processInput2);</span>
+<span class="pc bpc" id="L187" title="2 of 4 branches missed.">                return condition1.test(processInput1) &amp;&amp; condition2.test(processInput2);</span>
+<span class="nc" id="L188">            } catch (Exception e) {</span>
+<span class="nc" id="L189">                return false;</span>
+            }
+<span class="fc" id="L191">        }, sendMessage(INIT_BI_CONSUMER, &quot;modifies_input&quot;, input1, input2));</span>
+    }
+
+        /**
+         * Checks that the BiConsumer modifies the inputs as expected, according to the given bi-predicate.
+         *
+         * @param input1 the first input value
+         * @param input2 the second input value
+         * @param condition the bi-predicate to test both inputs after consumption
+         * @return this CheckerBiConsumer instance
+         */
+    public CheckerBiConsumer&lt;T, U&gt; modifiesInput(T input1, U input2, BiPredicate&lt;T, U&gt; condition) {
+<span class="fc" id="L203">        return is(c -&gt; {</span>
+            try {
+<span class="fc" id="L205">                T processInput1 = getInput1(input1);</span>
+<span class="fc" id="L206">                U processInput2 = getInput2(input2);</span>
+<span class="fc" id="L207">                c.accept(processInput1, processInput2);</span>
+<span class="fc" id="L208">                return condition.test(processInput1, processInput2);</span>
+<span class="nc" id="L209">            } catch (Exception e) {</span>
+<span class="nc" id="L210">                return false;</span>
+            }
+<span class="fc" id="L212">        }, sendMessage(INIT_BI_CONSUMER, &quot;modifies_input&quot;, input1, input2));</span>
+    }
+
+    /**
+     * Checks that the BiConsumer modifies all entries in the collection as expected, according to the given predicates.
+     *
+     * @param input the collection of key-value entries to test
+     * @param condition1 the predicate to test the first input after consumption
+     * @param condition2 the predicate to test the second input after consumption
+     * @return this CheckerBiConsumer instance
+     */
+    public CheckerBiConsumer&lt;T, U&gt; modifiesInput(Collection&lt;? extends Entry&lt;T, U&gt;&gt; input, Predicate&lt;T&gt; condition1, Predicate&lt;U&gt; condition2) {
+<span class="fc" id="L224">        return is(c -&gt; input.stream().allMatch(e -&gt; {</span>
+                try {
+<span class="fc" id="L226">                    T processInput1 = getInput1(e.getKey());</span>
+<span class="fc" id="L227">                    U processInput2 = getInput2(e.getValue());</span>
+<span class="fc" id="L228">                    c.accept(processInput1, processInput2);</span>
+<span class="pc bpc" id="L229" title="2 of 4 branches missed.">                    return condition1.test(processInput1) &amp;&amp; condition2.test(processInput2);</span>
+<span class="nc" id="L230">                } catch (Exception exc) {</span>
+<span class="nc" id="L231">                    return false;</span>
+                }
+            }
+<span class="fc" id="L234">        ), sendMessage(INIT_BI_CONSUMER, &quot;modifies_input.collection&quot;, input));</span>
+    }
+
+    /**
+     * Checks that the BiConsumer modifies all entries in the collection as expected, according to the given bi-predicate.
+     *
+     * @param input the collection of key-value entries to test
+     * @param condition the bi-predicate to test both inputs after consumption
+     * @return this CheckerBiConsumer instance
+     */
+    public CheckerBiConsumer&lt;T, U&gt; modifiesInput(Collection&lt;? extends Entry&lt;T, U&gt;&gt; input, BiPredicate&lt;T, U&gt; condition) {
+<span class="fc" id="L245">        return is(c -&gt; input.stream().allMatch(e -&gt; {</span>
+                try {
+<span class="fc" id="L247">                    T processInput1 = getInput1(e.getKey());</span>
+<span class="fc" id="L248">                    U processInput2 = getInput2(e.getValue());</span>
+<span class="fc" id="L249">                    c.accept(processInput1, processInput2);</span>
+<span class="fc" id="L250">                    return condition.test(processInput1, processInput2);</span>
+<span class="nc" id="L251">                } catch (Exception exc) {</span>
+<span class="nc" id="L252">                    return false;</span>
+                }
+            }
+<span class="fc" id="L255">        ), sendMessage(INIT_BI_CONSUMER, &quot;modifies_input.collection&quot;, input));</span>
+    }
+
+    /**
+     * Checks that the BiConsumer does not modify the given inputs.
+     *
+     * @param input1 the first input value
+     * @param input2 the second input value
+     * @return this CheckerBiConsumer instance
+     */
+    public CheckerBiConsumer&lt;T, U&gt; doesNothing(T input1, U input2) {
+<span class="fc" id="L266">        return is(c -&gt; {</span>
+            try {
+<span class="fc" id="L268">                T before1 = Cloner.deepClone(input1);</span>
+<span class="fc" id="L269">                T after1 = getInput1(input1);</span>
+<span class="fc" id="L270">                U before2 = Cloner.deepClone(input2);</span>
+<span class="fc" id="L271">                U after2 = getInput2(input2);</span>
+<span class="fc" id="L272">                c.accept(after1, after2);</span>
+<span class="pc bpc" id="L273" title="2 of 4 branches missed.">                return Utils.equalsContent(after1, before1) &amp;&amp; Utils.equalsContent(after2, before2);</span>
+<span class="nc" id="L274">            } catch (Exception e) {</span>
+<span class="nc" id="L275">                return false;</span>
+            }
+<span class="fc" id="L277">        }, sendMessage(INIT_BI_CONSUMER, &quot;does_nothing&quot;, input1, input2));</span>
+    }
+
+    /**
+     * Checks that the BiConsumer does not modify any of the entries in the collection.
+     *
+     * @param input the collection of key-value entries to test
+     * @return this CheckerBiConsumer instance
+     */
+    public CheckerBiConsumer&lt;T, U&gt; doesNothing(Collection&lt;? extends Entry&lt;T,U&gt;&gt; input) {
+<span class="fc" id="L287">        return is(c -&gt; input.stream().allMatch(e -&gt; {</span>
+                    try {
+<span class="fc" id="L289">                        T before1 = Cloner.deepClone(e.getKey());</span>
+<span class="fc" id="L290">                        T after1 = getInput1(e.getKey());</span>
+<span class="fc" id="L291">                        U before2 = Cloner.deepClone(e.getValue());</span>
+<span class="fc" id="L292">                        U after2 = getInput2(e.getValue());</span>
+<span class="fc" id="L293">                        c.accept(after1, after2);</span>
+<span class="pc bpc" id="L294" title="2 of 4 branches missed.">                        return Utils.equalsContent(after1, before1) &amp;&amp; Utils.equalsContent(after2, before2);</span>
+<span class="nc" id="L295">                    } catch (Exception exc) {</span>
+<span class="nc" id="L296">                        return false;</span>
+                    }
+                }
+            )
+<span class="fc" id="L300">        , sendMessage(INIT_BI_CONSUMER, &quot;does_nothing.collection&quot;));</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
