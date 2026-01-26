@@ -2,6 +2,8 @@ package com.luchersol.core.specialized_checkers;
 
 import static com.luchersol.core.util.Message.*;
 
+import java.util.function.Predicate;
+
 import com.luchersol.core.util.AbstractChecker;
 
 /**
@@ -185,7 +187,23 @@ public class CheckerString extends AbstractChecker<String, CheckerString> {
      * @return this CheckerString instance for chaining
      */
     public CheckerString isDNI(){
-        return is(string -> string.matches("^\\d{8}[A-Z]$"), sendMessage(INIT_STRING, "is_dni"));
+        Predicate<String> predicate = dni -> {
+            if (dni == null) return false;
+            dni = dni.trim().toUpperCase();
+
+            if (!dni.matches("\\d{8}[A-Z]")) return false;
+
+            String numberStr = dni.substring(0, 8);
+            char letter = dni.charAt(8);
+
+            int num = Integer.parseInt(numberStr);
+
+            String letters = "TRWAGMYFPDXBNJZSQVHLCKE";
+            char correctLetter = letters.charAt(num % 23);
+
+            return letter == correctLetter;
+        };
+        return is(predicate, sendMessage(INIT_STRING, "is_dni"));
     }
 
     /**

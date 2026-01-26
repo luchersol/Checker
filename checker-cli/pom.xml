@@ -8,29 +8,64 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-  <artifactId>checker-cli</artifactId>
-  <packaging>jar</packaging>
+    <artifactId>checker-cli</artifactId>
+    <packaging>jar</packaging>
 
-  <dependencies>
-        <!-- Proyecto principal -->
-        <dependency>
-            <groupId>com.luchersol</groupId>
-            <artifactId>checker-core</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+    <dependencies>
+            <!-- Proyecto principal -->
+            <dependency>
+                <groupId>com.luchersol</groupId>
+                <artifactId>checker-core</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
 
-        <!-- Generación de código -->
-        <dependency>
-            <groupId>com.squareup</groupId>
-            <artifactId>javapoet</artifactId>
-            <version>1.13.0</version>
-        </dependency>
+            <!-- Generación de código -->
+            <dependency>
+                <groupId>com.squareup</groupId>
+                <artifactId>javapoet</artifactId>
+                <version>1.13.0</version>
+            </dependency>
 
-        <!-- Generación de comandos -->
-        <dependency>
-            <groupId>info.picocli</groupId>
-            <artifactId>picocli</artifactId>
-            <version>4.7.4</version>
-        </dependency>
-  </dependencies>
+            <!-- Generación de comandos -->
+            <dependency>
+                <groupId>info.picocli</groupId>
+                <artifactId>picocli</artifactId>
+                <version>4.7.4</version>
+            </dependency>
+
+            <!-- Reflexión para adición automática de comandos  -->
+            <dependency>
+                <groupId>org.reflections</groupId>
+                <artifactId>reflections</artifactId>
+                <version>0.10.2</version>
+            </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-shade-plugin</artifactId>
+            <version>3.5.0</version>
+            <executions>
+                <execution>
+                <phase>package</phase>
+                <goals>
+                    <goal>shade</goal>
+                </goals>
+                <configuration>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                    <transformers>
+                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                        <mainClass>com.luchersol.cli.CheckerCLI</mainClass>
+                    </transformer>
+                    </transformers>
+                </configuration>
+                </execution>
+            </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

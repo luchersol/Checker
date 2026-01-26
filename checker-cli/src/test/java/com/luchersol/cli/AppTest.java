@@ -1,4 +1,4 @@
-package com.tuempresa;
+package com.luchersol.cli;
 
 /**
  * Unit test for simple App.

@@ -1,8 +1,11 @@
 package com.luchersol.cli;
 
+import java.util.Set;
 import java.util.concurrent.Callable;
 
-import com.luchersol.cli.command.CreateClassCommand;
+import org.reflections.Reflections;
+
+import com.luchersol.cli.command.CreateCheckerCommand;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
@@ -17,24 +20,23 @@ import picocli.CommandLine.Command;
  *
  * <p>Supported commands:</p>
  * <ul>
- *   <li>{@link com.luchersol.cli.command.CreateClassCommand} - Subcommand to create classes.</li>
+ *   <li>{@link CreateCheckerCommand} - Subcommand to create classes.</li>
  * </ul>
  *
  *
  * <p>Example usage from the terminal:</p>
  * <pre>
- * java -jar my-application.jar create-class
+ * java -jar checker-cli.jar create-class
  * </pre>
  *
  */
 @Command(
-        name = "checklib",
+        name = "checkcli",
         mixinStandardHelpOptions = true,
         version = "1.0",
-        description = "Library for checks and class generation",
-        subcommands = { CreateClassCommand.class }
+        description = "Library for checks and class generation"
 )
-public class MainCLI implements Callable<Integer> {
+public class CheckerCLI implements Callable<Integer> {
 
     /**
      * Main method that runs the CLI application.
@@ -46,7 +48,16 @@ public class MainCLI implements Callable<Integer> {
      * @param args arguments passed from the command line
      */
     public static void main(String[] args) {
-        int exitCode = new CommandLine(new MainCLI()).execute(args);
+        CommandLine cmd = new CommandLine(new CheckerCLI());
+
+        Reflections reflections = new Reflections("com.luchersol.cli.command");
+        Set<Class<?>> classes = reflections.getTypesAnnotatedWith(Command.class);
+        for (Class<?> clazz : classes) {
+            CommandLine sub = new CommandLine(clazz);
+            cmd.addSubcommand(sub.getCommandName(), sub);
+        }
+
+        int exitCode = cmd.execute(args);
         System.exit(exitCode);
     }
 
@@ -60,7 +71,12 @@ public class MainCLI implements Callable<Integer> {
      */
     @Override
     public Integer call() {
-        System.out.println("Use a subcommand. For example: create-class");
+        System.out.println("Use a subcommand. Available subcommands:");
+        CommandLine cmd = new CommandLine(this);
+
+        cmd.getSubcommands().forEach((name, sub) -> {
+            System.out.println("  " + name + " - " + sub.getCommandSpec().usageMessage().description()[0]);
+        });
         return 0;
     }
 }
