@@ -78,7 +78,7 @@ class CheckerStringTest {
 
     @Test
     void testIsDNI() {
-        assertDoesNotThrow(() -> new CheckerString("12345678A", "test").isDNI());
+        assertDoesNotThrow(() -> new CheckerString("21900008Y", "test").isDNI());
         assertThrows(CheckerException.class, () -> new CheckerString("1234567A", "test").isDNI());
         assertThrows(CheckerException.class, () -> new CheckerString("12345678a", "test").isDNI());
     }

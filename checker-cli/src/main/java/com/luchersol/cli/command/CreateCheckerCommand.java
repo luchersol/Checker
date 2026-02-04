@@ -13,14 +13,15 @@ import java.util.stream.Collectors;
 
 import javax.lang.model.element.Modifier;
 
+import org.springframework.javapoet.ClassName;
+import org.springframework.javapoet.JavaFile;
+import org.springframework.javapoet.MethodSpec;
+import org.springframework.javapoet.ParameterSpec;
+import org.springframework.javapoet.ParameterizedTypeName;
+import org.springframework.javapoet.TypeName;
+import org.springframework.javapoet.TypeSpec;
+
 import com.luchersol.core.util.AbstractChecker;
-import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.JavaFile;
-import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.ParameterSpec;
-import com.squareup.javapoet.ParameterizedTypeName;
-import com.squareup.javapoet.TypeName;
-import com.squareup.javapoet.TypeSpec;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -70,6 +71,9 @@ public class CreateCheckerCommand implements Callable<Integer> {
     @Option(names = {"-i", "--indent"}, defaultValue = "4", description = "Indent size for generated java file")
     private int indent;
 
+    @Option(names = "--no-javadoc", description = "Disable Javadoc generation in the generated classes")
+    private boolean noJavadoc;
+
     /**
      * Executes the command to create a Java class.
      * <p>
@@ -110,6 +114,7 @@ public class CreateCheckerCommand implements Callable<Integer> {
                 .indent(" ".repeat(indent))
                 .build();
 
+
         Path targetPath = Path.of(outputDir);
         javaFile.writeTo(targetPath);
         System.out.println("Generated sources written to: " + targetPath.toAbsolutePath());
@@ -117,31 +122,71 @@ public class CreateCheckerCommand implements Callable<Integer> {
     }
 
     public MethodSpec getConstructor(ClassName sourceClassName) {
-        return MethodSpec.constructorBuilder()
+        MethodSpec.Builder constructor = MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PROTECTED)
                 .addParameter(sourceClassName, "obj")
                 .addParameter(String.class, "name")
-                .addStatement("super(obj, name)")
-                .build();
+                .addStatement("super(obj, name)");
+
+        if(noJavadoc) return constructor.build();
+
+        constructor.addJavadoc("""
+                Constructs a new {@code $L} with the specified string and name.
+
+                @param obj the {@link $T} to bee associated with this checker
+                @param name the name of the checker
+                """, targetClass, sourceClassName
+            );
+    /**
+     * Constructs a new {@code CheckerString} with the specified string and name.
+     *
+     * @param string the {@link String} to be associated with this checker
+     * @param name the name of the checker
+     */
+
+        return constructor.build();
     }
 
     public MethodSpec getSelfMethod(ClassName targetClassName) {
-        return MethodSpec.methodBuilder("self")
+        MethodSpec.Builder spec = MethodSpec.methodBuilder("self")
             .addAnnotation(Override.class)
             .addModifiers(Modifier.PROTECTED)
             .returns(targetClassName)
-            .addStatement("return this")
-            .build();
+            .addStatement("return this");
+
+        if(noJavadoc) return spec.build();
+
+        spec.addJavadoc("""
+            Returns this instance (for fluent API usage).
+
+            @return this $T instance
+            """, targetClassName
+        );
+
+        return spec.build();
     }
 
     public MethodSpec getCheckMethod(ClassName sourceClassName, ClassName targetClassName) {
-        return MethodSpec.methodBuilder("check")
+        MethodSpec.Builder checkMethod = MethodSpec.methodBuilder("check")
             .addModifiers(Modifier.PUBLIC)
             .addParameter(sourceClassName, "obj")
             .addParameter(String.class, "name")
             .returns(targetClassName)
-            .addStatement("return new $T($L, $L)", targetClassName, "obj", "name")
-            .build();
+            .addStatement("return new $T($L, $L)", targetClassName, "obj", "name");
+
+
+        if(noJavadoc) return checkMethod.build();
+
+        checkMethod.addJavadoc("""
+            Creates a new $T instance for the given $T with a default name.
+
+            @param $T the $T value to be checked
+            @return a $T instance for further validations
+            """, targetClassName, sourceClassName, sourceClassName, sourceClassName, targetClassName
+        );
+
+
+        return checkMethod.build();
     }
 
     public void addMethods(TypeSpec.Builder builder, ClassName sourceClassName, ClassName targetClassName) throws ClassNotFoundException {
@@ -197,6 +242,22 @@ public class CreateCheckerCommand implements Callable<Integer> {
         spec.addStatement(
             "return is(obj -> obj.$L($L), $S)",
             method.getName(), paramNames, errorMessage
+        );
+
+
+        if(noJavadoc) return spec.build();
+
+        spec.addJavadoc("""
+                Checks if $L.
+
+                $L
+                @return this $T instance for chaining
+                """,
+                method.getName().replaceAll("([A-Z])", " $1").toLowerCase().trim(),
+                Arrays.stream(params)
+                        .map(p -> "@param " + p.name + " the " + p.type + " parameter")
+                        .collect(Collectors.joining("\n")),
+                targetClassName
         );
 
         return spec.build();
