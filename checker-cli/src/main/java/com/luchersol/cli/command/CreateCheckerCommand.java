@@ -108,6 +108,22 @@ public class CreateCheckerCommand implements Callable<Integer> {
 
         addMethods(checkerClassBuilder, sourceClassName, targetClassName);
 
+        if(!noJavadoc) {
+            checkerClassBuilder.addJavadoc("""
+
+                A specialized checker for {@link $L} instances, providing a fluent API
+                to assert various $T properties.
+
+                <p>This class supports chaining multiple assertions in a fluent style and integrates
+                with {@link com.luchersol.core.util.AbstractChecker} for generalized validation handling.</p>
+
+                @see $L
+                @see com.luchersol.core.util.AbstractChecker
+
+                """, sourceClassName.canonicalName(), sourceClassName, sourceClassName.canonicalName()
+            );
+        }
+
         TypeSpec checkerClass = checkerClassBuilder.build();
 
         JavaFile javaFile = JavaFile.builder(targetPackage, checkerClass)

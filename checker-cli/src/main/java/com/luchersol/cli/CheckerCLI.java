@@ -9,6 +9,8 @@ import com.luchersol.cli.command.CreateCheckerCommand;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.Model.CommandSpec;
+import picocli.CommandLine.Spec;
 
 /**
  * Main class for the command-line interface (CLI) of the library for
@@ -37,6 +39,14 @@ import picocli.CommandLine.Command;
         description = "Library for checks and class generation"
 )
 public class CheckerCLI implements Callable<Integer> {
+
+    /**
+     * Picocli injects the runtime command specification here.
+     * This gives access to subcommands, options, and metadata
+     * of the actual executing command instance.
+     */
+    @Spec
+    CommandSpec spec;
 
     /**
      * Main method that runs the CLI application.
@@ -72,11 +82,13 @@ public class CheckerCLI implements Callable<Integer> {
     @Override
     public Integer call() {
         System.out.println("Use a subcommand. Available subcommands:");
-        CommandLine cmd = new CommandLine(this);
 
-        cmd.getSubcommands().forEach((name, sub) -> {
-            System.out.println("  " + name + " - " + sub.getCommandSpec().usageMessage().description()[0]);
+        spec.subcommands().forEach((name, sub) -> {
+            String[] desc = sub.getCommandSpec().usageMessage().description();
+            String description = desc.length > 0 ? desc[0] : "";
+            System.out.println("  " + name + " - " + description);
         });
+
         return 0;
     }
 }
