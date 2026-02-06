@@ -5,6 +5,10 @@ import java.util.Map;
 public class Persona {
 InnerPerson innerPerson;
 
+    public InnerPerson getInnerPerson() {
+        return this.innerPerson;
+    }
+
         public Persona(InnerPerson innerPerson) {
             this.innerPerson = innerPerson;
         }
@@ -21,12 +25,6 @@ InnerPerson innerPerson;
             return map;
         }
 
-
-
-        public InnerPerson getInnerPerson(Object i){
-            return this.innerPerson;
-        }
-
         public static class InnerPerson
         {
             String name;
@@ -35,6 +33,10 @@ InnerPerson innerPerson;
             public InnerPerson(String name, int year){
                 this.name = name;
                 this.year = year;
+            }
+
+            public String getName() {
+                return this.name;
             }
 
             public String hola(String str){

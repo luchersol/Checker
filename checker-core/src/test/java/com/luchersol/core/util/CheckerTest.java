@@ -1,16 +1,16 @@
 package com.luchersol.core.util;
 
+import com.luchersol.core.util.Persona.InnerPerson;
+
 public class CheckerTest {
 
+
     public static void main(String[] args) throws CheckerException {
-        Integer num = 1;
-        Checker.check(num, "num")
-            .saveErrors()
-            .isInteger()
-            .isGreaterOrEqualTo(0)
-            .end()
-            .checkProperty("intValue()")
-            .isEqual(num)
-            .show();
+        Persona persona = new Persona(
+            new InnerPerson("Lucas", 23)
+        );
+        CheckerObject.check(persona.getInnerPerson(), "persona")
+            .checkProperty(InnerPerson::getName, "name");
+
     }
 }

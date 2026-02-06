@@ -136,9 +136,8 @@ public class Checker extends AbstractChecker<Object, Checker> {
      * @param <T>   the type of the class
      * @return the casted object or null
      */
-    @SuppressWarnings("unchecked")
     private static <T> T transformOfNull(Object obj, Class<T> clazz) {
-        return clazz.isInstance(obj) ? (T) obj : null;
+        return clazz.isInstance(obj) ? clazz.cast(obj) : null;
     }
 
 

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Queue;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -323,6 +324,37 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
      */
     public void show() {
         this.exceptionTracker.show();
+    }
+
+    /**
+     * Evaluates a property of the current object using the provided extractor function
+     * and returns a {@link Checker} for further validation.
+     *
+     * <p>The extractor is typically a method reference or lambda expression
+     * (e.g. {@code Person::getId}) that is applied to the wrapped object.
+     * Any exception thrown during extraction is caught and results in {@code null}.
+     *
+     * <p><strong>Caution:</strong> the extractor is executed eagerly and must be
+     * compatible with the runtime type of the wrapped object. Type mismatches or
+     * invalid method calls may cause runtime exceptions.
+     *
+     * @param extractor function used to extract the property value from the object
+     * @param propertyName logical name of the property, used for error reporting
+     * @param <R> type of the extracted property
+     * @return a {@link Checker} for the extracted property, or {@code null}
+     *         if extraction fails
+     */
+    public <R> Checker checkProperty(Function<? super T, ? extends R> extractor, String propertyName) {
+        try {
+            Object obj = extractor.apply(object);
+            Checker checker = new Checker(obj, name + "." + propertyName);
+            checker.saveErrors = this.saveErrors;
+            checker.stop = this.stop;
+            checker.backObject = (Checker) self();
+            return checker;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     /**
