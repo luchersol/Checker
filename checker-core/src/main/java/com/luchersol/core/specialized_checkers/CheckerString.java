@@ -5,6 +5,7 @@ import static com.luchersol.core.util.MessageService.*;
 import java.util.function.Predicate;
 
 import com.luchersol.core.util.AbstractChecker;
+import com.luchersol.core.util.Regex;
 
 /**
  * A specialized checker for {@link String} instances, providing a fluent API
@@ -178,7 +179,16 @@ public class CheckerString extends AbstractChecker<String, CheckerString> {
      * @return this CheckerString instance for chaining
      */
     public CheckerString isDigit() {
-        return is(string -> string.matches("\\d+"), sendMessage(INIT_STRING, "is_digit"));
+        return is(string -> string.matches(Regex.DIGIT), sendMessage(INIT_STRING, "is_digit"));
+    }
+
+    /**
+     * Checks if the string consists of a hexadecimal sequence.
+     *
+     * @return this CheckerString instance for chaining
+     */
+    public CheckerString isHexadecimal() {
+        return is(string -> string.matches(Regex.HEXADECIMAL), sendMessage(INIT_STRING, "is_hexadecimal"));
     }
 
     /**
@@ -191,7 +201,7 @@ public class CheckerString extends AbstractChecker<String, CheckerString> {
             if (dni == null) return false;
             dni = dni.trim().toUpperCase();
 
-            if (!dni.matches("\\d{8}[A-Z]")) return false;
+            if (!dni.matches(Regex.DNI)) return false;
 
             String numberStr = dni.substring(0, 8);
             char letter = dni.charAt(8);
@@ -212,8 +222,7 @@ public class CheckerString extends AbstractChecker<String, CheckerString> {
      * @return this CheckerString instance for chaining
      */
     public CheckerString isIPv4(){
-        return is(string -> string.matches("^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\\.(25[0-5]|2[0-4][0-9]|"+
-        "1[0-9]{2}|[1-9]?[0-9])){3}$"),
+        return is(string -> string.matches(Regex.IPV4),
         sendMessage(INIT_STRING, "is_ipv4"));
     }
 
@@ -223,8 +232,7 @@ public class CheckerString extends AbstractChecker<String, CheckerString> {
      * @return this CheckerString instance for chaining
      */
     public CheckerString isIPv6(){
-        return is(string -> string.equals("^(([0-9a-fA-F]{1,4}:){7}([0-9a-fA-F]{1,4})|"+
-        "(([0-9a-fA-F]{1,4}:){1,7}|:):(([0-9a-fA-F]{1,4}:){1,6}[0-9a-fA-F]{1,4})?)$"),
+        return is(string -> string.equals(Regex.IPV6),
         sendMessage(INIT_STRING, "is_ipv6"));
     }
 
@@ -234,7 +242,7 @@ public class CheckerString extends AbstractChecker<String, CheckerString> {
      * @return this CheckerString instance for chaining
      */
     public CheckerString hasSpecialCharacters(){
-        return is(string -> string.matches(".*[!@#$%^&*(),.?\":{}|<>].*"), "has_special_characters");
+        return is(string -> string.matches(Regex.SPECIAL_CHARACTERS), "has_special_characters");
     }
 
     /**

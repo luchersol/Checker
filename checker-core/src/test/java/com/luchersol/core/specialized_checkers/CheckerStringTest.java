@@ -76,6 +76,13 @@ class CheckerStringTest {
         assertThrows(CheckerException.class, () -> new CheckerString("12a45", "test").isDigit());
     }
 
+
+    @Test
+    void testIsHexadecimal() {
+        assertDoesNotThrow(() -> new CheckerString("1234567890abcdef", "test").isHexadecimal());
+        assertThrows(CheckerException.class, () -> new CheckerString("123xyz", "test").isHexadecimal());
+    }
+
     @Test
     void testIsDNI() {
         assertDoesNotThrow(() -> new CheckerString("21900008Y", "test").isDNI());
@@ -107,4 +114,5 @@ class CheckerStringTest {
         assertDoesNotThrow(() -> new CheckerString("madam", "test").isPalindrome());
         assertThrows(CheckerException.class, () -> new CheckerString("hello", "test").isPalindrome());
     }
+
 }
