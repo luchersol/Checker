@@ -1,9 +1,8 @@
 package com.luchersol.core.util;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.Locale;
 import java.util.MissingFormatArgumentException;
-import java.util.Properties;
+import java.util.ResourceBundle;
 
 import org.fusesource.jansi.Ansi;
 
@@ -13,18 +12,7 @@ import org.fusesource.jansi.Ansi;
  */
 public class MessageService {
 
-    /**
-     * The properties object holding all loaded messages from the properties file.
-     */
-    private static final Properties MSG_PROPERTIES = new Properties();
-
-    static {
-        try (InputStream input = MessageService.class.getClassLoader().getResourceAsStream("messages.properties")) {
-            MSG_PROPERTIES.load(input);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    private static final String BASENAME = "messages";
 
     /**
      * Private constructor to prevent instantiation of this utility class.
@@ -32,20 +20,23 @@ public class MessageService {
     private MessageService(){
     }
 
-
-    /**
-     * Retrieves the message for the given key from the properties file, or a default colored message if not found.
-     *
-     * @param key the message key
-     * @return the message string, or a default message if the key is not found
-     */
-    protected static String getProperty(String key){
-        String defaultMessage = Ansi.ansi()
-                                    .fgBrightYellow().bold()
-                                    .a(MSG_PROPERTIES.getProperty("default_message").formatted(key))
-                                    .reset().toString();
-        return MSG_PROPERTIES.getProperty(key, defaultMessage);
+    public static String getProperty(String key) {
+        return getProperty(key, Locale.getDefault());
     }
+
+    public static String getProperty(String key, Locale locale) {
+        ResourceBundle bundle = ResourceBundle.getBundle(BASENAME, locale);
+        try {
+            return bundle.getString(key);
+        } catch (Exception e) {
+            return Ansi.ansi()
+                    .fgBrightYellow().bold()
+                    .a(getProperty("default_message").formatted(key))
+                    .reset().toString();
+        }
+
+    }
+
 
     /**
      * Sends a formatted message for the given initial key and function, with no arguments.
