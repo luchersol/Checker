@@ -1,6 +1,6 @@
 package com.luchersol.core.util;
 
-import static com.luchersol.core.util.Message.*;
+import static com.luchersol.core.util.MessageService.*;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -165,6 +165,13 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
         return self();
     }
 
+    public C updateChecker(AbstractChecker<?,?> checker) {
+        this.stop = checker.stop;
+        this.exceptionTracker = checker.exceptionTracker;
+        this.saveErrors = checker.saveErrors;
+        return self();
+    }
+
     /**
      * Sets the parent checker.
      *
@@ -196,7 +203,7 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
      * @param message Message to use if the check fails
      * @return The current checker instance
      */
-    public C is(Predicate<T> condition, String message) {
+    public C is(Predicate<T> condition, Message message) {
         CheckerException exception = new CheckerException(message);
         if (stop) {
             this.exceptionTracker.addNotCheckedException(exception);
@@ -211,11 +218,21 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
             }
         } else {
             if (saveErrors) {
-                this.exceptionTracker.addNotThrownException(exception);
+                this.exceptionTracker.addPassedChecks(exception.negate());
             }
         }
 
         return self();
+    }
+
+    /**
+     * Validates the object with a custom condition and message.
+     * @param condition Condition to validate
+     * @param message Message to use if the check fails
+     * @return The current checker instance
+     */
+    public C is(Predicate<T> condition, String message) {
+        return is(condition, Message.ofMessage(message));
     }
 
     /**
@@ -315,8 +332,8 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
     /**
      * Displays exceptions that were not thrown.
      */
-    public void showNotThrownException() {
-        this.exceptionTracker.showNotThrownException();
+    public void showPassedChecks() {
+        this.exceptionTracker.showPassedChecks();
     }
 
     /**
@@ -344,13 +361,14 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
      * @return a {@link Checker} for the extracted property, or {@code null}
      *         if extraction fails
      */
-    public <R> Checker checkProperty(Function<? super T, ? extends R> extractor, String propertyName) {
+    @SuppressWarnings("unchecked")
+    public <R> Checker<R> checkProperty(Function<? super T, ? extends R> extractor, String propertyName) {
         try {
-            Object obj = extractor.apply(object);
-            Checker checker = new Checker(obj, name + "." + propertyName);
+            R obj = extractor.apply(object);
+            Checker<R> checker = new Checker<R>(obj, name + "." + propertyName);
             checker.saveErrors = this.saveErrors;
             checker.stop = this.stop;
-            checker.backObject = (Checker) self();
+            checker.backObject = (Checker<R>) self();
             return checker;
         } catch (Exception e) {
             return null;
@@ -366,7 +384,8 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
      * @param args Arguments to pass to the method
      * @return Checker for the property or method, or null if the property/method is not found
      */
-    public Checker checkProperty(String propertyPath, Object... args) {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public Checker<?> checkProperty(String propertyPath, Object... args) {
         int numArgs = 0;
         Pattern pattern = Pattern.compile(REGEX_PARENTHESIS);
         Matcher matcher = pattern.matcher(propertyPath);
@@ -386,7 +405,7 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
             Queue<String> properties = new LinkedList<>(Arrays.asList(split));
             Queue<Object> argsQueue = new LinkedList<>(Arrays.asList(args));
             Object obj = getProperty(this.object, properties, argsQueue);
-            Checker checker = new Checker(obj, name + "." + propertyPath);
+            Checker<?> checker = new Checker<>(obj, name + "." + propertyPath);
             checker.saveErrors = this.saveErrors;
             checker.stop = this.stop;
             checker.backObject = (Checker) self();
@@ -407,7 +426,8 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
      * @return Checker for the property or method, or null if not found
      * @throws Exception If a reflection-related error occurs
      */
-    public Checker checkProperty(String propertyPath, List<Entry<Object, Class<?>>> args) throws Exception {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public Checker<?> checkProperty(String propertyPath, List<Entry<Object, Class<?>>> args) throws Exception {
         int numArgs = 0;
         Pattern pattern = Pattern.compile(REGEX_PARENTHESIS);
         Matcher matcher = pattern.matcher(propertyPath);
@@ -425,7 +445,7 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
             String[] split = propertyPath.split(REGEX_POINT_PROPERTIES);
             Queue<String> properties = new LinkedList<>(Arrays.asList(split));
             Object obj = getProperty(this.object, properties, args);
-            Checker checker = new Checker(obj, name + "." + propertyPath);
+            Checker<?> checker = new Checker<>(obj, name + "." + propertyPath);
             checker.backObject = (Checker) self();
             return checker;
         } catch (Exception e) {
@@ -440,7 +460,8 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
      * @return Checker for the property, or null if not found
      * @throws Exception On reflection failure
      */
-    public Checker checkProperty(String propertyPath, Map<String, Object> args) throws Exception {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public Checker<?> checkProperty(String propertyPath, Map<String, Object> args) throws Exception {
         int numArgs = 0;
         Pattern pattern = Pattern.compile(REGEX_PARENTHESIS);
         Matcher matcher = pattern.matcher(propertyPath);
@@ -458,7 +479,7 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
             String[] split = propertyPath.split(REGEX_POINT_PROPERTIES);
             Queue<String> properties = new LinkedList<>(Arrays.asList(split));
             Object obj = getProperty(this.object, properties, args);
-            Checker checker = new Checker(obj, name + "." + propertyPath);
+            Checker<?> checker = new Checker<>(obj, name + "." + propertyPath);
             checker.backObject = (Checker) self();
             return checker;
         } catch (Exception e) {
@@ -656,7 +677,7 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
      *
      * @return The previous checker in the chain
      */
-    public Checker end(){
+    public Checker<?> end(){
         ExceptionTracker exceptionTracker = this.exceptionTracker;
         this.backObject.exceptionTracker.merge(exceptionTracker);
         return this.backObject.toChecker();
@@ -667,9 +688,9 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
      * @return This instance transform to Checker
      */
     @SuppressWarnings("unchecked")
-    public Checker toChecker() {
-        Checker checker = new Checker(this.object, this.name);
-        checker.backObject = (AbstractChecker<Object, Checker>) this.backObject;
+    public Checker<T> toChecker() {
+        Checker<T> checker = new Checker<T>(this.object, this.name);
+        checker.backObject = (AbstractChecker<T, Checker<T>>) this.backObject;
         checker.exceptionTracker = this.exceptionTracker;
         checker.saveErrors = this.saveErrors;
         checker.stop = this.stop;

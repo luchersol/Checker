@@ -1,6 +1,6 @@
 package com.luchersol.core.specialized_checkers;
 
-import static com.luchersol.core.util.Message.*;
+import static com.luchersol.core.util.MessageService.*;
 
 import java.awt.Color;
 import java.util.function.Predicate;

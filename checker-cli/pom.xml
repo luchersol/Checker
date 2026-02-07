@@ -21,12 +21,6 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
-        <!-- Spring Boot Configuration Processor -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>

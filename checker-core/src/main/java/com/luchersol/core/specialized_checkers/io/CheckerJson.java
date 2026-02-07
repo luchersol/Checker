@@ -1,6 +1,6 @@
 package com.luchersol.core.specialized_checkers.io;
 
-import static com.luchersol.core.util.Message.*;
+import static com.luchersol.core.util.MessageService.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +10,7 @@ import java.util.function.Predicate;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.luchersol.core.util.AbstractChecker;
+import com.luchersol.core.util.Message;
 
 /**
  * CheckerJson is a specialized checker for validating properties and structure of JSON data
@@ -404,11 +405,11 @@ public class CheckerJson extends AbstractChecker<JsonNode, CheckerJson> {
      * @param messageKey the message key for reporting
      * @return this CheckerJson instance
      */
-    private CheckerJson checkNodeType(String path, Predicate<JsonNode> condition, String messageKey) {
+    private CheckerJson checkNodeType(String path, Predicate<JsonNode> condition, Message messageKey) {
         return is(json -> {
             JsonNode node = getProperty(path);
             return node != null && condition.test(node);
-        }, sendMessage(INIT_JSON, messageKey, path));
+        }, sendMessage(INIT_JSON, messageKey.getCode(), path));
     }
 
     /**

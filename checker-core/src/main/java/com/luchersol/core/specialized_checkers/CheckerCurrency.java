@@ -1,6 +1,6 @@
 package com.luchersol.core.specialized_checkers;
 
-import static com.luchersol.core.util.Message.*;
+import static com.luchersol.core.util.MessageService.*;
 
 import java.util.Currency;
 import java.util.Locale;

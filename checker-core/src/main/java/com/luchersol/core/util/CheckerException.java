@@ -8,14 +8,16 @@ import java.util.Optional;
  */
 public class CheckerException extends RuntimeException {
 
+    private Message message_;
 
     /**
      * Constructs a CheckerException with the specified message.
      *
      * @param message the detail message
      */
-    protected CheckerException(String message) {
-        super(message);
+    protected CheckerException(Message message_) {
+        super(message_.getMessage());
+        this.message_ = message_;
     }
 
 
@@ -26,9 +28,12 @@ public class CheckerException extends RuntimeException {
      * @param exception the exception to wrap
      */
     protected CheckerException(Exception exception) {
-        super(Optional.ofNullable(exception.getCause())
-                    .map(e -> e.getMessage())
-                    .orElse(exception.getMessage()));
+        this(Message.ofMessage(
+                Optional.ofNullable(exception.getCause())
+                        .map(e -> e.getMessage())
+                        .orElse(exception.getMessage())
+                )
+            );
     }
 
 
@@ -39,9 +44,15 @@ public class CheckerException extends RuntimeException {
      * @return a new CheckerException instance
      */
     public static CheckerException of(Exception exception){
-        return new CheckerException(exception);
+        return exception instanceof CheckerException ?
+                (CheckerException) exception :
+                new CheckerException(exception);
     }
 
+    public CheckerException negate() {
+        this.message_.negate();
+        return this;
+    }
 
     /**
      * Returns a string representation of the exception, prefixed with " - ".
@@ -51,7 +62,7 @@ public class CheckerException extends RuntimeException {
     @Override
     public String toString() {
         return new StringBuilder(" - ")
-                    .append(getMessage())
+                    .append(this.message_.getMessage())
                     .toString();
     }
 }

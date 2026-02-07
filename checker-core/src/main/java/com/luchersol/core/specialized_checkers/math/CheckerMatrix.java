@@ -1,6 +1,6 @@
 package com.luchersol.core.specialized_checkers.math;
 
-import static com.luchersol.core.util.Message.*;
+import static com.luchersol.core.util.MessageService.*;
 
 import java.util.Arrays;
 import java.util.function.Predicate;

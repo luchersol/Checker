@@ -1,9 +1,9 @@
 package com.luchersol.core.util;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -30,17 +30,17 @@ public class ExceptionTracker  {
     /**
      * Map of thrown exceptions categorized by name.
      */
-    private Map<String, List<CheckerException>> thrownExceptions;
+    private Map<String, Set<CheckerException>> thrownExceptions;
 
     /**
      * Map of not thrown exceptions categorized by name.
      */
-    private Map<String, List<CheckerException>> notThrownExceptions;
+    private Map<String, Set<CheckerException>> passedChecks;
 
     /**
      * Map of not checked exceptions categorized by name.
      */
-    private Map<String, List<CheckerException>> notCheckedExceptions;
+    private Map<String, Set<CheckerException>> notCheckedExceptions;
 
     /**
      * Constructs an ExceptionTracker for the given name.
@@ -50,11 +50,11 @@ public class ExceptionTracker  {
     public ExceptionTracker(String name) {
         this.name = name;
         this.thrownExceptions = new HashMap<>();
-        this.thrownExceptions.put(name, new ArrayList<>());
-        this.notThrownExceptions = new HashMap<>();
-        this.notThrownExceptions.put(name, new ArrayList<>());
+        this.thrownExceptions.put(name, new LinkedHashSet<>());
+        this.passedChecks = new HashMap<>();
+        this.passedChecks.put(name, new LinkedHashSet<>());
         this.notCheckedExceptions = new HashMap<>();
-        this.notCheckedExceptions.put(name, new ArrayList<>());
+        this.notCheckedExceptions.put(name, new LinkedHashSet<>());
     }
 
 
@@ -84,8 +84,8 @@ public class ExceptionTracker  {
      *
      * @param e the exception that was expected but not thrown
      */
-    public void addNotThrownException(Exception e) {
-        this.notThrownExceptions.get(name).add(CheckerException.of(e));
+    public void addPassedChecks(Exception e) {
+        this.passedChecks.get(name).add(CheckerException.of(e));
     }
 
 
@@ -104,7 +104,7 @@ public class ExceptionTracker  {
      *
      * @return the map of thrown exceptions
      */
-    public Map<String, List<CheckerException>> getThrownExceptions() {
+    public Map<String, Set<CheckerException>> getThrownExceptions() {
         return thrownExceptions;
     }
 
@@ -114,8 +114,8 @@ public class ExceptionTracker  {
      *
      * @return the map of not thrown exceptions
      */
-    public Map<String, List<CheckerException>> getNotThrownExceptions() {
-        return notThrownExceptions;
+    public Map<String, Set<CheckerException>> getPassedChecks() {
+        return passedChecks;
     }
 
     /**
@@ -124,16 +124,16 @@ public class ExceptionTracker  {
      * @param exceptionTracker the ExceptionTracker to merge from
      */
     public void merge(ExceptionTracker exceptionTracker) {
-        Function<Map<String, List<CheckerException>>, List<CheckerException>> f = map -> map.values().stream()
-                .flatMap(List::stream).collect(Collectors.toList());
+        Function<Map<String, Set<CheckerException>>, Set<CheckerException>> f = map -> map.values().stream()
+                .flatMap(Set::stream).collect(Collectors.toSet());
         String propertyName = exceptionTracker.name;
 
-        this.thrownExceptions.putIfAbsent(propertyName, new ArrayList<>());
-        this.notThrownExceptions.putIfAbsent(propertyName, new ArrayList<>());
-        this.notCheckedExceptions.putIfAbsent(propertyName, new ArrayList<>());
+        this.thrownExceptions.putIfAbsent(propertyName, new LinkedHashSet<>());
+        this.passedChecks.putIfAbsent(propertyName, new LinkedHashSet<>());
+        this.notCheckedExceptions.putIfAbsent(propertyName, new LinkedHashSet<>());
 
         this.thrownExceptions.get(propertyName).addAll(f.apply(exceptionTracker.thrownExceptions));
-        this.notThrownExceptions.get(propertyName).addAll(f.apply(exceptionTracker.notThrownExceptions));
+        this.passedChecks.get(propertyName).addAll(f.apply(exceptionTracker.passedChecks));
         this.notCheckedExceptions.get(propertyName).addAll(f.apply(exceptionTracker.notCheckedExceptions));
 
 
@@ -164,15 +164,15 @@ public class ExceptionTracker  {
      * Displays all thrown exceptions in red color.
      */
     public void showThrownException(){
-        showException("Thrown Exceptions: ", this.thrownExceptions, Color.RED);
+        showException("Thrown Exceptions:", this.thrownExceptions, Color.RED);
     }
 
 
     /**
      * Displays all not thrown exceptions in green color.
      */
-    public void showNotThrownException(){
-        showException("Not Thrown Exceptions: ", this.notThrownExceptions, Color.GREEN);
+    public void showPassedChecks(){
+        showException("Passed Checks:", this.passedChecks, Color.GREEN);
     }
 
 
@@ -180,7 +180,7 @@ public class ExceptionTracker  {
      * Displays all not checked exceptions in yellow color.
      */
     public void showNotCheckedThrownException(){
-        showException("Not Checked Exceptions: ", this.notCheckedExceptions, Color.YELLOW);
+        showException("Not Checked Exceptions:", this.notCheckedExceptions, Color.YELLOW);
     }
 
 
@@ -191,13 +191,13 @@ public class ExceptionTracker  {
      * @param excepctionMap       the map of exceptions to display
      * @param colorTextException  the color to use for exception messages
      */
-    private void showException(String title, Map<String, List<CheckerException>> excepctionMap, Color colorTextException){
+    private void showException(String title, Map<String, Set<CheckerException>> excepctionMap, Color colorTextException){
         AnsiConsole.systemInstall();
         try {
             StringBuilder titleBuilder = new StringBuilder(title);
             String titleMessage = Ansi.ansi().bold().a(titleBuilder).reset().toString();
             System.out.println(titleMessage);
-            if(excepctionMap.values().stream().allMatch(List::isEmpty)) {
+            if(excepctionMap.values().stream().allMatch(Set::isEmpty)) {
                 System.out.println("\t" + CLEAN_MESSAGE);
             } else {
                 excepctionMap.entrySet().stream()
@@ -225,7 +225,7 @@ public class ExceptionTracker  {
      */
     public void show(){
         showThrownException();
-        showNotThrownException();
+        showPassedChecks();
         showNotCheckedThrownException();
     }
 

@@ -1,6 +1,6 @@
 package com.luchersol.core.specialized_checkers.math.numbers.bigTypes;
 
-import static com.luchersol.core.util.Message.*;
+import static com.luchersol.core.util.MessageService.*;
 
 import java.math.BigDecimal;
 

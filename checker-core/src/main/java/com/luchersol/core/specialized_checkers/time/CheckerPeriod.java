@@ -1,6 +1,6 @@
 package com.luchersol.core.specialized_checkers.time;
 
-import static com.luchersol.core.util.Message.*;
+import static com.luchersol.core.util.MessageService.*;
 
 import java.time.Period;
 import java.time.temporal.TemporalUnit;

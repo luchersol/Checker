@@ -1,6 +1,6 @@
 package com.luchersol.core.specialized_checkers.math.numbers.decimalTypes;
 
-import static com.luchersol.core.util.Message.*;
+import static com.luchersol.core.util.MessageService.*;
 
 import com.luchersol.core.specialized_checkers.math.numbers.InterfaceCheckerNumber;
 import com.luchersol.core.util.AbstractChecker;

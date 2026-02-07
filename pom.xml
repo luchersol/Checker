@@ -15,22 +15,11 @@
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
+
     <modules>
         <module>checker-core</module>
         <module>checker-cli</module>
     </modules>
-
-    <dependencyManagement>
-        <dependencies>
-            <!-- Gestión centralizada de Spring Boot Configuration Processor -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-configuration-processor</artifactId>
-                <version>3.2.3</version>
-                <optional>true</optional>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <dependencies>
         <!-- Dependencias comunes -->

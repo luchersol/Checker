@@ -1,6 +1,6 @@
 package com.luchersol.core.specialized_checkers.collection;
 
-import static com.luchersol.core.util.Message.*;
+import static com.luchersol.core.util.MessageService.*;
 
 import java.util.Map;
 import java.util.Map.Entry;
