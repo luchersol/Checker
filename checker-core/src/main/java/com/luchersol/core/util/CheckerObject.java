@@ -23,11 +23,6 @@ package com.luchersol.core.util;
 public class CheckerObject<T> extends AbstractChecker<T, CheckerObject<T>> {
 
     /**
-     * Message key for this checker type.
-     */
-    private static final String INIT_CHECKER = "checker";
-
-    /**
      * Default name for checked objects when none is provided.
      */
     private static final String DEFAULT_NAME = "Object";
@@ -72,19 +67,5 @@ public class CheckerObject<T> extends AbstractChecker<T, CheckerObject<T>> {
     public static Checker check(Object object) {
         return new Checker(object, DEFAULT_NAME);
     }
-
-
-    /**
-     * Casts the object to the given class if possible, or returns null if not compatible.
-     *
-     * @param obj   the object to cast
-     * @param clazz the target class
-     * @param <T>   the type of the class
-     * @return the casted object or null
-     */
-    private static <T> T transformOfNull(Object obj, Class<T> clazz) {
-        return clazz.isInstance(obj) ? clazz.cast(obj) : null;
-    }
-
 
 }

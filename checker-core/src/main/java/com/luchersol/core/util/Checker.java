@@ -81,7 +81,6 @@ public class Checker extends AbstractChecker<Object, Checker> {
         super(object, name);
     }
 
-
     /**
      * Returns this Checker instance (for fluent API).
      *
