@@ -204,21 +204,21 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
      * @return The current checker instance
      */
     public C is(Predicate<T> condition, Message message) {
-        CheckerException exception = new CheckerException(message);
+        var validationException = new CheckerException(message);
         if (stop) {
-            this.exceptionTracker.addNotCheckedException(exception);
+            this.exceptionTracker.addNotCheckedException(validationException.negate());
             return self();
         }
 
         if (!condition.test(this.object)) {
             if (saveErrors) {
-                this.exceptionTracker.addThrownException(exception);
+                this.exceptionTracker.addThrownException(validationException.negate());
             } else {
-                throw exception;
+                throw validationException.negate();
             }
         } else {
             if (saveErrors) {
-                this.exceptionTracker.addPassedChecks(exception.negate());
+                this.exceptionTracker.addPassedChecks(validationException);
             }
         }
 
@@ -287,6 +287,7 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
     public C isEqual(Object other){
         return is(object -> Utils.equalsContent(other, object), sendMessage(INIT_ABSTRACT_CHECKER, "is_equal"));
     }
+
 
     /**
      * Enables saving errors in the exception tracker instead of throwing immediately.
