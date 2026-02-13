@@ -3,7 +3,7 @@
  *
  * <p>This package provides validation implementations for lambda expressions and
  * functional programming constructs. It enables validation of functional interfaces
- * and functional behavior in Java applications.</p>
+ * and functional behavior in Java applications.
  *
  * @author LucherSol
  * @version 1.0

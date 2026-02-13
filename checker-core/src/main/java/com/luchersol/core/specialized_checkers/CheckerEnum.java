@@ -16,7 +16,7 @@ import com.luchersol.core.util.Utils;
  * to assert enum properties such as equality, name, ordinal, inclusion,
  * ordering and reflective attributes.
  *
- * <p>Typical usage:</p>
+ * <p>Typical usage:
  * <pre>{@code
  * CheckerEnum.check(status)
  *     .is(Status.ACTIVE)
@@ -26,21 +26,21 @@ import com.luchersol.core.util.Utils;
  *     .isIn(Status.ACTIVE, Status.PENDING);
  * }</pre>
  *
- * <p>Custom rule example:</p>
+ * <p>Custom rule example:
  * <pre>{@code
  * CheckerEnum.check(status)
  *     .matches(s -> s.ordinal() >= Status.ACTIVE.ordinal(),
  *              "status must be ACTIVE or higher");
  * }</pre>
  *
- * <p>Reflective property example:</p>
+ * <p>Reflective property example:
  * <pre>{@code
  * CheckerEnum.check(status)
  *     .hasProperty("enabled", true);
  * }</pre>
  *
  * <p>This class supports chaining multiple assertions in a fluent style and
- * integrates with {@link AbstractChecker} for generalized validation handling.</p>
+ * integrates with {@link AbstractChecker} for generalized validation handling.
  *
  * @param <T> Enum type being validated
  *
@@ -97,7 +97,7 @@ public class CheckerEnum<T extends Enum<T>> extends AbstractChecker<T, CheckerEn
     /**
      * Checks if the enum equals the expected value.
      *
-     * <p>Uses identity comparison (==).</p>
+     * <p>Uses identity comparison (==).
      *
      * @param expected expected enum value
      * @return this CheckerEnum instance for chaining

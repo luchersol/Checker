@@ -11,7 +11,7 @@ import com.luchersol.core.util.Regex;
  * A specialized checker for {@link String} instances, providing a fluent API
  * to assert various string properties such as emptiness, length, content, format and patterns.
  *
- * <p>Typical usage:</p>
+ * <p>Typical usage:
  * <pre>{@code
  * CheckerString.check("HelloWorld")
  *     .isBlank()
@@ -24,7 +24,7 @@ import com.luchersol.core.util.Regex;
  * }</pre>
  *
  * <p>This class supports chaining multiple assertions in a fluent style and integrates
- * with {@link com.luchersol.core.util.AbstractChecker} for generalized validation handling.</p>
+ * with {@link com.luchersol.core.util.AbstractChecker} for generalized validation handling.
  *
  * @see com.luchersol.core.util.AbstractChecker
  */

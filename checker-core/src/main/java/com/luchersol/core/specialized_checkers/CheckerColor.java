@@ -12,7 +12,7 @@ import com.luchersol.core.util.AbstractChecker;
  * to assert various color properties such as equality, brightness, transparency,
  * contrast, saturation, similarity, and hexadecimal representation.
  *
- * <p>Typical usage:</p>
+ * <p>Typical usage:
  * <pre>{@code
  * Color c1 = new Color(255, 0, 0);
  * Color c2 = new Color(128, 0, 0);
@@ -25,7 +25,7 @@ import com.luchersol.core.util.AbstractChecker;
  * }</pre>
  *
  * <p>This class supports chaining multiple assertions in a fluent style and integrates
- * with {@link com.luchersol.core.util.AbstractChecker} for generalized validation handling.</p>
+ * with {@link com.luchersol.core.util.AbstractChecker} for generalized validation handling.
  *
  * @see java.awt.Color
  * @see com.luchersol.core.util.AbstractChecker

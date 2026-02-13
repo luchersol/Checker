@@ -16,7 +16,7 @@ import com.luchersol.core.util.Utils;
  *
  * <p>
  * Example usage:
- * </p>
+ *
  * <pre>
  *     CheckerPredicate&lt;String&gt; checker = CheckerPredicate.check(String::isEmpty);
  *     checker.producesExpected("   ", false)
@@ -26,7 +26,7 @@ import com.luchersol.core.util.Utils;
  *
  * <p>
  * Deep cloning can be enabled to ensure that the input object is not mutated by the function:
- * </p>
+ *
  * <pre>
  *     checker.activateDeepClone();
  * </pre>

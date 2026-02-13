@@ -13,7 +13,7 @@ import com.luchersol.core.util.AbstractChecker;
  * to assert various properties such as emptiness, sorting order (ascending/descending),
  * element matching conditions, and percentage-based validations.
  *
- * <p>Typical usage:</p>
+ * <p>Typical usage:
  * <pre>{@code
  * String[] names = {"Alice", "Bob", "Charlie"};
  * CheckerArray<String> checker = CheckerArray.check(names)
@@ -23,7 +23,7 @@ import com.luchersol.core.util.AbstractChecker;
  * }</pre>
  *
  * <p>This class supports chaining multiple assertions in a fluent style,
- * making array validations more expressive and readable.</p>
+ * making array validations more expressive and readable.
  *
  * @param <T> the type of the array elements
  *

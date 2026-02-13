@@ -14,7 +14,7 @@ import com.luchersol.core.util.Utils;
  *
  * <p>
  * Example usage:
- * </p>
+ *
  * <pre>
  *     CheckerSupplier&lt;Integer&gt; checker = CheckerSupplier.check(() -> 5)
  *            .applyWithoutException()

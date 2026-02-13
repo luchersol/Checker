@@ -14,7 +14,7 @@ import com.luchersol.core.util.AbstractChecker;
  * <p>
  * This class extends {@link AbstractChecker} and offers a variety of checks such as emptiness,
  * subset/superset relationships, and element matching based on predicates.
- * </p>
+ *
  *
  * <pre>
  * Example usage:

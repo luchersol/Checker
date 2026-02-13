@@ -3,7 +3,7 @@
  *
  * <p>This package provides validation implementations for primitive and wrapper
  * integer types including byte, short, int, and long. Each checker offers methods
- * to validate numeric properties such as range, divisibility, and parity.</p>
+ * to validate numeric properties such as range, divisibility, and parity.
  *
  * <p>Supported integer types:
  * <ul>
@@ -12,7 +12,7 @@
  * <li>Integer - 32-bit signed integer</li>
  * <li>Long - 64-bit signed integer</li>
  * </ul>
- * </p>
+ *
  *
  * @author LucherSol
  * @version 1.0

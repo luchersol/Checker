@@ -8,6 +8,9 @@ import java.util.Optional;
  */
 public class CheckerException extends RuntimeException {
 
+    /**
+     * The message associated with this exception.
+     */
     private Message message_;
 
     /**

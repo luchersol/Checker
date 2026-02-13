@@ -20,7 +20,7 @@ import com.luchersol.core.util.AbstractChecker;
  * identity, diagonal, triangular, symmetric, orthogonal, invertibility, eigenvalue-based
  * validations, and rank conditions.
  *
- * <p>Typical usage:</p>
+ * <p>Typical usage:
  * <pre>{@code
  * Double[][] matrix = {
  *     {1.0, 0.0, 0.0},
@@ -36,7 +36,7 @@ import com.luchersol.core.util.AbstractChecker;
  *
  * <p>This class integrates with Apache Commons Math for advanced operations
  * (eigenvalues, decompositions, determinants, etc.), and supports chaining
- * multiple assertions in a fluent, expressive style.</p>
+ * multiple assertions in a fluent, expressive style.
  *
  * @param <T> the type of the elements in the matrix (must extend {@link Number})
  *

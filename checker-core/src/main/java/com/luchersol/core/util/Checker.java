@@ -45,9 +45,9 @@ import com.luchersol.core.util.collection.Graph;
  * It supports type checks, structural validations, and content assertions (e.g., collections,
  * files, URIs, numbers, matrices). When applicable, specialized checker instances are returned
  * to enable type-specific validations.
- * </p>
  *
- * <p><strong>Example usage:</strong></p>
+ *
+ * <p><strong>Example usage:</strong>
  * <pre>{@code
  * Checker<List<String>> checker = Checker.check(myList)
  *     .isList(String.class)
@@ -57,7 +57,7 @@ import com.luchersol.core.util.collection.Graph;
  * <p>
  * This class extends {@code AbstractChecker<T, Checker<T>>} and serves as the primary facade
  * for validation workflows.
- * </p>
+ *
  *
  * @param <T> the type of the object being validated
  */
@@ -98,8 +98,9 @@ public class Checker<T> extends AbstractChecker<T, Checker<T>> {
 
 
     /**
-     * Creates a {@code Checker<T>} for the given object and name.
+     * Creates a new {@link Checker} for the given object and name.
      *
+     * @param <T>   the type of the object being checked
      * @param object the object to check
      * @param name   the name or label for the object
      * @return a new {@code Checker<T>} instance
@@ -110,8 +111,9 @@ public class Checker<T> extends AbstractChecker<T, Checker<T>> {
 
 
     /**
-     * Creates a {@code Checker<T>} for the given object with a default name.
+     * Creates a new {@link Checker} for the given object and name.
      *
+     * @param <T>   the type of the object being checked
      * @param object the object to check
      * @return a new {@code Checker<T>} instance
      */

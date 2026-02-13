@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
  * This ensures the fluent API returns the correct subtype
  *
  *
- * <p>Example:</p>
+ * <p>Example:
  * <pre>{@code
  * class MyChecker extends AbstractChecker<MyType, MyChecker> {
  *     // implementation...

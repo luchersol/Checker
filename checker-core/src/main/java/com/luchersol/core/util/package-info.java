@@ -3,7 +3,7 @@
  *
  * <p>This package provides fundamental utilities and base classes that support
  * the entire validation framework, including the abstract base class for all checkers,
- * message handling, regular expression utilities, and common helper functions.</p>
+ * message handling, regular expression utilities, and common helper functions.
  *
  * <p>Key components:
  * <ul>
@@ -12,7 +12,7 @@
  * <li>{@link com.luchersol.core.util.Regex} - Regular expression pattern utilities</li>
  * <li>{@link com.luchersol.core.util.Utils} - General utility helper methods</li>
  * </ul>
- * </p>
+ *
  *
  * @author LucherSol
  * @version 1.0

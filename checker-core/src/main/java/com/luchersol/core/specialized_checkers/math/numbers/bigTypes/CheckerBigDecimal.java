@@ -12,7 +12,7 @@ import com.luchersol.core.util.AbstractChecker;
  * to assert various behaviors and properties of arbitrary-precision decimal numbers,
  * such as positivity, negativity, zero value, and comparisons against other numeric values.
  *
- * <p>Typical usage:</p>
+ * <p>Typical usage:
  * <pre>{@code
  * CheckerBigDecimal checker = CheckerBigDecimal.check(myBigDecimal)
  *     .isPositive()
@@ -21,7 +21,7 @@ import com.luchersol.core.util.AbstractChecker;
  * }</pre>
  *
  * <p>This class supports chaining multiple assertions in a fluent style and integrates
- * with {@link InterfaceCheckerNumber} for numeric-specific validations.</p>
+ * with {@link InterfaceCheckerNumber} for numeric-specific validations.
  *
  * @see java.math.BigDecimal
  * @see com.luchersol.core.specialized_checkers.math.numbers.InterfaceCheckerNumber

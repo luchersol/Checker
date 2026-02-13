@@ -14,11 +14,11 @@ import com.luchersol.core.util.collection.Graph;
  * The {@code CheckerGraph} class provides a fluent API for asserting various conditions
  * on graphs, such as connectivity, acyclicity, node and edge existence, and more.
  * It supports both directed and undirected graphs, as well as weighted edges.
- * </p>
+ *
  *
  * <p>
  * Example usage:
- * </p>
+ *
  * <pre>{@code
  * Graph<String, Integer> graph = ...;
  * CheckerGraph<String, Integer> checker = CheckerGraph.check(graph)

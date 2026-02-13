@@ -15,9 +15,9 @@ import com.luchersol.core.util.AbstractChecker;
  * <p>
  * This class extends {@link AbstractChecker} and offers methods to check for emptiness,
  * element matching, distinctness, subset/superset relationships, and percentage-based conditions.
- * </p>
  *
- * <p>Example usage:</p>
+ *
+ * <p>Example usage:
  * <pre>{@code
  * List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
  * CheckerList<String> checker = CheckerList.check(names)

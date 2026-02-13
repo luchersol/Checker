@@ -3,13 +3,13 @@
  *
  * <p>This package contains individual command implementations that handle specific
  * operations through the command-line interface. Each command encapsulates distinct
- * functionality available to CLI users.</p>
+ * functionality available to CLI users.
  *
  * <p>Supported commands:
  * <ul>
  * <li>CreateCheckerCommand - Command to create and configure checker instances</li>
  * </ul>
- * </p>
+ *
  *
  * @author LucherSol
  * @version 1.0

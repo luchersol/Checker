@@ -12,7 +12,7 @@ import com.luchersol.core.util.AbstractChecker;
  * to assert various temporal properties such as positivity, negativity, zero value,
  * and comparisons with other durations or specific temporal units.
  *
- * <p>Typical usage:</p>
+ * <p>Typical usage:
  * <pre>{@code
  * Duration d1 = Duration.ofMinutes(5);
  * Duration d2 = Duration.ofMinutes(10);
@@ -24,7 +24,7 @@ import com.luchersol.core.util.AbstractChecker;
  * }</pre>
  *
  * <p>This class supports chaining multiple assertions in a fluent style and integrates
- * with {@link com.luchersol.core.util.AbstractChecker} for generalized validation handling.</p>
+ * with {@link com.luchersol.core.util.AbstractChecker} for generalized validation handling.
  *
  * @see java.time.Duration
  * @see com.luchersol.core.util.AbstractChecker

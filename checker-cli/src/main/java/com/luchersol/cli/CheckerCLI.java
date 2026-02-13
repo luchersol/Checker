@@ -18,15 +18,15 @@ import picocli.CommandLine.Spec;
  * <p>
  * This class uses <a href="https://picocli.info/">Picocli</a> to manage
  * commands and subcommands from the command line.
- * </p>
  *
- * <p>Supported commands:</p>
+ *
+ * <p>Supported commands:
  * <ul>
  *   <li>{@link CreateCheckerCommand} - Subcommand to create classes.</li>
  * </ul>
  *
  *
- * <p>Example usage from the terminal:</p>
+ * <p>Example usage from the terminal:
  * <pre>
  * java -jar checker-cli.jar create-class
  * </pre>
@@ -41,6 +41,18 @@ import picocli.CommandLine.Spec;
 public class CheckerCLI implements Callable<Integer> {
 
     /**
+     * Constructs a new {@code CheckerCLI} instance.
+     *
+     * <p>
+     * Initializes the command-line interface for the Checker application.
+     * Currently, no specific setup is performed in the constructor.
+     *
+     */
+    public CheckerCLI() {
+
+    }
+
+    /**
      * Picocli injects the runtime command specification here.
      * This gives access to subcommands, options, and metadata
      * of the actual executing command instance.
@@ -53,7 +65,7 @@ public class CheckerCLI implements Callable<Integer> {
      * <p>
      * Creates a {@link CommandLine} instance with this class and executes
      * the command received from arguments.
-     * </p>
+     *
      *
      * @param args arguments passed from the command line
      */
@@ -75,7 +87,7 @@ public class CheckerCLI implements Callable<Integer> {
      * Method executed when no subcommand is specified.
      * <p>
      * Prints a message indicating the user should use a subcommand.
-     * </p>
+     *
      *
      * @return 0 if no error occurs
      */

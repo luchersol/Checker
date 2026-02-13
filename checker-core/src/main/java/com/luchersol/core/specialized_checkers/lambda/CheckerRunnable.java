@@ -11,7 +11,7 @@ import com.luchersol.core.util.AbstractChecker;
  *
  * <p>
  * Example usage:
- * </p>
+ *
  * <pre>
  *     CheckerRunnable checker = CheckerRunnable.check(() -> {})
  *            .runWithoutException();

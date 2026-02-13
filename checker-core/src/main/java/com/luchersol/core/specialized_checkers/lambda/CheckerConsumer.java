@@ -18,7 +18,7 @@ import com.luchersol.core.util.Utils;
  * <p>
  * Supports optional deep cloning of input objects to ensure that original inputs are not modified
  * during validation.
- * </p>
+ *
  *
  * Example usage:
  * <pre>{@code

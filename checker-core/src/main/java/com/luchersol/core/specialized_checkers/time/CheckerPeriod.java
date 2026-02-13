@@ -12,7 +12,7 @@ import com.luchersol.core.util.AbstractChecker;
  * to assert various temporal properties such as positivity, negativity, zero value,
  * and comparisons with other periods or specific temporal units.
  *
- * <p>Typical usage:</p>
+ * <p>Typical usage:
  * <pre>{@code
  * Period p1 = Period.ofMonths(6);
  * Period p2 = Period.ofYears(1);
@@ -24,7 +24,7 @@ import com.luchersol.core.util.AbstractChecker;
  * }</pre>
  *
  * <p>This class supports chaining multiple assertions in a fluent style and integrates
- * with {@link com.luchersol.core.util.AbstractChecker} for generalized validation handling.</p>
+ * with {@link com.luchersol.core.util.AbstractChecker} for generalized validation handling.
  *
  * @see java.time.Period
  * @see com.luchersol.core.util.AbstractChecker

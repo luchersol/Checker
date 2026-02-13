@@ -15,7 +15,7 @@ import com.luchersol.core.util.AbstractChecker;
  * This class extends {@code AbstractChecker} to enable chainable assertions on {@code URI} instances.
  * It supports both default and custom naming for checkers, and provides static factory methods
  * for convenient instantiation from {@code URI} or {@code String} representations.
- * </p>
+ *
  *
  * <h2>Usage Example:</h2>
  * <pre>{@code
@@ -27,7 +27,7 @@ import com.luchersol.core.util.AbstractChecker;
  *
  * <p>
  * Each validation method returns {@code this} for fluent chaining.
- * </p>
+ *
  */
 public class CheckerURI extends AbstractChecker<URI, CheckerURI> {
 

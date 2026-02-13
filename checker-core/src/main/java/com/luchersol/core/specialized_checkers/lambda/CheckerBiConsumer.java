@@ -18,7 +18,7 @@ import com.luchersol.core.util.Utils;
  * input modification, and no-op behavior. Supports optional deep cloning of inputs
  * before passing them to the BiConsumer under test.
  *
- * <p>Typical usage:</p>
+ * <p>Typical usage:
  * <pre>{@code
  * CheckerBiConsumer<MyType, OtherType> checker = CheckerBiConsumer.check(myBiConsumer)
  *     .activateDeepClone()

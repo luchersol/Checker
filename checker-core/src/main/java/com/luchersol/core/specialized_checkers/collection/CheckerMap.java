@@ -16,9 +16,9 @@ import com.luchersol.core.util.AbstractChecker;
  * This class extends {@code AbstractChecker} and allows for expressive, chainable
  * checks on {@code Map} objects, such as verifying emptiness, matching entries
  * against predicates, and more.
- * </p>
  *
- * <p>Example usage:</p>
+ *
+ * <p>Example usage:
  * <pre>{@code
  * Map<String, Integer> ages = Map.of("Alice", 19, "Bob", 40);
  * CheckerMap<String> checker = CheckerMap.check(ages)

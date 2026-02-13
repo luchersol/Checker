@@ -11,7 +11,7 @@ import com.luchersol.core.util.AbstractChecker;
  * A specialized checker for {@link java.util.Currency} instances, providing a fluent API
  * to assert various currency properties such as symbol, fraction digits, and locale association.
  *
- * <p>Typical usage:</p>
+ * <p>Typical usage:
  * <pre>{@code
  * Currency usd = Currency.getInstance("USD");
  *
@@ -22,7 +22,7 @@ import com.luchersol.core.util.AbstractChecker;
  * }</pre>
  *
  * <p>This class supports chaining multiple assertions in a fluent style and integrates
- * with {@link com.luchersol.core.util.AbstractChecker} for generalized validation handling.</p>
+ * with {@link com.luchersol.core.util.AbstractChecker} for generalized validation handling.
  *
  * @see java.util.Currency
  * @see com.luchersol.core.util.AbstractChecker

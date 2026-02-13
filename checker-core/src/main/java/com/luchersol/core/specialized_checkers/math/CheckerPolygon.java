@@ -8,7 +8,7 @@ import com.luchersol.core.util.AbstractChecker;
  * A specialized checker for {@link java.awt.Polygon} instances, providing fluent API methods
  * to assert properties of 2D polygonal shapes.
  *
- * <p>Typical usage:</p>
+ * <p>Typical usage:
  * <pre>{@code
  * int[] xpoints = {0, 50, 100};
  * int[] ypoints = {0, 100, 0};
@@ -20,7 +20,7 @@ import com.luchersol.core.util.AbstractChecker;
  *
  * <p>This class supports multiple factory methods to create a checker directly
  * from a {@code Polygon} instance or from arrays of coordinates, making it flexible
- * for geometric validations in a fluent and readable style.</p>
+ * for geometric validations in a fluent and readable style.
  *
  * @see java.awt.Polygon
  * @see com.luchersol.core.util.AbstractChecker

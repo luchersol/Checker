@@ -14,7 +14,7 @@ import com.luchersol.core.util.Utils;
  * exceptions, produces expected results, or returns non-null values for given inputs. It also supports optional
  * deep cloning of input objects to ensure immutability during checks.
  *
- * <p>Example usage:</p>
+ * <p>Example usage:
  * <pre>
  *     CheckerFunction&lt;String, Integer&gt; checker = CheckerFunction.check(String::length);
  *     checker.producesExpected("abc", 3)
@@ -24,7 +24,7 @@ import com.luchersol.core.util.Utils;
  *
  * <p>
  * Deep cloning can be enabled to ensure that the input object is not mutated by the function:
- * </p>
+ *
  * <pre>
  *     checker.activateDeepClone();
  * </pre>
@@ -91,7 +91,7 @@ public class CheckerFunction<T, R> extends AbstractChecker<Function<T, R>, Check
      * Enables deep cloning of input objects before passing them to the {@code Function}.
      * <p>
      * This is useful to ensure that the original input is not modified by the operation, especially when the function may mutate its input.
-     * </p>
+     *
      *
      * @return this {@code CheckerFunction} instance for further validation and chaining
      */
@@ -124,7 +124,7 @@ public class CheckerFunction<T, R> extends AbstractChecker<Function<T, R>, Check
      * Asserts that applying the {@code Function} to the given input does not throw any exception.
      * <p>
      * This check is useful to ensure that the function is safe to apply to the provided input and does not result in runtime errors.
-     * </p>
+     *
      *
      * @param input the input object to be processed by the function
      * @return this {@code CheckerFunction} instance for further validation and chaining
@@ -145,7 +145,7 @@ public class CheckerFunction<T, R> extends AbstractChecker<Function<T, R>, Check
      * Asserts that applying the {@code Function} to the given input produces the expected result.
      * <p>
      * This check compares the actual result of the function with the expected value using content equality.
-     * </p>
+     *
      *
      * @param input    the input object to be processed by the function
      * @param expected the expected result to compare with the actual result of the function
@@ -166,7 +166,7 @@ public class CheckerFunction<T, R> extends AbstractChecker<Function<T, R>, Check
      * Asserts that applying the {@code Function} to the given input produces a non-null result.
      * <p>
      * This check is useful to ensure that the function always returns a valid (non-null) result for the given input.
-     * </p>
+     *
      *
      * @param input the input object to be processed by the function
      * @return this {@code CheckerFunction} instance for further validation and chaining

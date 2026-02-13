@@ -10,7 +10,7 @@ import org.fusesource.jansi.Ansi.Color;
  * This class is used for generating messages that can be displayed, logged,
  * or associated with validation errors. Messages can be created from a
  * predefined code (with arguments) or directly from a string.
- * </p>
+ *
  */
 public class Message {
 

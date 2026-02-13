@@ -11,7 +11,7 @@ import com.luchersol.core.util.AbstractChecker;
  * to assert temporal properties such as being before/after another date, inclusivity checks,
  * range validations, and whether a date lies in the past or future.
  *
- * <p>Typical usage:</p>
+ * <p>Typical usage:
  * <pre>{@code
  * Date deadline = ...;
  * Date now = new Date();
@@ -23,7 +23,7 @@ import com.luchersol.core.util.AbstractChecker;
  * }</pre>
  *
  * <p>This class integrates with {@link InterfaceCheckerDate} for standardized temporal
- * validations and supports chaining multiple assertions in a fluent, expressive style.</p>
+ * validations and supports chaining multiple assertions in a fluent, expressive style.
  *
  * @see java.util.Date
  * @see com.luchersol.core.specialized_checkers.time.temporal.InterfaceCheckerDate

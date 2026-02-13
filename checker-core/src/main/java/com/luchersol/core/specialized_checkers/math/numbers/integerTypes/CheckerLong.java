@@ -12,7 +12,7 @@ import com.luchersol.core.util.AbstractChecker;
  * to assert various properties, such as positivity, negativity, zero value, even or odd
  * and numeric comparisons.
  *
- * <p>Typical usage:</p>
+ * <p>Typical usage:
  * <pre>{@code
  * CheckerLong checker = CheckerLong.check(myLong)
  *     .isPositive()
@@ -21,7 +21,7 @@ import com.luchersol.core.util.AbstractChecker;
  * }</pre>
  *
  * <p>This class supports chaining multiple assertions in a fluent style and integrates
- * with {@link InterfaceCheckerNumber} for numeric-specific validations.</p>
+ * with {@link InterfaceCheckerNumber} for numeric-specific validations.
  *
  * @see java.lang.Long
  * @see com.luchersol.core.specialized_checkers.math.numbers.InterfaceCheckerNumber

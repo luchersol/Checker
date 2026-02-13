@@ -26,7 +26,7 @@ public class MessageService {
      * <p>
      * If the key is not found in the resource bundle, a default colored warning message
      * is returned.
-     * </p>
+     *
      *
      * @param key the key of the message to retrieve
      * @return the message string for the given key, or a default colored message if not found
@@ -41,7 +41,7 @@ public class MessageService {
      * <p>
      * If the key is not found in the resource bundle for the given locale, a default
      * colored warning message is returned.
-     * </p>
+     *
      *
      * @param key    the key of the message to retrieve
      * @param locale the locale to use for message retrieval

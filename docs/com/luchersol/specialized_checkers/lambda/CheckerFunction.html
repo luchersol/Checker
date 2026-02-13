@@ -114,7 +114,7 @@ loadScripts(document, 'script');</script>
  exceptions, produces expected results, or returns non-null values for given inputs. It also supports optional
  deep cloning of input objects to ensure immutability during checks.
 
- <p>Example usage:</p>
+ <p>Example usage:
  <pre>
      CheckerFunction&lt;String, Integer&gt; checker = CheckerFunction.check(String::length);
      checker.producesExpected("abc", 3)
@@ -124,7 +124,7 @@ loadScripts(document, 'script');</script>
 
  <p>
  Deep cloning can be enabled to ensure that the input object is not mutated by the function:
- </p>
+ 
  <pre>
      checker.activateDeepClone();
  </pre></div>
@@ -334,7 +334,7 @@ R&gt;</span>&nbsp;<span class="return-type"><a href="CheckerFunction.html" title
 <div class="block">Enables deep cloning of input objects before passing them to the <code>Function</code>.
  <p>
  This is useful to ensure that the original input is not modified by the operation, especially when the function may mutate its input.
- </p></div>
+ </div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>this <code>CheckerFunction</code> instance for further validation and chaining</dd>
@@ -378,7 +378,7 @@ R&gt;</span>&nbsp;<span class="return-type"><a href="CheckerFunction.html" title
 <div class="block">Asserts that applying the <code>Function</code> to the given input does not throw any exception.
  <p>
  This check is useful to ensure that the function is safe to apply to the provided input and does not result in runtime errors.
- </p></div>
+ </div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>input</code> - the input object to be processed by the function</dd>
@@ -397,7 +397,7 @@ R&gt;</span>&nbsp;<span class="return-type"><a href="CheckerFunction.html" title
 <div class="block">Asserts that applying the <code>Function</code> to the given input produces the expected result.
  <p>
  This check compares the actual result of the function with the expected value using content equality.
- </p></div>
+ </div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>input</code> - the input object to be processed by the function</dd>
@@ -416,7 +416,7 @@ R&gt;</span>&nbsp;<span class="return-type"><a href="CheckerFunction.html" title
 <div class="block">Asserts that applying the <code>Function</code> to the given input produces a non-null result.
  <p>
  This check is useful to ensure that the function always returns a valid (non-null) result for the given input.
- </p></div>
+ </div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>input</code> - the input object to be processed by the function</dd>
@@ -434,7 +434,7 @@ R&gt;</span>&nbsp;<span class="return-type"><a href="CheckerFunction.html" title
 <!-- ========= END OF CLASS DATA ========= -->
 <footer role="contentinfo">
 <hr>
-<p class="legal-copy"><small>Copyright &#169; 2025. All rights reserved.</small></p>
+<p class="legal-copy"><small>Copyright &#169; 2025. All rights reserved.</small>
 </footer>
 </main>
 </div>

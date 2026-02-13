@@ -15,9 +15,9 @@ import com.luchersol.core.util.Utils;
  * This class extends {@link AbstractChecker} to offer convenient methods for
  * asserting that a {@code Callable} does not throw exceptions, produces expected
  * results, or returns non-null values.
- * </p>
  *
- * <p>Example usage:</p>
+ *
+ * <p>Example usage:
  * <pre>{@code
  * CheckerCallable<Integer> checker = CheckerCallable.check(() -> 42)
  *        .callWithoutException()

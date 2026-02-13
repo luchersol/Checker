@@ -4,7 +4,7 @@ package com.luchersol.core.specialized_checkers.math.numbers;
  * Interface for fluent number checkers, providing common validation methods for numeric types.
  * <p>
  * Implementations of this interface allow for fluent assertions on numeric values, such as positivity, negativity, comparison, and zero checks.
- * </p>
+ *
  *
  * @param <T> the type of the implementing checker (enables fluent API chaining)
  */

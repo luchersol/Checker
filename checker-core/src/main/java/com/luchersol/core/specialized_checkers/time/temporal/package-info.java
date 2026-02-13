@@ -3,7 +3,7 @@
  *
  * <p>This package provides validation implementations for {@code java.time} package types
  * including LocalDate, LocalTime, LocalDateTime, ZonedDateTime, and other temporal abstractions.
- * These checkers enable fluent validation of temporal properties and relationships.</p>
+ * These checkers enable fluent validation of temporal properties and relationships.
  *
  * <p>Supported temporal types:
  * <ul>
@@ -14,7 +14,7 @@
  * <li>Instant - Moment on the universal timeline</li>
  * <li>Period and Duration - Temporal spans and intervals</li>
  * </ul>
- * </p>
+ *
  *
  * @author LucherSol
  * @version 1.0

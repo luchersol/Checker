@@ -14,7 +14,7 @@ import com.luchersol.core.util.AbstractChecker;
  * such as evenness, oddness, divisibility, primality, positivity, negativity, zero value,
  * and comparisons against other numeric values.
  *
- * <p>Typical usage:</p>
+ * <p>Typical usage:
  * <pre>{@code
  * CheckerBigInteger checker = CheckerBigInteger.check(myBigInteger)
  *     .isPositive()
@@ -23,7 +23,7 @@ import com.luchersol.core.util.AbstractChecker;
  * }</pre>
  *
  * <p>This class supports chaining multiple assertions in a fluent style and integrates
- * with {@link InterfaceCheckerNumber} for numeric-specific validations.</p>
+ * with {@link InterfaceCheckerNumber} for numeric-specific validations.
  *
  * @see java.math.BigInteger
  * @see com.luchersol.core.specialized_checkers.math.numbers.InterfaceCheckerNumber

@@ -31,15 +31,15 @@ import picocli.CommandLine.Option;
  * <p>
  * This command generates a Java class with the specified name
  * and package.
- * </p>
  *
- * <p>Example usage:</p>
+ *
+ * <p>Example usage:
  * <pre>
  * java -jar my-application.jar create-classes -c com.example.MyClass -n CheckerMyClass -p com.example.checker
  * </pre>
  *
  *
- * <p>Options:</p>
+ * <p>Options:
  * <ul>
  *   <li>-sp, --source-package &lt;PACKAGE_NAME&gt; :</li>
  *   <li>-sc, --source-class &lt;CHECKER_NAME&gt; :</li>
@@ -79,7 +79,7 @@ public class CreateCheckerCommand implements Callable<Integer> {
      * <p>
      * Currently, this method does not implement the class generation logic
      * and simply returns 0.
-     * </p>
+     *
      *
      * @return 0 if the command executes successfully
      * @throws IOException if an input/output error occurs during execution
@@ -115,7 +115,7 @@ public class CreateCheckerCommand implements Callable<Integer> {
                 to assert various $T properties.
 
                 <p>This class supports chaining multiple assertions in a fluent style and integrates
-                with {@link com.luchersol.core.util.AbstractChecker} for generalized validation handling.</p>
+                with {@link com.luchersol.core.util.AbstractChecker} for generalized validation handling.
 
                 @see $L
                 @see com.luchersol.core.util.AbstractChecker
@@ -137,6 +137,12 @@ public class CreateCheckerCommand implements Callable<Integer> {
         return 0;
     }
 
+    /**
+     * Generates a constructor method for the checker class.
+     *
+     * @param sourceClassName the class name of the source class
+     * @return a {@link MethodSpec} for the constructor
+     */
     public MethodSpec getConstructor(ClassName sourceClassName) {
         MethodSpec.Builder constructor = MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PROTECTED)
@@ -153,16 +159,16 @@ public class CreateCheckerCommand implements Callable<Integer> {
                 @param name the name of the checker
                 """, targetClass, sourceClassName
             );
-    /**
-     * Constructs a new {@code CheckerString} with the specified string and name.
-     *
-     * @param string the {@link String} to be associated with this checker
-     * @param name the name of the checker
-     */
 
         return constructor.build();
     }
 
+    /**
+     * Generates the self() method for the checker class.
+     *
+     * @param targetClassName the class name of the target checker class
+     * @return a {@link MethodSpec} for the self method
+     */
     public MethodSpec getSelfMethod(ClassName targetClassName) {
         MethodSpec.Builder spec = MethodSpec.methodBuilder("self")
             .addAnnotation(Override.class)
@@ -182,6 +188,13 @@ public class CreateCheckerCommand implements Callable<Integer> {
         return spec.build();
     }
 
+    /**
+     * Generates the check() method for the checker class.
+     *
+     * @param sourceClassName the class name of the source class
+     * @param targetClassName the class name of the target checker class
+     * @return a {@link MethodSpec} for the check method
+     */
     public MethodSpec getCheckMethod(ClassName sourceClassName, ClassName targetClassName) {
         MethodSpec.Builder checkMethod = MethodSpec.methodBuilder("check")
             .addModifiers(Modifier.PUBLIC)
@@ -205,6 +218,14 @@ public class CreateCheckerCommand implements Callable<Integer> {
         return checkMethod.build();
     }
 
+    /**
+     * Adds the main methods to the checker class builder.
+     *
+     * @param builder the {@link TypeSpec.Builder} for the checker class
+     * @param sourceClassName the class name of the source class
+     * @param targetClassName the class name of the target checker class
+     * @throws ClassNotFoundException if the source class cannot be found
+     */
     public void addMethods(TypeSpec.Builder builder, ClassName sourceClassName, ClassName targetClassName) throws ClassNotFoundException {
         MethodSpec constructor = getConstructor(sourceClassName);
         MethodSpec selfMethod = getSelfMethod(targetClassName);
@@ -214,6 +235,14 @@ public class CreateCheckerCommand implements Callable<Integer> {
         addInnerMethods(builder, sourceClassName, targetClassName);
     }
 
+    /**
+     * Adds inner methods based on the public boolean methods of the source class.
+     *
+     * @param builder the {@link TypeSpec.Builder} for the checker class
+     * @param sourceClassName the class name of the source class
+     * @param targetClassName the class name of the target checker class
+     * @throws ClassNotFoundException if the source class cannot be found
+     */
     public void addInnerMethods(TypeSpec.Builder builder, ClassName sourceClassName, ClassName targetClassName)
             throws ClassNotFoundException {
 
@@ -232,6 +261,13 @@ public class CreateCheckerCommand implements Callable<Integer> {
             });
     }
 
+    /**
+     * Builds a check method for a boolean method from the source class.
+     *
+     * @param method the {@link Method} to wrap
+     * @param targetClassName the class name of the target checker class
+     * @return a {@link MethodSpec} for the check method
+     */
     private MethodSpec buildBooleanCheckMethod(Method method, ClassName targetClassName) {
         MethodSpec.Builder spec = MethodSpec.methodBuilder(method.getName())
             .addModifiers(Modifier.PUBLIC)

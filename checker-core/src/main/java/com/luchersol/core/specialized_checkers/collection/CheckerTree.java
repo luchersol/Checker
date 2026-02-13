@@ -16,9 +16,9 @@ import com.luchersol.core.util.collection.Tree;
  * CheckerTree provides static factory methods for convenient construction from a {@code Tree} instance,
  * a root value, or a root value with a map of children. It supports checks for emptiness, binary structure,
  * symmetry, fullness, depth, number of leaves, and diameter, among others.
- * </p>
  *
- * <p>Usage Example:</p>
+ *
+ * <p>Usage Example:
  * <pre>{@code
  * Tree<Integer> tree = new Tree<>(1);
  * CheckerTree<Integer> checker = CheckerTree.check(tree);
