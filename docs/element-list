@@ -1,5 +1,6 @@
 com.luchersol.cli
 com.luchersol.cli.command
+com.luchersol.core
 com.luchersol.core.specialized_checkers
 com.luchersol.core.specialized_checkers.collection
 com.luchersol.core.specialized_checkers.io
