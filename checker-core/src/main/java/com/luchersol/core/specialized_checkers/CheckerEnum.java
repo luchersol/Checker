@@ -46,8 +46,7 @@ import com.luchersol.core.util.Utils;
  *
  * @see AbstractChecker
  */
-public class CheckerEnum<T extends Enum<T>>
-        extends AbstractChecker<T, CheckerEnum<T>> {
+public class CheckerEnum<T extends Enum<T>> extends AbstractChecker<T, CheckerEnum<T>> {
 
     private static final String INIT_ENUM = "enum";
     private static final String DEFAULT_NAME = "Enum";

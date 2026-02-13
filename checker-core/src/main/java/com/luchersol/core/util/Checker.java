@@ -39,23 +39,27 @@ import com.luchersol.core.util.collection.Graph;
 
 /**
  * Main entry point for object validation and type checking.
+ *
  * <p>
- * The Checker<T> class provides a fluent API for validating and inspecting objects of various types.
- * It supports type checks, collection checks, file and URI checks, number and matrix checks, and more.
- * Specialized checkers are returned for specific types, enabling further type-specific validation.
+ * {@code Checker<T>} provides a fluent API for validating and inspecting objects of any type.
+ * It supports type checks, structural validations, and content assertions (e.g., collections,
+ * files, URIs, numbers, matrices). When applicable, specialized checker instances are returned
+ * to enable type-specific validations.
  * </p>
- * <p>
- * Example usage:
- * </p>
- * <pre>
- * Checker<T> = Checker<T>.check(myList)
+ *
+ * <p><strong>Example usage:</strong></p>
+ * <pre>{@code
+ * Checker<List<String>> checker = Checker.check(myList)
  *     .isList(String.class)
  *     .isNotEmpty();
- * </pre>
+ * }</pre>
  *
- * Checker<T> is the main class for validating and inspecting objects of any type.
- * It extends AbstractChecker<T> and provides methods to check for type, structure, and content,
- * returning specialized checkers for further validation when appropriate.
+ * <p>
+ * This class extends {@code AbstractChecker<T, Checker<T>>} and serves as the primary facade
+ * for validation workflows.
+ * </p>
+ *
+ * @param <T> the type of the object being validated
  */
 public class Checker<T> extends AbstractChecker<T, Checker<T>> {
 
@@ -72,7 +76,7 @@ public class Checker<T> extends AbstractChecker<T, Checker<T>> {
 
 
     /**
-     * Constructs a Checker<T> for the given object and name.
+     * Constructs a {@code Checker<T>} for the given object and name.
      *
      * @param object the object to check
      * @param name   the name or label for the object (used in error messages)
@@ -83,9 +87,9 @@ public class Checker<T> extends AbstractChecker<T, Checker<T>> {
 
 
     /**
-     * Returns this Checker<T> instance (for fluent API).
+     * Returns this {@code Checker<T>} instance (for fluent API).
      *
-     * @return this Checker<T>
+     * @return this {@code Checker<T>}
      */
     @Override
     protected Checker<T> self() {
@@ -94,11 +98,11 @@ public class Checker<T> extends AbstractChecker<T, Checker<T>> {
 
 
     /**
-     * Creates a Checker<T> for the given object and name.
+     * Creates a {@code Checker<T>} for the given object and name.
      *
      * @param object the object to check
      * @param name   the name or label for the object
-     * @return a new Checker<T> instance
+     * @return a new {@code Checker<T>} instance
      */
     public static <T> Checker<T> check(T object, String name) {
         return new Checker<T>(object, name);
@@ -106,10 +110,10 @@ public class Checker<T> extends AbstractChecker<T, Checker<T>> {
 
 
     /**
-     * Creates a Checker<T> for the given object with a default name.
+     * Creates a {@code Checker<T>} for the given object with a default name.
      *
      * @param object the object to check
-     * @return a new Checker<T> instance
+     * @return a new {@code Checker<T>} instance
      */
     public static <T> Checker<T> check(T object) {
         return new Checker<T>(object, DEFAULT_NAME);
@@ -121,7 +125,7 @@ public class Checker<T> extends AbstractChecker<T, Checker<T>> {
      *
      * @param clazz the class to check against
      * @param <C>   the type of the class
-     * @return this Checker<T>
+     * @return this {@code Checker<T>}
      */
     @SuppressWarnings("unchecked")
     public <C> Checker<C> isInstance(Class<C> clazz) {
@@ -145,7 +149,7 @@ public class Checker<T> extends AbstractChecker<T, Checker<T>> {
     /**
      * Checks if the object is a Collection.
      *
-     * @return this Checker<T>
+     * @return this {@code Checker<T>}
      */
     public Checker<T> isCollection() {
         isInstance(Collection.class);
@@ -369,7 +373,7 @@ public class Checker<T> extends AbstractChecker<T, Checker<T>> {
     /**
      * Checks if the object is a Number.
      *
-     * @return this Checker<T>
+     * @return this {@code Checker<T>}
      */
     public Checker<T> isNumber() {
         isInstance(Number.class);

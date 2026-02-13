@@ -165,6 +165,12 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
         return self();
     }
 
+    /**
+     * Copies the key state from another checker to this instance.
+     *
+     * @param checker the checker to copy state from
+     * @return this checker for fluent chaining
+     */
     public C updateChecker(AbstractChecker<?,?> checker) {
         this.stop = checker.stop;
         this.exceptionTracker = checker.exceptionTracker;
@@ -685,6 +691,7 @@ public abstract class AbstractChecker<T, C extends AbstractChecker<T,C>> impleme
     }
 
     /**
+     * Converts the current checker instance to a {@link Checker} of the same type.
      *
      * @return This instance transform to Checker
      */

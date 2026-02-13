@@ -13,7 +13,7 @@ public class CheckerException extends RuntimeException {
     /**
      * Constructs a CheckerException with the specified message.
      *
-     * @param message the detail message
+     * @param message_ the detail message
      */
     protected CheckerException(Message message_) {
         super(message_.getMessage());

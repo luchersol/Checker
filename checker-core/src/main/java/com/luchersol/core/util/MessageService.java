@@ -20,10 +20,33 @@ public class MessageService {
     private MessageService(){
     }
 
+    /**
+     * Retrieves the message text for the given key using the default locale.
+     *
+     * <p>
+     * If the key is not found in the resource bundle, a default colored warning message
+     * is returned.
+     * </p>
+     *
+     * @param key the key of the message to retrieve
+     * @return the message string for the given key, or a default colored message if not found
+     */
     public static String getProperty(String key) {
         return getProperty(key, Locale.getDefault());
     }
 
+    /**
+     * Retrieves the message text for the given key using the specified locale.
+     *
+     * <p>
+     * If the key is not found in the resource bundle for the given locale, a default
+     * colored warning message is returned.
+     * </p>
+     *
+     * @param key    the key of the message to retrieve
+     * @param locale the locale to use for message retrieval
+     * @return the message string for the given key and locale, or a default colored message if not found
+     */
     public static String getProperty(String key, Locale locale) {
         ResourceBundle bundle = ResourceBundle.getBundle(BASENAME, locale);
         try {
