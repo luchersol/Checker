@@ -18,7 +18,7 @@ import picocli.CommandLine.Option;
  * at runtime and prints their fully qualified class names.</p>
  */
 @Command(
-    name = "create-classes",
+    name = "list-checkers",
     description = "List Checkers in route"
 )
 public class ListCheckerCommand implements Callable<Integer> {
